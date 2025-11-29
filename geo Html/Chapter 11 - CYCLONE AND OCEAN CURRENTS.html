@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY - CYCLONE AND OCEAN CURRENTS QUIZ [18-10-2025] - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>GEOGRAPHY - CYCLONE AND OCEAN CURRENTS QUIZ [18-10-2025]</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>The ocean current flowing along the eastern coast of India is known as:<br/> </b>भारत के पूर्वी तट के साथ बहने वाली महासागरीय धारा को क्या कहा जाता है<b>?</b></p>",
+    "option1": "<p> Labrador Current / लैब्राडोर धारा</p>",
+    "option2": "<p> Gulf Stream / गल्फ स्ट्रीम</p>",
+    "option3": "<p> Kuroshio Current / कुरोशियो धारा</p>",
+    "option4": "<p> East India Coastal Current / पूर्वी भारत तटीय धारा</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The East India Coastal Current (EICC) is an ocean current flowing along the eastern coast of India (along the Bay of Bengal).<br/> 1. This current changes its direction according to the monsoon season—<br/> during the southwest monsoon (June to September), it flows northward.<br/> during the northeast monsoon (October to December), it flows southward.<br/> 2. This current is influenced by monsoon winds and is part of the Indian Ocean circulation system.<br/> Important Facts:<br/> 3. The current flowing along the western coast of India is called the West India Coastal Current (WICC).<br/> 4. The East India Coastal Current on the eastern coast and the West India Coastal Current on the western coast are both seasonal currents.<br/> पूर्वी भारत तटीय धारा (EICC) भारत के पूर्वी तट (बंगाल की खाड़ी के किनारे) के साथ बहने वाली एक महासागरीय धारा है।<br/> 5. यह धारा मॉनसून के अनुसार अपनी दिशा बदलती है —<br/> 6. दक्षिण-पश्चिम मानसून (जून से सितम्बर) के समय यह उत्तर की ओर बहती है।<br/> 7. उत्तर-पूर्व मानसून (अक्टूबर से दिसम्बर) के समय यह दक्षिण की ओर बहती है।<br/> 8. यह धारा मॉनसूनी हवाओं से प्रभावित होती है और भारतीय महासागर परिसंचरण प्रणाली का हिस्सा है।<br/> महत्वपूर्ण तथ्य:<br/> 9. भारत के पश्चिमी तट के साथ बहने वाली धारा को वेस्ट इंडिया कोस्टल करंट (WICC) कहा जाता है।<br/> 10. पूर्वी तट की ईस्ट इंडिया कोस्टल करंट और पश्चिमी तट की वेस्ट इंडिया कोस्टल करंट दोनों ही मौसमी धाराएँ हैं।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>The Gulf Stream is a warm ocean current that originates from:<br/> </b>गल्फ स्ट्रीम एक ऊष्ण महासागरीय धारा है जो कहाँ से उत्पन्न होती है<b>?</b></p>",
+    "option1": "<p> Caribbean Sea / कैरिबियन सागर</p>",
+    "option2": "<p> Bering Sea / बेरिंग सागर</p>",
+    "option3": "<p> Mediterranean Sea / भूमध्य सागर</p>",
+    "option4": "<p> Arctic Ocean / आर्कटिक महासागर</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Gulf Stream is a warm ocean current in the Atlantic Ocean.<br/> 1. It originates in the Caribbean Sea and the Gulf of Mexico.<br/> 2. From there, it flows northeast along the east coast of the United States and reaches the North Atlantic Ocean.<br/> Key Points:<br/> 3. The Gulf Stream is a fast-moving surface current.<br/> 4. It keeps the western coasts of Europe (especially Britain and Norway) relatively warm.<br/> 5. This current carries warm water from the tropics to the North Atlantic.<br/> गल्फ स्ट्रीम अटलांटिक महासागर की एक गर्म (ऊष्ण) महासागरीय धारा है।<br/> 6. यह कैरिबियन सागर और मेक्सिको की खाड़ी से उत्पन्न होती है।<br/> 7. वहाँ से यह अमेरिका के पूर्वी तट के साथ-साथ उत्तर-पूर्व दिशा में बहती है और उत्तर अटलांटिक महासागर तक पहुँचती है।<br/> मुख्य बिंदु:<br/> 8. गल्फ स्ट्रीम एक तेज़ गति वाली सतही धारा है।<br/> 9. यह यूरोप के पश्चिमी तटों (विशेषकर ब्रिटेन और नॉर्वे) को अपेक्षाकृत गर्म रखती है।<br/> 10. यह धारा उष्णकटिबंधीय क्षेत्र से उत्तरी अटलांटिक तक ऊष्ण जल ले जाती है।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>Which of the following is a cold current?<br/> </b>निम्नलिखित में से कौन सी धारा एक ठंडी जलधारा है<b>?</b></p>",
+    "option1": "<p> Brazil Current / ब्राज़ील धारा</p>",
+    "option2": "<p> Kuroshio Current / कुरोशियो धारा</p>",
+    "option3": "<p> Canary Current / कैनेरी धारा</p>",
+    "option4": "<p> North Atlantic Drift / नॉर्थ अटलांटिक ड्रिफ्ट</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 1. The Canary Current is a cold ocean current that flows in the North Atlantic Ocean.<br/> 2. It separates from the North Atlantic Drift and flows southward along the northwest coast of Africa.<br/> 3. This current is one of the cold currents in the Northern Hemisphere and lowers temperatures along its path.<br/> Key points:<br/> 4. Brazil Current → Warm Current<br/> 5. Kuroshio Current → Warm Current<br/> 6. North Atlantic Drift → Warm Current<br/> 7. कैनेरी धारा एक ठंडी महासागरीय धारा है जो उत्तरी अटलांटिक महासागर में बहती है।<br/> 8. यह उत्तर अटलांटिक ड्रिफ्ट से अलग होकर अफ्रीका के उत्तर-पश्चिमी तट के साथ दक्षिण दिशा में बहती है।<br/> 9. यह धारा उत्तरी गोलार्ध की ठंडी धाराओं में से एक है और अपने मार्ग में तापमान को कम करती है।<br/> मुख्य बिंदु:<br/> 10. ब्राज़ील धारा → गर्म धारा<br/> 11. कुरोशियो धारा → गर्म धारा<br/> 12. नॉर्थ अटलांटिक ड्रिफ्ट → गर्म धारा</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>The El Niño phenomenon is associated with:<br/> </b>एल नीनो घटना किससे संबंधित है<b>?</b></p>",
+    "option1": "<p> Atlantic Ocean / अटलांटिक महासागर</p>",
+    "option2": "<p> Indian Ocean / हिंद महासागर</p>",
+    "option3": "<p> Pacific Ocean / प्रशांत महासागर</p>",
+    "option4": "<p> Arctic Ocean / आर्कटिक महासागर</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> El Niño is an oceanic and atmospheric phenomenon that occurs primarily in the Pacific Ocean.<br/> 1. Normal cold currents flow near the western coast of South America, but during El Niño, the waters become unusually warm.<br/> 2. This warming affects air pressure and rainfall patterns worldwide.<br/> Main effects:<br/> 3. Excessive rainfall in South America.<br/> 4. Drought in Australia and India.<br/> 5. Reduced fish production (because warm water contains fewer nutrients).<br/> Related terms:<br/> 6. La Niña: The opposite effect of El Niño—the waters of the Pacific Ocean become colder than normal.<br/> एल नीनो एक महासागरीय एवं वायुमंडलीय घटना है, जो मुख्य रूप से प्रशांत महासागर में होती है।<br/> 7. सामान्यतः दक्षिण अमेरिका के पश्चिमी तट के पास ठंडी जलधाराएँ बहती हैं, लेकिन एल नीनो के दौरान वहाँ का जल असामान्य रूप से गर्म हो जाता है।<br/> 8. यह गर्मी हवा के दाब और वर्षा के पैटर्न को पूरी दुनिया में प्रभावित करती है।<br/> मुख्य प्रभाव:<br/> 9. दक्षिण अमेरिका में अत्यधिक वर्षा।<br/> 10. ऑस्ट्रेलिया और भारत में सूखा।<br/> 11. मछली उत्पादन में कमी (क्योंकि गर्म पानी में पोषक तत्व कम होते हैं)।<br/> संबंधित शब्द:<br/> 12. ला नीना: एल नीनो का विपरीत प्रभाव — इसमें प्रशांत महासागर का जल सामान्य से अधिक ठंडा हो जाता है।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>Which current influences the climate of Western Europe?<br/> </b>कौन सी धारा पश्चिमी यूरोप के जलवायु को प्रभावित करती है<b>?</b></p>",
+    "option1": "<p> Labrador Current / लैब्राडोर धारा</p>",
+    "option2": "<p> Gulf Stream / गल्फ स्ट्रीम</p>",
+    "option3": "<p> Peru Current / पेरू धारा</p>",
+    "option4": "<p> Oyashio Current / ओयाशियो धारा</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 1. The Gulf Stream is a warm ocean current in the Atlantic Ocean.<br/> 2. It originates in the Caribbean Sea and the Gulf of Mexico, flows along the eastern coast of the United States, and then turns toward the North Atlantic Ocean.<br/> 3. It later reaches the coasts of Western Europe as the North Atlantic Drift.<br/> Effect:<br/> 4. This current brings warm water and warm winds to Europe.<br/> 5. This causes the climate of Western Europe to be warmer and wetter than other regions at similar latitudes (such as Canada).<br/> 6. In particular, the coasts of Britain, Norway, and Western Europe experience relatively mild temperatures even in winter.<br/> For comparison:<br/> 7. Labrador Current → Cold Current<br/> 8. Peru Current (Humboldt Current) → Cold Current<br/> 9. Oyashio Current → Cold Current<br/> 10. गल्फ स्ट्रीम अटलांटिक महासागर की एक गर्म महासागरीय धारा है।<br/> 11. यह कैरिबियन सागर और मेक्सिको की खाड़ी से उत्पन्न होकर अमेरिका के पूर्वी तट के साथ बहती है और फिर उत्तर अटलांटिक महासागर की ओर मुड़ जाती है।<br/> 12. आगे जाकर यह नॉर्थ अटलांटिक ड्रिफ्ट के रूप में पश्चिमी यूरोप के तटों तक पहुँचती है।<br/> प्रभाव :<br/> 13. यह धारा गर्म पानी और गर्म हवाएँ यूरोप की ओर लाती है।<br/> 14. इसके कारण पश्चिमी यूरोप का जलवायु समान अक्षांशों वाले अन्य क्षेत्रों (जैसे कनाडा) की तुलना में अधिक गर्म और नम रहता है।<br/> 15. विशेष रूप से ब्रिटेन, नॉर्वे और पश्चिमी यूरोप के तट सर्दियों में भी अपेक्षाकृत मंद तापमान अनुभव करते हैं।<br/> तुलना के लिए:<br/> 16. लैब्राडोर धारा → ठंडी धारा<br/> 17. पेरू धारा (हम्बोल्ट धारा) → ठंडी धारा<br/> 18. ओयाशियो धारा → ठंडी धारा</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>The Peru Current is also known as:<br/> </b>पेरू धारा को और किस नाम से जाना जाता है<b>?</b></p>",
+    "option1": "<p> Humboldt Current / हम्बोल्ट धारा</p>",
+    "option2": "<p> Brazil Current / ब्राज़ील धारा</p>",
+    "option3": "<p> Agulhas Current / अगुलहास धारा</p>",
+    "option4": "<p> Benguela Current / बेंगुएला धारा</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The cold Peru or Humboldt Current flows northward along the west coast of South America, causing arid conditions along the coast.<br/> शीत पेरू या हम्बोल्ट धारा दक्षिण अमेरिका के पश्चिमी तट के साथ उत्तर की ओर बहती है, जिससे तटीय क्षेत्र शुष्क बनते हैं।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Which ocean current is responsible for the formation of deserts in Western Africa?<br/> </b>पश्चिमी अफ्रीका में रेगिस्तान बनने के लिए कौन सी महासागरीय धारा जिम्मेदार है<b>?</b></p>",
+    "option1": "<p> Canary Current / कैनेरी धारा</p>",
+    "option2": "<p> Gulf Stream / गल्फ स्ट्रीम</p>",
+    "option3": "<p> Equatorial Current / विषुवतीय धारा</p>",
+    "option4": "<p> Somali Current / सोमाली धारा</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Canary Current is a cold ocean current that flows along the northwestern coast of Africa.<br/> 1. It is a branch of the North Atlantic Ocean, originating from the North Atlantic Drift and flowing southward.<br/> 2. This cold current reduces the moisture in the atmosphere, preventing cloud formation.<br/> 3. As a result, rainfall is very low, and deserts develop in this region.<br/> Example:<br/> 4. Cold currents such as the Canary Current (for the Sahara) and the Benguela Current (for the Namib) play a major role in the formation of the Sahara Desert and the Namib Desert.<br/> कैनेरी धारा एक ठंडी महासागरीय धारा है जो अफ्रीका के उत्तर-पश्चिमी तट के साथ बहती है।<br/> 5. यह उत्तर अटलांटिक महासागर की एक शाखा है, जो नॉर्थ अटलांटिक ड्रिफ्ट से निकलकर दक्षिण दिशा में प्रवाहित होती है।<br/> 6. इस ठंडी धारा के कारण वायुमंडल में नमी कम हो जाती है, जिससे बादल बनने की प्रक्रिया रुक जाती है।<br/> 7. परिणामस्वरूप, वर्षा बहुत कम होती है और इस क्षेत्र में रेगिस्तान (मरुस्थल) विकसित हो जाता है।<br/> उदाहरण:<br/> 8. सहारा मरुस्थल और नामीब मरुस्थल के निर्माण में ठंडी धाराओं जैसे कैनेरी धारा (सहारा के लिए) और बेंगुएला धारा (नामीब के लिए) का बड़ा योगदान है।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>Cyclones in the Arabian Sea and Bay of Bengal are known as:<br/> </b>अरब सागर और बंगाल की खाड़ी में चक्रवात किस नाम से जाने जाते हैं<b>?</b></p>",
+    "option1": "<p> Typhoons / टाइफून</p>",
+    "option2": "<p> Hurricanes / हरिकेन</p>",
+    "option3": "<p> Tropical Cyclones / उष्णकटिबंधीय चक्रवात</p>",
+    "option4": "<p> Tornadoes / बवंडर</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 1. Cyclones that form in the Arabian Sea and Bay of Bengal are called tropical cyclones.<br/> 2. These cyclones form in the Indian Ocean region and often develop over warm seawater.<br/> 3. When sea surface temperatures are around 27°C or higher, moisture produced by evaporation lifts the air, and the rotational motion creates a cyclone.<br/> Names in different regions:<br/> 4. Indian Ocean (Arabian Sea &amp; Bay of Bengal) → Tropical cyclone<br/> 5. Western Pacific Ocean → Typhoon<br/> 6. Atlantic Ocean and Caribbean Sea → Hurricane<br/> 7. Around Australia → Willy-Willy<br/> 8. अरब सागर और बंगाल की खाड़ी में बनने वाले चक्रवातों को उष्णकटिबंधीय चक्रवात कहा जाता है।<br/> 9. ये चक्रवात भारतीय महासागर क्षेत्र में बनते हैं और प्रायः गर्म समुद्री जल के ऊपर विकसित होते हैं।<br/> 10. जब समुद्र की सतह का तापमान लगभग 27°C या उससे अधिक होता है, तो वाष्पीकरण से बनी नमी वायु को ऊपर उठाती है और घूर्णन गति से चक्रवात का निर्माण होता है।<br/> विभिन्न क्षेत्रों में नाम :<br/> 11. भारतीय महासागर (अरब सागर &amp; बंगाल की खाड़ी) → उष्णकटिबंधीय चक्रवात<br/> 12. पश्चिमी प्रशांत महासागर → टाइफून<br/> 13. अटलांटिक महासागर और कैरिबियन सागर → हरिकेन<br/> 14. ऑस्ट्रेलिया के आसपास → विली-विली</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>In which direction do cyclones rotate in the Northern Hemisphere?<br/> </b>उत्तरी गोलार्ध में चक्रवात किस दिशा में घूमते हैं<b>?</b></p>",
+    "option1": "<p> Clockwise / घड़ी की दिशा में (दक्षिणावर्त)</p>",
+    "option2": "<p> Anticlockwise / घड़ी की विपरीत दिशा में (वामावर्त)</p>",
+    "option3": "<p> Both / दोनों</p>",
+    "option4": "<p> None / कोई नहीं</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 1. Cyclones in the Northern Hemisphere rotate counterclockwise.<br/> 2. This is due to the Coriolis effect, which is caused by the Earth's rotation.<br/> This effect deflects the wind direction—<br/> 3. In the Northern Hemisphere: Turns to the right → therefore, cyclones rotate counterclockwise.<br/> 4. In the Southern Hemisphere: Turns to the left → therefore, cyclones rotate clockwise.<br/> 5. उत्तरी गोलार्ध में चक्रवात घड़ी की विपरीत दिशा में घूमते हैं।<br/> 6. इसका कारण है कोरिऑलिस प्रभाव, जो पृथ्वी के घूर्णन के कारण उत्पन्न होता है।<br/> 7. इस प्रभाव से वायु की दिशा विचलित होती है —<br/> 8. उत्तरी गोलार्ध में: दाईं ओर मुड़ती है → इसलिए चक्रवात वामावर्त घूमते हैं।<br/> 9. दक्षिणी गोलार्ध में: बाईं ओर मुड़ती है → इसलिए चक्रवात दक्षिणावर्त घूमते हैं।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>What is the eye of a cyclone?<br/> </b>चक्रवात की आँख क्या होती है<b>?</b></p>",
+    "option1": "<p> The outermost layer / बाहरी परत</p>",
+    "option2": "<p> The zone of heaviest rainfall / अधिकतम वर्षा का क्षेत्र</p>",
+    "option3": "<p> The calm center of the storm / तूफान का शांत केंद्र</p>",
+    "option4": "<p> The rising air column / उठती हुई वायु स्तंभ</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 1. The eye of a cyclone is the center where the air is nearly calm.<br/> 2. Surrounding it is a wall of high rainfall and strong winds (the eyewall), which is the most powerful part of the cyclone.<br/> 3. The eyeball is typically between 20–50 kilometers in diameter.<br/> Key points:<br/> 4. Air flows downward in the eyewall, lowering atmospheric pressure.<br/> 5. Strong winds and heavy rainfall occur outside the eyewall.<br/> 6. The most dangerous part of a cyclone—the eyewall—surrounds the eyewall.<br/> 7. चक्रवात की आँख वह केंद्र होता है जहाँ वायु लगभग शांत रहती है।<br/> 8. इसके चारों ओर दीवार जैसी ऊँची वर्षा और तेज हवाएँ (नेत्र-भित्ति) होती हैं, जो चक्रवात का सबसे ताकतवर भाग होता है।<br/> 9. आँख का व्यास आम तौर पर 20–50 किलोमीटर के बीच होता है।<br/> मुख्य बिंदु:<br/> 10. आँख में हवा नीचे की ओर बहती है, जिससे वायुमंडलीय दबाव कम होता है।<br/> 11. आँख के बाहर तेज़ हवाएँ और भारी वर्षा होती है।<br/> 12. चक्रवात का सबसे खतरनाक हिस्सा – नेत्र-भित्ति – आँख के चारों ओर होता है।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Assertion (A): The Labrador Current is a cold current.<br/> Reason (R): It originates in the Arctic Ocean.<br/> </b>कथन <b>(A): </b>लैब्राडोर धारा एक शीत धारा है।<b><br/> </b>कारण <b>(R): </b>यह आर्कटिक महासागर से उत्पन्न होती है।</p>",
+    "option1": "<p> A and R both correct, R explains A / A और R दोनों सही हैं, R, A की व्याख्या करता है।</p>",
+    "option2": "<p> A correct, R incorrect / A सही है, R गलत है।</p>",
+    "option3": "<p> A incorrect, R correct / A गलत है, R सही है।</p>",
+    "option4": "<p> Both incorrect / दोनों गलत हैं।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Labrador Current is a cold ocean current. ✅<br/> This current originates in the Arctic Ocean and the Labrador Sea. ✅<br/> Since this current originates in cold regions, its waters are cold and it is called a cold ocean current.<br/> Therefore, reason (R) is correct and correctly explains statement (A).<br/> लैब्राडोर धारा एक ठंडी महासागरीय धारा है।✅<br/> यह धारा आर्कटिक महासागर और लैब्राडोर सागर से उत्पन्न होती है। ✅<br/> चूंकि यह धारा ठंडे क्षेत्रों से निकलती है, इसलिए इसका जल ठंडा रहता है और यह ठंडी महासागरीय धारा कहलाती है।<br/> इसलिए कारण (R) सही है और यह कथन (A) को सही तरीके से समझाता है।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Assertion (A): Warm currents increase the temperature of coastal regions.<br/> Reason (R): They always transfer heat from higher latitudes to lower latitudes.<br/> </b>कथन <b>(A): </b>गर्म समुद्री धाराएँ तटीय क्षेत्रों का तापमान बढ़ा देती हैं।<b><br/> </b>कारण <b>(R): </b>वे ऊँचे अक्षांशों से निचले अक्षांशों की ओर ऊष्मा स्थानांतरित करती हैं।</p>",
+    "option1": "<p> Both A and R true, R is correct explanation / दोनों A और R सही हैं, और R सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R true, R is not correct explanation / दोनों A और R सही हैं, लेकिन R सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A true, R false / A सही है, R गलत है।</p>",
+    "option4": "<p> Both false / दोनों गलत हैं।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> <br/> </p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Which of the following currents meet near Newfoundland causing dense fog?<br/> </b>न्यूफाउंडलैंड के पास कौन सी धाराएँ मिलकर घना कोहरा बनाती हैं<b>?</b></p>",
+    "option1": "<p> Gulf Stream and Labrador Current</p>",
+    "option2": "<p> Kuroshio and Oyashio Current</p>",
+    "option3": "<p> Peru and Brazil Current</p>",
+    "option4": "<p> Canary and North Equatorial Current</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 1. The Gulf Stream and Labrador Current meet near Newfoundland (Canada).<br/> 2. Gulf Stream → Warm Current<br/> 3. Labrador Current → Cold Current<br/> 4. When warm and cold currents meet, water vapor condenses, forming dense fog.<br/> Key Points:<br/> 5. This area is famous for fishing, but dense fog makes navigation hazardous.<br/> 6. For this reason, Newfoundland is also known as \"Foggy Newfoundland.\"<br/> 7. न्यूफाउंडलैंड (कनाडा) के पास गल्फ स्ट्रीम और लैब्राडोर धारा मिलती हैं।<br/> 8. गल्फ स्ट्रीम → गर्म धारा<br/> 9. लैब्राडोर करंट → ठंडी धारा<br/> 10. जब गर्म और ठंडी धाराएँ आपस में मिलती हैं, तो वहाँ जलवाष्प संघनित होकर घना कोहरा बनता है।<br/> मुख्य बिंदु:<br/> 11. यह क्षेत्र मछली पकड़ने के लिए प्रसिद्ध है, लेकिन घने कोहरे के कारण नेविगेशन के लिए जोखिमपूर्ण होता है।<br/> 12. इसी कारण न्यूफाउंडलैंड को “धुंध भरा न्यूफ़ाउंडलैंड” भी कहा जाता है।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>The term “Cyclone” was coined by:<br/> “</b>चक्रवात” शब्द सबसे पहले किसने प्रयोग किया था<b>?</b></p>",
+    "option1": "<p> Henry Piddington / हेनरी पिडिंगटन</p>",
+    "option2": "<p> Alfred Wegener / अल्फ्रेड वेगेनर</p>",
+    "option3": "<p> Ferrel / फैरेल</p>",
+    "option4": "<p> Halley / हैली</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 1. The term \"cyclone\" was used by Henry Piddington in the 1840s to describe storms in the Bay of Bengal.<br/> 2. Piddington coined the term while studying cyclones in the Indian Ocean region.<br/> 3. The word \"cyclone\" is derived from the Greek word \"kyklos,\" meaning \"rotation\" or \"circular motion.\"<br/> Key points:<br/> 4. Piddington studied the patterns and directions of storms in the Indian coastal regions and compiled an index (Piddington's chart).<br/> 5. The term \"cyclone\" subsequently became popular worldwide.<br/> .<br/> 6. “चक्रवात” शब्द का प्रयोग 1840 के दशक में हेनरी पिडिंगटन ने बंगाल की खाड़ी के तूफानों के लिए किया था।<br/> 7. पिडिंगटन ने भारतीय समुद्री क्षेत्र में चक्रवातों के अध्ययन के दौरान इस शब्द को अपनाया।<br/> 8. शब्द “Cyclone” ग्रीक शब्द “kyklos” से लिया गया है, जिसका अर्थ है “घूर्णन” या “वृत्ताकार गति”।<br/> मुख्य बिंदु:<br/> 9. पिडिंगटन ने भारतीय तटीय क्षेत्रों में तूफानों के पैटर्न और दिशाओं का अध्ययन किया और उनका सूचकांक (पिडिंगटन का चार्ट) तैयार किया।<br/> 10. इसके बाद “चक्रवात” शब्द पूरी दुनिया में लोकप्रिय हुआ।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Which factor is essential for cyclone formation?<br/> </b>चक्रवात बनने के लिए कौन<b>-</b>सा कारक आवश्यक है<b>?</b></p>",
+    "option1": "<p> High pressure / उच्च दबाव</p>",
+    "option2": "<p> Cold ocean water / ठंडा समुद्री जल</p>",
+    "option3": "<p> Warm ocean water / गर्म समुद्री जल</p>",
+    "option4": "<p> Low humidity / कम आर्द्रता</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 1. The most important factor for cyclone formation is warm seawater (sea surface temperature 27°C or higher). ✅<br/> 2. Warm water increases evaporation, which adds moisture and heat to the atmosphere.<br/> 3. This heat lifts the air, creating an area of ​​low pressure below and high pressure above.<br/> 4. This process helps in rotational motion and the formation of a cyclone.<br/> Regarding other options:<br/> 5. High pressure → ❌ Cyclones do not form under high pressure, but under low pressure.<br/> 6. Cold seawater → ❌ Cold water does not form cyclones.<br/> 7. Low humidity → ❌ Moisture is necessary, low humidity prevents cyclones.<br/> 8. चक्रवात बनने के लिए सबसे महत्वपूर्ण कारक है गर्म समुद्री जल (समुद्री सतही तापमान 27°C या उससे अधिक)। ✅<br/> 9. गर्म पानी से वाष्पीकरण बढ़ता है, जिससे वायुमंडल में नमी और ऊष्मा मिलती है।<br/> 10. यह ऊष्मा वायु को ऊपर उठाती है, जिससे नीचे कम दबाव और ऊपर अधिक दबाव का क्षेत्र बनता है।<br/> 11. यह प्रक्रिया घूर्णन गति और चक्रवात के निर्माण में मदद करती है।<br/> अन्य विकल्पों के बारे में:<br/> 12. उच्च दबाव → ❌ चक्रवात उच्च दबाव में नहीं बनता, बल्कि निम्न दबाव में बनता है।<br/> 13. ठंडा समुद्री जल → ❌ ठंडा पानी चक्रवात नहीं बनाता।<br/> 14. कम आर्द्रता → ❌ नमी जरूरी है, कम आर्द्रता चक्रवात को रोकती है।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Assertion (A): Cyclones are more frequent in the Bay of Bengal than in the Arabian Sea.<br/> Reason (R): Sea surface temperature and humidity are higher in the Bay of Bengal.<br/> </b>कथन <b>(A): </b>बंगाल की खाड़ी में चक्रवात अरब सागर की तुलना में अधिक बार आते हैं।<b><br/> </b>कारण <b>(R): </b>बंगाल की खाड़ी में समुद्र की सतह का तापमान और आर्द्रता अधिक होती है।</p>",
+    "option1": "<p> Both true, R explains A / दोनों सही हैं, और R, A की सही व्याख्या करता है।</p>",
+    "option2": "<p> Both true, R doesn’t explain A / दोनों सही हैं, लेकिन R, A की सही व्याख्या नहीं करता है।</p>",
+    "option3": "<p> A true, R false / A सही है, R गलत है।</p>",
+    "option4": "<p> Both false / दोनों गलत हैं।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 1. Statement (A) is correct: More cyclones form in the Bay of Bengal than in the Arabian Sea.<br/> 2. Reason (R) is also correct: The Bay of Bengal has higher sea surface temperature and humidity.<br/> 3. Higher temperature and humidity → More heat and moisture → Increases the likelihood of cyclone formation.<br/> 4. Therefore, statement R is the correct explanation for statement A.<br/> Key Points:<br/> 5. The Arabian Sea is relatively smaller and less warm, so fewer cyclones form there.<br/> 6. The Bay of Bengal has warm and moist water due to the monsoon and summer, which leads to more cyclones.<br/> 7. कथन (A) सही है: बंगाल की खाड़ी में अरब सागर की तुलना में अधिक चक्रवात बनते हैं।<br/> 8. कारण (R) भी सही है: बंगाल की खाड़ी में समुद्र की सतह का तापमान और आर्द्रता अधिक होती है।<br/> 9. उच्च तापमान और आर्द्रता → अधिक ऊष्मा और नमी → चक्रवात बनने की संभावना बढ़ती है।<br/> 10. इसलिए R कथन, A कथन का सही स्पष्टीकरण देता है।<br/> मुख्य बिंदु:<br/> 11. अरब सागर अपेक्षाकृत छोटा और कम गर्म है, इसलिए वहाँ कम चक्रवात बनते हैं।<br/> 12. बंगाल की खाड़ी में मानसून और गर्मी के कारण गर्म और नम जल उपलब्ध होता है, जिससे चक्रवात अधिक बनते हैं।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Which of the following cyclones affected Odisha severely in 1999?<br/> 1999 </b>में ओडिशा को गंभीर रूप से प्रभावित करने वाला चक्रवात कौन था<b>?</b></p>",
+    "option1": "<p> Phailin / फैलिन</p>",
+    "option2": "<p> Titli / तितली</p>",
+    "option3": "<p> Super Cyclone / सुपर चक्रवात</p>",
+    "option4": "<p> Amphan / अम्फान</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 1. In 1999, Odisha was hit by a very powerful cyclone (Super Cyclone).<br/> 2. This cyclone was Category 5 equivalent and is considered the most severe cyclone in Indian maritime history.<br/> Major Impacts:<br/> 3. High winds: approximately 260–270 km/h<br/> 4. Heavy rainfall and flooding<br/> 5. Millions displaced and thousands killed<br/> 6. Massive economic and agricultural losses<br/> Other options:<br/> 7. Phailin (2013) → Hit Odisha later<br/> 8. Titli (2018) → Affected Odisha and Andhra Pradesh<br/> 9. Amphan (2020) → Affected West Bengal and the Bay of Bengal<br/> 10. 1999 में ओडिशा को एक अत्यंत शक्तिशाली चक्रवात (Super Cyclone) ने प्रभावित किया।<br/> 11. यह चक्रवात श्रेणी 5 समतुल्य का था और इसे भारतीय समुद्री इतिहास का सबसे भयंकर चक्रवात माना जाता है।<br/> 12. प्रमुख प्रभाव:<br/> 13. तेज़ हवाएँ: लगभग 260–270 km/h<br/> 14. भारी वर्षा और बाढ़<br/> 15. लाखों लोगों को विस्थापन और हजारों की मौत<br/> 16. विशाल आर्थिक और कृषि नुकसान<br/> अन्य विकल्प:<br/> 17. फैलिन (2013) → ओडिशा में बाद में आया<br/> 18. तितली (2018) → ओडिशा और आंध्र प्रदेश प्रभावित<br/> 19. अम्फान (2020) → पश्चिम बंगाल और बंगाल की खाड़ी प्रभावित</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>What is the main difference between a hurricane and a typhoon?<br/> </b>हरिकेन और टाइफून में मुख्य अंतर क्या है<b>?</b></p>",
+    "option1": "<p> Intensity / तीव्रता</p>",
+    "option2": "<p> Origin / उत्पत्ति क्षेत्र</p>",
+    "option3": "<p> Duration / अवधि</p>",
+    "option4": "<p> Structure / संरचना</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 1. Hurricanes and typhoons are both tropical cyclones.<br/> 2. They have roughly the same structure and intensity.<br/> 3. The main difference is in their origin:<br/> 4. Hurricanes: Form in the Atlantic Ocean and the eastern/central Pacific Ocean.<br/> 5. Typhoons: Form in the western Pacific Ocean (Japan, Philippines).<br/> Other points:<br/> 6. There is no significant difference in duration and structure.<br/> 7. Only the name varies by region.<br/> 8. हरिकेन और टाइफून दोनों ही उष्णकटिबंधीय चक्रवात हैं।<br/> 9. इनका संरचना और तीव्रता लगभग समान होती है।<br/> 10. मुख्य अंतर इनके उत्पत्ति क्षेत्र में है:<br/> 11. हरिकेन: अटलांटिक महासागर और पूर्वी/मध्य प्रशांत महासागर में बनता है।<br/> 12. टाइफून: पश्चिमी प्रशांत महासागर (जापान, फिलीपींस) में बनता है।<br/> अन्य बिंदु:<br/> 13. अवधि और संरचना में कोई विशेष अंतर नहीं।<br/> 14. नाम केवल क्षेत्र के अनुसार भिन्न होता है।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Which Indian agency monitors cyclones?<br/> </b>भारत में चक्रवातों की निगरानी कौन सी एजेंसी करती है<b>?</b></p>",
+    "option1": "<p> ISRO</p>",
+    "option2": "<p> IMD</p>",
+    "option3": "<p> DRDO</p>",
+    "option4": "<p> NDRF</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 1. The IMD (Indian Meteorological Department) monitors cyclones and other weather events in India.<br/> Its main functions are:<br/> 2. Cyclone forecasting<br/> 3. Storm warnings<br/> 4. Weather data collection and analysis<br/> 5. The IMD also has Regional Specialized Meteorological Centers (RSMCs), such as:<br/> 6. RSMC New Delhi → Monitoring cyclones in the Bay of Bengal and the Arabian Sea<br/> Other options:<br/> 7. ISRO → Space research, satellites<br/> 8. DRDO → Defense research<br/> 9. NDRF → Disaster relief and rescue<br/> .<br/> 10. IMD (भारतीय मौसम विज्ञान विभाग) भारत में चक्रवातों और अन्य मौसमीय घटनाओं की निगरानी करता है।<br/> 11. इसका मुख्य कार्य है:<br/> 12. चक्रवातों की भविष्यवाणी<br/> 13. तूफानों की चेतावनी<br/> 14. मौसमीय डेटा संग्रह और विश्लेषण<br/> 15. IMD के क्षेत्रीय विशिष्ट मौसम विज्ञान केंद्र (RSMC) भी हैं, जैसे:<br/> 16. RSMC नई दिल्ली → बंगाल की खाड़ी और अरब सागर के चक्रवातों की निगरानी<br/> अन्य विकल्प:<br/> 17. ISRO → अंतरिक्ष अनुसंधान, उपग्रह<br/> 18. DRDO → रक्षा अनुसंधान<br/> 19. NDRF → आपदा राहत और बचाव</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Which current is responsible for the mild climate of Japan?<br/> </b>जापान की सौम्य जलवायु के लिए कौन सी धारा जिम्मेदार है<b>?</b></p>",
+    "option1": "<p> Oyashio Current / ओयाशियो धारा</p>",
+    "option2": "<p> Kuroshio Current / कुरोशियो धारा</p>",
+    "option3": "<p> Alaska Current / अलास्का धारा</p>",
+    "option4": "<p> Peru Current / पेरू धारा</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 1. The Kuroshio Current is a warm ocean current.<br/> 2. It originates near the Philippines and Taiwan and flows toward the coast of Japan.<br/> 3. Being a warm current, it provides a mild and humid climate to the coastal regions of Japan.<br/> 4. This current prevents Japan's weather from becoming extremely cold in winter, unlike Europe and North America.<br/> Other options:<br/> 5. Oyashio Current → Cold current, cools the northwestern coast of Japan<br/> 6. Alaska Current → In the North Pacific<br/> 7. Peru Current → Cold current of the west coast of South America<br/> 8. कुरोशियो धारा एक गर्म महासागरीय धारा है।<br/> 9. यह फिलिपींस और ताइवान के पास से निकलकर जापान के तटों की ओर बहती है।<br/> 10. गर्म धारा होने के कारण यह जापान के तटीय क्षेत्रों को सौम्य और नम जलवायु प्रदान करती है।<br/> 11. इस धारा से यूरोप और उत्तर अमेरिका की तरह जापान के मौसम में सर्दियों में अत्यधिक ठंडक नहीं होती।<br/> अन्य विकल्प:<br/> 12. ओयाशियो धारा → ठंडी धारा, जापान के उत्तर-पश्चिमी तट को ठंडा करती है<br/> 13. अलास्का धारा → उत्तर प्रशांत में<br/> 14. पेरू धारा → दक्षिण अमेरिका के पश्चिमी तट पर ठंडी धारा</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>The “Western Intensification” of ocean currents occurs because of:<br/> </b>महासागरीय धाराओं का “पश्चिमी तीव्रीकरण” किस कारण होता है<b>?</b></p>",
+    "option1": "<p> Coriolis effect / कोरिओलिस प्रभाव</p>",
+    "option2": "<p> Upwelling / ऊपर उठाव</p>",
+    "option3": "<p> Wind erosion / पवन अपरदन</p>",
+    "option4": "<p> Evaporation / वाष्पीकरण</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 1. Western intensification is the phenomenon in which ocean currents flow faster toward the western edge.<br/> 2. The main reason for this is the Coriolis effect.<br/> 3. Due to the Earth's rotation, currents in the Southern and Northern Hemispheres deviate.<br/> 4. Currents in the Northern Hemisphere deviate to the right, while those in the Southern Hemisphere deviate to the left.<br/> 5. This results in ocean currents narrowing and intensifying toward the western edge, while flowing more slowly toward the eastern edge.<br/> Key examples:<br/> 6. Gulf Stream (Atlantic) → Faster on the western edge<br/> 7. Kuroshio Current (Pacific) → Faster on the western edge<br/> 8. पश्चिमी तीव्रीकरण उस घटना को कहते हैं जिसमें महासागरीय धाराएँ पश्चिमी किनारों की ओर अधिक तेज़ गति से बहती हैं।<br/> 9. इसका मुख्य कारण कोरिओलिस प्रभाव है।<br/> 10. पृथ्वी के घूर्णन के कारण दक्षिणी और उत्तरी गोलार्ध में धाराएँ विचलित होती हैं।<br/> 11. उत्तरी गोलार्ध में धाराएँ दाईं ओर, दक्षिणी गोलार्ध में बाईं ओर मुड़ती हैं।<br/> 12. इसका परिणाम यह होता है कि महासागरीय धारा पश्चिमी किनारे की ओर संकुचित और तीव्र हो जाती है, जबकि पूर्वी किनारे पर धीरे बहती है।<br/> मुख्य उदाहरण:<br/> 13. गल्फ स्ट्रीम धारा (अटलांटिक) → पश्चिमी किनारे पर तेज़<br/> 14. कुरोशियो धारा (प्रशांत) → पश्चिमी किनारे पर तेज़</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>During La Niña, the trade winds:<br/> </b>ला नीना के दौरान व्यापारिक पवनें कैसी होती हैं<b>?</b></p>",
+    "option1": "<p> Weaken / धीमी हो जाती हैं।</p>",
+    "option2": "<p> Reverse direction / दिशा बदलती हैं।</p>",
+    "option3": "<p> Strengthen / तेज हो जाती हैं।</p>",
+    "option4": "<p> Stop completely / पूरी तरह रुक जाती हैं।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> La Niña is the opposite effect of El Niño.<br/> During this period, trade winds in the equatorial Pacific Ocean become stronger than normal.<br/> Causes of strong winds:<br/> 1. Warm water is pushed westward (near Australia and Indonesia)<br/> 2. Water in the eastern Pacific Ocean (near the coast of South America) remains cool → a cold current is formed<br/> Results: Changes in rainfall patterns—more rainfall in Southeast Asia.<br/> ला नीना, एल नीनो का विपरीत प्रभाव है।<br/> इस दौरान प्रशांत महासागर के भूमध्यरेखीय क्षेत्र में व्यापारिक हवाएँ सामान्य से अधिक तेज़ हो जाती हैं।<br/> तेज़ हवाओं के कारण:<br/> 3. गर्म पानी पश्चिम की ओर धकेलता है (अष्ट्रलिया और इंडोनेशिया के पास)<br/> 4. पूर्वी प्रशांत महासागर (दक्षिण अमेरिका तट के पास) में पानी ठंडा रहता है → ठंडी धारा बनती है<br/> इसका परिणाम: बर्षा का पैटर्न बदलना — दक्षिण-पूर्व एशिया में अधिक वर्षा |</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>The Indian Ocean Dipole (IOD) affects:<br/> </b>इंडियन ओशन डाइपोल <b>(IOD) </b>किसे प्रभावित करता है<b>?</b></p>",
+    "option1": "<p> Monsoon rainfall / मानसूनी वर्षा</p>",
+    "option2": "<p> Earthquakes / भूकंप</p>",
+    "option3": "<p> Ocean salinity / महासागरीय लवणता</p>",
+    "option4": "<p> Cyclone formation / चक्रवात निर्माण</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 1. The Indian Ocean Dipole (IOD) is an ocean-atmosphere phenomenon.<br/> 2. It is caused by an east-west temperature and sea-surface water level imbalance in the Indian Ocean.<br/> 3. The IOD's main impact on Indian monsoon rainfall is:<br/> 4. Positive IOD: Western Indian Ocean (towards Africa) warms, Eastern Indian Ocean (towards Indonesia) cools → more rainfall in India<br/> 5. Negative IOD: Western Indian Ocean cools, Eastern Indian Ocean warms → less rainfall/drought in India<br/> Other options:<br/> 6. Earthquakes → influenced by plate tectonics<br/> 7. Ocean salinity → influenced by other local and global factors<br/> 8. Cyclone formation → influenced by ocean temperature and weather conditions<br/> 9. हिंद महासागर द्विध्रुव (IOD) एक महासागरीय और वायुमंडलीय घटना (महासागर-वायुमंडल घटना) है।<br/> 10. यह भारतीय महासागर में पूर्व-पश्चिम तापमान और समुद्री सतह के जल स्तर में असमानता के कारण होता है।<br/> 11. IOD का मुख्य प्रभाव है भारतीय मानसून की वर्षा पर:<br/> 12. सकारात्मक IOD: पश्चिमी भारतीय महासागर (अफ्रीका की ओर) गर्म, पूर्वी भारतीय महासागर (इंडोनेशिया की ओर) ठंडा → भारत में अधिक वर्षा<br/> 13. नकारात्मक IOD: पश्चिमी भारतीय महासागर ठंडा, पूर्वी भारतीय महासागर गर्म → भारत में कम वर्षा / सूखा<br/> अन्य विकल्प:<br/> 14. भूकंप → प्लेट टेक्टोनिक्स द्वारा प्रभावित<br/> 15. महासागरीय लवणता → अन्य स्थानीय और ग्लोबल फैक्टर्स द्वारा प्रभावित<br/> 16. चक्रवात निर्माण → समुद्र का तापमान और मौसमी परिस्थितियाँ प्रभावित</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Cyclone “Amphan” (2020) primarily affected which part of India?<br/> </b>चक्रवात “अम्फान” <b>(2020) </b>ने मुख्य रूप से भारत के किस भाग को प्रभावित किया था<b>?</b></p>",
+    "option1": "<p> Gujarat / गुजरात</p>",
+    "option2": "<p> Odisha and West Bengal / ओडिशा और पश्चिम बंगाल</p>",
+    "option3": "<p> Kerala / केरल</p>",
+    "option4": "<p> Maharashtra / महाराष्ट्र</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Cyclone Amphan hit the eastern coast, especially West Bengal and Odisha, causing massive destruction.<br/> अम्फान ने भारत के पूर्वी तट विशेषकर पश्चिम बंगाल और ओडिशा में भारी तबाही मचाई।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>The largest ocean current in the world is:<br/> </b>विश्व की सबसे विशाल महासागरीय धारा कौन सी है<b>?</b></p>",
+    "option1": "<p> Gulf Stream / गल्फ स्ट्रीम</p>",
+    "option2": "<p> Kuroshio Current / कुरोशियो धारा</p>",
+    "option3": "<p> Antarctic Circumpolar Current / अंटार्कटिक परिपाश्र्व धारा</p>",
+    "option4": "<p> Equatorial Counter Current / विषुवतीय प्रतिधारा</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Antarctic Circumpolar Current moves around Antarctica and is the largest ocean current.<br/> अंटार्कटिक परिपाश्र्व धारा अंटार्कटिका के चारों ओर बहती है और यह सबसे विशाल महासागरीय धारा है।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - GEOGRAPHY</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">GEOGRAPHY - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

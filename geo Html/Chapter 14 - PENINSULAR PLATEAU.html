@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY - PENINSULAR PLATEAU QUIZ [24-10-2025] - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>GEOGRAPHY - PENINSULAR PLATEAU QUIZ [24-10-2025]</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>What is the general elevation range of the Peninsular Plateau ?<br/> </b>निम्नलिखित में से प्रायद्वीपीय पठार की सामान्य ऊँचाई सीमा क्या है<b>?</b></p>",
+    "option1": "<p> 400-600 m / 400-600 मीटर</p>",
+    "option2": "<p> 600-900 m / 600-900 मीटर</p>",
+    "option3": "<p> 900-1200 m / 900-1200 मीटर</p>",
+    "option4": "<p> 1200-1500 m / 1200-1500 मीटर</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Peninsular Plateau has a general elevation ranging from 600 to 900 meters above sea level. This elevated landform is composed of old crystalline, igneous, and metamorphic rocks.<br/> प्रायद्वीपीय पठार की सामान्य ऊँचाई समुद्र तल से 600 से 900 मीटर तक है। यह उठा हुआ भू-आकृति पुरानी क्रिस्टलीय, आग्नेय और कायांतरित चट्टानों से बना है।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>Which type of rocks primarily constitutes the Peninsular Plateau?<br/> </b>प्रायद्वीपीय पठार मुख्य रूप से किस प्रकार की चट्टानों से बना है<b>?</b></p>",
+    "option1": "<p> Sedimentary rocks / अवसादी चट्टानें</p>",
+    "option2": "<p> Old crystalline, igneous, and metamorphic rocks / पुरानी क्रिस्टलीय, आग्नेय और कायांतरित चट्टानें</p>",
+    "option3": "<p> Only igneous rocks / केवल आग्नेय चट्टानें</p>",
+    "option4": "<p> Only metamorphic rocks / केवल कायांतरित चट्टानें</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Peninsular Plateau is described as a tableland composed of the old crystalline, igneous, and metamorphic rocks. It is one of the oldest and largest physiographic divisions of India.<br/> प्रायद्वीपीय पठार को पुरानी क्रिस्टलीय, आग्नेय और कायांतरित चट्टानों से बना एक मेज जैसा भूभाग बताया गया है। यह भारत के सबसे पुराने और सबसे बड़े भौतिक-भौगोलिक विभाजनों में से एक है।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>The formation of the Peninsular Plateau is attributed to the breaking and drifting of which ancient landmass?<br/> </b>प्रायद्वीपीय पठार का निर्माण किस प्राचीन भूभाग के टूटने और बहने के कारण हुआ है<b>?</b></p>",
+    "option1": "<p> Laurasia / लॉरेशिया</p>",
+    "option2": "<p> Angaraland / अंगारालैंड</p>",
+    "option3": "<p> Gondwana land / गोंडवाना भूमि</p>",
+    "option4": "<p> Tethys Sea / टेथिस सागर</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Peninsular Plateau was formed due to the breaking and drifting of Gondwana land. The Deccan Plateau portion, in particular, is made up of black soil of volcanic origin.<br/> प्रायद्वीपीय पठार का निर्माण गोंडवाना भूमि के टूटने और बहने के कारण हुआ। विशेष रूप से दक्कन पठार का भाग ज्वालामुखी मूल की काली मिट्टी से बना है।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>Which physical feature separates the entire part of the Deccan Plateau from the Meghalaya Plateau?<br/> </b>कौन सी भौतिक विशेषता दक्कन पठार के पूरे भाग को मेघालय पठार से अलग करती है<b>?</b></p>",
+    "option1": "<p> Narmada River / नर्मदा नदी</p>",
+    "option2": "<p> Satpura Range / सतपुड़ा रेंज</p>",
+    "option3": "<p> Malda fault/Malda gap / माल्दा भ्रंश/माल्दा गैप</p>",
+    "option4": "<p> Western Ghats / पश्चिमी घाट</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Malda fault/Malda gap is the feature that separates the entire part of the Deccan Plateau from the Meghalaya Plateau, also known as the Karbi Anglong Plateau or North Cachar Plateau.<br/> माल्दा भ्रंश/माल्दा गैप वह विशेषता है जो दक्कन पठार के पूरे भाग को मेघालय पठार से अलग करती है, जिसे कार्बी आंगलोंग पठार या उत्तरी कछार पठार के रूप में भी जाना जाता है।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>What is the highest peak of the Satpura Range, located on the Mahadeo Hills?<br/> </b>महादेव पहाड़ियों पर स्थित सतपुड़ा रेंज की सबसे ऊंची चोटी कौन सी है<b>?</b></p>",
+    "option1": "<p> Guru Shikhar / गुरु शिखर</p>",
+    "option2": "<p> Mahendragiri / महेंद्रगिरि</p>",
+    "option3": "<p> Anaimudi / अनाइमुडी</p>",
+    "option4": "<p> Dhupgarh / धूपगढ़</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Highest Peak of the Satpura Range is Dhupgarh (Madhya Pradesh), which is located on the Mahadeo Hills. Panchmarhi, also on the Mahadeo Hills, is a famous hill station known as the 'Queen of Satpura'.<br/> 5. Guru Shikhar – The highest peak in the Aravalli Range (Rajasthan).<br/> 6. Mahendragiri – The highest peak in the Eastern Ghats (Odisha).<br/> 7. Anamudi – The highest peak in the Western Ghats (Kerala) and also the highest peak in South India.<br/> सतपुड़ा रेंज की सबसे ऊंची चोटी धूपगढ़ (मध्य प्रदेश) है, जो महादेव पहाड़ियों पर स्थित है। महादेव पहाड़ियों पर स्थित पचमढ़ी एक प्रसिद्ध हिल स्टेशन है जिसे 'सतपुड़ा की रानी' कहा जाता है।<br/> 8. गुरु शिखर – अरावली पर्वतमाला की सबसे ऊँची चोटी (राजस्थान)।<br/> 9. महेंद्रगिरि – पूर्वी घाट की चोटी (ओडिशा)।<br/> 10. अनाइमुड़ी – पश्चिमी घाट (केरल) की सबसे ऊँची चोटी तथा दक्षिण भारत की भी सबसे ऊँची चोटी।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>Which hill station is known as the 'Queen of Satpura'?<br/> </b>किस हिल स्टेशन को <b>'</b>सतपुड़ा की रानी<b>' </b>के नाम से जाना जाता है<b>?</b></p>",
+    "option1": "<p> Ooty / ऊटी</p>",
+    "option2": "<p> Mount Abu / माउंट आबू</p>",
+    "option3": "<p> Pachmarhi Hills / पचमढ़ी पहाड़ी</p>",
+    "option4": "<p> Netrahat / नेतरहाट</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The hill station of Pachmarhi Hills is popularly known as the Queen of Satpura. It is located on the Mahadeo Hills in the Satpura range.<br/> पचमढ़ी पहाड़ी हिल स्टेशन को लोकप्रिय रूप से सतपुड़ा की रानी के रूप में जाना जाता है। यह सतपुड़ा रेंज में महादेव पहाड़ियों पर स्थित है।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Which plateau in the Central Highlands is famous for diamond deposits?<br/> </b>केंद्रीय उच्चभूमि में कौन सा पठार हीरे के भंडार के लिए प्रसिद्ध है<b>?</b></p>",
+    "option1": "<p> Chota Nagpur Plateau / छोटा नागपुर पठार</p>",
+    "option2": "<p> Malwa Plateau / मालवा पठार</p>",
+    "option3": "<p> Deccan Plateau / दक्कन पठार</p>",
+    "option4": "<p> Panna (Madhya Pradesh) / पन्ना (मध्य प्रदेश)</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Panna region (Madhya Pradesh), which is part of the Vindhyas, is famous for diamond deposits.<br/> पन्ना क्षेत्र (मध्य प्रदेश), जो विंध्य का हिस्सा है, हीरे के भंडार के लिए प्रसिद्ध है।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>Which peak is the highest point of the Aravali Range?<br/> </b>अरावली श्रेणी की सबसे ऊंची चोटी कौन सी है<b>?</b></p>",
+    "option1": "<p> Mahendragiri / महेंद्रगिरि</p>",
+    "option2": "<p> Doddabetta / डोड्डाबेट्टा</p>",
+    "option3": "<p> Guru Shikhar / गुरु शिखर</p>",
+    "option4": "<p> Anaimudi / अनाइमुडी</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Highest peak of the Aravali Range is Guru Shikhar (1722 m), which is situated in the Mount Abu Hills. The Aravalis are an example of residual mountains.<br/> अरावली श्रेणी की सबसे ऊंची चोटी गुरु शिखर (1722 मीटर) है, जो माउंट आबू पहाड़ी में स्थित है। अरावली अवशिष्ट पर्वतों का एक उदाहरण है।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>The Deccan Plateau is generally tilted towards which direction, causing rivers to flow that way?<br/> </b>दक्कन का पठार सामान्यतः किस दिशा में झुका हुआ है<b>, </b>जिसके कारण नदियाँ उस तरफ बहती हैं<b>?</b></p>",
+    "option1": "<p> East / पूर्व</p>",
+    "option2": "<p> North / उत्तर</p>",
+    "option3": "<p> West / पश्चिम</p>",
+    "option4": "<p> South / दक्षिण</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Deccan Plateau is tilted towards the East and slopes gently eastwards. This tilt is why most of the major Peninsular river’s flow towards the Bay of Bengal in the east.<br/> दक्कन का पठार पूर्व की ओर झुका हुआ है और धीरे-धीरे पूर्व की ओर ढलान करता है। इस झुकाव के कारण ही अधिकांश प्रमुख प्रायद्वीपीय नदियाँ पूर्व में बंगाल की खाड़ी की ओर बहती हैं।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>Which of the following is the oldest landmass of India?<br/> </b>भारत का सबसे प्राचीन भूभाग कौन<b>-</b>सा है<b>?</b></p>",
+    "option1": "<p> Northern Plains / उत्तरी मैदान</p>",
+    "option2": "<p> Himalayas / हिमालय</p>",
+    "option3": "<p> Peninsular Plateau / प्रायद्वीपीय पठार</p>",
+    "option4": "<p> Thar Desert / थार मरुस्थल</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Peninsular Plateau is the oldest and most stable landmass of India.<br/> It was formed during the Precambrian era and has not undergone significant tectonic activity since then.<br/> पेनिनसुलर पठार भारत का सबसे पुराना और सबसे स्थिर ज़मीनी हिस्सा है।<br/> यह प्रीकैम्ब्रियन युग के दौरान बना था और तब से इसमें कोई खास टेक्टोनिक एक्टिविटी नहीं हुई है।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Consider the following statements about the Peninsular Plateau:<br/> 1. It is the largest physiographic division of India.<br/> 2. It is a table land composed of young fold mountains.<br/> 3. Its present form is related to the breaking and drifting of the Gondwana land.<br/> Which of the statements given above is/are correct?<br/> </b>प्रायद्वीपीय पठार के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> 4. </b>यह भारत का सबसे बड़ा भौतिक<b>-</b>भौगोलिक विभाजन है।<b><br/> 5. </b>यह युवा वलित पर्वतों से बना एक मेज जैसा भूभाग है।<b><br/> 6. </b>इसका वर्तमान स्वरूप गोंडवाना भूमि के टूटने और खिसकने से संबंधित है।<b><br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option3": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Statement 1 is correct as it's the largest physiographic division. Statement 3 is correct, attributing its formation to the breaking and drifting of Gondwana land. Statement 2 is incorrect; it is composed of old crystalline, igneous, and metamorphic rocks, not young fold mountains.<br/> कथन 1 सही है क्योंकि यह सबसे बड़ा भौतिक-भौगोलिक विभाजन है। कथन 3 सही है, इसका निर्माण गोंडवाना भूमि के टूटने और बहने के कारण हुआ। कथन 2 गलत है; यह युवा वलित पर्वतों से नहीं, बल्कि पुरानी क्रिस्टलीय, आग्नेय और कायांतरित चट्टानों से बना है।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Assertion (A): The Central Highlands are wider in the West but narrower in the East. Reason (R): The flow of the rivers draining the Central Highlands is from Southwest to Northeast.<br/> </b>कथन <b>(A): </b>केंद्रीय उच्चभूमि पश्चिम में अधिक चौड़ी है लेकिन पूर्व में संकरी है।<b><br/> </b>कारण <b>(R): </b>केंद्रीय उच्चभूमि को अपवाहित करने वाली नदियों का प्रवाह दक्षिण<b>-</b>पश्चिम से उत्तर<b>-</b>पूर्व की ओर है।</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A / A और R दोनों सत्य हैं और R, A का सही स्पष्टीकरण है ।</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A / A और R दोनों सत्य हैं लेकिन R, A का सही स्पष्टीकरण नहीं है ।</p>",
+    "option3": "<p> A is true but R is false / A सत्य है लेकिन R असत्य है ।</p>",
+    "option4": "<p> A is false but R is true / A असत्य है लेकिन R सत्य है ।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Assertion (A) is correct, as the Central Highlands are wider in the West but narrower in the East. Reason (R) is also correct, as the rivers like Chambal, Betwa, etc. flow from Southwest to Northeast, which indicates the general slope. However, The width difference (wider west, narrower east) is due to structural and geological features of the plateau - not because of the direction of river flow.<br/> So, while both statements are true, the reason does not explain the assertion.<br/> कथन (A) सही है, क्योंकि केंद्रीय उच्चभूमि पश्चिम में चौड़ी लेकिन पूर्व में संकरी है। कारण (R) भी सही है, क्योंकि चंबल, बेतवा आदि नदियाँ दक्षिण-पश्चिम से उत्तर-पूर्व की ओर बहती हैं, जो सामान्य ढलान को दर्शाती है। हालाँकि, चौड़ाई का अंतर (A) नदी के प्रवाह की दिशा (R) द्वारा समझाया नहीं गया है।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Which one of the following is NOT one of the three important plateaus that constitute the Chota Nagpur Plateau?<br/> </b>निम्नलिखित में से कौन सा छोटा नागपुर पठार बनाने वाले तीन महत्वपूर्ण पठारों में से एक नहीं है<b>?</b></p>",
+    "option1": "<p> Ranchi Plateau / रांची पठार</p>",
+    "option2": "<p> Hazaribagh Plateau / हजारीबाग पठार</p>",
+    "option3": "<p> Koderma Plateau / कोडरमा पठार</p>",
+    "option4": "<p> Malwa Plateau / मालवा पठार</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The three important plateaus of the Chota Nagpur Plateau are the Ranchi Plateau, Hazaribagh Plateau, and Koderma Plateau. The Malwa Plateau is a separate main plateau located on the western side of the Central Highlands.<br/> छोटा नागपुर पठार के तीन महत्वपूर्ण पठार रांची पठार, हजारीबाग पठार और कोडरमा पठार हैं। मालवा पठार केंद्रीय उच्चभूमि के पश्चिमी किनारे पर स्थित एक अलग मुख्य पठार है।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Which of the following passes connects Mumbai to Pune?<br/> </b>निम्नलिखित में से कौन सा दर्रा मुंबई को पुणे से जोड़ता है<b>?</b></p>",
+    "option1": "<p> Thalghat / थालघाट</p>",
+    "option2": "<p> Bhorghat / भोरघाट</p>",
+    "option3": "<p> Pal Ghat / पालघाट</p>",
+    "option4": "<p> Lipu Lekh pass / लिपुलेख दर्रा</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Bhorghat is one of the passes mentioned in the Western Ghats region that connects Mumbai to Pune. Thalghat connects Mumbai to Nasik, and Pal Ghat is the Palakkad gap between the Anaimalai and Nilgiri Hills. Lipulekh Pass – Located on the India-Tibet border<br/> भोरघाट पश्चिमी घाट क्षेत्र में उल्लिखित दर्रों में से एक है जो मुंबई को पुणे से जोड़ता है। थालघाट मुंबई को नासिक से जोड़ता है, और पालघाट अन्नामलाई और नीलगिरि पहाड़ियों के बीच पालक्काड गैप है।<br/> लिपुलेख दर्रा – भारत-तिब्बत सीमा पर स्थित</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Consider the following pairs of hills and their locations:<br/> 1. Shevaroy Hills: Located to the southern part of the Eastern Ghats<br/> 2. Nallamala Hills: Located in the Northern Circars region<br/> 3. Cardamom Hills: The southernmost hills of the Western Ghats<br/> How many of the above pairs are correctly matched according to the text?<br/> </b>पहाड़ियों और उनके स्थानों के निम्नलिखित युग्मों पर विचार करें<b>:<br/> 4. </b>शेवरॉय पहाड़ी<b>: </b>पूर्वी घाट के दक्षिण<b>-</b>भाग में स्थित<b><br/> 5. </b>नल्लामाला पहाड़ी<b>: </b>उत्तरी सरकार क्षेत्र में स्थित<b><br/> 6. </b>इलायची पहाड़ी<b>: </b>पश्चिमी घाट की सबसे दक्षिणी पहाड़ियाँ<b><br/> </b>उपरोक्त में से कितने युग्म पाठ के अनुसार सही सुमेलित हैं<b>?</b></p>",
+    "option1": "<p> Only one / केवल एक</p>",
+    "option2": "<p> Only two / केवल दो</p>",
+    "option3": "<p> All three / सभी तीन</p>",
+    "option4": "<p> None / कोई नहीं</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 11. Correct — The Shevaroy Hills are located in the southern part of the Eastern Ghats in Tamil Nadu.<br/> 12. Incorrect — The Nallamala Hills are part of the Eastern Ghats in Andhra Pradesh and Telangana, but not in the Northern Circars region.<br/> 13. Correct — The Cardamom Hills are among the southernmost hills of the Western Ghats in Kerala and Tamil Nadu.<br/> 14. सही — शेवरॉय पहाड़ी तमिलनाडु में पूर्वी घाट के दक्षिण भाग में स्थित हैं।<br/> 15. गलत — नल्लामाला पहाड़ी आंध्र प्रदेश और तेलंगाना में पूर्वी घाट का हिस्सा हैं, लेकिन उत्तरी सरकार क्षेत्र में नहीं।<br/> 16. सही — इलायची पहाड़ी केरल और तमिलनाडु में पश्चिमी घाट की सबसे दक्षिणी पहाड़ियों में से हैं।<br/> इसलिए, केवल दो युग्म सही हैं।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Which of the following rivers is mentioned as flowing in a rift valley on the eastern side of the Chota Nagpur Plateau?<br/> </b>इनमें से कौन सी नदी छोटा नागपुर पठार के पूर्वी हिस्से में भ्रंश घाटी में बहती है<b>?</b></p>",
+    "option1": "<p> Mahanadi River / महानदी नदी</p>",
+    "option2": "<p> Narmada River / नर्मदा नदी</p>",
+    "option3": "<p> Son River / सोन नदी</p>",
+    "option4": "<p> Damodar River / दामोदर नदी</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Damodar River flows in a rift valley on the eastern edge of the Chota Nagpur Plateau. This plateau is also known as the Ruhr region, famous for its minerals. The river flows through Jharkhand and West Bengal. The Damodar Valley is known for its fertile soil and coal reserves, which is why it is also known as the \"Coal Heart of India.\"<br/> 5. Mahanadi – flows towards Odisha, not in the rift valley on the eastern edge of the Chota Nagpur Plateau.<br/> 6. Narmada – is a rift valley river flowing in western India, not related to the Chota Nagpur Plateau.<br/> 7. Son – is a river flowing in northern India.<br/> दामोदर नदी वह नदी है जो छोटा नागपुर पठार के पूर्वी किनारे पर एक भ्रंश घाटी में बहती है। यह पठार खनिजों के लिए प्रसिद्ध रूर राज्य के रूप में भी जाना जाता है। यह नदी झारखंड और पश्चिम बंगाल से बहती है। दामोदर घाटी में उर्वरक भूमि और कोयला भंडार पाए जाते हैं, इसलिए इसे “भारत का कोयला हृदय” भी कहा जाता है।<br/> 8. महानदी – ओडिशा की ओर बहती है, छोटा नागपुर पठार के पूर्वी किनारे की भ्रंश घाटी में नहीं।<br/> 9. नर्मदा – पश्चिमी भारत में बहने वाली भ्रंश घाटी नदी है, छोटा नागपुर पठार से संबंधित नहीं।<br/> 10. सोन – उत्तर भारत में बहने वाली नदी है।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Consider the following statements regarding the Malwa Plateau:<br/> 1. It is made up of lava (Basaltic rock).<br/> 2. Black soil originates here.<br/> 3. It is a major producer of cotton, with the topmost producers being Maharashtra/Gujarat.<br/> Which of the statements given above are correct?<br/> </b>मालवा पठार के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 4. </b>यह लावा <b>(</b>बेसाल्टिक चट्टान<b>) </b>से बना है।<b><br/> 5. </b>यहाँ काली मिट्टी की उत्पत्ति होती है।<b><br/> 6. </b>यह कपास का एक प्रमुख उत्पादक है<b>, </b>जिसके शीर्ष उत्पादक महाराष्ट्र<b>/</b>गुजरात हैं।<b><br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "option4": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> All three statements are correct about the Malwa Plateau. It is made of lava (Basaltic rock), leading to the origin of Black soil. The region, including its surrounding states, is a top cotton producer, with Maharashtra/Gujarat being the topmost.<br/> मालवा पठार के बारे में तीनों कथन सही हैं। यह लावा (बेसाल्टिक चट्टान) से बना है, जिससे काली मिट्टी की उत्पत्ति होती है। यह क्षेत्र, अपने आसपास के राज्यों सहित, शीर्ष कपास उत्पादक है, जिसमें महाराष्ट्र/गुजरात शीर्ष पर हैं।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Arrange the passes of the Western Ghats from North to South:<br/> 1. Bhorghat<br/> 2. Thalghat<br/> 3. Pal Ghat<br/> </b>पश्चिमी घाट के दर्रों को उत्तर से दक्षिण की ओर व्यवस्थित करें<b>:<br/> 4. </b>भोरघाट<b><br/> 5. </b>थालघाट<b><br/> 6. </b>पालघाट</p>",
+    "option1": "<p> 1-2-3</p>",
+    "option2": "<p> 2-1-3</p>",
+    "option3": "<p> 3-2-1</p>",
+    "option4": "<p> 2-3-1</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Based on their geographical locations, Thalghat (Mumbai to Nasik) is the northernmost, followed by Bhorghat (Mumbai to Pune), and the southernmost is Pal Ghat (Palakkad Gap) between Anaimalai and Nilgiri Hills.<br/> उनके भौगोलिक स्थानों के आधार पर, थालघाट (मुंबई से नासिक) सबसे उत्तरी है, उसके बाद भोरघाट (मुंबई से पुणे) है, और सबसे दक्षिणी पालघाट (पालक्काड गैप) अन्नामलाई और नीलगिरि पहाड़ियों के बीच है।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Which of the following is considered the Eastern border of the Deccan Plateau?<br/> </b>निम्नलिखित में से किसे दक्कन पठार की पूर्वी सीमा माना जाता है<b>?</b></p>",
+    "option1": "<p> Satpura Range / सतपुड़ा पर्वतमाला</p>",
+    "option2": "<p> Mahadev, Kaimur hills, and Maikal range / महादेव, कैमूर पहाड़ी और मैकाल श्रेणी</p>",
+    "option3": "<p> Western Ghats / पश्चिमी घाट</p>",
+    "option4": "<p> Aravali Range / अरावली पर्वतमाला</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Satpura range forms the Northern borders of the Deccan Plateau. The Eastern borders are formed by the Mahadev, Kaimur hills, and Maikal range. The Western Ghats form the western edge.<br/> सतपुड़ा पर्वतमाला दक्कन पठार की उत्तरी सीमाएँ बनाती है। पूर्वी सीमाएँ महादेव, कैमूर पहाड़ी और मैकाल श्रेणी द्वारा बनाई गई हैं। पश्चिमी घाट पश्चिमी किनारा बनाते हैं।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Which is the second-highest peak of the Western Ghats, located on the Nilgiri Hills?<br/> </b>पश्चिमी घाट की दूसरी सबसे ऊँची चोटी कौन सी है<b>, </b>जो नीलगिरि पहाड़ियों पर स्थित है<b>?</b></p>",
+    "option1": "<p> Anaimudi / अनाइमुडी</p>",
+    "option2": "<p> Guru Shikhar / गुरु शिखर</p>",
+    "option3": "<p> Doddabetta / डोड्डाबेट्टा</p>",
+    "option4": "<p> Mahendragiri / महेंद्रगिरि</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The highest peak of the Western Ghats is Anaimudi (2695 m). The second highest peak is Doddabetta (2637 m), which is located on the Nilgiri Hills. The popular hill station Ooty is also located on the Nilgiri Hills.<br/> पश्चिमी घाट की सबसे ऊँची चोटी अनाइमुडी (2695 मीटर) है। दूसरी सबसे ऊँची चोटी डोड्डाबेट्टा (2637 मीटर) है, जो नीलगिरि पहाड़ियों पर स्थित है। लोकप्रिय हिल स्टेशन ऊटी भी नीलगिरि पहाड़ियों पर स्थित है।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>The Aravalli range exhibits which of the following characteristics?<br/> 1. They are young fold mountains.<br/> 2. They are residual mountains.<br/> 3. They are spread across Gujarat, Rajasthan, Delhi, and Haryana.<br/> Select the correct answer using the code given below:<br/> </b>अरावली श्रेणी<b>, </b>निम्नलिखित में से कौन सी विशेषताएँ प्रदर्शित करती है<b>?<br/> 4. </b>ये नवीन वलित पर्वत हैं।<b><br/> 5. </b>ये अवशिष्ट पर्वत हैं।<b><br/> 6. </b>ये गुजरात<b>, </b>राजस्थान<b>, </b>दिल्ली और हरियाणा में फैले हुए हैं।<b><br/> </b>नीचे दिए गए कूट का प्रयोग कर सही उत्तर का चयन करें<b>:</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Aravali Range is the oldest mountain/hills range in India. Statement 1 is incorrect; they are explicitly called old fold mountains and residual mountains. Statements 2 and 3 are correct, confirming their nature as residual mountains and their spread across Gujarat, Rajasthan, Delhi, and Haryana.<br/> अरावली श्रेणी भारत की सबसे पुरानी पर्वत/पहाड़ी श्रृंखला है। कथन 1 गलत है; उन्हें स्पष्ट रूप से पुराने वलित पर्वत और अवशिष्ट पर्वत कहा जाता है। कथन 2 और 3 सही हैं, उनकी प्रकृति अवशिष्ट पर्वतों के रूप में और गुजरात, राजस्थान, दिल्ली और हरियाणा में उनके फैलाव की पुष्टि करते हैं।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Which of the following statements correctly describes the difference between the Western Ghats and the Eastern Ghats?<br/> </b>निम्नलिखित में से कौन सा कथन पश्चिमी घाट और पूर्वी घाट के बीच के अंतर का सही वर्णन करता है<b>?</b></p>",
+    "option1": "<p> Eastern Ghats are higher in average height (1200 m) than Western Ghats (600 m).पूर्वी घाटों की औसत ऊँचाई (1200 मीटर) पश्चिमी घाटों (600 मीटर) से अधिक है।</p>",
+    "option2": "<p> Western Ghats are Discontinuous, irregular, and dissected by rivers, while Eastern Ghats are continuous.पश्चिमी घाट असतत, अनियमित हैं और नदियों द्वारा काटे गए हैं, जबकि पूर्वी घाट सतत हैं।</p>",
+    "option3": "<p> Western Ghats are continuous and cause Orographic rainfall, while Eastern Ghats are discontinuous.पश्चिमी घाट सतत हैं और पर्वतीय वर्षा (ओरोग्राफिक वर्षा) का कारण बनते हैं, जबकि पूर्वी घाट असतत हैं।</p>",
+    "option4": "<p> The height of the Eastern Ghats increases from North to South, unlike the Western Ghats.पूर्वी घाटों की ऊँचाई उत्तर से दक्षिण की ओर बढ़ती है, जो कि पश्चिमी घाटों के विपरीत है।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Western Ghats are described as Continuous and cause Orographic rainfall. In contrast, the Eastern Ghats are Discontinuous, irregular, and dissected by rivers. Western Ghats are also higher (1200 m average) than Eastern Ghats (600 m average).<br/> पश्चिमी घाट को सतत बताया गया है और वे पर्वतीय वर्षा (ओरोग्राफिक वर्षा) का कारण बनते हैं। इसके विपरीत, पूर्वी घाट असतत, अनियमित और नदियों द्वारा विच्छेदित हैं। पश्चिमी घाट पूर्वी घाट की तुलना में ऊंचे भी हैं (1200 मीटर औसत बनाम 600 मीटर औसत)।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Consider the following pairs of hills and their associated features:<br/> 1. Rajmahal Hills: Located in Jharkhand, formed of basaltic rocks from Jurassic period<br/> 2. Kaimur Hills: Forms part of the Eastern borders of the Deccan Plateau.<br/> 3. Maikal Range: Rivers Narmada and Son flow from its Amarkantak Plateau.<br/> How many of the above pairs are correctly matched?<br/> </b>पहाड़ियों और उनसे जुड़ी विशेषताओं के निम्नलिखित युग्मों पर विचार करें<b>:<br/> 4. </b>राजमहल पहाड़ियाँ<b>: </b>झारखंड में स्थित<b>, </b>जुरासिक काल की बेसाल्टिक चट्टानों से बनी<b>|<br/> 5. </b>कैमूर पहाड़ी<b>: </b>दक्कन पठार की पूर्वी सीमाओं का हिस्सा बनाती है।<b><br/> 6. </b>मैकाल पहाड़ी<b>: </b>इसकी अमरकंटक पठार से नर्मदा और सोन नदियाँ निकलती हैं।<b><br/> </b>उपरोक्त में से कितने युग्म सही सुमेलित हैं<b>?</b></p>",
+    "option1": "<p> Only one / केवल एक</p>",
+    "option2": "<p> Only two / केवल दो</p>",
+    "option3": "<p> All three / सभी तीन</p>",
+    "option4": "<p> None / कोई नहीं</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Statement 1 is correct: Rajmahal Hills: Located in Jharkhand, formed of basaltic rocks from Jurassic period. Statement 2 is correct: The eastern limits of the Deccan Plateau include the Kaimur Hills. Statement 3 is correct: The Amarkantak Plateau (part of the Maikal Range) is the source of rivers such as the Narmada and Son.<br/> कथन 1 सही है: राजमहल पहाड़ियाँ: झारखंड में स्थित, जुरासिक काल की बेसाल्टिक चट्टानों से बनी। कथन 2 सही है: दक्कन पठार की पूर्वी सीमाओं में कैमूर पहाड़ी शामिल हैं। कथन 3 सही है: अमरकंटक पठार (मैकाल श्रेणी का हिस्सा) नर्मदा और सोन जैसी नदियों का स्रोत है।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Which of the following rivers originate from the Deccan Plateau?<br/> 1. Godavari<br/> 2. Krishna<br/> 3. Kaveri<br/> 4. Narmada<br/> Select the correct answer:<br/> a) 1, 2, and 3 only<br/> b) 2 and 4 only<br/> c) 1, 2, 3, and 4<br/> d) 1 and 3 only<br/> </b>निम्नलिखित नदियों में से कौन<b>-</b>सी दक्कन पठार से निकलती हैं<b>?<br/> 1. </b>गोदावरी<b><br/> 2. </b>कृष्णा<b><br/> 3. </b>कावेरी<b><br/> 4. </b>नर्मदा<b><br/> </b>सही उत्तर चुनिए<b>:</b></p>",
+    "option1": "<p> केवल 1, 2 और 3</p>",
+    "option2": "<p> केवल 2 और 4</p>",
+    "option3": "<p> 1, 2, 3 और 4</p>",
+    "option4": "<p> केवल 1 और 3</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Godavari, Krishna, and Kaveri all originate in the Western Ghats/Deccan Plateau region.<br/> Narmada originates from the Amarkantak Plateau (Satpura–Maikal range), which is not part of the Deccan Plateau.<br/> व्याख्या:<br/> गोदावरी, कृष्णा और कावेरी सभी पश्चिमी घाट / दक्कन पठार क्षेत्र से निकलती हैं।<br/> नर्मदा नदी अमरकंटक पठार (सतपुड़ा–मैकाल पर्वत श्रृंखला) से निकलती है, जो दक्कन पठार का हिस्सा नहीं है।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>Consider the two peaks, Anaimudi and Doddabetta, on the Western Ghats. In which respective states are they primarily located?<br/> </b>पश्चिमी घाट पर अनाइमुडी और डोड्डाबेट्टा<b>, </b>इन दो चोटियों पर विचार करें। वे मुख्य रूप से किन संबंधित राज्यों में स्थित हैं<b>?</b></p>",
+    "option1": "<p> Anaimudi (Kerala), Doddabetta (Tamil Nadu) / अनाईमुडी (केरल), डोड्डाबेट्टा (तमिलनाडु)</p>",
+    "option2": "<p> Anaimudi (Tamil Nadu), Doddabetta (Kerala) / अनाईमुडी (तमिलनाडु), डोड्डाबेट्टा (केरल)</p>",
+    "option3": "<p> Anaimudi (Karnataka), Doddabetta (Kerala) / अनाईमुडी (कर्नाटक), डोड्डाबेट्टा (केरल)</p>",
+    "option4": "<p> Anaimudi (Kerala), Doddabetta (Karnataka) / अनाईमुडी (केरल), डोड्डाबेट्टा (कर्नाटक)</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Anaimudi, the highest peak in the Western Ghats, is located in the Anaimalai Hills and is associated with Kerala. Doddabetta, the second highest peak, is located on the Nilgiri Hills and is associated with Tamil Nadu, where the hill station Ooty is also found.<br/> पश्चिमी घाट की सबसे ऊँची चोटी अनाइमुडी, अन्नामलाई पहाडियों में स्थित है और केरल से जुड़ी हुई है। दूसरी सबसे ऊँची चोटी डोड्डाबेट्टा, नीलगिरि पहाड़ी पर स्थित है और तमिलनाडु से जुड़ी हुई है, जहाँ हिल स्टेशन ऊटी भी स्थित है।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - GEOGRAPHY</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">GEOGRAPHY - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY - SOLAR SYSTEM QUIZ [06-10-2025] - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>GEOGRAPHY - SOLAR SYSTEM QUIZ [06-10-2025]</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>The Nebular Hypothesis of solar system formation was first proposed by:<br/> </b>सौरमंडल निर्माण की नीहारिका परिकल्पना सर्वप्रथम किसके द्वारा प्रस्तावित की गई थी<b>?</b></p>",
+    "option1": "<p> Fred Hoyle / फ्रेड हॉयल</p>",
+    "option2": "<p> Immanuel Kant / इमैनुएल कांट</p>",
+    "option3": "<p> Copernicus / इमैनुएल कांट</p>",
+    "option4": "<p> Chamberlin and Moulton / चेम्बरलिन और मौल्टन</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Proposed in 1755, later modified by Laplace in 1796. Explains the solar system formed from a rotating cloud of gas and dust.<br/> 1755 में प्रस्तावित, बाद में 1796 में लाप्लास द्वारा संशोधित। यह गैस और धूल के घूमते हुए बादल से बने सौरमंडल की व्याख्या करता है।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>Which of the following is/are luminous celestial bodies?<br/> 1. Stars<br/> 2. Planets<br/> 3. Galaxies<br/> </b>निम्नलिखित में से कौन<b>-</b>सा<b>/</b>से चमकदार खगोलीय पिंड है<b>/</b>हैं<b>?<br/> 4. </b>तारे<b><br/> 5. </b>ग्रह<b><br/> 6. </b>आकाशगंगाएँ</p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option3": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Stars emit light, galaxies are clusters of luminous stars. Planets only reflect sunlight → non-luminous.<br/> तारे प्रकाश उत्सर्जित करते हैं, आकाशगंगाएँ चमकदार तारों के समूह हैं। ग्रह केवल सूर्य के प्रकाश को परावर्तित करते हैं → अप्रकाशमान।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p><strong>Consider the following statements about Venus:<br/> 1. It rotates clockwise.<br/> 2. Its rotation is slower than its revolution.<br/> 3. It is the brightest planet.</strong><br/> शुक्र के बारे में निम्नलिखित कथनों पर विचार करें<strong>:<br/> 1. </strong>यह दक्षिणावर्त घूमता है।<br/> <strong>2. </strong>इसका घूर्णन इसके परिक्रमण से धीमा है।<br/> <strong>3. </strong>यह सबसे चमकीला ग्रह है।</p>",
+    "option1": "<p>1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p>2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p>1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p>1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Venus has retrograded (clockwise) rotation, one rotation takes 243 Earth days &gt; revolution (225 days). Brightest due to thick clouds reflecting sunlight.<br/> शुक्र का घूर्णन प्रतिगामी (दक्षिणावर्त) है, इसके एक घूर्णन में 243 पृथ्वी दिन लगते हैं। घूर्णन &gt; परिक्रमण (225 दिन)। सूर्य के प्रकाश को परावर्तित करने वाले घने बादलों के कारण यह सबसे चमकीला है।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>Which one of the following planets has the largest number of moons?<br/> </b>निम्नलिखित में से किस ग्रह के उपग्रहों की संख्या सबसे अधिक है<b>?</b></p>",
+    "option1": "<p> Jupiter / बृहस्पति</p>",
+    "option2": "<p> Saturn / शनि</p>",
+    "option3": "<p> Uranus / अरुण</p>",
+    "option4": "<p> Neptune / वरुण</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Saturn has the highest no. Of moons (latest data), the highest in the solar system.<br/> शनि के उपग्रहों की संख्या सबसे अधिक है (नवीनतम आंकड़ों के अनुसार), सौरमंडल में सबसे अधिक।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p><strong>Which planet has the longest revolution period?</strong><br/> किस ग्रह की परिक्रमा अवधि सबसे लंबी है<strong>?</strong></p>",
+    "option1": "<p>Jupiter / बृहस्पति</p>",
+    "option2": "<p>Uranus अरुण</p>",
+    "option3": "<p>Neptune / वरुण</p>",
+    "option4": "<p>Pluto / प्लूटो</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Neptune takes 165 Earth years to complete one revolution around the Sun. (Pluto is a dwarf planet, not a main planet).<br/> वरुण को सूर्य की एक परिक्रमा पूरी करने में 165 पृथ्वी वर्ष लगते हैं। (प्लूटो एक बौना ग्रह है, मुख्य ग्रह नहीं)।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p><strong>Arrange the following correctly according to distance from the Sun:<br/> Mercury, Uranus, Earth, Neptune</strong><br/> <br/> सूर्य से दूरी के अनुसार निम्नलिखित को सही ढंग से व्यवस्थित करें<strong>:</strong><br/> बुध<strong>, </strong>अरुण<strong>, </strong>पृथ्वी<strong>, </strong>वरुण</p>",
+    "option1": "<p>Mercury – Earth – Uranus – Neptune / बुध – पृथ्वी – अरुण – वरुण</p>",
+    "option2": "<p>Mercury – Neptune – Earth – Uranus / बुध – वरुण – पृथ्वी – अरुण</p>",
+    "option3": "<p>Earth – Mercury – Uranus – Neptune / पृथ्वी – बुध – अरुण – वरुण</p>",
+    "option4": "<p>Mercury – Uranus – Neptune – Earth / बुध – अरुण – वरुण – पृथ्वी</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Order of planets: Mercury (1st) → Earth (3rd) → Uranus (7th) → Neptune (8th).<br/> ग्रहों का क्रम: बुध (पहला) पृथ्वी (तीसरा) अरुण (सातवाँ) वरुण (आठवाँ)।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>The Kuiper Belt is mainly associated with:<br/> </b>कुइपर बेल्ट मुख्यतः निम्न से संबंधित है<b>:</b></p>",
+    "option1": "<p> Origin of stars / तारों की उत्पत्ति</p>",
+    "option2": "<p> Dwarf planets like Pluto / प्लूटो जैसे बौने ग्रह</p>",
+    "option3": "<p> Asteroid distribution / क्षुद्रग्रह वितरण</p>",
+    "option4": "<p> Formation of satellites / उपग्रहों का निर्माण</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Kuiper Belt beyond Neptune contains icy objects &amp; dwarf planets (Pluto, Haumea, Makemake, Eris).<br/> वरुण के आगे कुइपर बेल्ट में बर्फीले पिंड और बौने ग्रह (प्लूटो, हौमिया, मेकेमेक, एरिस) हैं।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p><strong>Which of the following statements is correct about the Moon?</strong><br/> चंद्रमा के बारे में निम्नलिखित में से कौन सा कथन सही है<strong>?</strong></p>",
+    "option1": "<p>It rotates and revolves at different speeds // यह अलग-अलग गति से घूमता है और परिक्रमा करता है।</p>",
+    "option2": "<p>Its gravity is equal to Earth’s // इसका गुरुत्वाकर्षण पृथ्वी के गुरुत्वाकर्षण के बराबर है।</p>",
+    "option3": "<p>One side always faces Earth due to synchronous rotation // समकालिक घूर्णन के कारण इसका एक पक्ष हमेशा पृथ्वी की ओर रहता है।</p>",
+    "option4": "<p>Light from the Moon takes 8 minutes to reach Earth // चंद्रमा से प्रकाश को पृथ्वी तक पहुँचने में 8 मिनट लगते हैं।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Moon’s rotation time = revolution time (27.3 days), so only one side is visible from Earth.<br/> चंद्रमा का घूर्णन समय = परिक्रमण समय (27.3 दिन), इसलिए पृथ्वी से केवल एक पक्ष ही दिखाई देता है।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Match the following pairs correctly:<br/> 1. Callisto – (A) Mars<br/> 2. Deimos– (B) Jupiter<br/> 3. Titan – (C) Saturn<br/> 4. Triton – (D) Neptune<br/> </b>निम्नलिखित युग्मों का सही मिलान करें<b>:<br/> 5. </b>कैलिस्टो <b>- (A) </b>मंगल<b><br/> 6. </b>डीमोस <b>- (B) </b>बृहस्पति<b><br/> 7. </b>टाइटन <b>- (C) </b>शनि<b><br/> 8. </b>ट्राइटन <b>- (D) </b>वरुण</p>",
+    "option1": "<p> 1-A, 2-B, 3-C, 4-D</p>",
+    "option2": "<p> 1-B, 2-A, 3-C, 4-D</p>",
+    "option3": "<p> 1-A, 2-C, 3-D, 4-B</p>",
+    "option4": "<p> 1-D, 2-C, 3-B, 4-A</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Deimos = Mars; Callisto = Jupiter; Titan = Saturn’s largest moon; Triton = Neptune’s largest moon.<br/> डीमोस = मंगल; कैलिस्टो = बृहस्पति; टाइटन = शनि का सबसे बड़ा चंद्रमा; ट्राइटन = वरुण का सबसे बड़ा चंद्रमा।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>Aditya-L1 mission of ISRO is related to:<br/> </b>इसरो का आदित्य<b>-L1 </b>मिशन किससे संबंधित है<b>?</b></p>",
+    "option1": "<p> Studying the Moon’s surface / चंद्रमा की सतह का अध्ययन</p>",
+    "option2": "<p> Observing Mars atmosphere / मंगल ग्रह के वायुमंडल का अवलोकन</p>",
+    "option3": "<p> Solar observatory at Lagrange Point / लैग्रेंज बिंदु पर सौर वेधशाला</p>",
+    "option4": "<p> Exploration of asteroid belt / क्षुद्रग्रह बेल्ट की खोज</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> India’s first solar mission placed at L1 point to study solar atmosphere &amp; radiation.<br/> भारत का पहला सौर मिशन सौर वायुमंडल और विकिरण का अध्ययन करने के लिए L1 बिंदु पर स्थापित किया गया।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p><strong>Consider the following statements about Jupiter:<br/> 1. Jupiter has the longest rotational period (i.e., it takes longer to spin once) among the planets.<br/> 2. The Great Red Spot is a persistent anticyclonic storm on Jupiter.<br/> 3. Ganymede, one of Jupiter’s moons, is the largest satellite in the Solar System.<br/> Which of the above statements is/are correct?</strong><br/> बृहस्पति के बारे में निम्नलिखित कथनों पर विचार करें<strong>:<br/> 1. </strong>ग्रहों में बृहस्पति की घूर्णन अवधि सबसे लंबी है <strong>(</strong>अर्थात<strong>, </strong>इसे एक बार घूमने में अधिक समय लगता है<strong>)</strong>।<br/> <strong>2. </strong>ग्रेट रेड स्पॉट बृहस्पति पर एक लगातार आने वाला प्रतिचक्रवाती तूफान है।<br/> <strong>3. </strong>बृहस्पति के चंद्रमाओं में से एक<strong>, </strong>गैनीमीड<strong>, </strong>सौरमंडल का सबसे बड़ा उपग्रह है।<br/> उपरोक्त कथनों में से कौन सा<strong>/</strong>से सही है<strong>/</strong>हैं<strong>?</strong></p>",
+    "option1": "<p>1 and 3 only / केवल 1 और 3</p>",
+    "option2": "<p>1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p>2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p>1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Statement 1 is false — Jupiter actually has the shortest rotation period (~9.9 hours). Statements 2 and 3 are true: the Great Red Spot is a long-lived storm, and Ganymede is the largest moon (larger than Mercury in diameter).<br/> कथन 1 गलत है - बृहस्पति की वास्तव में सबसे छोटी घूर्णन अवधि (~9.9 घंटे) है। कथन 2 और 3 सही हैं: ग्रेट रेड स्पॉट एक लंबे समय तक चलने वाला तूफान है, और गैनीमीड सबसे बड़ा चंद्रमा है (व्यास में बुध से बड़ा)।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p><strong>Consider the following statements about Saturn and its rings/moons:<br/> 1. Saturn’s mean density is less than waters, so it would float in a large enough body of water.<br/> 2. Saturn’s rings were observed in the 17th century and Huygens (1655) provided a major early description.<br/> 3. Cassini discovered a prominent gap in Saturn’s rings in the 17th century (Cassini Division).<br/> Which of the above statements is/are correct?</strong><br/> शनि और उसके वलयों<strong>/</strong>चंद्रमाओं के बारे में निम्नलिखित कथनों पर विचार करें<strong>:<br/> 1. </strong>शनि का औसत घनत्व पानी से कम है<strong>, </strong>इसलिए यह पर्याप्त बड़े जल निकाय में तैर सकता है।<br/> <strong>2. </strong>शनि के वलयों का अवलोकन <strong>17</strong>वीं शताब्दी में किया गया था और ह्यूजेंस <strong>(1655) </strong>ने एक प्रमुख प्रारंभिक विवरण प्रदान किया था।<br/> <strong>3. </strong>कैसिनी ने <strong>17</strong>वीं शताब्दी में शनि के वलयों में एक प्रमुख अंतराल की खोज की थी <strong>(</strong>कैसिनी प्रभाग<strong>)</strong>।<br/> उपरोक्त कथनों में से कौन सा<strong>/</strong>से सही है<strong>/</strong>हैं<strong>?</strong></p>",
+    "option1": "<p>1 and 3 only / केवल 1 और 3</p>",
+    "option2": "<p>1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p>2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p>1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>All are true. Saturn’s low mean density (&lt;1 g/cm³) is well known. Galileo first observed ringlike features; Huygens provided a coherent description (1655) and Cassini later described the major gap (1675).<br/> सभी सत्य हैं। शनि का कम औसत घनत्व (&lt;1 ग्राम/सेमी³) सर्वविदित है। गैलीलियो ने सबसे पहले वलयाकार आकृतियाँ देखीं; ह्यूजेंस ने एक सुसंगत विवरण प्रदान किया (1655) और कैसिनी ने बाद में प्रमुख अंतराल (1675) का वर्णन किया।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p><strong>Consider the following statements about Uranus:<br/> 1. Uranus appears greenish because methane in its atmosphere absorbs red light and reflects blue/green wavelengths.<br/> 2. Uranus has the warmest surface temperature among the planets.<br/> 3. William Herschel is credited with discovering Uranus in 1781.<br/> Which of the above statements is/are correct?</strong><br/> अरुण के बारे में निम्नलिखित कथनों पर विचार करें<strong>:<br/> 1. </strong>अरुण हरा दिखाई देता है क्योंकि इसके वायुमंडल में मीथेन लाल प्रकाश को अवशोषित करता है और नीले<strong>/</strong>हरे तरंगदैर्ध्य को परावर्तित करता है।<br/> <strong>2. </strong>ग्रहों में अरुण की सतह का तापमान सबसे अधिक गर्म है।<br/> <strong>3. </strong>विलियम हर्शेल को <strong>1781 </strong>में अरुण की खोज का श्रेय दिया जाता है।<br/> उपरोक्त में से कौन सा<strong>/</strong>से कथन सही है<strong>/</strong>हैं<strong>?</strong></p>",
+    "option1": "<p>1 and 3 only / केवल 1 और 3</p>",
+    "option2": "<p>1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p>2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p>1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Statements 1 and 3 are true — methane gives Uranus its blue-green hue and Herschel discovered it. Statement 2 is false — Uranus is not the warmest (it’s quite cold). The question checks spectral causes of color and discovery history.<br/> कथन 1 और 3 सत्य हैं - मीथेन अरुण को उसका नीला-हरा रंग देता है और हर्शेल ने इसकी खोज की थी। कथन 2 असत्य है - अरुण सबसे गर्म नहीं है (यह काफी ठंडा है)। प्रश्न रंग के वर्णक्रमीय कारणों और खोज के इतिहास की जाँच करता है।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p><strong>Consider the following statements about Neptune:<br/> 1. Neptune’s existence was predicted mathematically (perturbations in Uranus’s orbit) before observational confirmation.<br/> 2. Triton is Neptune’s largest moon and has a retrograde orbit.<br/> 3. Neptune is the innermost of the ice giant planets.<br/> Which of the above statements is/are correct?</strong><br/> वरुण के बारे में निम्नलिखित कथनों पर विचार करें<strong>:</strong><br/> 1. वरुण के अस्तित्व की भविष्यवाणी गणितीय रूप से <strong>(</strong>अरुण की कक्षा में गड़बड़ी<strong>) </strong>अवलोकन पुष्टि से पहले की गई थी।<br/> <strong>2. </strong>ट्राइटन वरुण का सबसे बड़ा उपग्रह है और इसकी कक्षा वक्री है।<br/> <strong>3. </strong>वरुण बर्फीले विशाल ग्रहों में सबसे भीतरी है।<br/> उपरोक्त कथनों में से कौन सा<strong>/</strong>से सही है<strong>/</strong>हैं<strong>?</strong></p>",
+    "option1": "<p>1 and 3 only / केवल 1 और 3</p>",
+    "option2": "<p>1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p>2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p>1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Statement 1 is true — Le Verrier and Adams predicted Neptune; Galle observed it (1846). Triton is Neptune’s largest moon and orbits retrograde (statement 2 true). Statement 3 is false — Neptune is the outermost of the major planets (not the innermost ice giant).<br/> कथन 1 सत्य है - ले वेरियर और एडम्स ने वरुण की भविष्यवाणी की थी; गैल ने इसका अवलोकन किया (1846) । ट्राइटन वरुण का सबसे बड़ा उपग्रह है और इसकी कक्षा वक्री है (कथन 2 सत्य) । कथन 3 असत्य है - वरुण प्रमुख ग्रहों में सबसे बाहरी है (सबसे भीतरी बर्फीले विशाल ग्रह नहीं) ।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p><strong>Assertion: In 2006 the International Astronomical Union (IAU) reclassified Pluto as a \"dwarf planet.\"</strong><br/> अभिकथन<strong>: 2006 </strong>में अंतर्राष्ट्रीय खगोलीय संघ <strong>(IAU) </strong>ने प्लूटो को <strong>\"</strong>बौने ग्रह<strong>\" </strong>के रूप में पुनर्वर्गीकृत किया।<br/> <strong>Reason: This reclassification occurred because Pluto’s orbit lies within the main asteroid belt between Mars and Jupiter.</strong><br/> कारण<strong>: </strong>यह पुनर्वर्गीकरण इसलिए हुआ क्योंकि प्लूटो की कक्षा मंगल और बृहस्पति के बीच मुख्य क्षुद्रग्रह बेल्ट के भीतर स्थित है।<br/> <strong>Choose the correct option: / </strong>सही विकल्प चुनें<strong>:<br/> a. Both A and R are true, and R is the correct explanation of A.<br/> b. Both A and R are true, but R is not the correct explanation of A.<br/> c. A is true but R is false.<br/> d. Both A and R are false.</strong><br/> a. <strong>A </strong><strong>और</strong><strong> </strong><strong>R </strong><strong>दोनों</strong><strong> </strong><strong>सत्य</strong><strong> </strong><strong>हैं</strong><strong>, </strong><strong>और</strong><strong> </strong><strong>R, A </strong><strong>की</strong><strong> </strong><strong>सही</strong><strong> </strong><strong>व्याख्या</strong><strong> </strong><strong>है।</strong><br/> <strong>b. A ​​</strong><strong>और</strong><strong> </strong><strong>R </strong><strong>दोनों</strong><strong> </strong><strong>सत्य</strong><strong> </strong><strong>हैं</strong><strong>, </strong><strong>लेकिन</strong><strong> </strong><strong>R, A </strong><strong>की</strong><strong> </strong><strong>सही</strong><strong> </strong><strong>व्याख्या</strong><strong> </strong><strong>नहीं</strong><strong> </strong><strong>है।</strong><br/> <strong>c. A </strong><strong>सत्य</strong><strong> </strong><strong>है</strong><strong> </strong><strong>लेकिन</strong><strong> </strong><strong>R </strong><strong>असत्य</strong><strong> </strong><strong>है।</strong><br/> <strong>d. A </strong><strong>और</strong><strong> </strong><strong>R </strong><strong>दोनों</strong><strong> </strong><strong>असत्य</strong><strong> </strong><strong>हैं।</strong></p>",
+    "option1": "<p>a</p>",
+    "option2": "<p>b</p>",
+    "option3": "<p>c</p>",
+    "option4": "<p>d</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Assertion is true — the IAU redefined “planet” in 2006, leading to Pluto’s reclassification as a dwarf planet. The Reason is false — Pluto does not orbit in the main asteroid belt; it is a Kuiper Belt Object with a distant, inclined, and eccentric orbit.<br/> अभिकथन सत्य है - IAU ने 2006 में \"ग्रह\" को पुनर्परिभाषित किया, जिसके परिणामस्वरूप प्लूटो को बौने ग्रह के रूप में पुनर्वर्गीकृत किया गया। कारण असत्य है - प्लूटो मुख्य क्षुद्रग्रह बेल्ट में परिक्रमा नहीं करता है; यह एक कुइपर बेल्ट पिंड है जिसकी कक्षा दूरस्थ, झुकी हुई और उत्केन्द्रित है।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p><strong>Consider the following statements about Pluto and the Kuiper Belt:<br/> 1. Pluto’s orbital period around the Sun is approximately 248 Earth years.<br/> 2. Pluto is a member of the Kuiper Belt population.<br/> 3. Charon is the largest of Pluto’s satellites.<br/> Which of the above statements is/are correct?</strong><br/> प्लूटो और कुइपर बेल्ट के बारे में निम्नलिखित कथनों पर विचार करें<strong>:<br/> 1. </strong>प्लूटो की सूर्य के चारों ओर परिक्रमा अवधि लगभग <strong>248 </strong>पृथ्वी वर्ष है।<br/> <strong>2. </strong>प्लूटो कुइपर बेल्ट की आबादी का सदस्य है।<br/> <strong>3. </strong>चारोन प्लूटो के उपग्रहों में सबसे बड़ा है।<br/> उपरोक्त में से कौन सा<strong>/</strong>से कथन सही है<strong>/</strong>हैं<strong>?</strong></p>",
+    "option1": "<p>1 and 3 only / केवल 1 और 3</p>",
+    "option2": "<p>1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p>2 and 3 only / केवल 1 और 2</p>",
+    "option4": "<p>1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>All three are true. Pluto’s orbit takes ~248 years, it resides in the Kuiper Belt beyond Neptune, and Charon is the largest of its known moons.<br/> तीनों सत्य हैं। प्लूटो की परिक्रमा लगभग 248 वर्ष लगती है, यह वरुण से आगे कुइपर बेल्ट में स्थित है, और चारोन इसके ज्ञात उपग्रहों में सबसे बड़ा है।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p><strong>Consider the following statements about luminous and non-luminous bodies:<br/> 1. Stars are luminous because they produce light via internal nuclear fusion.<br/> 2. Fireflies glow (bioluminescence) because they reflect sunlight using specialized scales.<br/> 3. Non-luminous objects like asteroids and comets shine in our sky by reflecting sunlight.<br/> Which of the above statements is/are correct?</strong><br/> चमकीले और गैर<strong>-</strong>चमकीले पिंडों के बारे में निम्नलिखित कथनों पर विचार करें<strong>:<br/> 1. </strong>तारे चमकदार होते हैं क्योंकि वे आंतरिक नाभिकीय संलयन द्वारा प्रकाश उत्पन्न करते हैं।<br/> <strong>2. </strong>जुगनू चमकते हैं <strong>(</strong>जैवप्रकाशिकता<strong>) </strong>क्योंकि वे विशिष्ट पैमानों का उपयोग करके सूर्य के प्रकाश को परावर्तित करते हैं।<br/> <strong>3. </strong>क्षुद्रग्रह और धूमकेतु जैसी गैर<strong>-</strong>चमकीली वस्तुएँ सूर्य के प्रकाश को परावर्तित करके हमारे आकाश में चमकती हैं।<br/> उपरोक्त में से कौन सा<strong>/</strong>से कथन सही है<strong>/</strong>हैं<strong>?</strong></p>",
+    "option1": "<p>1 and 3 only / केवल 1 और 3</p>",
+    "option2": "<p>1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p>2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p>1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Statement 1 true — stellar light originates from fusion (e.g., H→He). Statement 2 is false — fireflies produce light chemically (luciferin–luciferase reaction), not by reflecting sunlight. Statement 3 is true — many small bodies are visible because they reflect sunlight (and comets also have sublimated gases).<br/> कथन 1 सत्य है - तारकीय प्रकाश संलयन (जैसे, H→He) से उत्पन्न होता है। कथन 2 असत्य है - जुगनू रासायनिक रूप से (लूसिफ़ेरिन-लूसिफ़ेरेज़ अभिक्रिया) प्रकाश उत्पन्न करते हैं, सूर्य के प्रकाश को परावर्तित करके नहीं। कथन 3 सत्य है - कई छोटे पिंड दिखाई देते हैं क्योंकि वे सूर्य के प्रकाश को परावर्तित करते हैं (और धूमकेतुओं में भी उर्ध्वपातित गैसें होती हैं)।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p><strong>Consider the following statements about comets:<br/> 1. Comets are composed of rock, dust, ices and gases (a “dirty snowball” composition).<br/> 2. Halley’s Comet has an orbital period of roughly 76 years.<br/> 3. Comet tails always point toward the Sun when a comet is near perihelion.<br/> Which of the above statements is/are correct?</strong><br/> धूमकेतुओं के बारे में निम्नलिखित कथनों पर विचार करें<strong>:<br/> 1. </strong>धूमकेतु चट्टान<strong>, </strong>धूल<strong>, </strong>बर्फ और गैसों <strong>(</strong>एक <strong>\"</strong>गंदा बर्फीए गोला<strong>\" </strong>संरचना<strong>) </strong>से बने होते हैं।<br/> <strong>2. </strong>हैली के धूमकेतु की परिक्रमा अवधि लगभग <strong>76 </strong>वर्ष है।<br/> <strong>3. </strong>जब कोई धूमकेतु उपसौर के निकट होता है<strong>, </strong>तो धूमकेतु की पूंछ हमेशा सूर्य की ओर होती है।<br/> उपरोक्त में से कौन सा<strong>/</strong>से कथन सही है<strong>/</strong>हैं<strong>?</strong></p>",
+    "option1": "<p>1 and 3 only / केवल 1 और 3</p>",
+    "option2": "<p>1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p>2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p>1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Statements 1 and 2 are true. Statement 3 is false — comet tails (especially the ion tail) are pushed away from the Sun by the solar wind and radiation pressure; dust tails can trail along the orbit, so tails generally point away from the Sun, not toward it.<br/> कथन 1 और 2 सत्य हैं। कथन 3 असत्य है - धूमकेतु की पूंछ (विशेषकर आयन पूंछ) सौर वायु और विकिरण दाब द्वारा सूर्य से दूर धकेल दी जाती है; धूल की पूंछ कक्षा के साथ-साथ चल सकती है, इसलिए पूंछ आमतौर पर सूर्य से दूर होती है, उसकी ओर नहीं।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p><strong>Consider the following statements about asteroids and meteoroids:<br/> 1. All asteroids are located beyond Neptune in the Kuiper Belt.<br/> 2. A meteoroid becomes a meteor when it enters Earth’s atmosphere, and a meteorite if it reaches the ground.<br/> 3. The main asteroid belt is located between the orbits of Mars and Jupiter.<br/> Which of the above statements is/are correct?</strong><br/> क्षुद्रग्रहों और उल्कापिंडों के बारे में निम्नलिखित कथनों पर विचार करें<strong>:<br/> 1. </strong>सभी क्षुद्रग्रह वरुण के आगे कुइपर बेल्ट में स्थित हैं।<br/> <strong>2. </strong>एक उल्कापिंड पृथ्वी के वायुमंडल में प्रवेश करने पर उल्का बन जाता है<strong>, </strong>और यदि वह धरती पर पहुँचता है तो उल्कापतित बन जाता है।<br/> <strong>3. </strong>मुख्य क्षुद्रग्रह बेल्ट मंगल और बृहस्पति की कक्षाओं के बीच स्थित है।<br/> उपरोक्त में से कौन सा<strong>/</strong>से कथन सही है<strong>/</strong>हैं<strong>?</strong></p>",
+    "option1": "<p>1 and 3 only / केवल 1 और 3</p>",
+    "option2": "<p>1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p>2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p>1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Statement 1 is false — many asteroids inhabit the main belt between Mars and Jupiter, though there are also populations in the Kuiper Belt and near-Earth objects. Statement 2 defines meteoroid→meteor→meteorite correctly. Statement 3 is correct.<br/> कथन 1 गलत है - मंगल और बृहस्पति के बीच मुख्य बेल्ट में कई क्षुद्रग्रह रहते हैं, हालाँकि कुइपर बेल्ट और पृथ्वी के निकट स्थित पिंडों में भी आबादी है। कथन 2 उल्कापिंडउल्काउल्कापतित को सही ढंग से परिभाषित करता है। कथन 3 सही है।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p><strong>Assertion: Neptune has the shortest orbital period among the planets.<br/> Reason: Neptune is the closest planet to the Sun, so it completes its orbit fastest.<br/> Choose the correct option:<br/> a. Both A and R are true, and R correctly explains A.<br/> b. Both A and R are true, but R does not explain A.<br/> c. A is true but R is false.<br/> d. Both A and R are false.</strong><br/> अभिकथन<strong>: </strong>सभी ग्रहों में वरुण की परिक्रमा अवधि सबसे कम है।<br/> कारण<strong>: </strong>वरुण सूर्य के सबसे निकट का ग्रह है<strong>, </strong>इसलिए यह अपनी परिक्रमा सबसे तेजी से पूरी करता है।<br/> सही विकल्प चुनें<strong>:</strong></p><p><strong>A </strong><strong>और</strong><strong> </strong><strong>R </strong><strong>दोनों</strong><strong> </strong><strong>सत्य</strong><strong> </strong><strong>हैं</strong><strong>, </strong><strong>और</strong><strong> </strong><strong>R, A </strong><strong>की</strong><strong> </strong><strong>सही</strong><strong> </strong><strong>व्याख्या</strong><strong> </strong><strong>करता</strong><strong> </strong><strong>है।</strong></p><p><strong>A ​​</strong><strong>और</strong><strong> </strong><strong>R </strong><strong>दोनों</strong><strong> </strong><strong>सत्य</strong><strong> </strong><strong>हैं</strong><strong>, </strong><strong>लेकिन</strong><strong> </strong><strong>R, A </strong><strong>की</strong><strong> </strong><strong>व्याख्या</strong><strong> </strong><strong>नहीं</strong><strong> </strong><strong>करता</strong><strong> </strong><strong>है।</strong></p><p><strong>A </strong><strong>सत्य</strong><strong> </strong><strong>है</strong><strong>, </strong><strong>लेकिन</strong><strong> </strong><strong>R </strong><strong>असत्य</strong><strong> </strong><strong>है।</strong></p><p><strong>A </strong><strong>और</strong><strong> </strong><strong>R </strong><strong>दोनों</strong><strong> </strong><strong>असत्य</strong><strong> </strong><strong>हैं।</strong></p>",
+    "option1": "<p>a</p>",
+    "option2": "<p>b</p>",
+    "option3": "<p>c</p>",
+    "option4": "<p>d</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Both statements are false. Neptune is the farthest of the eight classical planets and therefore has a very long orbital period (~165 Earth years), not the shortest. The reason is the opposite of the truth.<br/> दोनों कथन असत्य हैं। वरुण आठ शास्त्रीय ग्रहों में सबसे दूर है और इसलिए इसकी परिक्रमा अवधि बहुत लंबी (लगभग 165 पृथ्वी वर्ष) है, सबसे छोटी नहीं। कारण सत्य के विपरीत है।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p><strong>Match the following planets with their unique features:</strong>ē<br/> निम्नलिखित ग्रहों का उनकी विशिष्ट विशेषताओं के साथ मिलान करें<strong>:</strong></p>",
+    "option1": "<p>A-3, B-2, C-1, D-4</p>",
+    "option2": "<p>A-2, B-3, C-4, D-1</p>",
+    "option3": "<p>A-1, B-4, C-2, D-3</p>",
+    "option4": "<p>A-4, B-1, C-3, D-2</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Mercury = smallest planet; Venus = hottest planet; Mars = Olympus Mons (largest volcano); Jupiter = Great Red Spot (giant storm).<br/> बुध = सबसे छोटा ग्रह; शुक्र = सबसे गर्म ग्रह; मंगल = ओलंपस मोन्स (सबसे बड़ा ज्वालामुखी); बृहस्पति = ग्रेट रेड स्पॉट (विशाल तूफान) ।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Which of the following statements regarding comets is correct?<br/> a. Their tails are always directed towards the Sun<br/> b. Their tails are always directed away from the Sun<br/> c. They do not have any tails<br/> d. Their tails are directed parallel to their orbits<br/> </b>धूमकेतुओं के संबंध में निम्नलिखित में से कौन सा कथन सही है<b>?</b></p><p>उनकी पूँछ हमेशा सूर्य की ओर होती है।</p><p>उनकी पूँछ हमेशा सूर्य से दूर होती है।</p><p>उनकी कोई पूँछ नहीं होती।</p><p>उनकी पूँछ उनकी कक्षाओं के समानांतर होती है।</p>",
+    "option1": "<p> a</p>",
+    "option2": "<p> b</p>",
+    "option3": "<p> c</p>",
+    "option4": "<p> d</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The tail of a comet is formed due to solar wind and radiation pressure. It always points away from the Sun, regardless of the comet’s direction of motion.<br/> धूमकेतु की पूँछ सौर वायु और विकिरण दाब के कारण बनती है। धूमकेतु की गति की दिशा चाहे जो भी हो, यह हमेशा सूर्य से दूर होती है।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p><strong>Consider the following statements about the Sun (energy and structure):<br/> 1. Approximately 99% of the Solar System’s mass is in the Sun.<br/> 2. The Sun’s composition is primarily hydrogen and helium with heavier elements in trace amounts.<br/> 3. Photons created in the core take a long, diffusive path (thousands to millions of years) to reach the photosphere before streaming to space.<br/> Which of the above statements is/are correct?</strong><br/> सूर्य <strong>(</strong>ऊर्जा और संरचना<strong>) </strong>के बारे में निम्नलिखित कथनों पर विचार करें<strong>:<br/> 1. </strong>सौरमंडल के द्रव्यमान का लगभग <strong>99% </strong>सूर्य में निहित है।<br/> <strong>2. </strong>सूर्य की संरचना मुख्यतः हाइड्रोजन और हीलियम से बनी है<strong>, </strong>जिसमें भारी तत्व अल्प मात्रा में उपस्थित हैं।<br/> <strong>3. </strong>क्रोड में उत्पन्न फोटॉन अंतरिक्ष में प्रवाहित होने से पहले प्रकाशमंडल तक पहुँचने के लिए एक लंबा<strong>, </strong>विसरित पथ <strong>(</strong>हज़ारों से लाखों वर्ष<strong>) </strong>लेते हैं।<br/> उपरोक्त कथनों में से कौन सा<strong>/</strong>से सही है<strong>/</strong>हैं<strong>?</strong></p>",
+    "option1": "<p>1 and 3 only / केवल 1 और 3</p>",
+    "option2": "<p>1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p>2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p>1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>All three are correct. The Sun holds the lion’s share of Solar System mass, is mainly H (~≈73%) and He (~≈25%), and radiative transport in the deep interior means that individual photons undergo many scatterings — diffusing outward over long timescales before escape.<br/> तीनों सही हैं। सूर्य सौरमंडल के द्रव्यमान का सबसे बड़ा हिस्सा रखता है, मुख्य रूप से H (~≈73%) और He (~≈25%) है, और गहरे आंतरिक भाग में विकिरणीय परिवहन का अर्थ है कि व्यक्तिगत फोटॉन कई प्रकीर्णनों से गुजरते हैं - बाहर निकलने से पहले लंबे समय के पैमाने पर बाहर की ओर विसरित होते हैं।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p><strong>Consider the following statements about Jupiter (satellites and rings):<br/> 1. Jupiter has no ring system at all.<br/> 2. Galileo discovered the four large Galilean satellites (Io, Europa, Ganymede, Callisto).<br/> 3. Ganymede is the largest moon in the Solar System.<br/> Which of the above statements is/are correct?</strong><br/> बृहस्पति <strong>(</strong>उपग्रह और वलय<strong>) </strong>के बारे में निम्नलिखित कथनों पर विचार करें<strong>:<br/> 1. </strong>बृहस्पति का कोई वलय तंत्र नहीं है।<br/> <strong>2. </strong>गैलीलियो ने चार बड़े गैलीलियन उपग्रहों <strong>(</strong>लो<strong>, </strong>यूरोपा<strong>, </strong>गैनीमेड<strong>, </strong>कैलिस्टो<strong>) </strong>की खोज की थी।<br/> <strong>3. </strong>गैनीमेड सौरमंडल का सबसे बड़ा उपग्रह है।<br/> उपरोक्त कथनों में से कौन सा<strong>/</strong>से सही है<strong>/</strong>हैं<strong>?</strong></p>",
+    "option1": "<p>1 and 3 only / केवल 1 और 3</p>",
+    "option2": "<p>1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p>2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p>1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Statement 1 is false — Jupiter does have a faint ring system (discovered later). Statements 2 and 3 are true — Galileo observed the four Galilean moons, and Ganymede is the largest moon.<br/> कथन 1 गलत है - बृहस्पति का एक धुंधला वलय तंत्र है (जिसे बाद में खोजा गया)। कथन 2 और 3 सही हैं - गैलीलियो ने चार गैलीलियन उपग्रहों का अवलोकन किया था, और गैनीमेड सबसे बड़ा उपग्रह है।<br/> </p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>Which of the following statement is correct?<br/> </b><b>निम्नलिखित</b><b> </b><b>में</b><b> </b><b>से</b><b> </b><b>कौन</b><b> </b><b>सा</b><b> </b><b>कथन</b><b> </b><b>सही</b><b> </b><b>है</b><b><br/> </b><br/> </p>",
+    "option1": "<p> The density of Saturn is similar to that of Earth. / . शनि का घनत्व पृथ्वी के समान है।</p>",
+    "option2": "<p> The Size of Earth and Venus are almost similar. / पृथ्वी और शुक्र का आकार लगभग समान है।</p>",
+    "option3": "<p> The size of Jupiter and Mars is similar. / . बृहस्पति और मंगल का आकार समान है।</p>",
+    "option4": "<p> Mars is the warmest planet. / मंगल सबसे गर्म ग्रह है।<br/> <br/> </p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Earth and Venus are considered twin planets because their radius, mass and composition are close to each other. Venus is just slightly smaller than Earth.</p><p><br/> पृथ्वी और शुक्र को जुड़वां ग्रह माना जाता है क्योंकि उनकी त्रिज्या, द्रव्यमान और संरचना एक-दूसरे के करीब हैं। शुक्र पृथ्वी से थोड़ा छोटा है।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - GEOGRAPHY</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">GEOGRAPHY - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

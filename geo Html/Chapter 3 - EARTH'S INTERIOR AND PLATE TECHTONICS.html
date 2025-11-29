@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY - EARTH'S INTERIOR AND PLATE TECHTONICS QUIZ [08-10-2025] - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>GEOGRAPHY - EARTH'S INTERIOR AND PLATE TECHTONICS QUIZ [08-10-2025]</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p><strong>Which layer of the Earth is primarily composed of Nickel (Ni) and Iron (Fe)?</strong><br/> पृथ्वी की कौन सी परत मुख्य रूप से निकेल <strong>(Ni) </strong>और लोहे <strong>(Fe) </strong>से बनी है<strong>?</strong></p>",
+    "option1": "<p>Crust / भूपर्पटी</p>",
+    "option2": "<p>Mantle / मेंटल</p>",
+    "option3": "<p>Upper Crust / ऊपरी भूपर्पटी</p>",
+    "option4": "<p>Core / कोर</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>The Core is the densest layer, composed mainly of Nickel (Ni) and Iron (Fe), often referred to as NiFe.<br/> कोर सबसे सघन परत है, जो मुख्य रूप से निकल (Ni) और आयरन (Fe) से बनी है, जिसे अक्सर NiFe कहा जाता है।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>The Mohorovičić discontinuity (Moho) lies between which two major layers of the Earth?<br/> </b>मोहोरोविक असंततता <b>(</b>मोहो<b>) </b>पृथ्वी की किन दो प्रमुख परतों के बीच स्थित है<b>?</b></p>",
+    "option1": "<p> Outer Core and Inner Core / बाहरी कोर और आंतरिक कोर</p>",
+    "option2": "<p> Upper Mantle and Lower Mantle / ऊपरी मेंटल और निचले मेंटल</p>",
+    "option3": "<p> Crust and Mantle / भूपर्पटी और मेंटल</p>",
+    "option4": "<p> Continental Crust and Oceanic Crust / महाद्वीपीय भूपर्पटी और महासागरीय भूपर्पटी</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Mohorovičić discontinuity (Moho) marks the boundary separating the Crust from the underlying Mantle.<br/> मोहोरोविक असंततता (मोहो) भूपर्पटी को अंतर्निहित मेंटल से अलग करने वाली सीमा को चिह्नित करता है।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>Which of the following methods is considered a direct source of information about the Earth's interior, as per the document?<br/> </b>दस्तावेज़ के अनुसार<b>, </b>निम्नलिखित में से किस विधि को पृथ्वी के आंतरिक भाग के बारे में जानकारी का प्रत्यक्ष स्रोत माना जाता है<b>?</b></p>",
+    "option1": "<p> Earthquake Waves / भूकंप की लहरें</p>",
+    "option2": "<p> Volcanoes and Rock / ज्वालामुखी और चट्टान</p>",
+    "option3": "<p> Temperature / तापमान</p>",
+    "option4": "<p> Meteorites / उल्कापिंड</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The document explicitly lists Volcanoes and rock as a direct source, while Temperature, Meteorites, and Earthquakes are listed as indirect sources.<br/> दस्तावेज़ स्पष्ट रूप से ज्वालामुखियों और चट्टानों को प्रत्यक्ष स्रोत के रूप में सूचीबद्ध करता है, जबकि तापमान, उल्कापिंड और भूकंप को अप्रत्यक्ष स्रोतों के रूप में सूचीबद्ध किया गया है।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>The layer known as the Asthenosphere is described as being in a semi-molten (plastic) form and acts as the source of magma. It is part of the:<br/> </b>दुर्बलतामंडल <b>(</b>एस्थेनोस्फीयर<b>) </b>के रूप में जानी जाने वाली परत को अर्ध<b>-</b>पिघला हुआ <b>(</b>प्लास्टिक<b>) </b>रूप में वर्णित किया गया है और यह मैग्मा के स्रोत के रूप में कार्य करता है। यह इसका हिस्सा है<b>:</b></p>",
+    "option1": "<p> Crust / भूपर्पटी</p>",
+    "option2": "<p> Upper Mantle / ऊपरी मेंटल</p>",
+    "option3": "<p> Lower Mantle / निचला मेंटल</p>",
+    "option4": "<p> Outer Core / बाहरी कोर</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Asthenosphere is the weak, semi-molten layer which is the source of magma, and is located within the Upper Mantle.<br/> दुर्बलतामंडल कमजोर, अर्ध-पिघली हुई परत है जो मैग्मा का स्रोत है, और ऊपरी मेंटल के भीतर स्थित है।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>What is the approximate range of thickness for the Earth's Crust, as indicated in the provided data?<br/> </b>दिए गए आंकड़ों के अनुसार<b>, </b>पृथ्वी की भूपर्पटी की मोटाई की अनुमानित सीमा क्या है<b>?</b></p>",
+    "option1": "<p> 2900 km / 2900 किमी</p>",
+    "option2": "<p> 5100 km / 5100 किमी</p>",
+    "option3": "<p> 6370 km / 6370 किमी</p>",
+    "option4": "<p> 5-50 km / 5-50 किमी</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The thickness of the Earth's crust ranges from 5 to 50 km — about 5 km for the oceanic crust and up to 50 km for the continental crust.<br/> भूपर्पटी की मोटाई को 5-50 किमी (महासागरीय के लिए 5 किमी, महाद्वीपीय के लिए 50 किमी तक) से दिखाती है।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>What is the name of the instrument used to record earthquake waves?<br/> </b>भूकंप की लहरों को रिकॉर्ड करने के लिए उपयोग किए जाने वाले उपकरण का नाम क्या है<b>?</b></p>",
+    "option1": "<p> Barometer / बैरोमीटर</p>",
+    "option2": "<p> Seismograph / सिस्मोग्राफ</p>",
+    "option3": "<p> Odometer / ओडोमीटर</p>",
+    "option4": "<p> Richter Scale / रिक्टर स्केल</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> A Seismograph is the instrument used to record the waves generated by an earthquake.<br/> सिस्मोग्राफ वह उपकरण है जिसका उपयोग भूकंप से उत्पन्न तरंगों को रिकॉर्ड करने के लिए किया जाता है।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Which seismic wave can travel through all three states of matter (solid, liquid, and gas)?<br/> </b>कौन सी भूकंपीय तरंग पदार्थ की तीनों अवस्थाओं <b>(</b>ठोस<b>, </b>तरल और गैस<b>) </b>से होकर गुजर सकती है<b>?</b></p>",
+    "option1": "<p> P-waves (Primary waves) / P-तरंगें (प्राथमिक तरंगें)</p>",
+    "option2": "<p> S-waves (Secondary waves) / S-तरंगें (द्वितीयक तरंगें)</p>",
+    "option3": "<p> L-waves (Love waves) / L-तरंगें (प्रेम तरंगें)</p>",
+    "option4": "<p> Rayleigh waves / रेले तरंगें</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> P-waves (Primary waves) are longitudinal compression waves that can pass through solid, liquid, and gas mediums.<br/> पी-तरंगें (प्राथमिक तरंगें) अनुदैर्ध्य संपीड़न तरंगें हैं जो ठोस, तरल और गैस माध्यमों से गुजर सकती हैं।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>The layer separating the Mantle and the Core is the:<br/> </b>मेंटल और कोर को अलग करने वाली परत है<b>:</b></p>",
+    "option1": "<p> Moho Discontinuity / मोहो असंततता</p>",
+    "option2": "<p> Conrad Discontinuity / कॉनराड असंततता</p>",
+    "option3": "<p> Gutenberg Discontinuity / गुटेनबर्ग असंततता</p>",
+    "option4": "<p> Lehmann Discontinuity / लेहमैनअसंततता</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Gutenberg Discontinuity separates the Lower Mantle from the liquid Outer Core.<br/> गुटेनबर्ग असंततता निचले मेंटल को तरल बाहरी कोर से अलग करता है</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Who is known as the \"Father of Geology,\"?<br/> \"</b>भूविज्ञान के जनक<b>\" </b>के रूप में किसे जाना जाता है<b>?</b></p>",
+    "option1": "<p> Alfred Wegener / अल्फ्रेड वेगेनर</p>",
+    "option2": "<p> James Hutton / जेम्स हटन</p>",
+    "option3": "<p> Charles Darwin / चार्ल्स डार्विन</p>",
+    "option4": "<p> Albert Einstein / अल्बर्ट आइंस्टीन</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> James Hutton is known as the \"Father of Geology.\"<br/> जेम्स हटन को \"भूविज्ञान के जनक\" के रूप में जाना जाता है</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>Which seismic zone in the Indian Seismic Zoning Map is classified as having the highest risk (most active)?<br/> </b>भारतीय भूकंपीय क्षेत्र मानचित्र में किस भूकंपीय क्षेत्र को सबसे अधिक जोखिम <b>(</b>सबसे सक्रिय<b>) </b>के रूप में वर्गीकृत किया गया है<b>?</b></p>",
+    "option1": "<p> Zone II / जोन II</p>",
+    "option2": "<p> Zone III / जोन III</p>",
+    "option3": "<p> Zone IV / जोन IV</p>",
+    "option4": "<p> Zone V / जोन जोन II</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The map clearly indicates that Zone V is the highest risk or \"most active\" zone in the Indian Seismic Zoning Map<br/> मानचित्र स्पष्ट रूप से इंगित करता है कि भारतीय भूकंपीय ज़ोनिंग मानचित्र में ज़ोन V सबसे अधिक जोखिम वाला या \"सबसे सक्रिय\" क्षेत्र है।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p><strong>Consider the following statements regarding the Earth's Interior:<br/> 1. Density generally decreases from the Earth's crust towards the Core.<br/> 2. The Lithosphere includes the entire crust and the uppermost solid part of the Mantle.<br/> Which of the statements given above is/are correct?</strong><br/> पृथ्वी के आंतरिक भाग के संबंध में निम्नलिखित कथनों पर विचार कीजिए<strong>:<br/> 1. </strong>घनत्व आमतौर पर पृथ्वी की भूपर्पटी से कोर की ओर कम हो जाता है।<br/> <strong>2. </strong>लिथोस्फीयर में संपूर्ण भूपर्पटी और मेंटल का सबसे ऊपरी ठोस भाग शामिल है।<br/> उपर्युक्त कथनों में से कौन<strong>-</strong>सा<strong>/</strong>से सही है<strong>/</strong>हैं<strong>?</strong></p>",
+    "option1": "<p>I only / केवल I</p>",
+    "option2": "<p>II only / केवल II</p>",
+    "option3": "<p>Both I and II / I और II दोनों</p>",
+    "option4": "<p>Neither I nor II / न तो I और न ही II</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Statement I is incorrect; density increases from the Crust (around) towards the Core. Statement II is correct; the Lithosphere is defined as the crust and upper-most solid mantle.<br/> कथन I गलत है; घनत्व भूपर्पटी (चारों ओर) से कोर की ओर बढ़ता है। कथन II सही है; लिथोस्फीयर को भूपर्पटी और सबसे ऊपरी-सबसे ठोस मेंटल के रूप में परिभाषित किया गया है।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Which of the following discontinuities is correctly matched with the layers it separates?<br/> </b>निम्नलिखित में से कौन सी असंततता इसके द्वारा अलग की जाने वाली परतों के साथ सही ढंग से मेल खाती है<b>?</b></p>",
+    "option1": "<p> Gutenberg Discontinuity: Separates Upper Mantle from Lower Mantle. / गुटेनबर्ग असंततता: ऊपरी मेंटल को निचले मेंटल से अलग करता है।</p>",
+    "option2": "<p> Repiti Discontinuity: Separates Continental Crust from Oceanic Crust. / रेपिटी असंततता: महाद्वीपीय भूपर्पटी को महासागरीय भूपर्पटी से अलग करता है।</p>",
+    "option3": "<p> Lehmann Discontinuity: Separates Outer Core from Inner Core. / लेहमैन असंततता: बाहरी कोर को आंतरिक कोर से अलग करता है।</p>",
+    "option4": "<p> Conrad Discontinuity: Separates Crust from Mantle. / कॉनराड असंततता: भूपर्पटी को मेंटल से अलग करता है।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Lehmann Discontinuity marks the boundary between the liquid Outer Core and the solid Inner Core. Gutenberg separates Mantle and Core, and Repiti separates Upper and Lower Mantle.<br/> लेहमैन असंतुलन तरल बाहरी कोर और ठोस आंतरिक कोर के बीच की सीमा को चिह्नित करता है। गुटेनबर्ग मेंटल और कोर को अलग करता है, और रेपिटी ऊपरी और निचले मेंटल को अलग करता है।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Which type of plate boundary is considered a 'Conservative Boundary'?<br/> </b>किस प्रकार की प्लेट सीमा को <b>'</b>रूढ़िवादी सीमा<b>' </b>माना जाता है<b>?</b></p>",
+    "option1": "<p> Divergent Boundary / अपसारी सीमा</p>",
+    "option2": "<p> Convergent Boundary / अभिसरण सीमा</p>",
+    "option3": "<p> Transform Boundary / रूपांतरण सीमा</p>",
+    "option4": "<p> Destructive Boundary / विनाशकारी सीमा</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> A Transform Boundary is where plates slide horizontally past each other, leading to the lithosphere being neither created nor destroyed, making it a conservative boundary.<br/> एक रूपांतरण सीमा वह जगह है जहां प्लेटें क्षैतिज रूप से एक दूसरे के पीछे स्लाइड करती हैं, जिससे स्थलमंडल (लिथोस्फीयर) न तो बनता है और न ही नष्ट हो जाता है, जिससे यह एक रूढ़िवादी सीमा बन जाती है।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Assertion (A): The S-waves (Secondary waves) cannot pass through the Outer Core.<br/> Reason (R): The Outer Core of the Earth is in a liquid state, and S-waves cannot travel through liquids.<br/> </b>अभिकथन <b>(A): S-</b>तरंगें <b>(</b>द्वितीयक तरंगें<b>) </b>बाहरी कोर से नहीं गुजर सकतीं।<b><br/> </b>कारण <b>(R): </b>पृथ्वी का बाहरी कोर तरल अवस्था में है<b>, </b>और <b>S-</b>तरंगें तरल पदार्थों के माध्यम से यात्रा नहीं कर सकती हैं।</p>",
+    "option1": "<p> Both A and R are true, and R is the correct explanation of A. / A और R दोनों सत्य हैं, और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true, but R is not the correct explanation of A. / A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true, but R is false. / A सत्य है, लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false, but R is true. / A असत्य है, लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Both the assertion and the reason are true, and the reason correctly explains the assertion. The liquid nature of the Outer Core is the physical property that prevents S-waves (which are shear waves) from passing through.<br/> अभिकथन और कारण दोनों सत्य हैं, और कारण अभिकथन को सही ढंग से समझाता है। बाहरी कोर की तरल प्रकृति भौतिक संपत्ति है जो एस-तरंगों (जो कतरनी तरंगें हैं) को गुजरने से रोकती है।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Consider the following statements about Surface Waves (L-waves):<br/> 1. They are the fastest seismic waves recorded by a seismograph.<br/> 2. They cause the most damage to structures near the epicenter.<br/> Which of the statements given above is/are correct?<br/> </b>सतही तरंगों <b>(L-</b>तरंगों<b>) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> 3. </b>वे सिस्मोग्राफ द्वारा दर्ज की गई सबसे तेज भूकंपीय तरंगें हैं।<b><br/> 4. </b>वे उपरिकेंद्र के पास संरचनाओं को सबसे अधिक नुकसान पहुंचाते हैं।<b><br/> </b>उपर्युक्त कथनों में से कौन<b>-</b>सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> I only / केवल I</p>",
+    "option2": "<p> II only / केवल II</p>",
+    "option3": "<p> Both I and II / I और II दोनों</p>",
+    "option4": "<p> Neither I nor II / न तो I और न ही II</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Statement I is false; P-waves are the fastest. Statement II is correct; Surface waves (L-waves/Rayleigh waves) travel along the surface and cause the greatest shaking and structural damage.<br/> कथन I असत्य है; पी-तरंगें सबसे तेज होती हैं। कथन II सही है; सतही तरंगें (एल-तरंगें/रेले तरंगें) सतह के साथ यात्रा करती हैं और सबसे बड़ी झटकों और संरचनात्मक क्षति का कारण बनती हैं।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Arrange the following layers of the Earth from the surface to the center (increasing depth):<br/> </b>पृथ्वी की निम्नलिखित परतों को सतह से केंद्र तक व्यवस्थित करें <b>(</b>बढ़ती गहराई<b>):<br/> 1. Asthenosphere / </b>दुर्बलतामंडल<b><br/> 2. Lower Mantle / </b>निचला मेंटल<b><br/> 3. Lithosphere / </b>स्थलमंडल<b><br/> 4. Inner Core / </b>आंतरिक कोर</p>",
+    "option1": "<p> 3-1-2-4</p>",
+    "option2": "<p> 1-3-2-4</p>",
+    "option3": "<p> 3-2-1-4</p>",
+    "option4": "<p> 1-2-3-4</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The order is: Lithosphere (Crust + Solid Upper Mantle) Asthenosphere (Weak, semi-molten layer) Lower Mantle Inner Core.<br/> क्रम है: स्थलमंडल (क्रस्ट + सॉलिड अपर मेंटल) दुर्बलतामंडल (कमजोर, अर्ध-पिघली हुई परत) निचला मेंटल, आंतरिक कोर</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Assertion (A): The seismic shadow zone for P-waves is smaller than the shadow zone for S-waves.<br/> Reason (R): P-waves are refracted, but not completely absorbed by the liquid Outer Core, unlike S-waves.<br/> </b>अभिकथन <b>(A): P-</b>तरंगों के लिए भूकंपीय छाया क्षेत्र <b>S-</b>तरंगों के लिए छाया क्षेत्र से छोटा होता है।<b><br/> </b>कारण <b>(R): P-</b>तरंगें अपवर्तित होती हैं<b>, </b>लेकिन <b>S-</b>तरंगों के विपरीत<b>, </b>तरल बाहरी कोर द्वारा पूरी तरह से अवशोषित नहीं होती हैं।</p>",
+    "option1": "<p> Both A and R are true, and R is the correct explanation of A. / A और R दोनों सत्य हैं, और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true, but R is not the correct explanation of A. / A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true, but R is false. / A सत्य है, लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false, but R is true. / A असत्य है, लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Both are true and R explains A. P-waves travel through the liquid core but are refracted, creating a smaller shadow zone. S-waves are completely blocked, creating a much larger shadow zone.<br/> दोनों सत्य हैं और R, A की व्याख्या करता है। P-तरंगें द्रव क्रोड से होकर गुजरती हैं, लेकिन अपवर्तित होकर एक छोटा छाया क्षेत्र बनाती हैं। S-तरंगें पूरी तरह से अवरुद्ध होकर एक बहुत बड़ा छाया क्षेत्र बनाती हैं।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>The Outer Core is in a liquid state, while the Inner Core is solid. What is the primary reason for the Inner Core's solid state despite higher temperatures?<br/> </b>बाहरी कोर द्रव अवस्था में है<b>, </b>जबकि आंतरिक कोर ठोस है। उच्च तापमान के बावजूद आंतरिक कोर के ठोस अवस्था में रहने का मुख्य कारण क्या है<b>?</b></p>",
+    "option1": "<p> Chemical composition difference (more Nickel in Inner Core). / रासायनिक संरचना में अंतर (आंतरिक कोर में अधिक निकल)।</p>",
+    "option2": "<p> Presence of convection currents only in the Outer Core. / केवल बाहरी कोर में संवहन धाराओं की उपस्थिति।</p>",
+    "option3": "<p> Immense pressure acting on the Inner Core, raising the melting point. / आंतरिक कोर पर अत्यधिक दबाव के कारण गलनांक बढ़ जाता है।</p>",
+    "option4": "<p> Absence of Iron in the Inner Core. / आंतरिक कोर में लोहे की अनुपस्थिति।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Inner Core is solid because the extreme pressure at that depth raises the melting point of the iron-nickel alloy above the actual temperature.<br/> आंतरिक कोर ठोस है क्योंकि उस गहराई पर अत्यधिक दबाव वास्तविक तापमान से ऊपर लौह-निकल मिश्र धातु के गलनांक को बढ़ाता है।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Which plate boundary is directly responsible for the formation of volcanic island arcs and deep ocean trenches?<br/> </b>ज्वालामुखीय द्वीप चापों और गहरे समुद्र की खाइयों के निर्माण के लिए कौन सी प्लेट सीमा सीधे जिम्मेदार है<b>?</b></p>",
+    "option1": "<p> Continent-Continent Divergence / महाद्वीप-महाद्वीप विचलन</p>",
+    "option2": "<p> Ocean-Ocean Convergence (Subduction) / महासागर-महासागर अभिसरण (अवसादन)</p>",
+    "option3": "<p> Transform Fault / रूपांतरण भ्रंश</p>",
+    "option4": "<p> Continent-Ocean Divergence/ महाद्वीप-महासागर विचलन</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Ocean-Ocean Convergence results in the subduction of one oceanic plate under another, leading to the formation of a Deep Ocean Trench and an adjacent chain of volcanic islands (Island Arc).<br/> महासागर-महासागर अभिसरण के परिणामस्वरूप एक महासागरीय प्लेट दूसरे के नीचे दब जाती है, जिससे एक गहरे महासागर की खाई और ज्वालामुखीय द्वीपों (द्वीप चाप) की एक आसन्न श्रृंखला का निर्माण होता है।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Which term is used to describe an earthquake type caused by the collapse of mines or underground caves?<br/> </b>खदानों या भूमिगत गुफाओं के ढहने के कारण होने वाले भूकंप के प्रकार का वर्णन करने के लिए किस शब्द का प्रयोग किया जाता है<b>?</b></p>",
+    "option1": "<p> Volcanic earthquake / ज्वालामुखीय भूकंप</p>",
+    "option2": "<p> Reservoir Induced Earthquake / जलाशय प्रेरित भूकंप</p>",
+    "option3": "<p> Tectonic earthquake / विवर्तनिक भूकंप</p>",
+    "option4": "<p> Collapse earthquake / निपात भूकंप</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Collapse earthquakes are a type of human-induced earthquake (or sometimes natural sinkhole collapse) that occurs in the areas of intense mining activity or underground cavities.<br/> निपात भूकंप एक प्रकार का मानव-प्रेरित भूकंप (या कभी-कभी प्राकृतिक सिंकहोल पतन) है जो तीव्र खनन गतिविधि या भूमिगत गुहाओं के क्षेत्रों में होता है।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Match the following types of plate boundaries with the landforms they create:<br/> Type of Plate Boundary Landform Formed<br/> 1. Ocean–Ocean Convergent Boundary (A) Mid-Atlantic Ridge<br/> 2. Continent–Continent Convergent Boundary (B) Mariana Trench and Island Arc<br/> 3. Divergent Boundary (C)Himalayas<br/> Options:<br/> </b>निम्नलिखित प्रकार की प्लेट सीमाओं का उनके द्वारा निर्मित भू<b>-</b>आकृतियों से मिलान कीजिए<b>:<br/> </b>विकल्प<b>:</b></p>",
+    "option1": "<p> 1-(B), 2-(A), 3-(C)</p>",
+    "option2": "<p> 1-(C), 2-(B), 3-(A)</p>",
+    "option3": "<p> 1-(A), 2-(C), 3-(B)</p>",
+    "option4": "<p> 1-(B), 2-(C), 3-(A)</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 1. Ocean–Ocean Convergence → Mariana Trench and Island Arc (B)<br/> 2. Continent–Continent Convergence → Himalayas (C)<br/> 3. Divergent Boundary → Mid-Atlantic Ridge (A)<br/> 4. महासागर-महासागर अभिसरण मारियाना ट्रेंच और द्वीप चाप (B)<br/> 5. महाद्वीप-महाद्वीप अभिसरण हिमालय (C)<br/> 6. अपसारी सीमा मध्य-अटलांटिक कटक (A)</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p><strong>Consider the following statements about the Earth's heat:<br/> 1. The temperature increase is not uniform from the surface to the core.<br/> 2. The rate of temperature increase is much slower in the core than in the crust/upper mantle.<br/> Which of the statements given above is/are correct?</strong><br/> पृथ्वी की ऊष्मा के बारे में निम्नलिखित कथनों पर विचार कीजिए<strong>:<br/> 1. </strong>तापमान वृद्धि सतह से कोर तक एक समान नहीं है।<br/> <strong>2. </strong>तापमान वृद्धि की दर भूपर्पटी<strong>/</strong>ऊपरी मेंटल की तुलना में कोर में बहुत धीमी होती है।<br/> उपर्युक्त कथनों में से कौन<strong>-</strong>सा<strong>/</strong>से सही है<strong>/</strong>हैं<strong>?</strong></p>",
+    "option1": "<p>I only / केवल I</p>",
+    "option2": "<p>II only / केवल II</p>",
+    "option3": "<p>Both I and II / I और II दोनों</p>",
+    "option4": "<p>Neither I nor II / न तो I और न ही II</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>The temperature increase inside the Earth is not uniform from the surface to the core; the rate is steepest in the crust and upper mantle, then becomes much slower in the core.<br/> दोनों कथन सही हैं। कथन I सत्य है : तापमान वृद्धि की दर गहराई के साथ बदलती रहती है। कथन II सत्य है: वृद्धि की दर सतह (भूपर्पटी/ऊपरी मेंटल) के पास बहुत तेज होती है और निचले मेंटल और कोर में काफी धीमी हो जाती है</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>The entire Mantle layer is primarily characterized by the chemical composition of SiMa (Silica and Magnesium) and extends down to a depth of approximately:<br/> </b>संपूर्ण मेंटल परत मुख्य रूप से <b>SiMa (</b>सिलिका और मैग्नीशियम<b>) </b>की रासायनिक संरचना की विशेषता है और लगभग गहराई तक फैली हुई है</p>",
+    "option1": "<p> 100 km / 100 किमी</p>",
+    "option2": "<p> 2900 km / 2900 किमी</p>",
+    "option3": "<p> 5100 km / 5100 किमी</p>",
+    "option4": "<p> 6370 km / 6370 किमी</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> SiMa is chemically characterized and extends from the Moho discontinuity (about 5–50 km) to the Gutenberg discontinuity at 2900 km.<br/> मेंटल रासायनिक रूप से SiMa की विशेषता है और यह मोहो असंततता (लगभग 5-50 किमी) से 2900 किमी पर गुटेनबर्ग असंततता तक फैला हुआ है।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>An earthquake of 7.7 magnitude hit Bhuj in Gujarat in 2001. According to the Indian Seismic Zoning Map, the area would most likely fall under which high-risk zone?<br/> </b>गुजरात के भुज में <b>2001 </b>में <b>7.7 </b>तीव्रता का भूकंप आया था। भारतीय भूकंपीय क्षेत्रीय मानचित्र के अनुसार<b>, </b>यह क्षेत्र किस उच्च जोखिम वाले क्षेत्र के अंतर्गत आने की संभावना है<b>?</b></p>",
+    "option1": "<p> Zone II / जोन II</p>",
+    "option2": "<p> Zone III / जोन III</p>",
+    "option3": "<p> Zone IV / जोन IV</p>",
+    "option4": "<p> Zone V / जोन V</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> An earthquake of magnitude is extremely powerful. Bhuj is historically one of the highest risk areas in India; hence it falls under the maximum risk category, Zone V.<br/> परिमाण का भूकंप अत्यंत शक्तिशाली होता है। भुज ऐतिहासिक रूप से भारत में सबसे अधिक जोखिम वाले क्षेत्रों में से एक है; इसलिए यह अधिकतम जोखिम श्रेणी, जोन V के अंतर्गत आता है।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>Which one of the following is not classified as a human-induced type of earthquake, according to the document's classification?<br/> </b>दस्तावेज़ के वर्गीकरण के अनुसार<b>, </b>निम्नलिखित में से किसे मानव<b>-</b>प्रेरित प्रकार के भूकंप के रूप में वर्गीकृत नहीं किया गया है<b>?</b></p>",
+    "option1": "<p> Collapse earthquake / पतन भूकंप</p>",
+    "option2": "<p> Volcanic earthquake / ज्वालामुखीय भूकंप</p>",
+    "option3": "<p> Explosion earthquake / विस्फोट भूकंप</p>",
+    "option4": "<p> Reservoir Induced earthquake / जलाशय प्रेरित भूकंप</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The document lists Volcanic earthquakes as a natural phenomenon resulting from volcanic eruption, distinct from the human-induced types like Collapse, Explosion, and Reservoir Induced earthquakes.<br/> दस्तावेज़ में ज्वालामुखीय भूकंप को ज्वालामुखी विस्फोट के परिणामस्वरूप एक प्राकृतिक घटना के रूप में सूचीबद्ध किया गया है, जो मानव-प्रेरित प्रकारों जैसे पतन, विस्फोट और जलाशय प्रेरित भूकंपों से अलग है।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - GEOGRAPHY</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">GEOGRAPHY - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

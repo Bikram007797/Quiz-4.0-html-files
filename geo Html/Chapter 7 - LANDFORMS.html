@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY - LANDFORMS QUIZ [14-10-2025] - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>GEOGRAPHY - LANDFORMS QUIZ [14-10-2025]</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>Which landform is created by a glacier and is described as sea water entering into a glacial valley?<br/> </b>कौन सी भू<b>-</b>आकृति हिमनद द्वारा निर्मित होती है तथा इसे हिमनद घाटी में प्रवेश करने वाले समुद्री जल के रूप में वर्णित किया जाता है<b>?</b></p>",
+    "option1": "<p> Moraine / हिमोढ़</p>",
+    "option2": "<p> Atoll / प्रवालद्वीप</p>",
+    "option3": "<p> Fjord / हिमनदीय खाड़ी</p>",
+    "option4": "<p> Arête / तीक्ष्ण कटक</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> A glacial bay (fjord) is a U-shaped glacial valley drained by seawater, typically found on high-latitude, mountainous coasts.<br/> An atoll is a ring-shaped coral reef or a chain of islands that surrounds a lagoon (a type of shallow lake). A fjord is a long, narrow arm of the sea that lies between high, steep cliffs and is formed when seawater fills deep valleys carved by glaciers.<br/> एक हिमनदीय खाड़ी (फजॉर्ड) एक U-आकार की हिमनद घाटी होती है जो समुद्र के पानी से होती है, जो आमतौर पर उच्च-अक्षांश, पहाड़ी तटों पर पाई जाती है।<br/> एटोल एक वलय के आकार की प्रवाल भित्ति या द्वीपों की एक श्रृंखला होती है जो एक लैगून (एक प्रकार की छिछली झील) को घेरे रहती है। फियोर्ड समुद्र की एक लंबी, संकरी भुजा होती है जो ऊँची, खड़ी चट्टानों के बीच स्थित होती है और ग्लेशियरों द्वारा बनाई गई गहरी घाटियों में समुद्र के पानी से भर जाने के कारण बनती है।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>Which of the following is a depositional landform created by sea waves?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी समुद्री लहरों द्वारा निर्मित निक्षेपणात्मक भू<b>-</b>आकृति है<b>?</b></p>",
+    "option1": "<p> Cliff / भृगु</p>",
+    "option2": "<p> Cave / गुफा</p>",
+    "option3": "<p> Arch / आर्च</p>",
+    "option4": "<p> Spit / स्पिट</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> A spit or sandspit is a depositional strip or beach landform located along coasts or lakes. A rift is a steep, high, and nearly vertical rock wall of a hill or coast, often formed by the forces of weathering and erosion. A sea cave, also known as a coastal cave, is a type of cave formed primarily by the impact of ocean waves.<br/> स्पिट या सैंडस्पिट तटों या झीलों के किनारे स्थित एकनिक्षेपण पट्टी या समुद्र तट की भू-आकृति है। भृगु किसी पहाड़ी या तट की एक खड़ी, ऊँची और लगभग लंबवत चट्टानी दीवार होती है, जो अक्सर अपक्षय और क्षरण की शक्तियों द्वारा निर्मित होती है। समुद्री गुफा को तटीय गुफा के रूप में भी जाना जाता है, यह एक प्रकार की गुफा है जो मुख्य रूप से समुद्र की लहरों के प्रभाव से बनती है।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>Karst topography is mainly found in regions where rocks are made of:<br/> </b>कार्स्ट स्थलाकृति मुख्यतः उन क्षेत्रों में पाई जाती है जहां चट्टानें निम्नलिखित से बनी होती हैं<b>:</b></p>",
+    "option1": "<p> Granite and Sandstone / ग्रेनाइट और बलुआ पत्थर</p>",
+    "option2": "<p> Basalt and Marble / बेसाल्ट और संगमरमर</p>",
+    "option3": "<p> Limestone and Dolomite / चूना पत्थर और डोलोमाइट</p>",
+    "option4": "<p> Shale and Gneiss / शेल और नीस</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Karst Topography is mainly created by the solvent action of groundwater on rocks rich in calcium carbonate, such as Limestone and Dolomite.<br/> कार्स्ट स्थलाकृति मुख्य रूप से कैल्शियम कार्बोनेट से समृद्ध चट्टानों, जैसे चूना पत्थर और डोलोमाइट, पर भूजल की विलायक क्रिया द्वारा निर्मित होती है।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>The erosional landform created by wind among the following is:<br/> </b>निम्नलिखित में से वायु द्वारा निर्मित अपरदनात्मक भू<b>-</b>आकृति है<b>:</b></p>",
+    "option1": "<p> Sand Dunes / बालुका स्तूप</p>",
+    "option2": "<p> Barchan / बरखान</p>",
+    "option3": "<p> Mushroom rock / मशरूम रॉक</p>",
+    "option4": "<p> Seif / सेफ</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Mushroom rock, Pediplain, Playas, and Pedestal rocks are common erosional landforms created by wind (Aeolian processes). Sand Dunes, Barchan, and Seif are all depositional features. A barkhan is a crescent-shaped sand dune formed by winds blowing primarily from a single direction.<br/> मशरूम चट्टान, पेडीप्लेन, प्लायास और पेडेस्टल चट्टानें हवा (वायुजनित प्रक्रियाओं) द्वारा निर्मित सामान्य अपरदनात्मक भू-आकृतियाँ हैं। बालुका स्तूप (रेत के टीले), बरखान और सेफ (लंबे, संकरे और अनुदैर्ध्य रेत के टीले) सभी निक्षेपण विशेषताएँ हैं। बरखान एक अर्धचंद्राकार रेत का टीला है जो मुख्य रूप से एक ही दिशा से चलने वाली हवा से बनता है।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>A naturally occurring opening or vent in the Earth's crust where lava or magma erupts is a:<br/> </b>पृथ्वी की भूपर्पटी में एक प्राकृतिक छिद्र या वेंट जहाँ लावा या मैग्मा फूटता है<b>, </b>वह है<b>:</b></p>",
+    "option1": "<p> Geyser / उष्‍णोत्‍स</p>",
+    "option2": "<p> Glacier / हिमनदी</p>",
+    "option3": "<p> Plateau / पठार</p>",
+    "option4": "<p> Volcano / ज्‍वालामुखी</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> A Volcano is the opening or vent through which molten rock (lava), ash, and gases escape from the Earth's interior to the surface.<br/> ज्वालामुखी वह छिद्र या वेंट है जिसके माध्यम से पिघली हुई चट्टान (लावा), राख और गैसें पृथ्वी के आंतरिक भाग से सतह पर निकलती हैं।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>Which pair of landforms is formed primarily by Depositional processes in their respective landform categories?<br/> </b>भू<b>-</b>आकृतियों का कौन सा युग्म मुख्यतः अपनी<b>-</b>अपनी भू<b>-</b>आकृतियों में निक्षेपण प्रक्रियाओं द्वारा निर्मित होता है<b>?</b></p>",
+    "option1": "<p> Delta (River) and Cirque (Glacier) / डेल्टा (नदी) और सर्क (हिमनद)</p>",
+    "option2": "<p> Ox-bow Lake (River) and Moraine (Glacier) / ऑक्स-बो झील (नदी) और हिमोढ़ (हिमनद)</p>",
+    "option3": "<p> Waterfall (River) and Arête (Glacier) / झरना (नदी) और एरेट (ग्लेशियर)</p>",
+    "option4": "<p> Canyon (River) and Horn (Glacier) / घाटी (नदी) और हॉर्न (हिमनद)</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Ox-bow lakes are formed by the depositional/erosional cut-off of a river meander. Moraines are depositional heaps of glacial debris. Cirques, Arêtes, Waterfalls, Canyon, and Horns are erosional.<br/> ऑक्स-बो झीलें नदी के विसर्प के निक्षेपण/अपरदनात्मक कटाव से बनती हैं। हिमोढ़ हिमनद मलबे के निक्षेपणात्मक ढेर होते हैं। सर्क, एरेट, झरने, घाटी और हॉर्न अपरदनात्मक होते हैं।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Consider the following pairs: </b>निम्नलिखित युग्मों पर विचार करें<b>:<br/> 1. V-shaped valley (V-</b>आकार की घाटी<b>) - Erosional feature of a River's Youthful stage (</b>नदी की युवावस्था की अपरदनात्मक विशेषता<b>)<br/> 2. Stalagmite (</b>स्टैलेग्माइट<b>) - Depositional feature created by Groundwater (</b>भूजल द्वारा निर्मित निक्षेपणात्मक विशेषता<b>)<br/> 3. Drumlin (</b>ड्रमलिन<b>) - Depositional feature created by Sea Waves (</b>समुद्री तरंगों द्वारा निर्मित निक्षेपणात्मक विशेषता<b>)<br/> Which of the pairs given above is/are correctly matched?<br/> </b>उपर्युक्त युग्मों में से कौन<b>-</b>सा<b>/</b>से सही सुमेलित है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option2": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Pairs 1 and 2 are correct. Pair 3 is incorrect because Drumlins are depositional features created by Glaciers, not Sea Waves.<br/> युग्म 1 और 2 सही हैं । युग्म 3 गलत है क्योंकि ड्रमलिन हिमनदों द्वारा बनाई गई निक्षेपण विशेषताएं हैं, न कि समुद्री लहरों द्वारा ।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>Which landform is correctly associated with the process of formation and its agent?<br/> </b>कौन सी भू<b>-</b>आकृति निर्माण प्रक्रिया और उसके कारक से सही रूप से संबद्ध है<b>?</b></p>",
+    "option1": "<p> Canyon - Depositional - River / घाटी - निक्षेपण - नदी</p>",
+    "option2": "<p> Alluvial Fan - Erosional - River / जलोढ़ पंख - अपरदन - नदी</p>",
+    "option3": "<p> Barchan - Erosional - Wind / बरखान - अपरदन - पवन</p>",
+    "option4": "<p> Plunge Pool - Erosional - River / अवसादन ताल - अपरदन - नदी</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Plunge pools are correctly matched as an erosional feature created by rivers (found at the base of waterfalls). The Canyon is erosion, not depositional. Alluvial Fan is depositional, not erosional. Barchan is depositional, not erosional.<br/> अवसादन ताल नदियों द्वारा निर्मित अपरदनकारी विशेषता (झरनों के तल पर पाए जाते हैं) के रूप में सही रूप से सुमेलित हैं। घाटी अपरदनकारी है, निक्षेपणकारी नहीं। जलोढ़ पंख निक्षेपणकारी है, अपरदनकारी नहीं। बरखान निक्षेपणकारी है, अपरदनकारी नहीं।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Consider the following statements regarding River Landforms:<br/> </b>नदी भू<b>-</b>आकृतियों के संबंध में निम्नलिखित कथनों पर विचार कीजिए<b>:<br/> 1. The river Jhelum is the one of the rivers to meander in its youthful stage. / </b>झेलम नदी अपनी युवावस्था में विसर्पित होने वाली नदियों में से एक है।<b><br/> 2. Meanders and Alluvial fans are depositional features of the river. / </b>विसर्प और जलोढ़ पंख नदी की निक्षेपण विशेषताएँ हैं।<b><br/> 3. Ox-bow lakes separate from the main river channel. / </b>गोखुर झीलें मुख्य नदी चैनल से अलग हो जाती हैं।<b><br/> Which of the statements given above is/are correct?<br/> </b>उपर्युक्त कथनों में से कौन<b>-</b>सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> II and III only / केवल II और III</p>",
+    "option2": "<p> I only / I केवल</p>",
+    "option3": "<p> I, II and III / I, II और III</p>",
+    "option4": "<p> I and II only / केवल I और II</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> All statements are correct. The Jhelum meanders near its source, unusually for a river in its youthful (mountain) stage. Meanders and Alluvial fans are indeed river depositional features. Ox-bow lakes are formed when the river cuts off a meander loop.<br/> सभी कथन सही हैं। झेलम अपने उद्गम के पास विसर्पित होती है, जो अपनी युवावस्था (पर्वतीय) अवस्था में एक नदी के लिए असामान्य है। विसर्प और जलोढ़ पंख वास्तव में नदी की निक्षेपण विशेषताएँ हैं। गोखुर झीलें तब बनती हैं जब नदी एक विसर्प लूप को काट देती है।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>Identify the correct sequence of features from the river's youthful stage to the old stage based on the dominance of the process:<br/> </b>प्रक्रिया की प्रधानता के आधार पर नदी की युवावस्था से वृद्धावस्था तक की विशेषताओं का सही क्रम पहचानिए<b>:</b></p>",
+    "option1": "<p> Delta - Meanders - Waterfall / डेल्टा - विसर्प - जलप्रपात</p>",
+    "option2": "<p> Ox-bow Lake - Flood plain - Canyon / ऑक्स-बो झील - बाढ़ का मैदान - घाटी</p>",
+    "option3": "<p> Canyon - Meanders - Delta / घाटी - विसर्प - डेल्टा</p>",
+    "option4": "<p> Rapids - Ox-bow Lake - V-shaped valley / रैपिड्स - ऑक्सबो झील - V-आकार की घाटी</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The sequence of river stages is:<br/> 5. Youthful Stage (Erosion dominant): Canyon (or V-shaped valley, Rapids).<br/> 6. Mature Stage (Erosion/Deposition balance): Meanders, Floodplain formation.<br/> 7. Old Stage (Deposition dominant): Delta, Ox-bow Lakes.<br/> 8. The correct progression is Canyon → Meanders → Delta.<br/> नदी के चरणों का क्रम है:<br/> 9. युवावस्था (अपरदन प्रधान): घाटी (या V-आकार की घाटी, रैपिड्स)।<br/> 10. परिपक्व अवस्था (अपरदन/निक्षेपण संतुलन): विसर्प, बाढ़ के मैदान का निर्माण।<br/> 11. पुरानी अवस्था (निक्षेपण प्रधान): डेल्टा, ऑक्सबो झीलें।<br/> 12. सही क्रम है: घाटी → विसर्प → डेल्टा।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Which of the following features is not an erosional landform created by groundwater (Karst Topography)?<br/> </b>निम्नलिखित में से कौन सी विशेषता भूजल <b>(</b>कार्स्ट स्थलाकृति<b>) </b>द्वारा निर्मित अपरदनात्मक भू<b>-</b>आकृति नहीं है<b>?</b></p>",
+    "option1": "<p> Dolines / डोलाइन</p>",
+    "option2": "<p> Lapies / लैपीज़</p>",
+    "option3": "<p> Sink holes / सिंकहोल</p>",
+    "option4": "<p> Stalactite / हिमलंब</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Stalactites (hanging from the cave roof) and Stalagmites (rising from the cave floor) are depositional features formed by the precipitation of calcium carbonate from dripping water. Dolines, Lapies, and Sink holes are erosional forms created by dissolution.<br/> स्टैलेक्टाइट्स/हिमलंब (गुफा की छत से लटकते हुए) और स्टैलेग्माइट्स (गुफा के तल से उठते हुए) टपकते पानी से कैल्शियम कार्बोनेट के अवक्षेपण से निर्मित निक्षेपणीय आकृतियाँ हैं। डोलाइन्स, लैपीज़ और सिंक होल, विघटन द्वारा निर्मित अपरदनात्मक आकृतियाँ हैं।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Which of the geographical features mentioned below involves a narrow strip of water connecting two larger bodies of water?<br/> </b>नीचे उल्लिखित भौगोलिक विशेषताओं में से किसमें दो बड़े जल निकायों को जोड़ने वाली पानी की एक संकरी पट्टी शामिल है<b>?</b></p>",
+    "option1": "<p> Peninsula / प्रायद्वीप</p>",
+    "option2": "<p> Isthmus / स्थलसंधि</p>",
+    "option3": "<p> Strait / जलडमरूमध्य</p>",
+    "option4": "<p> Archipelago / द्वीपसमूह</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> A Strait is a naturally formed narrow strip of water that connects two larger bodies of water. An Isthmus is a narrow strip of land connecting two large landmasses.<br/> जलडमरूमध्य प्राकृतिक रूप से निर्मित पानी की एक संकरी पट्टी है जो दो बड़े जल निकायों को जोड़ती है। स्थलसंधि दो बड़े भूभागों को जोड़ने वाली भूमि की एक संकरी पट्टी है।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Which landform is associated with the deposition of sand removed from a depression by wind (deflation)?<br/> </b>कौन सी भू<b>-</b>आकृति वायु द्वारा अवनमन से हटाई गई रेत के निक्षेपण से संबंधित है<b>?</b></p>",
+    "option1": "<p> Oasis / मरूद्यान</p>",
+    "option2": "<p> Aquifer / जलभृत</p>",
+    "option3": "<p> Dunes / टिब्बा या टीला</p>",
+    "option4": "<p> Pediplain / पदस्थली</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Deflation is the lifting and removal of loose material by wind, often creating a depression. The sand removed is then deposited elsewhere to form various types of Dunes. A Pediplain is an erosional plain created by wind.<br/> अपस्फीति, हवा द्वारा ढीली सामग्री को ऊपर उठाने और हटाने की प्रक्रिया है, जिससे अक्सर एक गड्ढा बन जाता है। हटाई गई रेत फिर अन्यत्र जमा होकर विभिन्न प्रकार के टीलों का निर्माण करती है। पदस्थली/पेडीप्लेन, हवा द्वारा निर्मित एक अपरदनात्मक मैदान है।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Match the following Landforms with their forming agent:<br/> </b>निम्नलिखित भू<b>-</b>आकृतियों को उनके निर्माण कारकों के साथ सुमेलित करें<b>:<br/> Landforms: </b>भू<b>-</b>आकृतियाँ<b>:<br/> 1. Horn / </b>सींग<b><br/> 2. Delta / </b>डेल्टा<b><br/> 3. Cliff / </b>टीला<b><br/> Forming Agents: </b>गठन एजेंट<b>:<br/> 4. Sea Waves / </b>समुद्री लहरें<b><br/> 5. Glacier / </b>हिमनद<b><br/> 6. River / </b>नदी<b><br/> Codes:</b></p>",
+    "option1": "<p> I-1, II– 3, III – 2</p>",
+    "option2": "<p> I-2, II – 3, III – 1</p>",
+    "option3": "<p> I-2, II– 1, III – 3</p>",
+    "option4": "<p> I-3, II – 2, III – 1</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 7. I. Horn is a sharp, pyramid-like peak formed by the erosion of glaciers.<br/> 8. II. Delta is a depositional feature created by a River at its mouth.<br/> 9. III. Cliff is an erosional feature created by the hydraulic action and abrasion of Sea Waves.<br/> 10. I. हॉर्न एक नुकीला, पिरामिड जैसा शिखर है जो हिमनदों की अपरदन क्रिया द्वारा निर्मित होता है।<br/> 11. II. डेल्टा एक निक्षेपण आकृति है जो नदी के मुहाने पर बनती है।<br/> 12. III. भृगु एक अपरदन आकृति है जो समुद्री लहरों की जलीय क्रिया और घर्षण द्वारा निर्मित होती है।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Wearing a way of landscape by different agents like water, wind and ice is called________.<br/> </b>जल<b>, </b>वायु और बर्फ जैसे विभिन्न कारकों द्वारा भूदृश्य के क्षरण को <b>_________ </b>कहा जाता है।</p>",
+    "option1": "<p> Weathering /अपक्षय</p>",
+    "option2": "<p> Erosion / क्षरण</p>",
+    "option3": "<p> Metamorphosis / कायापलट</p>",
+    "option4": "<p> Sedimentation / अवसादन</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Erosion is the process where agents like water, wind, and ice wear away the land and transport the eroded material. The question specifically mentions the \"wearing away\" (destruction) by these transporting agents, which defines erosion. Weathering is just the breaking down of rock in situ (in place), without movement.<br/> अपरदन (Erosion) वह प्रक्रिया है जिसमें जल, वायु और बर्फ जैसे कारक भूमि को घिसते हैं और अपरदित सामग्री को एक स्थान से दूसरे स्थान पर स्थानांतरित करते हैं। प्रश्न में विशेष रूप से इन कारकों द्वारा भूदृश्य के क्षरण (Wearing away) का उल्लेख है, जो अपरदन को परिभाषित करता है। अपक्षय (Weathering) केवल चट्टानों का अपने स्थान पर टूटना है, जिसमें किसी भी प्रकार का संचलन शामिल नहीं होता है।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>The depositional pattern of CaCO3 and other materials that extend upwards from the floor of a limestone cavern is known as:<br/> </b>चूना पत्थर की गुफा के तल से ऊपर की ओर फैले <b>CaCO3 </b>और अन्य पदार्थों के निक्षेपण पैटर्न को इस रूप में जाना जाता है<b>:</b></p>",
+    "option1": "<p> Stalactite / स्टैलेक्टाइट</p>",
+    "option2": "<p> Dripstone / ड्रिपस्टोन</p>",
+    "option3": "<p> Stalagmite / स्टैलेग्माइट</p>",
+    "option4": "<p> Hatectite / हेटेक्टाइट</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Stalagmite is a depositional landform created inside limestone caves. It is formed when water drops containing dissolved calcium carbonate (CaCO₃) fall onto the cave floor. As the water evaporates, the residual CaCO₃ is deposited and gradually builds up a cone-shaped pillar extending upwards from the floor. A useful mnemonic: Stalagmites rise from the main floor.<br/> स्टैलेग्माइट चूना पत्थर की गुफाओं के अंदर बनने वाली एक निक्षेपण भू-आकृति है। यह तब बनती है जब घुले हुए कैल्शियम कार्बोनेट (CaCO₃) युक्त पानी की बूँदें गुफा के तल पर गिरती हैं। जैसे ही पानी वाष्पित होता है, अवशिष्ट CaCO₃ जमा हो जाता है और धीरे-धीरे तल से ऊपर की ओर एक शंकु के आकार का स्तंभ बनाता है। याद रखने योग्य तथ्य: यह नीचे से ऊपर की ओर बढ़ता है, जबकि स्टैलेक्टाइट छत से नीचे लटकता है।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>A long, winding ridge of stratified sand and gravel is known as:<br/> </b>स्तरीकृत रेत और बजरी की एक लंबी<b>, </b>घुमावदार रिज को क्या कहते हैं<b>?</b></p>",
+    "option1": "<p> Moraine / मोरैने</p>",
+    "option2": "<p> esker / एस्कर</p>",
+    "option3": "<p> Aquifer / एक्विफायर</p>",
+    "option4": "<p> Erratic / अनियमित</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> An esker is a long, winding ridge composed of stratified sand and gravel. It is an outwash deposit formed by sediments laid down by meltwater streams flowing beneath or within a stagnant or retreating glacial ice sheet. Moraines are typically unstratified deposits found along the edges of the glacier.<br/> एस्कर स्तरीकृत रेत और बजरी से बनी एक लंबी, घुमावदार रिज होती है। यह एक अपक्षालित निक्षेप (outwash deposit) है जो पिघले हुए जल की धाराओं द्वारा जमा किए गए तलछट से बनता है जो स्थिर या पीछे हटती हिमनद बर्फ की चादर के नीचे या भीतर बहती हैं। मोरैने आमतौर पर हिमनद के किनारों पर पाए जाने वाले गैर-स्तरीकृत निक्षेप होते हैं।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>The steep rocky coast rising almost vertically above sea water is called ______.<br/> </b>समुद्र के पानी से लगभग लंबवत ऊपर उठे हुए खड़ी चट्टानी तट को <b>______ </b>कहा जाता है।</p>",
+    "option1": "<p> sea caves / समुद्री गुफा</p>",
+    "option2": "<p> sea arches / समुद्री आर्क</p>",
+    "option3": "<p> sea cliff समुद्री भृगु</p>",
+    "option4": "<p> ox-bow lake / ओक्स-वो झील</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> A sea cliff is a steep, high rock face formed when the sea waves erode the base of the rock mass, creating a notch. Over time, the rock above the notch collapses due to gravity, forming a coast that rises almost vertically above the sea water.<br/> समुद्री भृगु (Sea Cliff) एक खड़ी, ऊँची चट्टानी दीवार होती है जो तब बनती है जब समुद्री लहरें चट्टान समूह के आधार को अपरदित करती हैं, जिससे एक खांचा बनता है। समय के साथ, खांचे के ऊपर की चट्टान गुरुत्वाकर्षण के कारण ढह जाती है, और इस प्रकार समुद्र के पानी से लगभग लंबवत ऊपर उठा हुआ एक तट बनता है।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Which of the following mass movements occurs when saturated soil and debris move down a slope during heavy rainfall?<br/> </b>निम्नलिखित में से कौन सा सामूहिक संचलन तब होता है जब भारी वर्षा के दौरान संतृप्त मिट्टी और मलबा ढलान से नीचे बहता है<b>?</b></p>",
+    "option1": "<p> Rockfall / चट्टान खिसकना</p>",
+    "option2": "<p> Avalanche / हिमस्खलन</p>",
+    "option3": "<p> Mud flow / पंक प्रवाह</p>",
+    "option4": "<p> Soil creep / मृदा सर्पण</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> A mud flow is a rapid form of mass movement where a large volume of saturated soil and debris becomes extremely fluid, often due to heavy rainfall or rapid snowmelt, and flows quickly down a slope. Rockfall is sudden free-fall, while Soil creep is extremely slow.<br/> पंक प्रवाह (Mud flow) सामूहिक संचलन का एक तीव्र रूप है जहाँ संतृप्त मिट्टी और मलबा भारी वर्षा या तेजी से बर्फ पिघलने के कारण अत्यधिक तरल हो जाता है और ढलान से तेजी से नीचे बहता है। यह जल की अधिक मात्रा के कारण होता है। चट्टान खिसकना अचानक मुक्त रूप से गिरना है, जबकि मृदा सर्पण अत्यंत धीमी प्रक्रिया है।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Which of the following is an erosional landform created primarily by river action?<br/> </b>निम्नलिखित में से कौन सा मुख्य रूप से नदी क्रिया द्वारा निर्मित अपरदनात्मक भू<b>-</b>आकृति है<b>?</b></p>",
+    "option1": "<p> Moraine / मोरैने</p>",
+    "option2": "<p> Delta / डेल्टा</p>",
+    "option3": "<p> Gorge / महाखड्ड</p>",
+    "option4": "<p> Levee / तटबंध</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> A Gorge is a steep-sided, narrow valley formed by the river's intensive downcutting (vertical erosion), typically in its upper course or youthful stage. Delta and Levee are depositional landforms, while Moraine is a glacial deposit.<br/> गॉर्ज (महाखड्ड) एक संकरी, खड़ी-किनारों वाली घाटी है जो नदी की तीव्र अधोगामी कटाव (ऊर्ध्वाधर अपरदन) क्रिया द्वारा निर्मित होती है, जो आमतौर पर नदी के ऊपरी या युवा चरण में होती है। डेल्टा और तटबंध (Levee) निक्षेपात्मक भू-आकृतियाँ हैं, जबकि मोरैने हिमनद निक्षेप है।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Fine-grained bed of ephemeral lake in a desert is also known as:<br/> </b>रेगिस्तान में अल्पकालिक झील के बारीक कणों वाले तल को भी कहा जाता है</p>",
+    "option1": "<p> Playa / प्लाया</p>",
+    "option2": "<p> Oasis / ओएसिस</p>",
+    "option3": "<p> Drumlin / ड्रमलिन</p>",
+    "option4": "<p> Natural levee / प्राकृतिक तटबंध</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> A Playa is the term for the flat, dry, and typically fine-grained bed of a temporary (ephemeral) lake found in desert basins. When it holds water, it is called a playa lake; when dry, it is a salt-covered flat. Oasis is a fertile area, and Drumlins are glacial features.<br/> प्लाया रेगिस्तानी घाटियों में पाई जाने वाली अस्थायी (अल्पकालिक) झील के समतल, सूखे और आमतौर पर महीन दाने वाले तल के लिए प्रयुक्त शब्द है। जब इसमें पानी होता है, तो इसे प्लाया झील कहा जाता है; जब यह सूख जाता है, तो यह नमक से ढका हुआ समतल क्षेत्र होता है। ओएसिस (Oasis) एक उपजाऊ क्षेत्र है, और ड्रमलिन (Drumlins) हिमनदीय भू-आकृति हैं।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Which one of the following landforms is/are formed by wind erosion?<br/> </b>निम्नलिखित में से कौन सी भू<b>-</b>आकृति हवा के अपरदन से बनती है<b>?</b></p>",
+    "option1": "<p> Cirque/ सर्क</p>",
+    "option2": "<p> Stack / स्टैक</p>",
+    "option3": "<p> Zeugen / ज़्यूजेन</p>",
+    "option4": "<p> Stack and Zeugen both / स्टैक और ज़्यूजेन दोनों</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Zeugen is a mushroom-shaped ridge formed in desert areas due to differential wind erosion (deflation and abrasion). Wind preferentially erodes the softer rock layers, leaving the harder layers standing. Cirque is a glacial feature, and Stack is a coastal erosional feature formed by sea waves.<br/> ज़्यूजेन एक छत्रक (mushroom) के आकार की भू-आकृति है जो मरुस्थलीय क्षेत्रों में विभेदक हवा के अपरदन (अपस्फीति और अपघर्षण) के कारण बनती है। हवा नरम चट्टान की परतों को प्राथमिकता से अपरदित करती है, जिससे कठोर परतें खड़ी रह जाती हैं। सर्क (Cirque) एक हिमनदीय विशेषता है, और स्टैक (Stack) समुद्री लहरों द्वारा निर्मित एक तटीय अपरदनात्मक विशेषता है।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>A flat or gently sloping surface left behind after river erosion, often with some resistant remnants, is known as:<br/> </b>नदी के कटाव के बाद बची हुई समतल या धीमी ढलान वाली सतह<b>, </b>जिसमें अक्सर कुछ प्रतिरोधी अवशेष होते हैं<b>, </b>को निम्न रूप में जाना जाता है<b>:</b></p>",
+    "option1": "<p> Plateau / पठार</p>",
+    "option2": "<p> Peneplain / पेनिप्लेन</p>",
+    "option3": "<p> Floodplain बाढ़ का मैदान</p>",
+    "option4": "<p> Monadnock /</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> A Peneplain (meaning \"almost a plain\") is the final, low-relief, gently sloping surface formed by long-term river erosion and denudation. It represents the ultimate stage of the erosion cycle. The occasional isolated hills that remain due to their resistance to erosion are called Monadnocks.<br/> पेनीप्लेन (संप्राय मैदान) (जिसका अर्थ है \"लगभग मैदान\") वह अंतिम, निम्न-उच्चावच वाली, धीमी ढलान वाली सतह है जो दीर्घकालिक नदी अपरदन और अनाच्छादन के बाद बनती है। यह अपरदन चक्र की अंतिम अवस्था का प्रतिनिधित्व करती है। जो प्रतिरोधी चट्टानों के कारण इक्का-दुक्का पहाड़ियाँ बच जाती हैं, उन्हें मोनाडनॉक कहा जाता है।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Which of the following factors best explains the formation of ox-bow lakes along river courses?<br/> </b>निम्नलिखित में से कौन सा कारक नदी के किनारे गोखुर झीलों के निर्माण को सबसे अच्छी तरह से समझाता है<b>?</b></p>",
+    "option1": "<p> Lateral erosion on the outer banks and deposition on the inner banks / बाहरी तटों पर पार्श्व अपरदन और आंतरिक तटों पर निक्षेपण।</p>",
+    "option2": "<p> Glacial retreat leaving depressions / हिमनदों के पीछे हटने से अवसाद उत्पन्न होते हैं।</p>",
+    "option3": "<p> Sudden uplift of riverbeds by tectonic activity / विवर्तनिक गतिविधि द्वारा नदी तल का अचानक उत्थान।</p>",
+    "option4": "<p> Tectonic uplift disrupting the flow / विवर्तनिक उत्थान प्रवाह को बाधित करता है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Ox-bow lakes are formed in the river's meandering (winding) stage, typically in the middle or lower course. The continuous process involves lateral erosion (cutting) on the concave (outer) bank and simultaneous deposition on the convex (inner) bank. Over time, the meander loop becomes extremely curved until the river cuts across the narrow neck of land, abandoning the old loop, which then becomes the ox-bow lake.<br/> गोखुर झीलें नदी के विसर्पण (meandering) चरण में, आमतौर पर मध्य या निचले मार्ग में बनती हैं। इस सतत प्रक्रिया में अवतल (बाहरी) किनारे पर पार्श्व अपरदन (काटना) और उत्तल (आंतरिक) किनारे पर निक्षेपण एक साथ होता है। समय के साथ, विसर्प पाश (meander loop) अत्यधिक घुमावदार हो जाता है जब तक कि नदी भूमि की संकरी गर्दन को काट नहीं देती, पुरानी पाश को छोड़ देती है, जो बाद में गोखुर झील बन जाती है।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>Which of the following statements regarding river meanders is/are correct?<br/> 1. It is a U-shaped bend in a river.<br/> 2. An extremely tight meander is called a gooseneck; it is likely to become a cutoff, or oxbow lake, after a flood.<br/> 3. Tectonic uplift can cause a river to continue downcutting along its meandering course, producing incised or entrenched meanders.<br/> Select the correct answer using the code given below:<br/> </b>नदी के विसर्पों के संबंध में निम्नलिखित में से कौन सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?<br/> 4. </b>यह नदी में एक <b>U-</b>आकार का मोड़ होता है।<b><br/> 5. </b>एक अत्यंत सघन विसर्प को गूज़नेक कहा जाता है<b>; </b>बाढ़ के बाद इसके कटऑफ या ऑक्सबो झील बनने की संभावना होती है।<b><br/> 6. </b>विवर्तनिक उत्थान के कारण नदी अपने विसर्पी मार्ग के साथ नीचे की ओर कटाव जारी रख सकती है<b>, </b>जिससे कटे हुए या जड़े हुए विसर्प बनते है<b><br/> </b>नीचे दिए गए कोड का उपयोग करके सही उत्तर चुनें<b>:</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> A meander is a U-shaped or S-shaped bend formed by river erosion and deposition. When it becomes very tight, it forms a gooseneck, which may later turn into an oxbow lake after a flood. In regions of tectonic uplift, rivers cut deeper into their old valleys, forming incised or entrenched meanders.<br/> विसर्प नदी के कटाव और निक्षेपण से बना एक यू-आकार/ S-आकार का मोड़ होता है। जब यह बहुत संकरा हो जाता है, तो यह एक गूज़नेक (हंस गर्दन) बनाता है, जो बाद में बाढ़ के बाद एक ऑक्सबो झील में बदल सकता है। विवर्तनिक उत्थान वाले क्षेत्रों में, नदियाँ अपनी पुरानी घाटियों में और गहराई तक कट जाती हैं, जिससे कटे हुए या जड़े हुए विसर्प बनते हैं।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - GEOGRAPHY</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">GEOGRAPHY - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

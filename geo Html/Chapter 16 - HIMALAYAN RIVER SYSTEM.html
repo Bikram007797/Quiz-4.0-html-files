@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY - HIMALAYAN RIVER SYSTEM QUIZ [26-10-2025] - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>GEOGRAPHY - HIMALAYAN RIVER SYSTEM QUIZ [26-10-2025]</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>The Ganga River is known as what in Bangladesh?<br/> </b>गंगा नदी को बांग्लादेश में किस नाम से जाना जाता है<b>?</b></p>",
+    "option1": "<p> Jamuna / जमुना</p>",
+    "option2": "<p> Meghna / मेघना</p>",
+    "option3": "<p> Padma / पद्मा</p>",
+    "option4": "<p> Hugli / हुगली</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Ganga River flows into Bangladesh and is known there as the Padma. This river later joins with the Jamuna (Brahmaputra) to form the Meghna, which finally drains into the Bay of Bengal.<br/> गंगा नदी बांग्लादेश में बहती है और वहाँ इसे पद्मा के नाम से जाना जाता है । यह नदी बाद में जमुना (ब्रह्मपुत्र) से मिलकर मेघना बनाती है, जो अंततः बंगाल की खाड़ी में गिरती है ।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>Which river is the longest tributary of the Ganga River?<br/> </b>गंगा नदी की सबसे लंबी सहायक नदी कौन सी है<b>?</b></p>",
+    "option1": "<p> Ghaghra / घाघरा</p>",
+    "option2": "<p> Kosi / कोसी</p>",
+    "option3": "<p> Yamuna / यमुना</p>",
+    "option4": "<p> Son / सोन</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Yamuna River, originating from Yamunotri Glacier, Banderpoonch peak, is cited as the longest tributary of the Ganga. It has a total length of 1370 km. It joins the Ganga at Prayagraj (Allahabad).<br/> यमुना नदी, जिसका उद्गम यमनोत्री हिमनद, बंदरपूंछ चोटी से होता है, गंगा की सबसे लंबी सहायक नदी है । इसकी कुल लंबाई 1370 किमी है । यह प्रयागराज (इलाहाबाद) में गंगा से मिलती है ।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>Which of the following cities is located on the bank of the Jhelum River?<br/> </b>निम्नलिखित में से कौन सा शहर झेलम नदी के किनारे स्थित है<b>?</b></p>",
+    "option1": "<p> Leh / लेह</p>",
+    "option2": "<p> Srinagar / श्रीनगर</p>",
+    "option3": "<p> Lucknow / लखनऊ</p>",
+    "option4": "<p> Ujjain / उज्जैन</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Srinagar is the city located on the banks of the Jhelum River, which originates from Verinag in J&amp;K. The Wular lake, the largest freshwater lake, also receives its water from the Jhelum.<br/> 5. Leh - Indus River<br/> 6. Lucknow - Gomti River<br/> 7. Ujjain - Shipra River<br/> श्रीनगर शहर झेलम नदी के किनारे स्थित है, जिसका उद्गम जम्मू-कश्मीर में वेरीनाग से होता है । वुलर झील, जो सबसे बड़ी मीठे पानी की झील है, को भी झेलम से पानी मिलता है ।<br/> 8. लेह - सिंधु नदी<br/> 9. लखनऊ - गोमती नदी<br/> 10. उज्जैन - शिप्रा</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>Where do the Alaknanda and Bhagirathi rivers meet to form the Ganga?<br/> </b>अलकनंदा और भागीरथी नदियाँ कहाँ मिलकर गंगा बनाती हैं<b>?</b></p>",
+    "option1": "<p> Vishnu Prayag / विष्णु प्रयाग</p>",
+    "option2": "<p> Rudra Prayag / रुद्र प्रयाग</p>",
+    "option3": "<p> Karna Prayag / कर्ण प्रयाग</p>",
+    "option4": "<p> Deva Prayag / देव प्रयाग</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The confluence of two rivers is called a 'Prayag'. The Alaknanda River meets the Bhagirathi River at Deva Prayag (Devprayag), after which the combined stream is named the Ganga.<br/> 5. Rudra Prayag - Alaknanda + Mandakini<br/> 6. Karn Prayag - Alaknanda + Pindar<br/> 7. Nanda Prayag - Alaknanda + Nandakini<br/> 8. Vishnu Prayag - Alaknanda + Dhauliganga<br/> दो नदियों के संगम को 'प्रयाग' कहा जाता है । अलकनंदा नदी भागीरथी नदी से देव प्रयाग पर मिलती है, जिसके बाद संयुक्त धारा को गंगा नाम दिया जाता है ।<br/> 9. रुद्र प्रयाग - अलकनंदा + मंदाकिनी<br/> 10. कर्ण प्रयाग - अलकनंदा + पिंडार<br/> 11. नंद प्रयाग - अलकनंदा + नंदाकिनी<br/> 12. विष्णु प्रयाग - अलकनंदा + धौलीगंगा</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>The Indus Water Treaty was signed between India and Pakistan in which year?<br/> </b>सिंधु जल संधि पर भारत और पाकिस्तान के बीच किस वर्ष हस्ताक्षर किए गए थे<b>?</b></p>",
+    "option1": "<p> 1947</p>",
+    "option2": "<p> 1960</p>",
+    "option3": "<p> 1971</p>",
+    "option4": "<p> 1977</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Indus Water Treaty was signed in 1960 in Karachi between J.L. Nehru and Ayub Khan. The World Bank was the mediator for this agreement, which is considered one of the most successful treaties around the world, but In April 2025, India temporarily suspended the treaty after the Pahalgam terrorist attack, citing national security concerns<br/> सिंधु जल संधि पर 1960 में कराची में जे.एल. नेहरू और अयूब खान के बीच हस्ताक्षर किए गए थे । विश्व बैंक इस समझौते के लिए मध्यस्थ था, जिसे दुनिया भर में सबसे सफल संधियों में से एक माना जाता है । लेकिन अप्रैल 2025 में, भारत ने पहलगाम आतंकवादी हमले के बाद राष्ट्रीय सुरक्षा चिंताओं का हवाला देते हुए संधि को अस्थायी रूप से निलंबित कर दिया |</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>Which drainage pattern resembles the branch of a tree?<br/> </b>कौन सा अपवाह तंत्र एक पेड़ की शाखा जैसा दिखता है<b>?</b></p>",
+    "option1": "<p> Trellis / जालीनुमा</p>",
+    "option2": "<p> Radial / अरीय</p>",
+    "option3": "<p> Dendritic / द्रुमाकृतिक</p>",
+    "option4": "<p> Centripetal / केंद्राभिमुख</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Dendritic drainage pattern resembles the branch of a tree. This pattern is typically found in areas where the underlying rock structure does not control the river's course.<br/> द्रुमाकृतिक (वृक्षाकार) जल निकासी पैटर्न एक पेड़ की शाखा जैसा दिखता है । यह तंत्र आमतौर पर उन क्षेत्रों में पाया जाता है जहां अंतर्निहित चट्टान संरचना नदी के मार्ग को नियंत्रित नहीं करती है ।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Which major river is known as the 'Sorrow of Bihar'?<br/> </b>किस प्रमुख नदी को <b>'</b>बिहार का शोक<b>' </b>कहा जाता है<b>?</b></p>",
+    "option1": "<p> Son / सोन</p>",
+    "option2": "<p> Gandak / गंडक</p>",
+    "option3": "<p> Kosi / कोसी</p>",
+    "option4": "<p> Ghaghra / घाघरा</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Kosi River is famously known as the Sorrow of Bihar because it frequently changes its course, which leads to devastating floods in the state. This makes it a significant feature of the Ganga River System.<br/> कोसी नदी को आमतौर पर बिहार का शोक कहा जाता है क्योंकि यह अक्सर अपना मार्ग बदलती है, जिसके कारण राज्य में विनाशकारी बाढ़ आती है । यह इसे गंगा नदी प्रणाली की एक महत्वपूर्ण विशेषता बनाता है।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>The 'Panchnad' of the Indus River system is the confluence of which five rivers?<br/> </b>सिंधु नदी प्रणाली का <b>'</b>पंचनद<b>' </b>किन पाँच नदियों का संगम है<b>?</b></p>",
+    "option1": "<p> Jhelum, Chenab, Ravi, Beas, Sutlej / झेलम, चिनाब, रावी, ब्यास, सतलुज</p>",
+    "option2": "<p> Shyok, Gilgit, Hunza, Zanskar, Nubra / श्योक, गिलगित, हुंजा, जांस्कर, नुब्रा</p>",
+    "option3": "<p> Jhelum, Chenab, Ravi, Indus, Sutlej / झेलम, चिनाब, रावी, सिंधु, सतलुज</p>",
+    "option4": "<p> Ganga, Yamuna, Godavari, Narmada, Tapi / गंगा, यमुना, गोदावरी, नर्मदा, तापी</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Panchnad is the collective name given to the five major tributaries of the Indus River that flow through Punjab: the Jhelum, Chenab, Ravi, Beas, and Sutlej. They meet the Indus River at Mithankot, Pakistan.<br/> पंचनद सिंधु नदी की उन पांच प्रमुख सहायक नदियों को दिया गया सामूहिक नाम है जो पंजाब से होकर बहती हैं: झेलम, चिनाब, रावी, ब्यास और सतलुज । वे पाकिस्तान के मिठानकोट में सिंधु नदी से मिलती हैं ।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Which of the following is an example of a Peninsular River?<br/> </b>निम्नलिखित में से कौन प्रायद्वीपीय नदी का उदाहरण है<b>?</b></p>",
+    "option1": "<p> Indus / सिंधु</p>",
+    "option2": "<p> Brahmaputra / ब्रह्मपुत्र</p>",
+    "option3": "<p> Narmada / नर्मदा</p>",
+    "option4": "<p> Ganga / गंगा</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Narmada River is listed as an example of a Peninsular River. Peninsular rivers are typically ephemeral (seasonal), have shorter and shallower courses, and most originate in the Western Ghats.<br/> नर्मदा नदी को प्रायद्वीपीय नदी के उदाहरण के रूप में सूचीबद्ध किया गया है । प्रायद्वीपीय नदियाँ आमतौर पर अल्पकालिक (मौसमी) होती हैं, इनका मार्ग छोटा और उथला होता है, और अधिकांश पश्चिमी घाट से निकलती हैं ।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>The Brahmaputra River is known by what name in Tibet (its origin)?<br/> </b>ब्रह्मपुत्र नदी को तिब्बत में <b>(</b>इसके उद्गम स्थल पर<b>) </b>किस नाम से जाना जाता है<b>?</b></p>",
+    "option1": "<p> Lohit / लोहित</p>",
+    "option2": "<p> Langquen Zangbo / लांगचेन ज़ांगबो</p>",
+    "option3": "<p> Siang / सियांग</p>",
+    "option4": "<p> Yarlung Zangbo (Tsangpo) / यारुलंग जांगबो (त्सांगपो)</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Brahmaputra River originates in Tibet from the Chemayungdung/Angsi Glacier. In Tibet, it is known as the Yarlung Tsangpo or Yarlung Zangbo. It is known as Siang/Dihang when it enters Arunachal Pradesh, India.<br/> ब्रह्मपुत्र नदी तिब्बत में चेमायुंगडुंग/आंग्सी ग्लेशियर से निकलती है । तिब्बत में, इसे यारलुंग त्सांगपो या यारलुंग जांगबो के नाम से जाना जाता है । जब यह भारत में अरुणाचल प्रदेश में प्रवेश करती है तो इसे सियांग/दिहांग के नाम से जाना जाता है ।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Which among the following tributaries of the Indus River does NOT pass through or enter Pakistan?<br/> </b>सिंधु नदी की निम्नलिखित सहायक नदियों में से कौन सी पाकिस्तान से होकर नहीं गुजरती या उसमें प्रवेश नहीं करती है<b>?</b></p>",
+    "option1": "<p> Jhelum / झेलम</p>",
+    "option2": "<p> Sutlej / सतलुज</p>",
+    "option3": "<p> Beas / ब्यास</p>",
+    "option4": "<p> Chenab / चिनाब</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Beas River, with the ancient name Bipasha, is the only tributary of the Indus that does not pass or enter Pakistan. It originates from the Rohtang pass and joins the Sutlej River within India.<br/> ब्यास नदी, जिसका प्राचीन नाम बिपाशा है, सिंधु की एकमात्र सहायक नदी है जो पाकिस्तान से होकर नहीं गुजरती या उसमें प्रवेश नहीं करती है । यह रोहतांग दर्रे से निकलती है और भारत के भीतर सतलुज नदी से मिल जाती है ।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>What is the characteristic feature of a Trellis drainage pattern?<br/> </b>जालीनुमा अपवाह तंत्र की विशेषता हैः</p>",
+    "option1": "<p> Rivers originating from a central point and flowing in all directions. / एक केंद्रीय बिंदु से निकलने वाली और सभी दिशाओं में बहने वाली नदियाँ।</p>",
+    "option2": "<p> Tributaries joining the main river at right angles. / सहायक नदियाँ मुख्य नदी से समकोण पर मिलती हैं।</p>",
+    "option3": "<p> Rivers draining their water into a central lake or depression. / नदियाँ अपना पानी एक केंद्रीय झील या अवसाद में गिराती हैं।</p>",
+    "option4": "<p> The pattern resembling the branch of a tree. / तंत्र एक पेड़ की शाखा जैसा दिखता है।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Trellis drainage pattern is characterized by tributaries joining the main river at a right angle. This pattern typically develops in areas with folded topography, where hard and soft rock strata exist parallel to each other.<br/> जालीनुमा अपवाह तंत्र की विशेषता सहायक नदियों का मुख्य नदी से समकोण पर मिलना है । यह पैटर्न आमतौर पर मोड़दार स्थलाकृति वाले क्षेत्रों में विकसित होता है, जहां कठोर और नरम चट्टानें एक-दूसरे के समानांतर मौजूद होती हैं ।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Assertion (A): Himalayan rivers are perennial, having water throughout the year.<br/> Reason (R): Himalayan rivers originate from glaciers.<br/> </b>दावा <b>(A): </b>हिमालयी नदियाँ बारहमासी होती हैं<b>, </b>जिनमें वर्ष भर पानी रहता है।<b><br/> </b>कारण <b>(R): </b>हिमालयी नदियाँ हिमनदों से निकलती हैं।</p>",
+    "option1": "<p> Both (A) and (R) are true and (R) is the correct explanation of (A). / (A) और (R) दोनों सत्य हैं और (R), (A) की सही व्याख्या है।</p>",
+    "option2": "<p> Both (A) and (R) are true but (R) is not the correct explanation of (A). / (A) और (R) दोनों सत्य हैं लेकिन (R), (A) की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> (A) is true but (R) is false. / (A) सत्य है लेकिन (R) असत्य है।</p>",
+    "option4": "<p> (A) is false but (R) is true. / (A) असत्य है लेकिन (R) सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Himalayan Rivers are perennial (Assertion A). This is because their origin (source) is the glaciers (Reason R), which provide a continuous supply of water throughout the year. Hence, the reason explains the assertion correctly.<br/> हिमालयी नदियाँ बारहमासी होती हैं (दावा A)। इसका कारण यह है कि उनका उद्गम (स्रोत) हिमनद होते हैं (कारण R), जो वर्ष भर पानी की निरंतर आपूर्ति प्रदान करते हैं । अतः कारण दावे की सही व्याख्या करता है।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>The Ganga River flows through which sequence of Indian states from its origin to the sea?<br/> </b>गंगा नदी अपने उद्गम से लेकर समुद्र तक भारत के किन राज्यों से होकर बहती है<b>?</b></p>",
+    "option1": "<p> Uttarakhand, Uttar Pradesh, Bihar, Jharkhand, West Bengal. / उत्तराखंड, उत्तर प्रदेश, बिहार, झारखंड, पश्चिम बंगाल</p>",
+    "option2": "<p> Uttarakhand, Uttar Pradesh, Madhya Pradesh, Bihar, West Bengal. / उत्तराखंड, उत्तर प्रदेश, मध्य प्रदेश, बिहार, पश्चिम बंगाल</p>",
+    "option3": "<p> Uttar Pradesh,Uttarakhand, Jharkhand, West Bengal. / उत्तर प्रदेश, उत्तराखंड, झारखंड, पश्चिम बंगाल</p>",
+    "option4": "<p> Uttar Pradesh, Uttarakhand, Bihar, West Bengal. / उत्तर प्रदेश, उत्तराखंड, बिहार, पश्चिम बंगाल</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Ganges River originates from the Gangotri Glacier in Uttarakhand as the Bhagirathi River.<br/> It meets the Alaknanda River at Devprayag, after which it is called the Ganges.<br/> From there, it flows through these states in sequence:<br/> 5. Uttarakhand – origin (Gangotri Glacier)<br/> 6. Uttar Pradesh – main body (Kanpur, Allahabad/Prayagraj, Varanasi)<br/> 7. Bihar – flows east (Patna, Bhagalpur)<br/> 8. Jharkhand – from its northern part, the shortest route<br/> 9. West Bengal – splits into tributaries (Hooghly River) before flowing into the Sundarbans Delta and the Bay of Bengal.<br/> गंगा नदी उत्तराखंड में गंगोत्री हिमनद से भागीरथी नदी के रूप में निकलती है।<br/> यह देवप्रयाग में अलकनंदा नदी से मिलती है, जिसके बाद इसे गंगा कहा जाता है।<br/> वहाँ से, यह क्रम से इन राज्यों से होकर बहती है:<br/> 10. उत्तराखंड – उद्गम (गंगोत्री ग्लेशियर)<br/> 11. उत्तर प्रदेश – मुख्य हिस्सा (कानपुर, इलाहाबाद/प्रयागराज, वाराणसी)<br/> 12. बिहार – पूरब की ओर बहती है (पटना, भागलपुर)<br/> 13. झारखंड – इसके उत्तरी हिस्से से, सबसे छोटा रास्ता<br/> 14. पश्चिम बंगाल – सुंदरबन डेल्टा और बंगाल की खाड़ी में मिलने से पहले सहायक नदियों (हुगली नदी) में बँट जाती है।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Which confluence of the Alaknanda River is correctly matched with its joining river?<br/> </b>अलकनंदा नदी का कौन सा संगम अपनी सहायक नदी के साथ सही सुमेलित है<b>?</b></p>",
+    "option1": "<p> Vishnu Prayag - Mandakini / विष्णु प्रयाग - मंदाकिनी</p>",
+    "option2": "<p> Nand Prayag - Dhauli Ganga / नंद प्रयाग - धौली गंगा</p>",
+    "option3": "<p> Rudra Prayag - Mandakini / रुद्र प्रयाग - मंदाकिनी</p>",
+    "option4": "<p> Karna Prayag - Nandakini / कर्ण प्रयाग - मंदाकिनी</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Alaknanda River meets the Mandakini River at Rudra Prayag. Vishnu Prayag is the confluence of Alaknanda and Dhauli Ganga, Nand Prayag is with Nandakini, and Karna Prayag is with the Pindar.<br/> अलकनंदा नदी रुद्र प्रयाग में मंदाकिनी नदी से मिलती है । विष्णु प्रयाग अलकनंदा और धौली गंगा का संगम है, नंद प्रयाग नंदाकिनी के साथ है, और कर्ण प्रयाग पिंडर के साथ है ।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>What does the term 'Doab' primarily signify in the context of the Indus River system?<br/> </b>सिंधु नदी प्रणाली के संदर्भ में <b>'</b>दोआब<b>' </b>शब्द मुख्य रूप से क्या दर्शाता है<b>?</b></p>",
+    "option1": "<p> The confluence points of five major rivers. / पाँच प्रमुख नदियों का संगम बिंदु।</p>",
+    "option2": "<p> The area between two rivers. / दो नदियों के बीच का क्षेत्र।</p>",
+    "option3": "<p> A river's entry point into India. / भारत में नदी का प्रवेश बिंदु।</p>",
+    "option4": "<p> A type of drainage pattern found in plains. / मैदानी इलाकों में पाया जाने वाला एक प्रकार का अपवाह तंत्र।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The term 'Doab' is defined as the Area between two rivers. Examples: the Jech Doab (Jhelum+Chenab), Rechna Doab (Chenab+Ravi), and Bari Doab (Ravi+Beas).<br/> 'दोआब' शब्द को दो नदियों के बीच का क्षेत्र के रूप में परिभाषित किया गया है । उदाहरण: जेच दोआब (झेलम+चिनाब), रचना दोआब (चिनाब+रावी), बिस्ट दोआब (ब्यास + सतलुज) और बारी दोआब (रावी+ब्यास)</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Which city is located at the confluence of the two rivers that form the Ganga River system's most significant distributary Hooghly?<br/> </b>गंगा नदी प्रणाली की सबसे महत्वपूर्ण वितरिका हुगली बनाने वाली दो नदियों के संगम पर कौन सा शहर स्थित है<b>?</b></p>",
+    "option1": "<p> Varanasi / वाराणसी</p>",
+    "option2": "<p> Kolkata / कोलकाता</p>",
+    "option3": "<p> Patna / पटना</p>",
+    "option4": "<p> Guwahati / गुवाहाटी</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Hooghly/Bhagirathi—The Hooghly is mentioned as a distributary of the Ganges. The city of Kolkata is situated on the banks of the Hooghly River, an important distributary carrying the Ganges' waters to the sea.<br/> हुगली/भागीरथी-हुगली को गंगा की एक वितरिका के रूप में उल्लेख किया गया है । कोलकाता शहर हुगली नदी के किनारे स्थित है, जो समुद्र तक गंगा का पानी ले जाने वाली महत्वपूर्ण वितरिका है।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>The Son River originates from the Amarkantak Plateau and exhibits which drainage pattern?<br/> </b>सोन नदी अमरकंटक पठार से निकलती है और किस अपवाह तंत्र को दर्शाती है<b>?</b></p>",
+    "option1": "<p> Dendritic / वृक्षानुमा</p>",
+    "option2": "<p> Radial / अरीय</p>",
+    "option3": "<p> Trellis / जालीनुमा</p>",
+    "option4": "<p> Centripetal / अभिकेन्द्रीय</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Son River originates in the Amarkantak Plateau and exhibits a radial or centrifugal drainage system. Radial or centrifugal drainage occurs when rivers originate from a central dome or hill and flow in all directions.<br/> सोन नदी अमरकंटक पठार से निकलती है और यह अरीय या अपकेन्द्रीय अपवाह तंत्र प्रदर्शित करती है। अरीय या अपकेन्द्रीय अपवाह तंत्र तब होता है जब नदियाँ किसी केंद्रीय गुंबद या पहाड़ी से निकलकर सभी दिशाओं में बहती हैं ।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Which river is known as the National River of Pakistan?<br/> </b>किस नदी को पाकिस्तान की राष्ट्रीय नदी के रूप में जाना जाता है<b>?</b></p>",
+    "option1": "<p> Jhelum / झेलम</p>",
+    "option2": "<p> Sutlej / सतलुज</p>",
+    "option3": "<p> Indus / सिंधु</p>",
+    "option4": "<p> Chenab / चिनाब</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Indus River, which is 2880 km long (1114 km in India) , flows in China, India, and Pakistan. It is designated as the National River of Pakistan.<br/> सिंधु नदी, जिसकी लंबाई 2880 किमी है (भारत में 1114 किमी) , चीन, भारत और पाकिस्तान में बहती है । इसे पाकिस्तान की राष्ट्रीय नदी के रूप में नामित किया गया है ।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Consider the following statements about Peninsular Rivers:<br/> 1. They are perennial (have water throughout the year).<br/> 2. They have shorter and shallower courses.<br/> 3. Most of them originate in the Western Ghats and flow towards the Bay of Bengal.<br/> Which of the statements given above is/are correct?<br/> </b>प्रायद्वीपीय नदियों के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> 4. </b>वे बारहमासी हैं <b>(</b>वर्ष भर पानी रहता है<b>)</b>।<b><br/> 5. </b>उनके मार्ग छोटे और उथले होते हैं।<b><br/> 6. </b>उनमें से अधिकांश पश्चिमी घाट से निकलती हैं और बंगाल की खाड़ी की ओर बहती हैं।<b><br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Peninsular Rivers are ephemeral (seasonal/not perennial) and have a reduced flow in the dry season (Statement 1 is incorrect). They have shorter and shallower courses (Statement 2 is correct). Most originate in the Western Ghats and flow towards the Bay of Bengal (Statement 3 is correct).<br/> प्रायद्वीपीय नदियाँ अल्पकालिक (मौसमी/बारहमासी नहीं) होती हैं और शुष्क मौसम में उनका प्रवाह कम हो जाता है (कथन 1 गलत है) । उनके मार्ग छोटे और उथले होते हैं (कथन 2 सही है) । उनमें से अधिकांश पश्चिमी घाट से निकलती हैं और बंगाल की खाड़ी की ओर बहती हैं (कथन 3 सही है) ।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Match the following rivers with their ancient names (as per the source):<br/> 1. Jhelum<br/> 2. Ravi<br/> 3. Chenab<br/> 4. Sutlej<br/> Ancient Names:<br/> 5. Shutudri<br/> 6. Askini<br/> 7. Purushni<br/> 8. Vitasta<br/> </b>निम्नलिखित नदियों को उनके प्राचीन नामों से सुमेलित करें <b>(</b>स्रोत के अनुसार<b>):<br/> 9. </b>झेलम<b><br/> 10. </b>रावी<b><br/> 11. </b>चिनाब<b><br/> 12. </b>सतलुज<b><br/> </b>प्राचीन नाम<b>:<br/> 13. </b>शतद्रु<b><br/> 14. </b>अश्किनी<b><br/> 15. </b>परुषणी<b><br/> 16. </b>वितस्ता</p>",
+    "option1": "<p> 1-D, 2-C, 3-B, 4-A</p>",
+    "option2": "<p> 1-C, 2-D, 3-A, 4-B</p>",
+    "option3": "<p> 1-D, 2-B, 3-C, 4-A</p>",
+    "option4": "<p> 1-A, 2-C, 3-B, 4-D</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The ancient names for the Indus tributaries are: Jhelum is Vitasta , Ravi is Purushni , Chenab is Askini , and Sutlej is Shutudri. These are important facts for understanding the historical context of the rivers in the Indian subcontinent.<br/> सिंधु की सहायक नदियों के प्राचीन नाम हैं: झेलम, वितस्ता है , रावी, परुषणी है , चिनाब, अश्किनी है , और सतलुज, शतद्रु है । ये भारतीय उपमहाद्वीप में नदियों के ऐतिहासिक संदर्भ को समझने के लिए महत्वपूर्ण तथ्य हैं।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Consider the following pairs:<br/> 1. Centripetal Drainage Pattern: Rivers draining into a central lake.<br/> 2. Radial Drainage Pattern: Rivers originating from a central dome.<br/> 3. Dendritic Drainage Pattern: Tributaries joining the river at a right angle.<br/> Which of the pairs given above is/are correctly matched?<br/> </b>निम्नलिखित युग्मों पर विचार करें<b>:<br/> 4. </b>केंद्राभिमुख अपवाह तंत्र<b>: </b>एक केंद्रीय झील में जल गिराने वाली नदियाँ।<b><br/> 5. </b>अरीय अपवाह तंत्र<b>: </b>एक केंद्रीय गुंबद से निकलने वाली नदियाँ।<b><br/> 6. </b>वृक्षानुमा अपवाह तंत्र<b>: </b>नदी से समकोण पर जुड़ने वाली सहायक नदियाँ।<b><br/> </b>ऊपर दिए गए युग्मों में से कौन सा<b>/</b>से सही सुमेलित है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Centripetal pattern is correctly described as rivers draining their water into a central lake/depression. Radial pattern is correctly described as rivers originating from a central point (dome/hill). The Dendritic pattern resembles a tree branch, while the one with tributaries joining at a right angle is the Trellis pattern. Therefore, pair 3 is incorrectly matched.<br/> अभिकेन्द्रीय अपवाह तंत्र को केंद्रीय झील/अवसाद में जल गिराने वाली नदियों के रूप में सही ढंग से वर्णित किया गया है । अरीय अपवाह तंत्र को केंद्रीय बिंदु (गुंबद/पहाड़ी) से निकलने वाली नदियों के रूप में सही ढंग से वर्णित किया गया है । वृक्षानुमा अपवाह तंत्र एक पेड़ की शाखा जैसा दिखता है , जबकि समकोण पर जुड़ने वाली सहायक नदियों वाला पैटर्न जालीनुमा अपवाह तंत्र है । अतः, युग्म 3 गलत सुमेलित है।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Which of the following is considered the 'World's largest Delta', formed by the Ganga-Brahmaputra River system?<br/> </b>निम्नलिखित में से किसे गंगा<b>-</b>ब्रह्मपुत्र नदी प्रणाली द्वारा निर्मित <b>'</b>विश्व का सबसे बड़ा डेल्टा<b>' </b>माना जाता है<b>?</b></p>",
+    "option1": "<p> Godavari Delta / गोदावरी डेल्टा</p>",
+    "option2": "<p> Mahanadi Delta / महानदी डेल्टा</p>",
+    "option3": "<p> Sundarbans Delta / सुंदरबन डेल्टा</p>",
+    "option4": "<p> Krishna Delta / कृष्णा डेल्टा</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Sundarbans Delta is explicitly stated to be the World's largest Delta. It is formed by the combined flow of the Padma (Ganga) and Jamuna (Brahmaputra), which ultimately merge to form the Meghna before emptying into the Bay of Bengal.<br/> सुंदरबन डेल्टा को स्पष्ट रूप से विश्व का सबसे बड़ा डेल्टा कहा गया है। यह पद्मा (गंगा) और जमुना (ब्रह्मपुत्र) के संयुक्त प्रवाह से बनता है, जो अंततः मिलकर मेघना बनाते हैं और बंगाल की खाड़ी में गिरते हैं।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Assertion (A): The Ganga River is the Longest River of India.<br/> Reason (R): The total length of the Ganga River is 2525 km.<br/> </b>दावा <b>(A): </b>गंगा नदी भारत की सबसे लंबी नदी है।<b><br/> </b>कारण <b>(R): </b>गंगा नदी की कुल लंबाई <b>2525 </b>किमी है।</p>",
+    "option1": "<p> Both (A) and (R) are true and (R) is the correct explanation of (A). / (A) और (R) दोनों सत्य हैं और (R), (A) की सही व्याख्या है।</p>",
+    "option2": "<p> Both (A) and (R) are true but (R) is not the correct explanation of (A). / (A) और (R) दोनों सत्य हैं लेकिन (R), (A) की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> (A) is true but (R) is false. / (A) सत्य है लेकिन (R) असत्य है।</p>",
+    "option4": "<p> (A) is false but (R) is true. / (A) असत्य है लेकिन (R) सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Ganga is cited as the Longest River of India (Assertion A) , and its total length is 2525 km (Reason R). Both (A) and (R) are true and (R) is the correct explanation of (A). / (A) और (R) दोनों सत्य हैं और (R), (A) की सही व्याख्या है।<br/> गंगा को भारत की सबसे लंबी नदी कहा गया है (कथन A), और इसकी कुल लंबाई 2525 किमी है (कारण R)। इस प्रकार, (R) में दिया गया कारण (A) के सही स्पष्टीकरण के रूप में कार्य करता है क्योंकि गंगा नदी की लंबाई ही उसे भारत की सबसे लंबी नदी बनाती है।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>Which of the following is a Right Bank Tributary of the Brahmaputra River?<br/> </b>निम्नलिखित में से कौन ब्रह्मपुत्र नदी की दाहिनी सहायक नदी है<b>?</b></p>",
+    "option1": "<p> Lohit / लोहित</p>",
+    "option2": "<p> Dhansiri / धनसिरी</p>",
+    "option3": "<p> Dibang / दिबांग</p>",
+    "option4": "<p> Kameng / कामेंग</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 5. The Brahmaputra River has numerous tributaries that join it from both the right (south bank) and left (north bank) sides.<br/> 6. Right bank (south bank) tributaries flow from the hills of Arunachal Pradesh and the Meghalaya plateau.<br/> 7. Main right bank tributaries: Kameng, Manas, Subansiri, Sankosh, and Teesta.<br/> 8. Left bank (northern bank) tributaries flow from the Himalayas.<br/> 9. Main left bank tributaries: Dhansiri, Dibang, and Lohit.<br/> Therefore, the Kameng River is a right bank tributary of the Brahmaputra River.<br/> 10. ब्रह्मपुत्र नदी में कई सहायक नदियाँ हैं जो दाएँ (दक्षिणी किनारा) और बाएँ (उत्तरी किनारा) दोनों तरफ़ से मिलती हैं।<br/> 11. दाएँ किनारे (दक्षिणी तरफ़) की सहायक नदियाँ अरुणाचल प्रदेश की पहाड़ियों और मेघालय के पठार से बहती हैं।<br/> 12. दाएँ किनारे की मुख्य सहायक नदियाँ: कामेंग, मानस, सुबनसिरी, संकोश और तीस्ता।<br/> 13. बाएँ किनारे (उत्तरी तरफ़) की सहायक नदियाँ हिमालय से बहती हैं।<br/> 14. बाएँ किनारे की मुख्य सहायक नदियाँ: धनसिरी, दिबांग और लोहित।<br/> इसलिए, कामेंग नदी ब्रह्मपुत्र नदी की दाएँ किनारे की सहायक नदी है।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - GEOGRAPHY</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">GEOGRAPHY - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY - TRANSPORT QUIZ [07-11-2025] - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>GEOGRAPHY - TRANSPORT QUIZ [07-11-2025]</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>Which of the following is the largest container port in India?<br/> </b>निम्नलिखित में से कौन सा भारत का सबसे बड़ा कंटेनर बंदरगाह है<b>?</b></p>",
+    "option1": "<p> Chennai Port / चेन्नई बंदरगाह</p>",
+    "option2": "<p> Mundra Port / मुंद्रा बंदरगाह</p>",
+    "option3": "<p> Kolkata Port / कोलकाता बंदरगाह</p>",
+    "option4": "<p> Jawaharlal Nehru Port (JNPT) / जवाहरलाल नेहरू पोर्ट (जेएनपीटी)</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Jawaharlal Nehru Port (JNPT), also known as Nhava Sheva Port, located in Maharashtra, is India's largest container-handling port. It handles more than half of the total container volume passing through India's major ports. / जवाहरलाल नेहरू पोर्ट (जेएनपीटी), जिसे न्हावा शेवा पोर्ट भी कहा जाता है, महाराष्ट्र में स्थित है, भारत का सबसे बड़ा कंटेनर हैंडलिंग बंदरगाह है। यह भारत के प्रमुख बंदरगाहों से गुजरने वाले कुल कंटेनर मात्रा के आधे से अधिक को संभालता है।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>What is the approximate total length of the Golden Quadrilateral (GQ) highway network?<br/> </b>स्वर्णिम चतुर्भुज <b>(GQ) </b>राजमार्ग नेटवर्क की अनुमानित कुल लंबाई कितनी है<b>?</b></p>",
+    "option1": "<p> 1,235 km / 1,235 किमी</p>",
+    "option2": "<p> 7,300 km / 7,300 किमी</p>",
+    "option3": "<p> 5,846 km / 5,846 किमी</p>",
+    "option4": "<p> 1,700 km / 1,700 किमी</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Golden Quadrilateral is a national highway network connecting India's four major metropolitan cities: Delhi, Mumbai, Chennai, and Kolkata. Its total length is approximately 5,846 km, making it one of the largest highway projects globally. / स्वर्णिम चतुर्भुज भारत के चार प्रमुख महानगरों - दिल्ली, मुंबई, चेन्नई और कोलकाता को जोड़ने वाला एक राष्ट्रीय राजमार्ग नेटवर्क है। इसकी कुल लंबाई लगभग 5,846 किमी है, जो इसे विश्व की सबसे बड़ी राजमार्ग परियोजनाओं में से एक बनाती है।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>Which National Waterway connects Haldia (Sagar) and Prayagraj?<br/> </b>कौन सा राष्ट्रीय जलमार्ग हल्दिया <b>(</b>सागर<b>) </b>और प्रयागराज को जोड़ता है<b>?</b></p>",
+    "option1": "<p> National Waterways 4 (NW 4) / राष्ट्रीय जलमार्ग 4 (NW 4)</p>",
+    "option2": "<p> National Waterways 3 (NW 3) / राष्ट्रीय जलमार्ग 3 (NW 3)</p>",
+    "option3": "<p> National Waterways 2 (NW 2) / राष्ट्रीय जलमार्ग 2 (NW 2)</p>",
+    "option4": "<p> National Waterways 1 (NW 1) / राष्ट्रीय जलमार्ग 1 (NW 1)</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> National Waterway 1 (NW-1) is the longest National Waterway in India, stretching for 1620 km along the Ganga-Bhagirathi-Hooghly river system. It connects Haldia in West Bengal to Prayagraj (Allahabad) in Uttar Pradesh. / राष्ट्रीय जलमार्ग 1 (NW-1) भारत का सबसे लंबा राष्ट्रीय जलमार्ग है, जो गंगा-भागीरथी-हुगली नदी प्रणाली के साथ 1620 किमी तक फैला हुआ है। यह पश्चिम बंगाल में हल्दिया को उत्तर प्रदेश में प्रयागराज (इलाहाबाद) से जोड़ता है।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>What is the distance between rails in broad gauge on the Indian Railways?<br/> </b>भारतीय रेलवे में ब्रॉड गेज में पटरियों के बीच की दूरी कितनी है<b>?</b></p>",
+    "option1": "<p> 1.000 metre / 1.000 मीटर</p>",
+    "option2": "<p> 1.676 metre / 1.676 मीटर</p>",
+    "option3": "<p> 0.762 metre / 0.762 मीटर</p>",
+    "option4": "<p> 2.000 metre / 2.000 मीटर</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Broad gauge, also known as Indian gauge, has a track width of 1,676 metres (5 ft 6 in). It is the primary gauge used on the Indian railway network for high speed and carrying capacity. / ब्रॉड गेज, जिसे भारतीय गेज के नाम से भी जाना जाता है, की ट्रैक चौड़ाई 1.676 मीटर (5 फीट 6 इंच) होती है। यह भारतीय रेलवे नेटवर्क में उच्च गति और वहन क्षमता के लिए उपयोग किया जाने वाला प्रमुख गेज है।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>According to the Indian Railways, which state has the largest railway track length in India?<br/> </b>भारतीय रेलवे के अनुसार<b>, </b>भारत में सबसे बड़ा रेलवे ट्रैक किस राज्य में है<b>?</b></p>",
+    "option1": "<p> Madhya Pradesh / मध्य प्रदेश</p>",
+    "option2": "<p> Haryana / हरियाणा</p>",
+    "option3": "<p> Uttar Pradesh / उत्तर प्रदेश</p>",
+    "option4": "<p> Punjab / पंजाब</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Uttar Pradesh has the largest railway network in India, primarily due to its vast, flat terrain and high population density, which facilitates extensive construction and connectivity of rail lines across the state. / उत्तर प्रदेश में भारत का सबसे बड़ा रेलवे नेटवर्क है, जिसका मुख्य कारण इसका विशाल, समतल भूभाग और उच्च जनसंख्या घनत्व है, जो पूरे राज्य में रेल लाइनों के व्यापक निर्माण और कनेक्टिविटी की सुविधा प्रदान करता है।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>The Golden Quadrilateral connects which of the following four major metro cities?<br/> </b>स्वर्णिम चतुर्भुज निम्नलिखित चार प्रमुख महानगरों में से किनको जोड़ता है<b>?</b></p>",
+    "option1": "<p> Delhi, Mumbai, Hyderabad, Kolkata / दिल्ली, मुंबई, हैदराबाद, कोलकाता</p>",
+    "option2": "<p> Delhi, Chennai, Kolkata, Mumbai / दिल्ली, चेन्नई, कोलकाता, मुंबई</p>",
+    "option3": "<p> Mumbai, Kolkata, Bhopal, Bengaluru / मुंबई, कोलकाता, भोपाल, बेंगलुरु</p>",
+    "option4": "<p> Delhi, Bengaluru, Hyderabad, Chennai / दिल्ली, बेंगलुरु, हैदराबाद, चेन्नई</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Golden Quadrilateral, a network of national highways, connects the four major metropolitan cities of India: New Delhi in the North, Mumbai in the West, Chennai in the South, and Kolkata in the East. / राष्ट्रीय राजमार्गों का एक नेटवर्क, स्वर्णिम चतुर्भुज भारत के चार प्रमुख महानगरों: उत्तर में नई दिल्ली, पश्चिम में मुंबई, दक्षिण में चेन्नई और पूर्व में कोलकाता को जोड़ता है।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>The Hazira–Vijaipur–Jagdishpur (HVJ) pipeline is mainly used to transport:<br/> </b>हजीरा<b>-</b>विजयपुर<b>-</b>जगदीशपुर <b>(</b>एचवीजे<b>) </b>पाइपलाइन का उपयोग मुख्य रूप से किसके परिवहन के लिए किया जाता है<b>:</b></p>",
+    "option1": "<p> Crude oil / कच्चा तेल</p>",
+    "option2": "<p> Kerosene / मिट्टी का तेल</p>",
+    "option3": "<p> Petrol / पेट्रोल</p>",
+    "option4": "<p> Natural gas / प्राकृतिक गैस</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Hazira–Vijaipur–Jagdishpur (HVJ) pipeline is India's first and longest natural gas pipeline.<br/> It transports gas from Hazira in Gujarat to Jagdishpur in Uttar Pradesh via Vijaypur in Madhya Pradesh.<br/> It was constructed by GAIL to connect the gas fields of western India with the industrial areas of northern and central India.<br/> हजीरा–विजयपुर–जगदीशपुर (HVJ) पाइपलाइन भारत की पहली और सबसे लंबी प्राकृतिक गैस पाइपलाइन है।<br/> यह गुजरात के हजीरा से गैस को मध्य प्रदेश के विजयपुर होते हुए उत्तर प्रदेश के जगदीशपुर तक पहुँचाती है।<br/> इसका निर्माण गेल (GAIL) द्वारा किया गया था ताकि पश्चिमी भारत के गैस क्षेत्रों को उत्तरी और मध्य भारत के औद्योगिक क्षेत्रों से जोड़ा जा सके।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>The Brahmaputra River is navigable by steamers up to Dibrugarh by which of the following national waterways of India?<br/> </b>भारत की निम्नलिखित में से किस राष्ट्रीय जलमार्ग द्वारा ब्रह्मपुत्र नदी डिब्रूगढ़ तक स्टीमरों के लिए नौगम्य है<b>?</b></p>",
+    "option1": "<p> National Waterway 1 (NW 1) / राष्ट्रीय जलमार्ग 1 (NW 1)</p>",
+    "option2": "<p> National Waterway 4 (NW 4) / राष्ट्रीय जलमार्ग 4 (NW 4)</p>",
+    "option3": "<p> National Waterway 3 (NW 3) / राष्ट्रीय जलमार्ग 3 (NW 3)</p>",
+    "option4": "<p> National Waterway 2 (NW 2) / राष्ट्रीय जलमार्ग 2 (NW 2)</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> National Waterway 2 (NW-2) is located on the Brahmaputra River, connecting Sadiya and Dhubri in Assam. This waterway is navigable by steamers up to Dibrugarh, playing a vital role in the regional trade and connectivity of Northeast India. / राष्ट्रीय जलमार्ग 2 (NW-2) ब्रह्मपुत्र नदी पर स्थित है, जो असम में सादिया और धुबरी को जोड़ता है। यह जलमार्ग डिब्रूगढ़ तक स्टीमर द्वारा नौगम्य है, जो पूर्वोत्तर भारत के क्षेत्रीय व्यापार और कनेक्टिविटी में महत्वपूर्ण भूमिका निभाता है।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Which of the following is the deepest landlocked and well-protected port in India?<br/> </b>निम्नलिखित में से कौन सा भारत का सबसे गहरा स्थलरुद्ध और अच्छी तरह से संरक्षित बंदरगाह है<b>?</b></p>",
+    "option1": "<p> Paradip / पारादीप</p>",
+    "option2": "<p> Kandla / कांडला</p>",
+    "option3": "<p> Mumbai / मुंबई</p>",
+    "option4": "<p> Visakhapatnam / विशाखापत्तनम</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Visakhapatnam Port, located in Andhra Pradesh, is known for being a natural harbour. It is the deepest port in India, landlocked by the Dolphin's Nose hill range, which provides excellent protection from cyclones and strong sea currents. / विशाखापत्तनम बंदरगाह, जो आंध्र प्रदेश में स्थित है, एक प्राकृतिक बंदरगाह के रूप में जाना जाता है। यह डॉल्फिन नोज पर्वत श्रृंखला द्वारा स्थलरुद्ध होने के कारण भारत का सबसे गहरा बंदरगाह है, जो इसे चक्रवातों और तेज समुद्री धाराओं से उत्कृष्ट सुरक्षा प्रदान करता है।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>When was air transport nationalised in India?<br/> </b>भारत में हवाई परिवहन का राष्ट्रीयकरण कब किया गया<b>?</b></p>",
+    "option1": "<p> 1950</p>",
+    "option2": "<p> 1952</p>",
+    "option3": "<p> 1951</p>",
+    "option4": "<p> 1953</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The nationalisation of air transport in India took place in 1953 under the Air Corporations Act. Two state-owned corporations, Air India and Indian Airlines, were established to manage international and domestic routes respectively. / भारत में वायु परिवहन का राष्ट्रीयकरण 1953 में वायु निगम अधिनियम के तहत किया गया था। अंतरराष्ट्रीय और घरेलू मार्गों के प्रबंधन के लिए क्रमशः दो सरकारी स्वामित्व वाली निगमों — एयर इंडिया और इंडियन एयरलाइंस — की स्थापना की गई।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Consider the following statements regarding major ports in India:<br/> </b>भारत के प्रमुख बंदरगाहों के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. Ennore Port (Kamarajar Port) is India's first corporatised major port. / </b>एन्नोर पोर्ट <b>(</b>कामराजार पोर्ट<b>) </b>भारत का पहला निगमित प्रमुख बंदरगाह है।<b><br/> 2. Kandla Port, located in Gujarat, is a tidal port and is now known as Deendayal Port. / </b>गुजरात में स्थित कांडला बंदरगाह एक ज्वारीय बंदरगाह है और अब इसे दीनदयाल पोर्ट के नाम से जाना जाता है।<b><br/> Which of the statements given above is/are correct? </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Ennore Port, now officially Kamarajar Port, was the first major port in India to be corporatised, operating as a company rather than a government trust. Kandla is indeed a major tidal port on the western coast and was renamed Deendayal Port in 2017. / एन्नोर पोर्ट, जिसे अब आधिकारिक तौर पर कामराजार पोर्ट कहा जाता है, भारत का पहला प्रमुख बंदरगाह था जिसका निगमीकरण किया गया। कांडला वास्तव में पश्चिमी तट पर एक प्रमुख ज्वारीय बंदरगाह है और इसका नाम 2017 में बदलकर दीनदयाल पोर्ट कर दिया गया था।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Consider the following statements regarding India's road network:<br/> </b>भारत के सड़क नेटवर्क के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. As of 2021, India holds the second position globally in terms of the road network length. / 2021 </b>तक<b>, </b>भारत सड़क नेटवर्क की लंबाई के मामले में विश्व स्तर पर दूसरे स्थान पर है।<b><br/> 2. Kerala has the highest road density in India due to its narrow and densely populated areas requiring extensive road connectivity. / </b>केरल में भारत में सबसे अधिक सड़क घनत्व है क्योंकि इसकी संकरी और घनी आबादी वाली क्षेत्रों में व्यापक सड़क संपर्क की आवश्यकता होती है।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> India's road network is vast, ranking second in the world after the USA in terms of total length. Kerala consistently maintains the highest road density due to its unique geographical conditions and high population density requiring a closely meshed network. / भारत का सड़क नेटवर्क विशाल है, कुल लंबाई के मामले में यह अमेरिका के बाद विश्व में दूसरा स्थान रखता है। अपनी विशिष्ट भौगोलिक परिस्थितियों और उच्च जनसंख्या घनत्व के कारण केरल लगातार सबसे अधिक सड़क घनत्व बनाए रखता है, जिसके लिए एक सघन रूप से जुड़ा हुआ नेटवर्क आवश्यक है।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Assertion (A): The development of rail transport is less in Sikkim compared to Uttar Pradesh.<br/> Reason (R): Sikkim's mountainous terrain and difficult geographical conditions hinder the construction of railway lines.<br/> </b>कथन <b>(A): </b>उत्तर प्रदेश की तुलना में सिक्किम में रेल परिवहन का विकास कम है।<b><br/> </b>कारण <b>(R): </b>सिक्किम का पहाड़ी इलाका और कठिन भौगोलिक परिस्थितियाँ रेलवे लाइनों के निर्माण में बाधा डालती हैं</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A. / A और R दोनों सत्य हैं और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A. / A और R दोनों सत्य हैं लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true but R is false. / A सत्य है लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false but R is true. / A असत्य है लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Assertion (A) is true as Sikkim's rail network is minimal. Reason (R) correctly explains this, as building rail lines in the high-relief, geologically unstable Himalayas is costly and technically challenging, which is why plains states like Uttar Pradesh have extensive networks. / अभिकथन (A) सही है क्योंकि सिक्किम का रेल नेटवर्क बहुत सीमित है। कारण (R) इसे सही ढंग से स्पष्ट करता है, क्योंकि ऊँचे-ऊँचे और भूवैज्ञानिक रूप से अस्थिर हिमालयी क्षेत्रों में रेल लाइनों का निर्माण महंगा और तकनीकी रूप से कठिन है, यही कारण है कि उत्तर प्रदेश जैसे मैदानी राज्यों में विस्तृत रेल नेटवर्क पाया जाता है।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Which of the following statements about modes of transport is correct in the Indian context?<br/> </b>भारतीय संदर्भ में परिवहन के साधनों के बारे में निम्नलिखित में से कौन सा कथन सही है<b>?</b></p>",
+    "option1": "<p> Airways are the most suitable for transporting heavy and bulky goods over long distances. / वायु मार्ग लंबी दूरी तक भारी और विशाल वस्तुओं के परिवहन के लिए सबसे उपयुक्त हैं।</p>",
+    "option2": "<p> Roadways carry a minimal percentage of passenger traffic in India. / भारत में सड़कों के माध्यम से यात्री परिवहन का प्रतिशत बहुत कम है।</p>",
+    "option3": "<p> Inland waterways are the most efficient in terms of energy consumption per tonne-km. / आंतरिक जलमार्ग प्रति टन-किलोमीटर ऊर्जा खपत के दृष्टिकोण से सबसे कुशल परिवहन साधन हैं।</p>",
+    "option4": "<p> Railways cause the most trans-shipment losses and delays for gas and petroleum. / रेलवे गैस और पेट्रोलियम के लिए सबसे अधिक पुनः-ढुलाई हानि और विलंब का कारण बनते हैं।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Inland waterways are highly fuel-efficient and cost-effective for cargo movement, consuming the least amount of energy per tonne-kilometre compared to rail, road, and air transport. This makes them the most energy-efficient mode in India. The other options are incorrect because:<br/> 5. Air routes are suitable for light and expensive cargo, not heavy cargo.<br/> 6. Road routes handle the largest share of passenger transport in India.<br/> 7. Railways are relatively safe and efficient for gas and petroleum.<br/> / अंतर्देशीय जलमार्ग कार्गो आवागमन के लिए अत्यधिक ईंधन-कुशल और लागत प्रभावी हैं, जो रेल, सड़क और हवाई परिवहन की तुलना में प्रति टन-किलोमीटर पर सबसे कम ऊर्जा की खपत करते हैं। यह उन्हें भारत में सबसे अधिक ऊर्जा-कुशल साधन बनाता है। अन्य विकल्प गलत हैं क्योंकि:<br/> 8. वायु मार्ग हल्के और महंगे माल के लिए उपयुक्त हैं, भारी माल के लिए नहीं।<br/> 9. सड़क मार्ग भारत में यात्री परिवहन का सबसे बड़ा हिस्सा संभालते हैं।<br/> 10. रेलवे गैस और पेट्रोलियम के लिए अपेक्षाकृत सुरक्षित और कुशल हैं।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Assertion (A): The Eastern Peripheral Expressway was built to decongest traffic in Delhi.<br/> Reason (R): The expressway provides a bypass for traffic moving towards northern states, eliminating the need for commercial vehicles to enter Delhi.<br/> </b>कथन <b>(A): </b>ईस्टर्न पेरिफेरल एक्सप्रेसवे का निर्माण दिल्ली में यातायात की भीड़भाड़ कम करने के लिए किया गया था।<b><br/> </b>कारण <b>(R): </b>एक्सप्रेसवे उत्तरी राज्यों की ओर जाने वाले यातायात के लिए एक बाईपास प्रदान करता है<b>, </b>जिससे वाणिज्यिक वाहनों को दिल्ली में प्रवेश करने की आवश्यकता समाप्त हो जाती है।</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A. / A और R दोनों सत्य हैं और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A. / A और R दोनों सत्य हैं लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true but R is false. / A सत्य है लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false but R is true. / A असत्य है लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Eastern Peripheral Expressway (EPE) acts as a ring road around Delhi, diverting non-Delhi bound commercial traffic. This direct bypass drastically reduces the entry of heavy vehicles into the city, effectively addressing the primary purpose of decongesting Delhi. / ईस्टर्न पेरिफेरल एक्सप्रेसवे (ईपीई) दिल्ली के चारों ओर एक रिंग रोड के रूप में कार्य करता है, जो गैर-दिल्ली बाध्य वाणिज्यिक यातायात को मोड़ता है। यह सीधा बाईपास शहर में भारी वाहनों के प्रवेश को बहुत कम कर देता है, जिससे दिल्ली में भीड़भाड़ कम करने का प्राथमिक उद्देश्य प्रभावी ढंग से पूरा होता है।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>With reference to National Waterway 1 (NW-1), consider the following statements:<br/> </b>राष्ट्रीय जलमार्ग <b>1 (NW-1) </b>के संदर्भ में<b>, </b>निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. It is a part of the Ganga-Bhagirathi-Hooghly river system. / </b>यह गंगा<b>-</b>भागीरथी<b>-</b>हुगली नदी प्रणाली का एक हिस्सा है।<b><br/> 2. It is navigable by mechanical boats only up to Patna and by ordinary boats up to Haridwar. / </b>यह केवल पटना तक यांत्रिक नौकाओं द्वारा और हरिद्वार तक साधारण नौकाओं द्वारा नौवहन योग्य है।<b><br/> Which of the statements given above is/are correct? </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statement 1: True<br/> National Waterway 1 (NW-1) is part of the Ganges–Bhagirathi–Hooghly river system and extends from Allahabad (Prayagraj) to Haldia, with a total length of approximately 1620 km.<br/> Statement 2: False<br/> This statement is factually incorrect—NW-1 is navigable from Haldia to Prayagraj, not just Patna or Haridwar. Haridwar is not included in this waterway.<br/> कथन 1: सही है<br/> राष्ट्रीय जलमार्ग 1 (NW-1) गंगा–भागीरथी–हुगली नदी प्रणाली का हिस्सा है और यह इलाहाबाद (प्रयागराज) से हल्दिया तक फैला हुआ है, जिसकी कुल लंबाई लगभग 1620 किमी है।<br/> कथन 2: गलत है<br/> यह कथन तथ्यात्मक रूप से सही नहीं है — NW-1 हल्दिया से प्रयागराज तक नौवहन योग्य है, न कि केवल पटना या हरिद्वार तक। हरिद्वार इस जलमार्ग के अंतर्गत नहीं आता।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Which of the following pairs of strategic ports/corridors is/are correctly matched with their strategic benefit to India?<br/> </b>सामरिक बंदरगाहों<b>/</b>गलियारों के निम्नलिखित युग्मों में से कौन सा<b>/</b>से भारत को उनके सामरिक लाभ के साथ सही ढंग से मेल खाता है<b>/</b>खाते हैं<b>?<br/> 1. Chabahar Port: Access to Central Asia bypassing Pakistan. / </b>चाबहार बंदरगाह<b>: </b>पाकिस्तान को दरकिनार करते हुए मध्य एशिया तक पहुँच।<b><br/> 2. Sittwe Port: New age of transportation between India to Southeast Asia via Mizoram-Myanmar link. / </b>सित्तवे बंदरगाह<b>: </b>मिजोरम–म्यांमार संपर्क मार्ग के माध्यम से भारत और दक्षिण<b>-</b>पूर्व एशिया के बीच परिवहन के नए युग की शुरुआत।<b><br/> Select the correct answer using the code given below: </b>नीचे दिए गए कोड का उपयोग करके सही उत्तर चुनें<b>:</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Chabahar Port in Iran offers India a crucial sea-land route, bypassing Pakistan, to reach Afghanistan and Central Asian countries. Sittwe Port, part of the Kaladan Multi-Modal Transit Transport Project, provides a sea and river route connecting India's mainland to Northeast India and further to Southeast Asia via Myanmar. / ईरान में स्थित चाबहार बंदरगाह भारत को पाकिस्तान को दरकिनार करते हुए अफगानिस्तान और मध्य एशियाई देशों तक पहुँचने के लिए एक महत्वपूर्ण समुद्री-स्थलीय मार्ग प्रदान करता है। सित्तवे बंदरगाह, कालादान मल्टी-मोडल ट्रांजिट ट्रांसपोर्ट परियोजना का हिस्सा है, जो भारत के मुख्य भूभाग को पूर्वोत्तर भारत से और आगे म्यांमार के माध्यम से दक्षिण-पूर्व एशिया से जोड़ने वाला समुद्री और नदी मार्ग उपलब्ध कराता है।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Assertion (A): Pipeline transport is the most suitable mode for transporting liquids and gases like petroleum and natural gas over long distances.<br/> Reason (R): It reduces trans-shipment losses and delays in the supply of these materials.<br/> </b>कथन <b>(A): </b>पाइपलाइन परिवहन लंबी दूरी तक पेट्रोलियम और प्राकृतिक गैस जैसे तरल पदार्थों और गैसों के परिवहन के लिए सबसे उपयुक्त साधन है।<b><br/> </b>कारण <b>(R): </b>यह इन पदार्थों की आपूर्ति में पुनः<b>-</b>ढुलाई से होने वाली हानियों और विलंब को कम करता है।</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A. / A और R दोनों सत्य हैं और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A. / A और R दोनों सत्य हैं लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true but R is false. / A सत्य है लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false but R is true. / A असत्य है लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Pipelines are specifically designed for continuous, uninterrupted movement of fluids and gases. They eliminate the need for loading and unloading at various points, which are the main causes of trans-shipment loss and delays in other modes of transport for these commodities. / पाइपलाइनें विशेष रूप से तरल और गैसीय पदार्थों की सतत और निर्बाध आवाजाही के लिए बनाई जाती हैं। वे विभिन्न स्थानों पर लोडिंग और अनलोडिंग की आवश्यकता को समाप्त कर देती हैं, जो अन्य परिवहन साधनों में इन वस्तुओं के लिए पुनः-ढुलाई से होने वाली हानि और विलंब के मुख्य कारण होते हैं।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>With respect to Indian Railways, consider the following statements:<br/> </b>भारतीय रेलवे के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. The Konkan Railway was constructed in 1998, connecting Maharashtra, Goa, and Karnataka. / </b>कोंकण रेलवे का निर्माण <b>1998 </b>में हुआ था<b>, </b>जो महाराष्ट्र<b>, </b>गोवा और कर्नाटक को जोड़ता है।<b><br/> 2. The Nilgiri Mountain Railway is the only rack railway in India that was declared a UNESCO World Heritage Site in 2005. / </b>नीलगिरि पर्वतीय रेलवे भारत का एकमात्र रैक रेलवे है जिसे <b>2005 </b>में यूनेस्को विश्व धरोहर स्थल घोषित किया गया था।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> 7. The Konkan Railway was completed in 1998. It connects Maharashtra, Goa, and Karnataka in India's western coastal region. It is considered an engineering marvel because it passes through numerous tunnels and bridges.<br/> 8. The Nilgiri Mountain Railway is India's only rack railway and was declared a UNESCO World Heritage Site in 2005.<br/> 9. It runs between Mettupalayam and Ooty (Tamil Nadu) and operates using unique technology in mountainous terrain.<br/> 10. कोंकण रेलवे का निर्माण 1998 में पूरा हुआ था। यह भारत के पश्चिमी तटीय क्षेत्र में महाराष्ट्र, गोवा और कर्नाटक को जोड़ता है। यह एक इंजीनियरिंग चमत्कार माना जाता है क्योंकि यह कई सुरंगों और पुलों से होकर गुजरता है।<br/> 11. नीलगिरि पर्वतीय रेलवे भारत की एकमात्र रैक रेलवे है और इसे 2005 में यूनेस्को विश्व धरोहर स्थल घोषित किया गया था।<br/> 12. यह मेट्टूपालयम से ऊटी (तमिलनाडु) के बीच चलती है और पर्वतीय इलाकों में अनोखी तकनीक से संचालित होती है।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Consider the autonomous bodies/ministries involved in India's transport sector:<br/> </b>भारत के परिवहन क्षेत्र में शामिल स्वायत्त निकायों<b>/</b>मंत्रालयों पर विचार करें<b>:<br/> 1. The National Highways Authority of India (NHAI) was operationalised in 1995 under the Ministry of Surface Transport. / </b>राष्ट्रीय राजमार्ग प्राधिकरण <b>(NHAI) </b>को <b>1995 </b>में सतह परिवहन मंत्रालय के अधीन कार्यान्वित किया गया था।<b><br/> 2. Pipeline transport for oil and gas is regulated and looked after by the Ministry of Petroleum and Natural Gas. / </b>तेल और गैस के लिए पाइपलाइन परिवहन का विनियमन और देखरेख पेट्रोलियम और प्राकृतिक गैस मंत्रालय द्वारा की जाती है।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> 7. The National Highways Authority of India (NHAI) was established in 1988 but became operational in 1995.<br/> 8. It was initially under the Ministry of Surface Transport, which was later split into the Ministry of Road Transport and Highways (MoRTH).<br/> 9. Oil and gas pipelines are built, operated, and regulated by the Ministry of Petroleum and Natural Gas. This ministry oversees energy security and fuel distribution networks in the country.<br/> 10. राष्ट्रीय राजमार्ग प्राधिकरण (NHAI) की स्थापना 1988 में की गई थी, लेकिन इसे 1995 में कार्यान्वित किया गया।<br/> 11. यह प्रारंभ में सतह परिवहन मंत्रालय के अधीन था, जिसे बाद में विभाजित कर सड़क परिवहन और राजमार्ग मंत्रालय (MoRTH) बनाया गया।<br/> 12. तेल और गैस की पाइपलाइनों का निर्माण, संचालन और नियमन पेट्रोलियम और प्राकृतिकगैस मंत्रालय द्वारा किया जाता है। यह मंत्रालय देश में ऊर्जा सुरक्षा और ईंधन वितरण नेटवर्क की देखरेख करता है।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Match List - I with List - II and choose the correct answer using the code given below the lists.<br/> </b>सूची <b>- I </b>को सूची <b>- II </b>से सुमेलित करें और सूचियों के नीचे दिए गए कोड का उपयोग करके सही उत्तर चुनें। <b>List - I (Port / </b>बंदरगाह<b>):<br/> 1. Paradeep / </b>पारादीप<b><br/> 2. Tuticorin / </b>तूतीकोरिन<b><br/> 3. Kakinada / </b>काकीनाडा<b><br/> 4. Alappuzha / </b>अलाप्पुझा<b><br/> List - II (State / </b>राज्य<b>):<br/> 5. Tamil Nadu / </b>तमिलनाडु<b><br/> 6. Kerala / </b>केरल<b><br/> 7. Odisha / </b>ओडिशा<b><br/> 8. Andhra Pradesh / </b>आंध्र प्रदेश</p>",
+    "option1": "<p> A-1, B-3, C-4, D-2</p>",
+    "option2": "<p> A-3, B-1, C-2, D-4</p>",
+    "option3": "<p> A-3, B-1, C-4, D-2</p>",
+    "option4": "<p> A-1, B-4, C-3, D-2</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Paradeep Port is a major port in Odisha, on the Mahanadi river delta. Tuticorin, now V.O. Chidambaranar Port, is in Tamil Nadu. Kakinada is a major port on the Andhra Pradesh coast. Alappuzha, an old port, is located in Kerala. / पारादीप बंदरगाह महानदी नदी के डेल्टा पर ओडिशा में एक प्रमुख बंदरगाह है। तूतीकोरिन, अब वी.ओ. चिदम्बरनार पोर्ट, तमिलनाडु में है। काकीनाडा आंध्र प्रदेश के तट पर एक प्रमुख बंदरगाह है। अलाप्पुझा, एक पुराना बंदरगाह, केरल में स्थित है।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Match the following Ports/Corridors (Column A) with their Strategic Benefit to India (Column B):<br/> </b>निम्नलिखित बंदरगाहों<b>/</b>गलियारों <b>(</b>स्तंभ <b>A) </b>का भारत को उनके सामरिक लाभ <b>(</b>स्तंभ <b>B) </b>से मिलान करें<b>: Column A (Port/Corridor / </b>बंदरगाह<b>/</b>गलियारा<b>):<br/> 1. Chabahar Port / </b>चाबहार बंदरगाह<b><br/> 2. IMEC / </b>आईएमईसी<b><br/> 3. Sittwe Port / </b>सित्तवे बंदरगाह<b><br/> Column B (Strategic Benefit to India / </b>भारत को सामरिक लाभ<b>):<br/> 4. Links India with Europe via Middle East. / </b>मध्य पूर्व के माध्यम से भारत को यूरोप से जोड़ता है।<b><br/> 5. New age of transportation between India to Southeast Asia via Mizoram-Myanmar link. / </b>मिजोरम–म्यांमार संपर्क मार्ग के माध्यम से भारत और दक्षिण<b>-</b>पूर्व एशिया के बीच परिवहन का नया युग।<b><br/> 6. Access to Central Asia bypassing Pakistan. / </b>पाकिस्तान को दरकिनार कर मध्य एशिया तक पहुंच।</p>",
+    "option1": "<p> A→3, B→1, C→2</p>",
+    "option2": "<p> A→2, B→3, C→1</p>",
+    "option3": "<p> A→3, B→2, C→1</p>",
+    "option4": "<p> A→1, B→2, C→3</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Chabahar Port facilitates trade with Central Asia, bypassing Pakistan. IMEC (India-Middle East-Europe Economic Corridor) is a proposed network to connect India to Europe via the Middle East. Sittwe Port is the key terminal for the Kaladan Multi-Modal Transit Transport Project, connecting India to Southeast Asia. / चाबहार बंदरगाह पाकिस्तान को दरकिनार करते हुए मध्य एशिया के साथ व्यापार की सुविधा प्रदान करता है। आईएमईसी (इंडिया-मिडिल ईस्ट-यूरोप इकोनॉमिक कॉरिडोर) मध्य पूर्व के माध्यम से भारत को यूरोप से जोड़ने के लिए एक प्रस्तावित नेटवर्क है। सित्तवे बंदरगाह कलादान मल्टी-मॉडल ट्रांजिट ट्रांसपोर्ट प्रोजेक्ट के लिए प्रमुख टर्मिनल है, जो भारत को दक्षिण पूर्व एशिया से जोड़ता है।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>The four segments of the Golden Quadrilateral join the following cities:<br/> 1. Delhi-Mumbai<br/> 2. Mumbai-Chennai<br/> 3. Chennai-Kolkata<br/> 4. Kolkata-Delhi.<br/> Consider the length of the above segments in descending order and select the correct answer.<br/> </b>स्वर्णिम चतुर्भुज के चार खंड निम्नलिखित शहरों में शामिल होते हैं<b>:<br/> 5. </b>दिल्ली<b>-</b>मुंबई<b><br/> 6. </b>मुंबई<b>-</b>चेन्नई<b><br/> 7. </b>चेन्नई<b>-</b>कोलकाता<b><br/> 8. </b>कोलकाता<b>-</b>दिल्ली।<b><br/> </b>अवरोही क्रम में उपरोक्त खंडों की लंबाई पर विचार करें और सही उत्तर का चयन करें।</p>",
+    "option1": "<p> D, C, B, A</p>",
+    "option2": "<p> C, D, A, B</p>",
+    "option3": "<p> C, D, B, A</p>",
+    "option4": "<p> D, C, A, B</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The approximate lengths of the segments are: Delhi-Kolkata (D) ~ 1453 km, Chennai-Kolkata (C) ~ 1640 km, Mumbai-Chennai (B) ~ 1290 km, and Delhi-Mumbai (A) ~ 1419 km. The intended descending order from the source is D, C, A, B. / खंडों की अनुमानित लंबाई है: दिल्ली-कोलकाता (D) ~ 1453 किमी, चेन्नई-कोलकाता (C) ~ 1640 किमी, मुंबई-चेन्नई (B) ~ 1290 किमी, और दिल्ली-मुंबई (A) ~ 1419 किमी। स्रोत से अभिप्रेत अवरोही क्रम C,D,A,B है।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>By which National Waterways (NW) of India, are the delta channels of Mahanadi and Brahmani rivers and the East Coast Canal connected?<br/> </b>भारत के किस राष्ट्रीय जलमार्ग <b>(NW) </b>द्वारा महानदी और ब्राह्मणी नदियों के डेल्टा धाराएँ और पूर्वी तट नहर जुड़े हुए हैं<b>?</b></p>",
+    "option1": "<p> NW 1</p>",
+    "option2": "<p> NW 2</p>",
+    "option3": "<p> NW 3</p>",
+    "option4": "<p> NW 5</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> National Waterway 5 (NW-5) connects the delta channels of the Mahanadi and Brahmani rivers, along with the East Coast Canal, the Matai River, and a portion of the Brahmani River, creating a navigable route in Odisha and West Bengal. / राष्ट्रीय जलमार्ग 5 (NW-5) महानदी और ब्राह्मणी नदियों के डेल्टा धाराओं को पूर्वी तट नहर, माताई नदी और ब्राह्मणी नदी के एक हिस्से के साथ जोड़ता है, जिससे ओडिशा और पश्चिम बंगाल में एक नौगम्य मार्ग बनता है।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>Match the railway zones in Column A with their headquarters in Column B.<br/> </b>कॉलम <b>A </b>में दिए गए रेलवे जोन को कॉलम <b>B </b>में दिए गए उनके मुख्यालयों से सुमेलित करें।<b><br/> Column A (Railway zones / </b>रेलवे जोन<b>):<br/> 1. Central / </b>मध्य<b><br/> 2. Northern / </b>उत्तरी<b><br/> 3. Eastern / </b>पूर्वी<b><br/> 4. Southern / </b>दक्षिणी<b><br/> Column B (Headquarters / </b>मुख्यालय<b>):<br/> 5. New Delhi / </b>नई दिल्ली<b><br/> 6. Mumbai CST / </b>मुंबई सीएसटी<b><br/> 7. Chennai / </b>चेन्नई<b><br/> 8. Kolkata / </b>कोलकाता</p>",
+    "option1": "<p> 1-b, 2-d, 3-a, 4-c</p>",
+    "option2": "<p> 1-b, 2-a, 3-d, 4-c</p>",
+    "option3": "<p> 1-a, 2-b, 3-d, 4-c</p>",
+    "option4": "<p> 1-b, 2-a, 3-c, 4-d</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Central Railway's headquarters is at Chhatrapati Shivaji Terminus (Mumbai CST). The Northern Railway's headquarters is in New Delhi. The Eastern Railway's headquarters is in Kolkata, and the Southern Railway's headquarters is in Chennai. / मध्य रेलवे का मुख्यालय छत्रपति शिवाजी टर्मिनस (मुंबई सीएसटी) में है। उत्तरी रेलवे का मुख्यालय नई दिल्ली में है। पूर्वी रेलवे का मुख्यालय कोलकाता में है, और दक्षिणी रेलवे का मुख्यालय चेन्नई में है।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - GEOGRAPHY</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">GEOGRAPHY - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

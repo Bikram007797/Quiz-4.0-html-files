@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY - SOIL QUIZ [04-11-2025] - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>GEOGRAPHY - SOIL QUIZ [04-11-2025]</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>The study of soil is known as:<br/> </b>मृदा के अध्ययन को किस नाम से जाना जाता है<b>?</b></p>",
+    "option1": "<p> Entomology / एंटोंमोलॉजी</p>",
+    "option2": "<p> Pedology / पेडोलॉजी</p>",
+    "option3": "<p> Paleontology / पैलेन्टोलॉजी</p>",
+    "option4": "<p> Geology / जियोलॉजी</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Pedology (soil science) is a scientific discipline devoted to the study of soil, including its origin, nature, distribution, and classification. It focuses on soil as a natural entity and its roles in the environment.<br/> ● Geology (geology) – the study of the Earth<br/> ● Paleontology (paleontology) – the study of the history of life on Earth through fossils.<br/> ● Entomology (insect science) – the study of insects<br/> पेडोलॉजी (मृदा विज्ञान) एक वैज्ञानिक अनुशासन है जो मिट्टी के अध्ययन के लिए समर्पित है, जिसमें इसकी उत्पत्ति, प्रकृति, वितरण और वर्गीकरण शामिल हैं। यह मिट्टी को एक प्राकृतिक इकाई के रूप में और पर्यावरण में इसकी भूमिकाओं पर केंद्रित करता है।<br/> ● जियोलॉजी (भूविज्ञान) - पृथ्वी का अध्ययन<br/> ● जीवाश्म विज्ञान (पेलियोन्टोलॉजी) - जीवाश्मों के माध्यम से पृथ्वी पर जीवन के इतिहास का अध्ययन।<br/> ● एंटोंमोलॉजी (कीट विज्ञान) - कीटों का अध्ययन<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>Which layer of the soil horizon is also known as Topsoil and is rich in minerals and humus?<br/> </b>मृदा संस्तर की कौन<b>-</b>सी परत को ऊपरी मृदा के रूप में भी जाना जाता है और जो खनिजों और ह्यूमस से भरपूर होती है<b>?</b></p>",
+    "option1": "<p> O - Organic Layer / O - कार्बनिक परत</p>",
+    "option2": "<p> A - Topsoil / A - ऊपरी मृदा</p>",
+    "option3": "<p> B - Subsoil / B - उपमृदा</p>",
+    "option4": "<p> C - Parent Rock / C - मूल शैल</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The A-Horizon is the layer known as Topsoil, or the zone of leaching, where minerals and humus (organic matter) are concentrated, making it vital for plant growth. The O-layer is the uppermost organic layer above it.<br/> A-संस्तर वह परत है जिसे ऊपरी मृदा या निक्षालन के क्षेत्र के रूप में जाना जाता है, जहाँ खनिज और ह्यूमस (कार्बनिक पदार्थ) केंद्रित होते हैं, जिससे यह पौधों के विकास के लिए महत्वपूर्ण हो जाती है। O-परत इसके ऊपर की सबसे ऊपरी कार्बनिक परत है।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>What percentage of India's area is covered by Alluvial Soil ?<br/> </b>भारत के कितने प्रतिशत क्षेत्र में जलोढ़ मृदा पाई जाती है<b>?</b></p>",
+    "option1": "<p> 15%</p>",
+    "option2": "<p> 18%</p>",
+    "option3": "<p> 40%</p>",
+    "option4": "<p> 4.3%</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Alluvial soil covers approximately 40% of India's total area. This soil is found primarily in the plains of North India, where rivers like the Ganges, Brahmaputra, and Indus deposit silt. Alluvial soil is very fertile and supports crops such as rice, wheat, sugarcane, and pulses.<br/> भारत के कुल क्षेत्रफल का लगभग 40% भाग जलोढ़ मृदा से ढका हुआ है। यह मृदा मुख्य रूप से उत्तर भारत के मैदानों में पाई जाती है, जहाँ गंगा, ब्रह्मपुत्र और सिंधु जैसी नदियाँ अपने साथ लाई हुई गाद जमा करती हैं। जलोढ़ मृदा बहुत उपजाऊ होती है और इसमें धान, गेहूँ, गन्ना तथा दलहन जैसी फसलें अच्छी तरह उगाई जाती हैं।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>Black Soil is also known by which name, making it ideal for cotton cultivation?<br/> </b>कपास की खेती के लिए आदर्श<b>, </b>काली मृदा को अन्य किस नाम से जाना जाता है<b>?</b></p>",
+    "option1": "<p> Khadar / खादर</p>",
+    "option2": "<p> Bhangar / भांगर</p>",
+    "option3": "<p> Regur / रेगुर</p>",
+    "option4": "<p> Arid / शुष्क</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Black soil, due to its high clay content, capacity to hold moisture, and rich nutrient profile, is also known as 'Regur'. These properties make it especially suitable and ideal for the cultivation of cotton.<br/> काली मृदा, अपनी उच्च चिकनी मिट्टी सामग्री, नमी धारण करने की क्षमता और समृद्ध पोषक प्रोफाइल के कारण, 'रेगुर' के नाम से भी जानी जाती है। ये गुण इसे कपास की खेती के लिए विशेष रूप से उपयुक्त और आदर्श बनाते हैं।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>Which primary nutrient, along with Nitrogen (N) and Phosphorus (P), is generally found deficient in Indian soils?<br/> </b>कौन<b>-</b>सा प्राथमिक पोषक तत्व<b>, </b>नाइट्रोजन <b>(N) </b>और फास्फोरस <b>(P) </b>के साथ<b>, </b>सामान्यतः भारतीय मिट्टियों में कमी के रूप में पाया जाता है<b>?</b></p>",
+    "option1": "<p> Potassium (K) / पोटैशियम (K)</p>",
+    "option2": "<p> Sulfur (S) / सल्फर (S)</p>",
+    "option3": "<p> Calcium (Ca) / कैल्शियम (Ca)</p>",
+    "option4": "<p> Magnesium (Mg) / मैग्नीशियम (Mg)</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The three primary macronutrients essential for plant growth are Nitrogen (N), Phosphorus (P), and Potassium (K) — collectively called NPK.<br/> Indian soils are commonly deficient in Nitrogen and Phosphorus, and in many regions, Potassium (K) is also found to be deficient.<br/> These deficiencies reduce soil fertility and crop yield, hence NPK fertilizers are widely used in agriculture.<br/> पौधों की वृद्धि के लिए आवश्यक तीन प्रमुख (Primary) पोषक तत्व हैं — नाइट्रोजन (N), फास्फोरस (P) और पोटैशियम (K), जिन्हें सामूहिक रूप से NPK कहा जाता है।<br/> भारतीय मिट्टियाँ सामान्यतः नाइट्रोजन और फास्फोरस की कमी से ग्रस्त होती हैं, और कई क्षेत्रों में पोटैशियम (K) की कमी भी पाई जाती है।<br/> इन पोषक तत्वों की कमी मिट्टी की उर्वरता और फसल की पैदावार को घटा देती है, इसलिए NPK उर्वरक कृषि में व्यापक रूप से उपयोग किए जाते हैं।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>The practice of planting rows of trees on one side of an area to prevent wind erosion is called:<br/> </b>वायु अपरदन को रोकने के लिए किसी क्षेत्र के एक तरफ पेड़ों की कतारें लगाने की प्रथा को क्या कहा जाता है<b>?</b></p>",
+    "option1": "<p> Mulching / पलवार</p>",
+    "option2": "<p> Contour Bunding / समोच्च मेड़ब</p>",
+    "option3": "<p> Terrace Farming / सीढ़ीदार खेती</p>",
+    "option4": "<p> Shelter Belts / आश्रय पट्टी</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Shelter Belts involve planting rows of trees to create a physical barrier against wind, thereby protecting the soil from wind erosion. This method is highly effective in arid and semi-arid regions to maintain soil stability.<br/> आश्रय पट्टी (शेल्टर बेल्ट) में हवा के खिलाफ एक भौतिक अवरोध पैदा करने के लिए पेड़ों की कतारें लगाना शामिल है, जिससे मृदा को वायु अपरदन से बचाया जा सके। यह विधि शुष्क और अर्ध-शुष्क क्षेत्रों में मृदा स्थिरता बनाए रखने में अत्यधिक प्रभावी है।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Which type of farming involves growing a single crop on a large area with the use of modern inputs like HYV seeds and chemical fertilisers?<br/> </b>किस प्रकार की खेती में बड़े क्षेत्र पर एक ही फसल उगाई जाती है<b>, </b>जिसमें <b>HYV </b>बीज और रासायनिक उर्वरकों जैसे आधुनिक इनपुट का उपयोग किया जाता है<b>?</b></p>",
+    "option1": "<p> Primitive Subsistence Farming / आदिम निर्वाह खेती</p>",
+    "option2": "<p> Intensive Subsistence Farming / गहन निर्वाह खेती</p>",
+    "option3": "<p> Commercial Farming / वाणिज्यिक खेती</p>",
+    "option4": "<p> Mixed Farming / मिश्रित खेती</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Commercial farming is practiced over large areas, where a single crop (mono-cropping system) is grown to generate profits by selling it in the market. High-yielding seeds, chemical fertilizers, pesticides, and modern machinery are used in this type of farming.<br/> Examples include large-scale cultivation of wheat, cotton, sugarcane, and rice.<br/> वाणिज्यिक खेती बड़े क्षेत्र में की जाती है, जहाँ एक ही फसल (एकल फसल प्रणाली) उगाई जाती है ताकि उसे बाज़ार में बेचकर लाभ प्राप्त किया जा सके। इस प्रकार की खेती में उच्च उपज देने वाले बीज, रासायनिक उर्वरक, कीटनाशक और आधुनिक मशीनों का उपयोग किया जाता है।<br/> इसके उदाहरण हैं — गेहूँ, कपास, गन्ना, धान आदि की बड़े पैमाने पर की जाने वाली खेती।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>The short cropping season for crops like Watermelon, Muskmelon, and Cucumber is known as:<br/> </b>तरबूज<b>, </b>खरबूज और खीरे जैसी फसलों के लिए अल्पकालिक फसल अवधि को क्या कहा जाता है<b>?</b></p>",
+    "option1": "<p> Kharif / खरीफ</p>",
+    "option2": "<p> Rabi / रबी</p>",
+    "option3": "<p> Zaid / ज़ायद</p>",
+    "option4": "<p> Monsoon / मानसून</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Zaid is the short cropping season that falls between the Rabi and Kharif seasons, typically from May to June. Crops grown during this time include watermelons, muskmelons, and fodder crops.<br/> ज़ायद वह अल्पकालिक छोटा फसल मौसम है जो रबी और खरीफ मौसमों के बीच आता है, आमतौर पर मई से जून तक। इस दौरान उगाई जाने वाली फसलों में तरबूज, खरबूजा और चारा फसलें शामिल हैं।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>The process of rearing of silk is called:<br/> </b>रेशम के कीड़ों के पालन की प्रक्रिया को क्या कहा जाता है<b>?</b></p>",
+    "option1": "<p> Aquaculture / एक्वाकल्चर</p>",
+    "option2": "<p> Sericulture / सेरीकल्चर</p>",
+    "option3": "<p> Pisciculture / पिसीकल्चर</p>",
+    "option4": "<p> Apiculture / एपिकल्चर</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Sericulture is the practice specifically dedicated to the rearing of silkworms for the production of raw silk. India is a major producer of silk, with different varieties found across the country.<br/> ● Aquaculture - fish farming<br/> ● Pisciculture - fish farming or fish culture<br/> ● Apiculture - beekeeping<br/> सेरीकल्चर विशेष रूप से कच्चे रेशम के उत्पादन के लिए रेशम के कीड़ों के पालन की प्रथा है। भारत रेशम का एक प्रमुख उत्पादक है, जिसकी विभिन्न किस्में पूरे देश में पाई जाती हैं।<br/> ● एक्वाकल्चर - मत्स्य पालन<br/> ● पिसीकल्चर - मछली पालन या मत्स्य पालन<br/> ● एपिकल्चर - मधुमक्खी पालन<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>Who is known as the 'Father of the Yellow Revolution' in India?<br/> </b>भारत में <b>'</b>पीली क्रांति के जनक<b>' </b>के रूप में किसे जाना जाता है<b>?</b></p>",
+    "option1": "<p> Norman Borlaug / नॉर्मन बोरलॉग</p>",
+    "option2": "<p> Verghese Kurien / वर्गीस कुरियन</p>",
+    "option3": "<p> Harilal Chaudhuri / हरिलाल चौधरी</p>",
+    "option4": "<p> Sam Pitroda / सैम पित्रोदा</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Sam Pitroda is credited as the father of the Yellow Revolution, which focused on increasing oilseed production in India to achieve self-sufficiency in edible oils.<br/> 1. Dr. Norman Borlaug was an American agronomist known as the 'Father of the Green Revolution'.<br/> 2. Verghese Kurien was the father of the 'White Revolution' in India, which played a key role in making India the world's largest milk producer.<br/> 3. Dr. Hiralal Chaudhary and Dr. Arun Krishnan are considered the fathers of the Blue Revolution in India.<br/> 4. सैम पित्रोदा को पीली क्रांति के जनक के रूप में श्रेय दिया जाता है, जिसका मुख्य ध्यान खाद्य तेलों में आत्मनिर्भरता प्राप्त करने के लिए भारत में तिलहन के उत्पादन को बढ़ाना था।<br/> 5. डॉ. नॉर्मन बोरलॉग एक अमेरिकी कृषिविज्ञानी थे जिन्हें 'हरित क्रांति के जनक' के रूप में जाना जाता है।<br/> 6. वर्गीस कुरियन भारत में 'श्वेत क्रांति' के जनक थे, जिन्होंने भारत को दुनिया का सबसे बड़ा दूध उत्पादक देश बनाने में महत्वपूर्ण भूमिका निभाई।<br/> 7. भारत में नीली क्रांति के जनक डॉ. हीरालाल चौधरी और डॉ. अरुण कृष्णन को माना जाता है।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Consider the following statements about Alluvial Soil:<br/> </b>जलोढ़ मृदा के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. It is the most widely spread (40%) and most fertile type of soil in India. </b>यह भारत में सबसे व्यापक रूप से फैली हुई <b>(40%) </b>और सबसे उपजाऊ प्रकार की मृदा है।<b><br/> 2. It is rich in potash and poor in phosphorus. </b>यह पोटाश में समृद्ध और फास्फोरस की कमी होती है।<b><br/> 3. Its older type, known as 'Khadar', is less fertile. </b>इसके पुराने प्रकार<b>, </b>जिसे <b>'</b>खादर<b>' </b>कहा जाता है<b>, </b>में उर्वरता कम होती है।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statements 1 and 2 are correct as Alluvial soil is the most fertile and covers 40% of the area, being rich in potash and poor in phosphorus. Statement 3 is incorrect because the older alluvial soil is called Bhangar (less fertile), while the newer, more fertile type is called Khadar. कथन 1 और 2 सही हैं क्योंकि जलोढ़ मृदा सबसे उपजाऊ है और 40% क्षेत्र को कवर करती है, जो पोटाश में समृद्ध और फास्फोरस में कम होती है। कथन 3 गलत है क्योंकि पुरानी जलोढ़ मृदा को भांगर (कम उपजाऊ) कहा जाता है, जबकि नई, अधिक उपजाऊ प्रकार को खादर कहा जाता है।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Assertion (A): Laterite soil is a result of an intense leaching process.<br/> </b>अभिकथन <b>(A): </b>लैटेराइट मृदा गहन निक्षालन प्रक्रिया का परिणाम है।<b><br/> Reason (R): In laterite soil, important minerals such as silica wash away with the water in regions of high temperature and heavy rainfall.<br/> </b>कारण <b>(R): </b>लैटेराइट मृदा में<b>, </b>उच्च तापमान और भारी वर्षा वाले क्षेत्रों में सिलिका जैसे महत्वपूर्ण खनिज पानी के साथ बह जाते हैं।</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A / A और R दोनों सत्य हैं और R, A की सही व्याख्या है</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A / A और R दोनों सत्य हैं लेकिन R, A की सही व्याख्या नहीं है</p>",
+    "option3": "<p> A is true but R is false / A सत्य है लेकिन R असत्य है</p>",
+    "option4": "<p> A is false but R is true / A असत्य है लेकिन R सत्य है</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Both the Assertion and the Reason are correct, and R correctly explains A. The intense leaching process, where important soluble minerals like silica are washed away by heavy water flow, is the very mechanism that leads to the formation of Laterite soil.<br/> कथन और कारण दोनों सही हैं, और कारण कथन की सही व्याख्या करता है। तीव्र अपक्षालन की प्रक्रिया, जिसमें भारी जल प्रवाह द्वारा सिलिका जैसे घुलनशील खनिज बह जाते हैं, वही प्रक्रिया है जो लैटेराइट मिट्टी के निर्माण का कारण बनती है।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Which of the following statements is INCORRECT regarding the factors affecting soil formation?<br/> </b>मृदा निर्माण को प्रभावित करने वाले कारकों के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन गलत है<b>?</b></p>",
+    "option1": "<p> Parent material determines the soil's colour, texture, and chemical properties. / जनक सामग्री मृदा के रंग, बनावट और रासायनिक गुणों को निर्धारित करती है।</p>",
+    "option2": "<p> Climate, specifically temperature and rainfall, affects the rate of weathering and humus formation. / जलवायु, विशेष रूप से तापमान और वर्षा, अपक्षय की दर और ह्यूमस निर्माण को प्रभावित करती है।</p>",
+    "option3": "<p> Relief (land surface) primarily determines the thickness of the soil. / उच्चावच मुख्य रूप से मृदा की मोटाई निर्धारित करता है।</p>",
+    "option4": "<p> Time determines the thickness of the soil layer. / समय मृदा परत की मोटाई निर्धारित करता है।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Option C is incorrect because time determines the thickness of the soil layer, while relief (the slope of the land) primarily determines soil accumulation. The other statements correctly describe their respective factors.<br/> विकल्प c गलत है, क्योकि समय मृदा परत की मोटाई निर्धारित करता है जबकि उच्चावच (भूमि का ढलान) मुख्य रूप से मृदा के संचय को निर्धारित करता है। अन्य कथन अपने संबंधित कारकों का सही वर्णन करते हैं।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Which pair of soil type and its treatment is correctly matched?<br/> </b>मृदा के प्रकार और उसके उपचार का कौन<b>-</b>सा जोड़ा सही सुमेलित है<b>?</b></p>",
+    "option1": "<p> Saline Soil: Lime / लवणीय मृदा: चूना</p>",
+    "option2": "<p> Acidic Soil : Gypsum / अम्लीय मृदा : जिप्सम</p>",
+    "option3": "<p> Saline Soil : Gypsum / लवणीय मृदा : जिप्सम</p>",
+    "option4": "<p> Black Soil: Lime / काली मृदा: चूना</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Saline soil, which has a high concentration of salts, is typically treated with Gypsum to improve its structure and reduce salinity. Conversely, Acidic soil is treated with Lime to neutralise its acidity.<br/> लवणीय मृदा, जिसमें लवणों की उच्च सांद्रता होती है, को आमतौर पर इसकी संरचना में सुधार करने और लवणता को कम करने के लिए जिप्सम से उपचारित किया जाता है। इसके विपरीत, अम्लीय मृदा को इसकी अम्लता को बेअसर करने के लिए चूने से उपचारित किया जाता है।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Consider the following soil types based on the US Taxonomy (Soil Orders):<br/> </b>यूएस मृदा वर्गीकरण प्रणाली के आधार पर निम्नलिखित मृदा प्रकारों पर विचार करें<b>:<br/> 1. Entisol: Alluvial soil (Young) / </b>एंटिसोल<b>: </b>जलोढ़ मिट्टी <b>(</b>युवावस्था<b>)<br/> 2. Vertisol: Black soil (Clay-rich, swelling/shrinking) / </b>वर्टिसोल<b>: </b>काली मिट्टी <b>(</b>मृत्तिका<b>-</b>समृद्ध<b>, </b>फूलने<b>/</b>सिकुड़ने वाली<b>)<br/> 3. Histosol: Permanently frozen soil / </b>हिस्टोसोल<b>: </b>स्थायी रूप से जमी हुई मिट्टी<b><br/> Which of the above pairs is/are correctly matched?<br/> </b>उपरोक्त जोड़ों में से कौन<b>-</b>सा<b>/</b>से सही सुमेलित है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Entisol (Young/Alluvial) and Vertisol (Black/Clay-rich) are correctly matched. Histosol is the name for Organic Soil (Peaty/Marshy), while permanently frozen soils are classified as Gelisols.<br/> एंटिसोल (युवा/जलोढ़) और वर्टिसोल (काली/चिकनी मिट्टी से समृद्ध) सही सुमेलित हैं। हिस्टोसोल कार्बनिक मृदा (पीटमय/दलदली) का नाम है, जबकि स्थायी रूप से जमी हुई मृदा को गेलिसोल के रूप में वर्गीकृत किया गया है।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>which layer of the soil horizon is primarily a zone of deposition for minerals and metal salts?<br/> </b>मृदा संस्तर की कौन सी परत मुख्य रूप से खनिजों और धातु लवणों के निक्षेपण का क्षेत्र है<b>?</b></p>",
+    "option1": "<p> O - Organic Layer / O - कार्बनिक परत</p>",
+    "option2": "<p> A - Topsoil / A - ऊपरी मृदा</p>",
+    "option3": "<p> B - Subsoil / B - उपमृदा</p>",
+    "option4": "<p> C - Parent Rock / C - मूल शैल</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The B-Horizon is also known as the Subsoil. It is the zone below the A-Horizon where deposited minerals and metal salts, leached down from the topsoil, accumulate. This accumulation makes it denser and less fertile than the A-horizon.<br/> B-संस्तर को उपमृदा के रूप में भी जाना जाता है। यह A-संस्तर के नीचे का क्षेत्र है जहाँ ऊपरी मृदा से निक्षालित खनिज और धातु लवण जमा होते हैं। यह संचय इसे A-संस्तर की तुलना में सघन और कम उपजाऊ बनाता है।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Which major soil type in India covers 15% of the total area and is mainly found in the Deccan Trap region, including Maharashtra and Gujarat?<br/> </b>भारत में कौन सा प्रमुख मृदा प्रकार कुल क्षेत्रफल का <b>15% </b>कवर करता है और मुख्य रूप से महाराष्ट्र और गुजरात सहित दक्कन ट्रेप <b>(Deccan Trap) </b>क्षेत्र में पाया जाता है<b>?</b></p>",
+    "option1": "<p> Red Soil / लाल मृदा</p>",
+    "option2": "<p> Black Soil / काली मृदा</p>",
+    "option3": "<p> Laterite Soil / लेटेराइट मृदा</p>",
+    "option4": "<p> Montane Soil / पर्वतीय मृदा</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Black Soil, covering 15% of the area, is concentrated in the Deccan Trap (Basalt region) spread over Maharashtra, Gujarat, and parts of Madhya Pradesh. Its origin from lava makes it suitable for cotton.<br/> काली मृदा, 15% क्षेत्र को कवर करती है, महाराष्ट्र, गुजरात और मध्य प्रदेश के कुछ हिस्सों में फैले दक्कन ट्रेप (बेसाल्ट क्षेत्र) में केंद्रित है। लावा से इसकी उत्पत्ति इसे कपास के लिए उपयुक्त बनाती है।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Which factor of soil formation is explicitly stated to determine the soil's permeability?<br/> </b>मृदा निर्माण का वह कौन<b>-</b>सा कारक है जो मृदा की पारगम्यता को स्पष्ट रूप से निर्धारित करता है<b>?</b></p>",
+    "option1": "<p> Time / समय</p>",
+    "option2": "<p> Climate / जलवायु</p>",
+    "option3": "<p> Parent material / जनक सामग्री</p>",
+    "option4": "<p> Relief / उच्चावच</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Parent material (parent rock/bedrock) is the unweathered or partly weathered rock that directly influences the soil's colour, texture, chemical properties, mineral content, and, critically, its permeability.<br/> जनक सामग्री (जनक शैल/आधार शैल) वह अपरदित या आंशिक रूप से अपरदित शैल है जो सीधे मृदा के रंग, बनावट, रासायनिक गुणों, खनिज सामग्री और, महत्वपूर्ण रूप से, इसकी पारगम्यता को प्रभावित करती है।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>The Headquarters of the Indian Council of Agricultural Research (ICAR), which categorized Indian soil into 8 categories, is located in:<br/> </b>भारतीय कृषि अनुसंधान परिषद <b>(ICAR), </b>जिसने भारतीय मृदा को <b>8 </b>श्रेणियों में वर्गीकृत किया है<b>, </b>का मुख्यालय कहाँ स्थित है<b>?</b></p>",
+    "option1": "<p> Patna / पटना</p>",
+    "option2": "<p> Bengaluru / बेंगलुरु</p>",
+    "option3": "<p> New Delhi / नई दिल्ली</p>",
+    "option4": "<p> Mumbai / मुंबई</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> the Indian Council of Agricultural Research (ICAR), which divided Indian soils into 8 major categories, has its Headquarters (HQ) in New Delhi.<br/> भारतीय कृषि अनुसंधान परिषद (ICAR), जिसने भारतीय मृदाओं को 8 प्रमुख श्रेणियों में विभाजित किया है, का मुख्यालय (HQ) नई दिल्ली में स्थित है।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Red soil appears red due to the diffusion of iron in which type of rocks?<br/> </b>लाल मृदा किस प्रकार की चट्टानों में आयरन के प्रसार के कारण लाल दिखाई देती है<b>?</b></p>",
+    "option1": "<p> Sedimentary Rocks / अवसादी चट्टानें</p>",
+    "option2": "<p> Igneous and Metamorphic Rocks / आग्नेय और कायांतरित चट्टानें</p>",
+    "option3": "<p> Volcanic Rocks / ज्वालामुखी चट्टानें</p>",
+    "option4": "<p> Deccan Trap Rocks / दक्कन जाल चट्टानें</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Red soil develops on crystalline igneous and metamorphic rocks. Its characteristic red colour is due to the diffusion of iron in the rocks. When hydrated, this soil can appear yellowish.<br/> लाल मृदा क्रिस्टलीय आग्नेय और कायांतरित चट्टानों पर विकसित होती है। इसका विशिष्ट लाल रंग चट्टानों में आयरन के प्रसार के कारण होता है। जब यह जलयोजित होती है, तो यह मृदा पीली दिखाई दे सकती है।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>In which regions are montane soils generally rich in humus content?<br/> </b>किस क्षेत्रों में पर्वतीय मिट्टियाँ सामान्यतः ह्यूमस की अधिक मात्रा रखती हैं<b>?</b></p>",
+    "option1": "<p> Lower, drier hill slopes / निचली, शुष्क पहाड़ी ढलानें</p>",
+    "option2": "<p> Upper, forested, and cool regions / ऊपरी, वनाच्छादित और शीत क्षेत्रों</p>",
+    "option3": "<p> Plateau regions / पठारी क्षेत्र</p>",
+    "option4": "<p> River valley regions / नदी घाटी क्षेत्र</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> <br/> </p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Which of the following is the best description of the characteristic of Black Soil's self-aeration?<br/> </b>निम्नलिखित में से कौन सा काली मृदा के स्व<b>-</b>जुताई की विशेषता का सबसे अच्छा वर्णन करता है<b>?</b></p>",
+    "option1": "<p> Its rich iron content causes it to aerate naturally. / इसकी समृद्ध लोहे की सामग्री के कारण यह स्वाभाविक रूप से वातित होती है।</p>",
+    "option2": "<p> It has small cracks when wet, allowing air to pass. / गीला होने पर इसमें छोटी दरारें होती हैं, जिससे हवा गुजर सकती है।</p>",
+    "option3": "<p> It swells when wet and develops deep, wide cracks when dry, enabling self-aeration. / गीला होने पर यह फूल जाती है और सूखने पर गहरी, चौड़ी दरारें विकसित करती है, जिससे स्व-जुताई संभव होती है।</p>",
+    "option4": "<p> It is constantly loosened by the action of micro-organisms. / यह सूक्ष्म जीवों की क्रिया से लगातार शिथिल होती रहती है।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Black soil, due to its high clay content, becomes sticky when wet (swelling) and develops deep, wide cracks when dry (shrinking). These cracks facilitate air circulation, giving it the property of 'self-aeration'.<br/> काली मिट्टी, अपनी उच्च मृत्तिका मात्रा के कारण, गीली होने पर चिपचिपी हो जाती है (फूलती है) और सूखने पर गहरी, चौड़ी दरारें विकसित करती है (सिकुड़ती है)। ये दरारें वायु संचार को सुगम बनाती हैं, जिससे इसे 'स्व-जुताई' की विशेषता प्राप्त होती है।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>The older Alluvial Soil (Bhangar) is distinguished from the newer Alluvial Soil (Khadar) primarily because Bhangar contains:<br/> </b>पुरानी जलोढ़ मृदा <b>(</b>भांगर<b>) </b>नई जलोढ़ मृदा <b>(</b>खादर<b>) </b>से मुख्य रूप से इसलिए अलग है क्योंकि भांगर में होता हैं<b>:</b></p>",
+    "option1": "<p> High percentage of fine silt / महीन गाद का उच्च प्रतिशत</p>",
+    "option2": "<p> Low calcareous concentration (Kankar) / कम कैल्केरियस सांद्रता (कंकर)</p>",
+    "option3": "<p> High calcareous concentration (Kankar) / उच्च कैल्केरियस सांद्रता (कंकर)</p>",
+    "option4": "<p> found far away from the river bed / नदी तल से दूरी</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The older Alluvial Soil (Bhangar) is characterized by the presence of a high concentration of calcareous nodules known as 'Kankar', making it less fertile. Khadar is finer and more clayey, making it the most fertile.<br/> पुरानी जलोढ़ मिट्टी (भांगर) की विशेषता इसकी उच्च कैल्केरियस गांठों की उपस्थिति होती है, जिन्हें 'कंकर' कहा जाता है, जिससे यह कम उपजाऊ होती है। खादर अधिक महीन और मृत्तिका युक्त होती है, जिससे यह सबसे अधिक उपजाऊ होती है।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Which of the following methods are used to prevent soil erosion by water in sloping regions?<br/> </b>ढलान वाले क्षेत्रों में जल द्वारा मृदा अपरदन को रोकने के लिए निम्नलिखित में से कौन सी विधियाँ उपयोग की जाती हैं<b>?<br/> 1. Contour Ploughing / </b>समोच्च जुताई<b><br/> 2. Strip Farming / </b>पट्टीदार खेती<b><br/> 3. Shelter Belts / </b>आश्रय पट्टी</p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Contour Ploughing involves building barriers/ploughing along contours to intercept water flow. Strip Farming (growing crops in strips) also breaks the force of water. Shelter Belts primarily prevent wind erosion.<br/> समोच्च जुताई में जल प्रवाह को रोकने के लिए समोच्च रेखाओं के साथ अवरोध बनाना या जुताई करना शामिल होता है। पट्टीदार खेती (फसलों को पट्टियों में उगाना) भी जल के वेग को कम करती है। आश्रय पट्टियाँ मुख्यतः पवन अपरदन को रोकती हैं।<br/> ________________________________________</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>Which type of soil is generally infertile, used for making bricks and house construction, and is also found in the hilly areas of Odisha and Kerala?<br/> </b>किस प्रकार की मृदा आमतौर पर अनउपजाऊ होती है<b>, </b>जिसका उपयोग ईंटें और घर बनाने के लिए किया जाता है<b>, </b>और यह ओडिशा और केरल के पहाड़ी क्षेत्रों में भी पाई जाती है<b>?</b></p>",
+    "option1": "<p> Red Soil / लाल मृदा</p>",
+    "option2": "<p> Black Soil / काली मृदा</p>",
+    "option3": "<p> Laterite Soil / लेटेराइट मृदा</p>",
+    "option4": "<p> Arid Soil / शुष्क मृदा</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Laterite soil is the result of intense leaching, making it generally infertile. However, due to its soft nature when wet and hard nature when dry, it is commonly used for making bricks for house construction. It is found in regions like Odisha, Kerala, and the Western Ghats.<br/> लेटेराइट मृदा गहन निक्षालन का परिणाम है, जो इसे आमतौर पर अनुर्वर या अनउपजाऊ बनाती है। हालाँकि, गीला होने पर इसकी नरम प्रकृति और सूखने पर कठोर प्रकृति के कारण, इसका उपयोग आमतौर पर घर बनाने के लिए ईंटें बनाने में किया जाता है। यह ओडिशा, केरल और पश्चिमी घाट जैसे क्षेत्रों में पाई जाती है।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - GEOGRAPHY</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">GEOGRAPHY - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

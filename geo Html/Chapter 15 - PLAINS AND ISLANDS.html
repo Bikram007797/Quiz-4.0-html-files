@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY - PLAINS AND ISLANDS QUIZ [25-10-2025] - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>GEOGRAPHY - PLAINS AND ISLANDS QUIZ [25-10-2025]</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>Which term is used for the belt of new alluvium deposition in the Northern Plains?<br/> </b>उत्तरी मैदानों में नई जलोढ़ निक्षेप की पट्टी के लिए किस शब्द का प्रयोग किया जाता है<b>?</b></p>",
+    "option1": "<p> Bhabar / भाबर</p>",
+    "option2": "<p> Bhangar / भांगर</p>",
+    "option3": "<p> Khadar / खादर</p>",
+    "option4": "<p> Terai / तराई</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Khadar is the new deposition (alluvium) that renews every year, making it more fertile than Bhangar. It is located in the alluvial flood plain area.<br/> खादर नई निक्षेप (जलोढ़) है जो हर साल नवीनीकृत होती है, जिससे यह भांगर की तुलना में अधिक उपजाऊ होती है। यह जलोढ़ बाढ़ के मैदान क्षेत्र में स्थित है।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>The Bhabar belt lies immediately south of which physical division?<br/> </b>भाबर पट्टी किस भौतिक विभाजन के ठीक दक्षिण में स्थित है<b>?</b></p>",
+    "option1": "<p> Himalaya / हिमालय</p>",
+    "option2": "<p> Siwaliks / शिवालिक</p>",
+    "option3": "<p> Terai / तराई</p>",
+    "option4": "<p> Khadar / खादर</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Bhabar is described as a narrow belt lying South of the Shiwaliks. It consists of big stone pebbles and is not suitable for agriculture.<br/> भाबर को शिवालिक के दक्षिण में स्थित एक संकरी पट्टी के रूप में वर्णित किया गया है। इसमें बड़े पत्थर के कंकड़ होते हैं और यह कृषि के लिए उपयुक्त नहीं है।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>In which region of the Northern Plains do the streams of the river disappear due to porosity?<br/> </b>उत्तरी मैदानों के किस क्षेत्र में सरंध्रता <b>(</b>पारगम्यता<b>) </b>के कारण नदी की धाराएँ विलुप्त हो जाती हैं<b>?</b></p>",
+    "option1": "<p> Khadar / खादर</p>",
+    "option2": "<p> Terai / तराई</p>",
+    "option3": "<p> Bhangar / भांगर</p>",
+    "option4": "<p> Bhabar / भाबर</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> In the Bhabar belt, which consists of big stone pebbles, the streams of the river disappear as the water percolates through the porous sediments.<br/> भाबर पट्टी में, जो बड़े पत्थर के कंकड़ों से बनी होती है, नदी की धाराएँ विलुप्त हो जाती हैं क्योंकि पानी सरंध्र तलछट के माध्यम से रिस जाता है।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>The older alluvium of the Northern Plains, which has more calcareous concentration, is known as:<br/> </b>उत्तर भारत के मैदानों की पुरानी जलोढ़ मिट्टी<b>, </b>जिसमें अधिक चूने की मात्रा होती है<b>, </b>को क्या कहा जाता है<b>?</b></p>",
+    "option1": "<p> Khadar / खादर</p>",
+    "option2": "<p> Bhangar / भांगर</p>",
+    "option3": "<p> Bhabar / भाबर</p>",
+    "option4": "<p> Delta / डेल्टा</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Bhangar is referred to as \"Old deposition\" and has \"More calcareous concentration\" known as Kankad. It is less fertile than Khadar.<br/> भांगर को \"पुराना निक्षेप\" कहा जाता है और इसमें \"अधिक चूने की मात्रा\" होती है जिसे कंकड़ के रूप में जाना जाता है। यह खादर की तुलना में कम उपजाऊ होता है।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>The marshy area and lush green vegetation are primarily seen in which region of the Northern Plains?<br/> </b>उत्तरी मैदानों के किस क्षेत्र में मुख्य रूप से दलदली क्षेत्र और हरी<b>-</b>भरी वनस्पति पाई जाती है<b>?</b></p>",
+    "option1": "<p> Bhabar / भाबर</p>",
+    "option2": "<p> Khadar / खादर</p>",
+    "option3": "<p> Bhangar / भांगर</p>",
+    "option4": "<p> Terai / तराई</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Terai region lies just south of the Bhabar in the northern plains.<br/> 5. In the Bhabar region, river water seeps into the ground, and when it emerges later, the area becomes waterlogged and marshy.<br/> 6. This results in dense, lush vegetation and biodiversity in the Terai region.<br/> 7. This region is very fertile, but was once malaria-prone and forested (most of it has now been converted to agriculture).<br/> Therefore, marshlands and lush vegetation are found primarily in the Terai region.<br/> 8. तराई क्षेत्र उत्तरी मैदानों में भाबर के ठीक दक्षिण में स्थित होता है।<br/> 9. भाबर क्षेत्र में नदियों का पानी नीचे जमीन में समा जाता है, और जब यह पानी आगे चलकर सतह पर निकलता है, तो वह क्षेत्र जलभराव और दलदली बन जाता है।<br/> 10. इस वजह से तराई क्षेत्र में घनी, हरी-भरी प्राकृतिक वनस्पति और जैव विविधता पाई जाती है।<br/> 11. यह क्षेत्र बहुत उपजाऊ होता है, परंतु पहले यह मलेरिया-प्रवण और जंगलों से भरा हुआ इलाका था (अब अधिकांश भाग कृषि योग्य बना दिया गया है)।<br/> इसलिए, दलदली भूमि और हरी-भरी वनस्पति मुख्य रूप से तराई क्षेत्र में पाई जाती है।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>Which of the following channels or straits is located between the Great Nicobar Island and Indonesia's Sumatra Island?<br/> </b>निम्नलिखित में से कौन सा चैनल या जलडमरूमध्य ग्रेट निकोबार द्वीप और इंडोनेशिया के सुमात्रा द्वीप के बीच स्थित है<b>?</b></p>",
+    "option1": "<p> 10 degree channel</p>",
+    "option2": "<p> Palk Strait</p>",
+    "option3": "<p> Grand channel</p>",
+    "option4": "<p> 9 degree channel</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Coco Strait is between the North Andaman islands and the Coco Islands of Myanmar. Sumatra and Java are separated by the Sunda Strait.<br/> कोको जलडमरूमध्य उत्तरी अंडमान द्वीप समूह और म्यांमार के कोको द्वीप समूह के बीच स्थित है। सुमात्रा और जावा को सुंडा जलडमरूमध्य अलग करता है।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>The Khadar region of the Northern Plains is known for which characteristic regarding soil fertility?<br/> </b>उत्तरी मैदानों का खादर क्षेत्र मिट्टी की उर्वरता के संबंध में किस विशेषता के लिए जाना जाता है<b>?</b></p>",
+    "option1": "<p> Not fit for agriculture / कृषि के लिए उपयुक्त नहीं</p>",
+    "option2": "<p> More calcareous concentration / अधिक चूने की मात्रा</p>",
+    "option3": "<p> Better fertility than bhangar / भांगर से बेहतर उर्वरता</p>",
+    "option4": "<p> Old deposition / पुरानी निक्षेप</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Khadar is characterized by \"New deposition\" that \"renews every year,\" resulting in \"Better fertility than bhangar.\"<br/> खादर की विशेषता \"नई निक्षेप\" है जो \"हर साल नवीनीकृत होती है\", जिसके परिणामस्वरूप \"भांगर से बेहतर उर्वरता\" होती है।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>Which state has the longest coastline in India, excluding islands?<br/> </b>द्वीपों को छोड़कर भारत में किस राज्य की तटरेखा सबसे लम्बी है<b>?</b></p>",
+    "option1": "<p> Tamil Nadu</p>",
+    "option2": "<p> Gujarat</p>",
+    "option3": "<p> Maharashtra</p>",
+    "option4": "<p> Andhra Pradesh</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Gujarat has the longest coastline in India, measuring about 1,600 km, excluding islands. It lies along the Arabian Sea, stretching from Kutch in the northwest to Diu in the south. The long coastline supports major ports such as Kandla, Mundra, and Porbandar.<br/> गुजरात की तटरेखा भारत में सबसे लंबी है, जिसकी लंबाई लगभग 1,600 किलोमीटर है, द्वीपों को छोड़कर। यह अरब सागर के किनारे स्थित है, जो उत्तर-पश्चिम में कच्छ से लेकर दक्षिण में दीव तक फैला है। यह लंबी तटरेखा कांडला, मुंद्रा और पोरबंदर जैसे प्रमुख बंदरगाहों को सहारा देती है।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Indira Point, the southernmost tip of India, is located on which island?<br/> </b>भारत का सबसे दक्षिणी छोर इंदिरा प्वाइंट किस द्वीप पर स्थित है<b>?</b></p>",
+    "option1": "<p> Car Nicobar Island / कार निकोबार द्वीप</p>",
+    "option2": "<p> Great Nicobar Island / ग्रेट निकोबार द्वीप</p>",
+    "option3": "<p> Nancowry Island / नानकॉरी द्वीप</p>",
+    "option4": "<p> Little Nicobar Island / छोटा निकोबार द्वीप</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Indira Point is the southernmost tip of India, located on the Great Nicobar Island in the Andaman and Nicobar Islands.<br/> It was named in memory of Prime Minister Indira Gandhi in 1984.<br/> This point lies at approximately 6°45′ N latitude, making it the southernmost point of Indian territory.<br/> इंदिरा पॉइंट भारत का सबसे दक्षिणी छोर है, जो अंडमान और निकोबार द्वीप समूह के ग्रेट निकोबार द्वीप पर स्थित है।<br/> इसका नाम 1984 में प्रधानमंत्री इंदिरा गांधी की स्मृति में रखा गया था।<br/> यह बिंदु लगभग 6°45′ उत्तरी अक्षांश पर स्थित है, जो इसे भारतीय क्षेत्र का सबसे दक्षिणी बिंदु बनाता है।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>Choose the correct statements about the islands of India.<br/> 1. Lakshadweep Islands are composed of coral islands.<br/> 2. Andaman and Nicobar islands are composed of coral islands.<br/> 3. It is believed that Lakshadweep islands are an elevated portion of submarine mountains.<br/> 4. It is believed that Andaman and Nicobar islands are an elevated portion of submarine mountains.<br/> </b>भारत के द्वीपों के बारे में सही कथन चुनें।<b><br/> 5. </b>लक्षद्वीप द्वीप समूह प्रवाल द्वीपों से बने हैं।<b><br/> 6. </b>अंडमान और निकोबार द्वीप समूह प्रवाल द्वीपों से बने हैं।<b><br/> 7. </b>ऐसा माना जाता है कि लक्षद्वीप द्वीप समूह पनडुब्बी पहाड़ों का एक ऊंचा हिस्सा हैं।<b><br/> 8. </b>ऐसा माना जाता है कि अंडमान और निकोबार द्वीप समूह पनडुब्बी पहाड़ों का एक ऊंचा हिस्सा हैं।</p>",
+    "option1": "<p> b and c</p>",
+    "option2": "<p> a and b</p>",
+    "option3": "<p> a and d</p>",
+    "option4": "<p> c and d</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> (a) Lakshadweep Islands are composed of coral islands — True.<br/> These islands are formed from coral reefs and atolls in the Arabian Sea.<br/> (d) Andaman and Nicobar Islands are believed to be an elevated portion of submarine mountains — True.<br/> They are actually the emergent peaks of submerged mountains in the Bay of Bengal, forming part of the Arakan Yoma range (extension of the Himalayas).</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Which two regions are part of the 'Alluvial flood plain' of the Northern Plains?<br/> </b>कौन से दो क्षेत्र उत्तरी मैदानों के <b>'</b>जलोढ़ बाढ़ मैदान<b>' </b>का हिस्सा हैं<b>?</b></p>",
+    "option1": "<p> Bhabar and Terai / भाबर और तराई</p>",
+    "option2": "<p> Khadar and Bhangar / खादर और भांगर</p>",
+    "option3": "<p> Siwaliks and Bhabar / शिवालिक और भाबर</p>",
+    "option4": "<p> Terai and Khadar / तराई और खादर</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The alluvial floodplain is primarily formed by old and new river alluvial deposits.<br/> It consists of two main divisions:<br/> 5. Bhangar – older alluvium, higher and less flood-prone.<br/> 6. Khadar – newer alluvium, deposited during floods and more fertile.<br/> Other regions, such as the Bhabar and Terai, are not considered part of the floodplain because the Bhabar is highly porous and the Terai is marshy.<br/> जलोढ़ बाढ़ मैदान मुख्य रूप से नदी के पुराने और नए जलोढ़ निक्षेप से बनता है।<br/> इसमें दो मुख्य भाग होते हैं:<br/> 7. भांगर – पुराना जलोढ़ , ऊँचा और कम बाढ़-प्रवण।<br/> 8. खादर – नया जलोढ़, बाढ़ के समय जमा होता है और अधिक उपजाऊ।<br/> अन्य क्षेत्र जैसे भाबर और तराई बाढ़ मैदान का हिस्सा नहीं माने जाते, क्योंकि भाबर बहुत छिद्रपूर्ण और तराई दलदली क्षेत्र है।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Consider the following statements about the Terai region:<br/> 1. It is characterized by lush green vegetation.<br/> 2. The streams of the river completely disappear here.<br/> 3. It is a marshy area without a properly demarcated channel.<br/> Which of the statements given above is/are correct?<br/> </b>तराई क्षेत्र के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> 4. </b>यह हरी<b>-</b>भरी वनस्पति की विशेषता है।<b><br/> 5. </b>नदी की धाराएँ यहाँ पूरी तरह से विलुप्त हो जाती हैं।<b><br/> 6. </b>यह बिना किसी उचित सीमांकित चैनल के एक दलदली क्षेत्र है।<b><br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Statement 1 and 3 are correct as Terai has \"lush green vegetation\" and is a \"marshy area\" where streams \"will reappear\" without a properly demarcated channel. Statement 2 is incorrect; the streams reappear in Terai; they disappear in the Bhabar region.<br/> कथन 1 और 3 सही हैं क्योंकि तराई में \"हरी-भरी वनस्पति\" है और यह एक \"दलदली क्षेत्र\" है जहाँ धाराएँ बिना किसी उचित सीमांकित चैनल के \"फिर से प्रकट होंगी\"। कथन 2 गलत है; धाराएँ तराई में फिर से प्रकट होती हैं; वे भाबर क्षेत्र में विलुप्त हो जाती हैं।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Assertion (A): The Khadar belt is considered more fertile for agriculture than the Bhangar belt.<br/> Reason (R): Khadar is the area of 'New deposition' that renews every year, unlike Bhangar which is 'Old deposition' with more calcareous concentration.<br/> Choose the correct option:<br/> </b>अभिकथन <b>(A): </b>खादर पट्टी को भांगर पट्टी की तुलना में कृषि के लिए अधिक उपजाऊ माना जाता है।<b><br/> </b>कारण <b>(R): </b>खादर <b>'</b>नए निक्षेप<b>' </b>का क्षेत्र है जो हर वर्ष नया होता है<b>, </b>जबकि भांगर <b>'</b>पुराना निक्षेप<b>' </b>है जिसमें अधिक चूने की मात्रा होती है।<b><br/> </b>सही विकल्प चुनें<b>:</b></p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A. / A और R दोनों सत्य हैं और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A. / A और R दोनों सत्य हैं लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true but R is false. / A सत्य है लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false but R is true. / A असत्य है लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Assertion is true: Khadar has \"Better fertility than bhangar.\" The Reason is also true and correctly explains A: Khadar's superior fertility is due to it being \"New deposition\" that \"renews every year,\" contrasting with Bhangar's \"Old deposition\" and \"More calcareous concentration.\"<br/> अभिकथन सत्य है: खादर में \"भांगर से बेहतर उर्वरता\" है। कारण भी सत्य है और A की सही व्याख्या करता है: खादर की बेहतर उर्वरता इसके \"नई निक्षेप\" होने के कारण है जो \"हर साल नवीनीकृत होती है\", जो भांगर के \"पुरानी निक्षेप\" और \"अधिक कैल्केरियस सांद्रता\" के विपरीत है।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>The term 'Kankad' is associated with which feature in the Northern Plains?<br/> '</b>कंकड़<b>' </b>शब्द उत्तरी मैदानों में किस विशेषता से जुड़ा है<b>?</b></p>",
+    "option1": "<p> Big stone pebbles in Bhabar / भाबर में बड़े पत्थर के कंकड़</p>",
+    "option2": "<p> Marshy area of Terai / तराई का दलदली क्षेत्र</p>",
+    "option3": "<p> Calcareous concentration in Bhangar / भांगर में कैल्केरियस सांद्रता</p>",
+    "option4": "<p> New deposition in Khadar / खादर में नई निक्षेप</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Kankad is the term given to the high \"calcareous concentration\" found within the \"Old deposition\" of the Bhangar region.<br/> कंकड़ वह शब्द है जो भांगर क्षेत्र की \"पुरानी निक्षेप\" के भीतर पाई जाने वाली उच्च \"कैल्केरियस सांद्रता\" को दिया गया है।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>The formation of the Bhabar belt is primarily due to the rivers performing which activity in their upper stage?<br/> </b>भाबर पट्टी का निर्माण मुख्यतः नदियों द्वारा उनके ऊपरी चरण में की गई किस गतिविधि के कारण होता है<b>?</b></p>",
+    "option1": "<p> Deposition / निक्षेपण</p>",
+    "option2": "<p> Erosion / अपरदन</p>",
+    "option3": "<p> Meandering / विसर्पण</p>",
+    "option4": "<p> Delta formation / डेल्टा निर्माण</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The river in its \"youthful stage\" (upper stage near the mountains) \"performs erosion\" which leads to the deposition of big stone pebbles at the foot of the mountains, forming the Bhabar belt.<br/> नदी अपनी \"युवा अवस्था\" (पहाड़ों के पास ऊपरी अवस्था) में \"अपरदन करती है\" जो पहाड़ों के तल पर बड़े पत्थर के कंकड़ों के निक्षेपण की ओर ले जाता है, जिससे भाबर पट्टी बनती है।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Which of the following is NOT a National Park located in the Terai region as listed in the context?<br/> </b>निम्नलिखित में से कौन सा संदर्भ में सूचीबद्ध तराई क्षेत्र में स्थित राष्ट्रीय उद्यान नहीं है<b>?</b></p>",
+    "option1": "<p> Dudhwa NP (UP) / दुधवा राष्ट्रीय उद्यान (यूपी)</p>",
+    "option2": "<p> Rajaji NP (UK) / राजाजी राष्ट्रीय उद्यान (यूके)</p>",
+    "option3": "<p> Jim Corbett NP (UK) / जिम कॉर्बेट राष्ट्रीय उद्यान (यूके)</p>",
+    "option4": "<p> Ranthambore NP (Rajasthan) / रणथंभौर राष्ट्रीय उद्यान (राजस्थान)</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The National Parks listed in the Terai region are Jim Corbett NP (UK), Dudhwa NP (UP), Chitwan NP (Nepal), Valmiki NP (Bihar), and Rajaji NP (UK). Ranthambore NP is located in Rajasthan, not in the Terai region.<br/> तराई क्षेत्र में सूचीबद्ध राष्ट्रीय उद्यान जिम कॉर्बेट राष्ट्रीय उद्यान (उत्तराखंड), दुधवा राष्ट्रीय उद्यान (उत्तर प्रदेश), चितवन राष्ट्रीय उद्यान (नेपाल), वाल्मीकि राष्ट्रीय उद्यान (बिहार), और राजाजी राष्ट्रीय उद्यान (उत्तराखंड) हैं। रणथंभौर राष्ट्रीय उद्यान राजस्थान में स्थित है, न कि तराई क्षेत्र में।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Arrange the following Northern Plains sub-divisions in order from North to South:<br/> 1. Khadar<br/> 2. Terai<br/> 3. Bhabar<br/> 4. Bhangar<br/> Choose the correct sequence:<br/> </b>निम्नलिखित उत्तरी मैदानों के उप<b>-</b>विभाजनों को उत्तर से दक्षिण क्रम में व्यवस्थित करें<b>:<br/> 5. </b>खादर<b><br/> 6. </b>तराई<b><br/> 7. </b>भाबर<b><br/> 8. </b>भांगर<b><br/> </b>सही क्रम चुनें<b>:</b></p>",
+    "option1": "<p> 3, 2, 4, 1</p>",
+    "option2": "<p> 2, 3, 4, 1</p>",
+    "option3": "<p> 3, 2, 1, 4</p>",
+    "option4": "<p> 4, 1, 3, 2</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The North-to-South sequence starts after the Himalayas/Siwaliks: Bhabar (where streams disappear), followed by Terai (where streams reappear, marshy), and then the Alluvial flood plain, which consists of Bhangar (older, higher ground) and Khadar (newer, lower flood-prone area, often intermixed or Khadar closer to the current river course).<br/> उत्तर से दक्षिण क्रम हिमालय/शिवालिक के बाद शुरू होता है: भाबर (जहाँ धाराएँ विलुप्त हो जाती हैं), उसके बाद तराई (जहाँ धाराएँ फिर से प्रकट होती हैं, दलदली), और फिर जलोढ़ बाढ़ का मैदान, जिसमें भांगर (पुराना, ऊँचा मैदान) और खादर (नया, कम बाढ़-ग्रस्त क्षेत्र, अक्सर मिश्रित या खादर वर्तमान नदी के करीब) शामिल हैं।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Consider the following statements:<br/> 1. The northern plains are formed mainly by volcanic materials brought by rivers originating from the Himalayas.<br/> 2. There is a lot of waterlogging in the Bhangar area, due to which it becomes marshy.<br/> 3. New fertile soil is deposited every year in the Khadar area.<br/> Choose the correct option:<br/> a. 1 and 2 only<br/> b. only 3<br/> c. 2 and 3 only<br/> d. all correct<br/> </b>निम्नलिखित कथनों पर विचार कीजिए<b>:<br/> 1. </b>उत्तरी मैदान का निर्माण मुख्यतः हिमालय से निकलने वाली नदियों द्वारा लाए गए ज्वालामुखीय पदार्थों से हुआ है।<b><br/> 2. </b>भांगर क्षेत्र में जलभराव अधिक होता है<b>, </b>जिससे यह दलदली बन जाता है।<b><br/> 3. </b>खादर क्षेत्र में हर वर्ष नई उपजाऊ मिट्टी जमा होती है।<b><br/> </b>सही विकल्प चुनिए<b>:</b></p>",
+    "option1": "<p> केवल 1 और 2</p>",
+    "option2": "<p> केवल 3</p>",
+    "option3": "<p> केवल 2 और 3</p>",
+    "option4": "<p> सभी सही</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Statement 1: \"The northern plains are formed primarily by volcanic material brought by rivers originating in the Himalayas.\" Incorrect<br/> 8. The northern plains are formed not by volcanic material, but by alluvial material brought by Himalayan rivers.<br/> Statement 2: \"The Bhangar region is highly waterlogged, making it marshy.\" Incorrect<br/> 9. The Bhangar region is composed of old alluvial soil.<br/> 10. This region is higher and less flood-prone, so it does not become marshy.<br/> Statement 3: \"New fertile soil is deposited in the Khadar region every year.\" Correct<br/> 11. The Khadar region is composed of new alluvial soil.<br/> 12. During floods, rivers deposit new soil in this region, making it extremely fertile.<br/> कथन 1: \"उत्तरी मैदान का निर्माण मुख्यतः हिमालय से निकलने वाली नदियों द्वारा लाए गए ज्वालामुखीय पदार्थों से हुआ है।\" गलत<br/> 13. उत्तरी मैदान का निर्माण ज्वालामुखीय पदार्थों से नहीं, बल्कि हिमालय की नदियों द्वारा लाए गए जलोढ़ पदार्थों से हुआ है।<br/> कथन 2: \"भांगर क्षेत्र में जलभराव अधिक होता है, जिससे यह दलदली बन जाता है।\" गलत<br/> 14. भांगर क्षेत्र पुरानी जलोढ़ मिट्टी से बना है।<br/> 15. यह क्षेत्र ऊँचा और कम बाढ़-प्रवण है, इसलिए दलदली नहीं होता।<br/> कथन 3: \"खादर क्षेत्र में हर वर्ष नई उपजाऊ मिट्टी जमा होती है।\" सही<br/> 16. खादर क्षेत्र नई जलोढ़ मिट्टी से बना है।<br/> 17. बाढ़ के समय नदियाँ इस क्षेत्र में नई मिट्टी जमा करती हैं, जिससे यह अत्यंत उपजाऊ बनता है।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Which characteristics differentiate Bhangar from Khadar?<br/> </b>भांगर को खादर से कौन सी विशेषताएँ अलग करती हैं<b>?</b></p>",
+    "option1": "<p> Bhangar is better for agriculture, Khadar is not. / भांगर कृषि के लिए बेहतर है, खादर नहीं।</p>",
+    "option2": "<p> Khadar has old deposition, Bhangar has new deposition. / खादर में पुरानी निक्षेप है, भांगर में नई निक्षेप है।</p>",
+    "option3": "<p> Bhangar has more calcareous concentration, Khadar has better fertility. / भांगर में अधिक कैल्केरियस सांद्रता है, खादर में बेहतर उर्वरता है।</p>",
+    "option4": "<p> Bhangar streams disappear, Khadar streams reappear. / भांगर धाराएँ विलुप्त हो जाती हैं, खादर धाराएँ फिर से प्रकट होती हैं।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Bhangar is characterized by \"Old deposition\" and \"More calcareous concentration,\" while Khadar is \"New deposition\" with \"Better fertility than bhangar\" and \"renews every year.\" The streams disappearing/reappearing is Bhabar/Terai.<br/> भांगर की विशेषता \"पुरानी निक्षेप\" और \"अधिक कैल्केरियस सांद्रता\" है, जबकि खादर \"नई निक्षेप\" है जिसमें \"भांगर से बेहतर उर्वरता\" है और यह \"हर साल नवीनीकृत होता है\"। धाराओं का विलुप्त/पुनः प्रकट होना भाबर/तराई की विशेषता है।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Assertion (A): The Bhabar belt is generally not suitable for agriculture.<br/> Reason (R): The soil is highly porous, and the coarse material makes it unsuitable for crop growth.<br/> Choose the correct option:<br/> </b>अभिकथन <b>(A): </b>भाबर पट्टी आम तौर पर कृषि के लिए उपयुक्त नहीं है।<b><br/> </b>कारण <b>(R): </b>इसकी मिट्टी अत्यधिक छिद्रयुक्त होती है और मोटे कण फसल की वृद्धि के लिए अनुपयुक्त होते हैं।<b><br/> </b>सही विकल्प चुनें<b>:</b></p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A. / A और R दोनों सत्य हैं और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A. / A और R दोनों सत्य हैं लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true but R is false. / A सत्य है लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false but R is true. / A असत्य है लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Assertion is true (\"Not fit for agriculture\"). The Reason is true: The Bhabar belt is made of \"big stone pebbles\", which causes the streams to \"disappear\" due to high porosity, making the land unsuitable for crop cultivation.<br/> अभिकथन सत्य है (\"कृषि के लिए उपयुक्त नहीं\")। कारण सत्य है: भाबर पट्टी \"बड़े पत्थर के कंकड़ों\" से बनी है, जिसके कारण उच्च सरंध्रता के कारण धाराएँ \"विलुप्त हो जाती हैं\", जिससे भूमि फसल की खेती के लिए अनुपयुक्त हो जाती है।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Considering the topography and climatic characteristics of the northern plains of India, analyze the following statements.<br/> 1. The depth and diversity of alluvial soil in the northern plains directly impact India's food security.<br/> 2. Variations in water flow in the Bhabar and Terai regions hinder the success of irrigation schemes.<br/> 3. The frequency and intensity of floods in the Ganga-Brahmaputra plains remain unaffected by climate change.<br/> 4. The annual deposition of new soil in the Khadar region affects crop diversity.<br/> Choose the correct answer from the options below:<br/> </b>भारत के उत्तरी मैदानों की स्थलाकृति और जलवायु विशेषताओं को ध्यान में रखते हुए<b>, </b>निम्नलिखित कथनों का विश्लेषण कीजिए<b>?<br/> 5. </b>उत्तरी मैदानों की जलोढ़ मिट्टी की गहराई और विविधता भारत की खाद्य सुरक्षा को प्रत्यक्ष रूप से प्रभावित करती है।<b><br/> 6. </b>भाबर और तराई क्षेत्रों में जल प्रवाह की भिन्नता सिंचाई योजनाओं की सफलता में बाधक बनती है।<b><br/> 7. </b>गंगा<b>-</b>ब्रह्मपुत्र मैदान में बाढ़ की आवृत्ति और तीव्रता जलवायु परिवर्तन से अप्रभावित रहती है।<b><br/> 8. </b>खादर क्षेत्र में हर वर्ष नई मिट्टी के जमाव के कारण फसल विविधता को प्रभावित करता है।<b><br/> </b>नीचे दिए गए विकल्पों में से सही उत्तर चुनिए<b>:</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 4 only / केवल 2 और 4</p>",
+    "option3": "<p> 1, 2 and 4 only / केवल 1, 2 और 4</p>",
+    "option4": "<p> 1, 2, 3 and 4 / 1, 2, 3 और 4</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 13. Statement 1 — Correct:<br/> The deep and fertile alluvial soils of the northern plains play a vital role in India's agricultural productivity and food security.<br/> 14. Statement 2 — Correct:<br/> Rivers in the Bhabar flow underground and resurface in the Terai, complicating water management and irrigation schemes.<br/> 15. Statement 3 — Incorrect:<br/> The frequency and intensity of floods in the Ganges-Brahmaputra plain are affected by climate change—such as melting Himalayan glaciers, erratic monsoons, etc.<br/> 16. Statement 4 — Correct:<br/> New soil is deposited in the Khadar every year, which can limit crop rotation and diversity because the soil structure changes frequently.<br/> 17. कथन 1 — सही:<br/> उत्तरी मैदानों की गहरी और उपजाऊ जलोढ़ मिट्टी भारत की कृषि उत्पादकता और खाद्य सुरक्षा में महत्वपूर्ण भूमिका निभाती है।<br/> 18. कथन 2 — सही:<br/> भाबर में नदियाँ भूमिगत हो जाती हैं और तराई में पुनः सतह पर आती हैं, जिससे जल प्रबंधन और सिंचाई योजनाएँ जटिल हो जाती हैं।<br/> 19. कथन 3 — गलत:<br/> गंगा-ब्रह्मपुत्र मैदान में बाढ़ की आवृत्ति और तीव्रता जलवायु परिवर्तन से प्रभावित होती है — जैसे हिमालयी ग्लेशियरों का पिघलना, अनियमित मानसून आदि।<br/> 20. कथन 4 — सही:<br/> खादर में हर वर्ष नई मिट्टी जमा होती है, जिससे फसल चक्र और विविधता सीमित हो सकती है क्योंकि मिट्टी की संरचना बार-बार बदलती रहती है।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Which of the following statements correctly describes the climate of the northern plains and its impact on agriculture?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा कथन उत्तरी मैदान की जलवायु और कृषि पर प्रभाव को सही रूप में दर्शाता है<b>?</b></p>",
+    "option1": "<p> The alluvial soil of the northern plains makes rain-fed agriculture impossible. / उत्तरी मैदान की जलोढ़ मिट्टी वर्षा पर निर्भर कृषि को असंभव बनाती है।</p>",
+    "option2": "<p> The Ganges-Brahmaputra plains are widely cultivated for rice cultivation due to their high water-holding capacity. / गंगा-ब्रह्मपुत्र मैदान में उच्च जलधारण क्षमता वाली मिट्टी के कारण धान की खेती व्यापक रूप से होती है।</p>",
+    "option3": "<p> The Bhabar region has highly developed irrigation facilities due to the abundance of underground water sources. / भाबर क्षेत्र में भूमिगत जल स्रोतों की अधिकता के कारण सिंचाई सुविधाएँ अत्यधिक विकसित हैं।</p>",
+    "option4": "<p> The Khadar region is characterized by soil instability, making crop production impossible. / खादर क्षेत्र में मिट्टी की अस्थिरता के कारण फसल उत्पादन असंभव होता है।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> First option: \"The alluvial soil of the northern plains makes rain-fed agriculture impossible.\" Wrong<br/> 5. Alluvial soil is very fertile. Rain-fed agriculture is possible.<br/> Second option: Correct<br/> 6. The soil of the Ganga-Brahmaputra plain has a high water-holding capacity.<br/> 7. Therefore, water-loving crops like rice are widely grown here.<br/> Third option: \"Irrigation facilities are highly developed in the Bhabar region due to the abundance of underground water sources.\" Wrong<br/> 8. The soil of the Bhabar region is porous, and water seeps into the ground.<br/> 9. Therefore, irrigation facilities are not highly developed.<br/> Fourth option: \"Crop production is impossible in the Khadar region due to soil instability.\" Wrong<br/> 10. New alluvial soil is deposited in the Khadar region, which is extremely fertile.<br/> 11. Crop production is highly possible and productive here.<br/> पहला विकल्प: \"उत्तरी मैदान की जलोढ़ मिट्टी वर्षा पर निर्भर कृषि को असंभव बनाती है।\" गलत<br/> 12. जलोढ़ मिट्टी बहुत उपजाऊ होती है। वर्षा पर निर्भर कृषि संभव है।<br/> दूसरा विकल्प: सही<br/> 13. गंगा-ब्रह्मपुत्र मैदान की मिट्टी में उच्च जलधारण क्षमता है।<br/> 14. इसलिए धान जैसी जलप्रिय फसलें यहाँ व्यापक रूप से उगाई जाती हैं।<br/> तीसरा विकल्प: \"भाबर क्षेत्र में भूमिगत जल स्रोतों की अधिकता के कारण सिंचाई सुविधाएँ अत्यधिक विकसित हैं।\" गलत<br/> 15. भाबर क्षेत्र की मिट्टी छिद्रपूर्ण होती है, पानी जमीन में समा जाता है।<br/> 16. इसलिए सिंचाई सुविधाएँ अत्यधिक विकसित नहीं हैं।<br/> चौथा विकल्प: \"खादर क्षेत्र में मिट्टी की अस्थिरता के कारण फसल उत्पादन असंभव होता है।\" गलत<br/> 17. खादर क्षेत्र में नई जलोढ़ मिट्टी जमा होती है, जो अत्यंत उपजाऊ है।<br/> 18. फसल उत्पादन यहाँ अत्यधिक संभव और उपजाऊ है।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Which of the following statements about the formation and characteristics of the Northern Plains regions is least accurate?<br/> </b>उत्तरी मैदान क्षेत्रों के निर्माण और विशेषताओं के बारे में निम्नलिखित में से कौन सा कथन सबसे कम सटीक है<b>?</b></p>",
+    "option1": "<p> The Khadar is the newer alluvium that provides better fertility for agriculture. / खादर नई जलोढ़ है जो कृषि के लिए बेहतर उर्वरता प्रदान करती है।</p>",
+    "option2": "<p> The Bhabar is a belt not fit for agriculture due to the presence of big stone pebbles. / भाबर बड़े पत्थर के कंकड़ों की उपस्थिति के कारण कृषि के लिए उपयुक्त नहीं है।</p>",
+    "option3": "<p> The Terai is a belt where river streams reappear, forming a marshy area of 10-20 km width. / तराई एक ऐसी पट्टी है जहाँ नदी की धाराएँ फिर से प्रकट होती हैं, जो 10-20 किमी चौड़ाई का दलदली क्षेत्र बनाती है।</p>",
+    "option4": "<p> The Bhangar is an area of new deposition that renews every year due to annual floods. / भांगर नई निक्षेप का क्षेत्र है जो वार्षिक बाढ़ के कारण हर साल नवीनीकृत होता है।</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Statement (d) is inaccurate. Khadar, not Bhangar, is the area of \"New deposition\" that \"renews every year.\" Bhangar is the \"Old deposition\" with more calcareous concentration.<br/> कथन (d) गलत है। खादर, न कि भांगर, \"नई निक्षेप\" का क्षेत्र है जो \"हर साल नवीनीकृत होता है\"। भांगर अधिक कैल्केरियस सांद्रता वाली \"पुरानी निक्षेप\" है।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Consider the geographical progression from the Himalayas towards the Peninsular Plateau. The Terai belt is characterized by the following:<br/> 1. Streams of the river will reappear.<br/> 2. It is a narrow belt, 8-16 km wide, lying immediately south of Siwaliks.<br/> 3. It supports lush green vegetation.<br/> 4. It is not fit for agriculture.<br/> Which combination of statements correctly defines the Terai region as per the provided context?<br/> </b>हिमालय से प्रायद्वीपीय पठार की ओर भौगोलिक क्रम को ध्यान में रखते हुए<b>, </b>तराई पट्टी की निम्नलिखित विशेषताएँ हैं<b>:<br/> 5. </b>नदियों की धाराएँ पुनः सतह पर प्रकट होती हैं।<b><br/> 6. </b>यह एक संकीर्ण पट्टी है<b>, </b>जो शिवालिक के ठीक दक्षिण में <b>8–16 </b>किमी की चौड़ाई में फैली होती है।<b><br/> 7. </b>यह क्षेत्र घनी हरित वनस्पति को सहारा देता है<b><br/> 8. </b>यह कृषि के लिए उपयुक्त नहीं है।<b><br/> </b>प्रदान किए गए संदर्भ के अनुसार कथनों का कौन सा संयोजन तराई क्षेत्र को सही ढंग से परिभाषित करता है<b>?</b></p>",
+    "option1": "<p> 1, 2 and 4 only / केवल 1, 2 और 4</p>",
+    "option2": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p> 2 and 4 only / केवल 2 और 4</p>",
+    "option4": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Terai is defined by streams that \"will reappear\" and \"lush green vegetation\". Its width is listed as \"10-20 km\". Statement 2 is incorrect; 8-16 km is the width of the Bhabar belt.<br/> तराई को उन धाराओं द्वारा परिभाषित किया गया है जो \"फिर से प्रकट होंगी\" और \"हरी-भरी वनस्पति\"। इसकी चौड़ाई \"10-20 किमी\" के रूप में सूचीबद्ध है। कथन 2 गलत है; 8-16 किमी भाबर पट्टी की चौड़ाई है।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>The Khadar and Bhangar are primarily distinguished on the basis of:<br/> </b>खादर और भांगर मुख्य रूप से किसके आधार पर प्रतिष्ठित हैं<b>?</b></p>",
+    "option1": "<p> Their location relative to the Siwaliks. / शिवालिक के सापेक्ष उनकी स्थिति।</p>",
+    "option2": "<p> The type of river erosion experienced. / अनुभव किए गए नदी अपरदन का प्रकार।</p>",
+    "option3": "<p> The age and calcareous content of the alluvium. / जलोढ़ की आयु और कैल्केरियस सामग्री।</p>",
+    "option4": "<p> The disappearance and reappearance of river streams. / नदी की धाराओं का विलुप्त होना और फिर से प्रकट होना।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Khadar and Bhangar are the two parts of the Alluvial Flood Plain. They are distinguished by the age of the deposition—Khadar is \"New deposition\" that \"renews every year\" and is more fertile, while Bhangar is \"Old deposition\" with \"More calcareous concentration\" (Kankad).<br/> खादर और भांगर जलोढ़ बाढ़ के मैदान के दो भाग हैं। वे निक्षेपण की आयु से प्रतिष्ठित हैं - खादर \"नई निक्षेप\" है जो \"हर साल नवीनीकृत होता है\" और अधिक उपजाऊ है, जबकि भांगर \"पुराना निक्षेप\" है जिसमें \"अधिक कैल्केरियस सामग्री\" (कंकड़) होती है।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - GEOGRAPHY</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">GEOGRAPHY - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

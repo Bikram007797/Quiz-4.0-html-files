@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY - MINERALS QUIZ [06-11-2025] - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>GEOGRAPHY - MINERALS QUIZ [06-11-2025]</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>Which of the following iron ore is considered the finest, with a very high content of iron up to 70%?<br/> </b>निम्नलिखित में से कौन सा लौह अयस्क सर्वोत्तम माना जाता है<b>, </b>जिसमें <b>70% </b>तक लोहे की मात्रा बहुत अधिक होती है<b>?</b></p>",
+    "option1": "<p> Hematite / हेमेटाइट</p>",
+    "option2": "<p> Limonite / लिमोनाइट</p>",
+    "option3": "<p> Magnetite / मैग्नेटाइट</p>",
+    "option4": "<p> Siderite / सिडेराइट</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Magnetite is the finest iron ore and contains a very high proportion of iron, up to 70%. It is valued for its excellent magnetic qualities, which are especially useful in the electrical industry. / मैग्नेटाइट सबसे उत्तम लौह अयस्क है और इसमें लौह की मात्रा बहुत अधिक, लगभग 70% तक होती है। यह अपनी उत्कृष्ट चुंबकीय गुणों के कारण मूल्यवान है, जो विशेष रूप से विद्युत उद्योग में उपयोगी होते हैं।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>The Gondwana belt in India is primarily known for the reserves of which mineral ?<br/> </b>भारत में गोंडवाना बेल्ट मुख्य रूप से किस खनिज के भंडार के लिए जाना जाता है<b>?</b></p>",
+    "option1": "<p> Diamond / हीरा</p>",
+    "option2": "<p> Copper / ताँबा</p>",
+    "option3": "<p> Coal / कोयला</p>",
+    "option4": "<p> Mica / अभ्रक</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Gondwana Belt is primarily known for its vast reserves of coal.<br/> The region is composed of sedimentary rocks of the Gondwana era, about 250 million years old, where most of India's coal fields are found in states like Jharkhand, Odisha, Chhattisgarh, Madhya Pradesh and West Bengal.<br/> भारत में गोंडवाना बेल्ट मुख्य रूप से कोयले के विशाल भंडार के लिए जानी जाती है।<br/> यह क्षेत्र लगभग 250 मिलियन वर्ष पुराने गोंडवाना युग की अवसादी चट्टानों से बना है, जहाँ भारत के अधिकांश कोयला क्षेत्र जैसे झारखंड, ओडिशा, छत्तीसगढ़, मध्य प्रदेश और पश्चिम बंगाल में पाए जाते हैं।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>Which state in India is the topmost producer of Manganese?<br/> </b>भारत का कौन सा राज्य मैंगनीज का शीर्ष उत्पादक है<b>?</b></p>",
+    "option1": "<p> Odisha / ओडिशा</p>",
+    "option2": "<p> Madhya Pradesh / मध्य प्रदेश</p>",
+    "option3": "<p> Karnataka / कर्नाटक</p>",
+    "option4": "<p> Maharashtra / महाराष्ट्र</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Madhya Pradesh is the topmost producer of Manganese in India. Manganese is mainly used in the manufacturing of steel and ferro-manganese alloy, as well as in bleaching powder and paints. / मध्य प्रदेश भारत में मैंगनीज का शीर्ष उत्पादक है। मैंगनीज का उपयोग मुख्य रूप से स्टील और फेरो-मैंगनीज मिश्र धातु के निर्माण के साथ-साथ ब्लीचिंग पाउडर और पेंट में भी किया जाता है।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>Which of the following is the primary ore for Aluminum?<br/> </b>एल्युमीनियम का प्राथमिक अयस्क निम्नलिखित में से कौन सा है<b>?</b></p>",
+    "option1": "<p> Hematite / हेमेटाइट</p>",
+    "option2": "<p> Galena / गैलेना</p>",
+    "option3": "<p> Bauxite / बॉक्साइट</p>",
+    "option4": "<p> Dolomite / डोलोमाइट</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Bauxite is the principal ore from which aluminum is smelted. Aluminum is an asphaltite metal, valued for its light weight and particularly useful in the aircraft industry. / बॉक्साइट वह प्रमुख अयस्क है जिससे एल्युमिनियम को गलाकर प्राप्त किया जाता है। एल्युमिनियम एक अश्फटिक धातु है, जो अपने हल्के वजन के कारण मूल्यवान है और विशेष रूप से विमान उद्योग में उपयोगी होती है।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>Koderma Gaya-Hazaribagh belt is the leading producer of which non-metallic mineral in Jharkhand?<br/> </b>कोडरमा गया<b>-</b>हजारीबाग बेल्ट झारखंड में किस गैर<b>-</b>धात्विक खनिज का प्रमुख उत्पादक है<b>?</b></p>",
+    "option1": "<p> Limestone / चूना पत्थर</p>",
+    "option2": "<p> Mica / अभ्रक</p>",
+    "option3": "<p> Potash / पोटाश</p>",
+    "option4": "<p> Sulphur / सल्फर</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Mica deposits are found in the northern edge of the Chota Nagpur plateau, and the Koderma Gaya-Hazaribagh belt of Jharkhand is specifically mentioned as the leading producer in the region. / अभ्रक भंडार छोटा नागपुर पठार के उत्तरी किनारे पर पाए जाते हैं, और झारखंड का कोडरमा गया-हजारीबाग बेल्ट विशेष रूप से इस क्षेत्र में प्रमुख उत्पादक के रूप में उल्लिखित है।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>Which city/region in the state of Madhya Pradesh is the only place for the production of Diamond?<br/> </b>मध्य प्रदेश राज्य का कौन सा शहर<b>/</b>क्षेत्र हीरे के उत्पादन का एकमात्र स्थान है<b>?</b></p>",
+    "option1": "<p> Singrauli / सिंगरौली</p>",
+    "option2": "<p> Korba / कोरबा</p>",
+    "option3": "<p> Balaghat / बालाघाट</p>",
+    "option4": "<p> Panna / पन्ना</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Madhya Pradesh (Panna) is the only state that produces diamond in India, making Panna the key location for diamond mining in the country. / मध्य प्रदेश (पन्ना) भारत में हीरा उत्पादन करने वाला एकमात्र राज्य है, जो पन्ना को देश में हीरा खनन का प्रमुख स्थान बनाता है।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Which type of coal has the highest carbon content (80-90%) and is considered the highest quality, hard coal?<br/> </b>किस प्रकार के कोयले में कार्बन की मात्रा सबसे अधिक <b>(80-90%) </b>होती है और इसे उच्चतम गुणवत्ता वाला<b>, </b>कठोर कोयला माना जाता है<b>?</b></p>",
+    "option1": "<p> Peat / पीट</p>",
+    "option2": "<p> Lignite / लिग्नाइट</p>",
+    "option3": "<p> Bituminous / बिटुमिनस</p>",
+    "option4": "<p> Anthracite / एन्थ्रेसाइट</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Anthracite is the best quality coal, containing 80-90% carbon. It has a high calorific value and is known as hard coal, representing the final stage of coal formation. / एन्थ्रेसाइट सर्वोत्तम गुणवत्ता वाला कोयला है, जिसमें 80-90% कार्बन होता है। इसका ऊष्मीय मान उच्च होता है और इसे कठोर कोयले के रूप में जाना जाता है, जो कोयले के निर्माण की अंतिम अवस्था का प्रतिनिधित्व करता है।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>Which state is the oldest oil-producing state of India?<br/> </b>भारत का सबसे पुराना तेल उत्पादक राज्य कौन सा है<b>?</b></p>",
+    "option1": "<p> Gujarat / गुजरात</p>",
+    "option2": "<p> Mumbai High (Off-shore) / मुंबई हाई (अपतटीय)</p>",
+    "option3": "<p> Assam / असम</p>",
+    "option4": "<p> Andhra Pradesh / आंध्र प्रदेश</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Assam is the oldest oil-producing state of India, with important oil fields like Digboi, Naharkatiya, and Moran-Hugrijan. The state began commercial production very early in the country. / असम को भारत के सबसे पुराने तेल उत्पादक राज्य के रूप में उल्लेखित किया गया है, जिसके महत्वपूर्ण तेल क्षेत्र डिगबोई, नाहरकटिया और मोरान-हुग्रिजन हैं। राज्य ने देश में बहुत पहले व्यावसायिक उत्पादन शुरू किया था।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>The first oil refinery of India was commissioned in which year?<br/> </b>भारत की पहली तेल रिफाइनरी किस वर्ष में चालू की गई थी<b>?</b></p>",
+    "option1": "<p> 1889</p>",
+    "option2": "<p> 1901</p>",
+    "option3": "<p> 1947</p>",
+    "option4": "<p> 1956</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> 5. India's first oil refinery was established in Digboi in 1901.<br/> 6. It is located in the state of Assam and is considered to be the oldest oil refinery in Asia.<br/> 7. Digboi is often called the \"Oil City of Assam\" because it was here that crude oil was first discovered and refined in India.<br/> 8. The establishment of this refinery is considered to be the beginning of the oil industry in India.<br/> 9. भारत की पहली तेल रिफाइनरी डिगबोई में 1901 में स्थापित की गई थी।<br/> 10. यह असम राज्य में स्थित है और इसे एशिया की सबसे पुरानी तेल रिफाइनरी माना जाता है।<br/> 11. डिगबोई को अक्सर \"असम का तेल नगर\" भी कहा जाता है, क्योंकि यहाँ पर भारत में सबसे पहले कच्चे तेल की खोज और शोधन का कार्य आरंभ हुआ था।<br/> 12. इस रिफाइनरी की स्थापना से भारत में तेल उद्योग की शुरुआत मानी जाती है।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>Who is known as the 'Father of the Nuclear Programme' in India?<br/> </b>भारत में <b>'</b>परमाणु कार्यक्रम के जनक<b>' </b>के रूप में किसे जाना जाता है<b>?</b></p>",
+    "option1": "<p> Vikram Sarabhai / विक्रम साराभाई</p>",
+    "option2": "<p> A P. J. Abdul Kalam / ए. पी. जे. अब्दुल कलाम</p>",
+    "option3": "<p> H. J. Bhabha / एच. जे. भाभा</p>",
+    "option4": "<p> C. V. Raman / सी. वी. रमन</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Homi Jehangir Bhabha (H. J. Bhabha) as the 'Father of nuclear programme' in India. He was instrumental in shaping India's atomic energy policy and scientific direction. / होमी जहांगीर भाभा (एच. जे. भाभा) को भारत में 'परमाणु कार्यक्रम के जनक' के रूप में श्रेय दिया जाता है। उन्होंने भारत की परमाणु ऊर्जा नीति और वैज्ञानिक दिशा को आकार देने में महत्वपूर्ण भूमिका निभाई।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Consider the following statements regarding Iron Ore:<br/> </b>लौह अयस्क के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. Hematite ore is the most important industrial iron ore in terms of quantity used, but has a higher iron content than Magnetite. / </b>हेमेटाइट अयस्क उपयोग की गई मात्रा के संदर्भ में सबसे महत्वपूर्ण औद्योगिक लौह अयस्क है<b>, </b>लेकिन इसमें मैग्नेटाइट की तुलना में लोहे की मात्रा अधिक होती है।<b><br/> 2. In 2018-19, almost the entire production of iron ore (97%) accrued from Odisha, Chhattisgarh, Karnataka, and Jharkhand. / 2018-19 </b>में लौह अयस्क का लगभग पूरा उत्पादन <b>(97%) </b>ओडिशा<b>, </b>छत्तीसगढ़<b>, </b>कर्नाटक और झारखंड से प्राप्त हुआ।<b><br/> Which of the statements given above is/are correct? / </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statement 1 is incorrect because Hematite has a slightly lower iron content (50-60%) than Magnetite (up to 70%). However, it is correct that Hematite is the most important industrial iron ore in terms of quantity used. Statement 2 is correct, as these four states account for almost the entire production of iron ore in India. / वाक्य 1 गलत है क्योंकि हेमेटाइट में लौह की मात्रा मैग्नेटाइट (लगभग 70%) की तुलना में थोड़ी कम (50–60%) होती है। हालांकि, यह सही है कि उपयोग की मात्रा के आधार पर हेमेटाइट सबसे महत्वपूर्ण औद्योगिक लौह अयस्क है। वाक्य 2 सही है, क्योंकि ये चार राज्य भारत में लगभग संपूर्ण लौह अयस्क उत्पादन के लिए जिम्मेदार हैं।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Consider the following pairs of non-ferrous minerals and its largest producer state in India:<br/> </b>अलौह खनिज और भारत में उसके सबसे बड़े उत्पादक राज्य के निम्नलिखित युग्मों पर विचार करें<b>:<br/> 1. Copper: Madhya Pradesh / </b>ताँबा<b>: </b>मध्य प्रदेश<b><br/> 2. Bauxite: Odisha / </b>बॉक्साइट<b>: </b>ओडिशा<b><br/> 3. Gold: Karnataka / </b>सोना<b>: </b>कर्नाटक<b><br/> How many of the pairs given above are correctly matched?<br/> </b>ऊपर दिए गए युग्मों में से कितने सही सुमेलित हैं<b>?</b></p>",
+    "option1": "<p> Only one / केवल एक</p>",
+    "option2": "<p> Only two / केवल दो</p>",
+    "option3": "<p> All three / सभी तीनों</p>",
+    "option4": "<p> None / कोई नहीं</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Copper: Madhya Pradesh<br/> 8. Madhya Pradesh is the largest producer of copper in India.<br/> 9. The Balaghat mines in Madhya Pradesh are a leading producer.<br/> Bauxite: Odisha<br/> 10. Odisha is the largest producer of bauxite in India.<br/> 11. Koraput, Kalahandi, and Sundargarh districts are its major areas.<br/> Gold: Karnataka<br/> 12. The state of Karnataka is the main producer of gold in India.<br/> 13. The famous Kolar and Hutti gold mines here are historically known.<br/> ताँबा: मध्य प्रदेश<br/> 14. भारत में ताँबे का सबसे बड़ा उत्पादक राज्य मध्य प्रदेश है।<br/> 15. 'मध्य प्रदेश में बालाघाट की खानें' एक अग्रणी उत्पादक है।<br/> बॉक्साइट: ओडिशा<br/> 16. ओडिशा भारत में बॉक्साइट का सबसे बड़ा उत्पादक राज्य है।<br/> 17. कोरापुट, कालाहांडी और सुंदरगढ़ जिले इसके प्रमुख क्षेत्र हैं।<br/> सोना: कर्नाटक<br/> 18. भारत में सोने का मुख्य उत्पादन कर्नाटक राज्य में होता है।<br/> 19. यहाँ की प्रसिद्ध कोलार और हुट्टी स्वर्ण खदानें ऐतिहासिक रूप से जानी जाती हैं।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Which of the following statements correctly describes the coal deposits in India?<br/> </b>निम्नलिखित में से कौन सा कथन भारत में कोयले के निक्षेपों का सही वर्णन करता है<b>?</b></p>",
+    "option1": "<p> Tertiary coals, which are metallurgical coal, are mainly located in the Damodar valley. / तृतीयक कोयला, जो धातुकर्मीय कोयला है, मुख्य रूप से दामोदर घाटी में स्थित है।</p>",
+    "option2": "<p> The major resources of Gondwana coal, which are metallurgical coal, are located in the Damodar, Son, Mahanadi, and Godavari valleys. / गोंडवाना कोयले के प्रमुख संसाधन, जो धातुकर्मीय कोयला हैं, दामोदर, सोन, महानदी और गोदावरी घाटियों में स्थित हैं।</p>",
+    "option3": "<p> Gondwana coal deposits, which are around 55 million years old, are found in the north eastern states. / गोंडवाना कोयले के भंडार, जो लगभग 55 मिलियन वर्ष पुराने हैं, उत्तर पूर्वी राज्यों में पाए जाते हैं।</p>",
+    "option4": "<p> Over 97% of coal reserves occur in the Brahmaputra valley. / 97% से अधिक कोयला भंडार ब्रह्मपुत्र घाटी में पाए जाते हैं।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Gondwana coal, which is metallurgical coal and over 200 million years old, is mainly found in the valleys of Damodar, Son, Mahanadi and Godavari. Tertiary coals (around 55 million years old) occur in the north eastern states. / गोंडवाना कोयला, जो धातुकर्मीय कोयला है और 200 मिलियन वर्ष से अधिक पुराना है, मुख्य रूप से दामोदर, सोन, महानदी और गोदावरी की घाटियों में पाया जाता है। तृतीयक कोयला (लगभग 55 मिलियन वर्ष पुराना) उत्तर पूर्वी राज्यों में पाया जाता है।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Which of the following are classified as Non-Conventional Sources of Energy?<br/> </b>निम्नलिखित में से किसे गैर<b>-</b>परंपरागत ऊर्जा स्रोतों के रूप में वर्गीकृत किया गया है<b>?<br/> 1. Coal / </b>कोयला<b><br/> 2. Solar energy / </b>सौर ऊर्जा<b><br/> 3. Tidal energy / </b>ज्वारीय ऊर्जा<b><br/> 4. Electricity (Thermal) / </b>विद्युत <b>(</b>तापीय<b>)<br/> 5. Wind energy / </b>पवन ऊर्जा</p>",
+    "option1": "<p> 1, 2 and 4 only / केवल 1, 2 और 4</p>",
+    "option2": "<p> 2, 3 and 5 only / केवल 2, 3 और 5</p>",
+    "option3": "<p> 1, 3 and 5 only / केवल 1, 3 और 5</p>",
+    "option4": "<p> 1 and 4 only / केवल 1 और 4</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Conventional sources include coal, petroleum, and electricity (which can be thermal or hydroelectric), while non-conventional energy sources include solar energy, wind energy, tidal energy, geothermal energy, and energy from municipal waste. / पारंपरिक स्रोतों में कोयला, पेट्रोलियम और बिजली (जो तापीय या जलविद्युत हो सकती है) शामिल हैं। जबकि गैर-परंपरागत ऊर्जा स्रोतों में सौर ऊर्जा, पवन ऊर्जा, ज्वारीय ऊर्जा, भूतापीय ऊर्जा और शहरी कचरे से प्राप्त ऊर्जा शामिल हैं।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Assertion (A): Petroleum occurrences in India are mostly associated with anticlines and fault traps in rock formations of the tertiary age.<br/> Reason (R): Gas, being lighter, usually occurs above the oil in these geological structures.<br/> </b>अभिकथन <b>(A): </b>भारत में पेट्रोलियम की उपस्थिति प्रायः तृतीयक युग की शैल संरचनाओं में पाए जाने वाले वलन और भ्रंश जालों से संबंधित होती है।<b><br/> </b>कारण <b>(R): </b>गैस हल्की होने के कारण सामान्यतः इन भूवैज्ञानिक संरचनाओं में तेल के ऊपर पाई जाती है।</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A. / A और R दोनों सत्य हैं और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A. / A और R दोनों सत्य हैं लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true but R is false. / A सत्य है लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false but R is true. / A असत्य है लेकिन R सत्य है।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Both statements A and R are factually correct. However, the reason (R) does not explain the assertion (A). Assertion (A) explains the structural conditions for petroleum accumulation, while Reason (R) describes the relative positioning of gas and oil within that accumulation. / दोनों कथन A और R तथ्यात्मक रूप से सही हैं। हालाँकि, कारण (R) अभिकथन (A) की व्याख्या नहीं करता है। अभिकथन (A) पेट्रोलियम के संचयन के लिए संरचनात्मक स्थितियों की व्याख्या करता है, जबकि कारण (R) उस संचयन के भीतर गैस और तेल की सापेक्ष स्थिति का वर्णन करता है।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Which of the following correctly describes the distribution of minerals for nuclear energy in India?<br/> </b>निम्नलिखित में से कौन भारत में परमाणु ऊर्जा के लिए खनिजों के वितरण का सही वर्णन करता है<b>?</b></p>",
+    "option1": "<p> Uranium reserves are found only in the Monazite sands of Kerala. / यूरेनियम भंडार केवल केरल की मोनाजाइट रेत में पाए जाते हैं।</p>",
+    "option2": "<p> Thorium is mainly found in the Monazite sands of Himachal Pradesh, Tamil Nadu, and Odisha. / थोरियम मुख्य रूप से हिमाचल प्रदेश, तमिलनाडु और ओडिशा की मोनाजाइट रेतों में पाया जाता है।</p>",
+    "option3": "<p> Uranium and Thorium are available in Jharkhand and the Aravalli ranges of Rajasthan, and Monazite sands of Kerala are rich in Thorium. / यूरेनियम और थोरियम झारखंड और राजस्थान की अरावली पर्वतमाला में उपलब्ध हैं, और केरल की मोनाजाइट रेत थोरियम से भरपूर है।</p>",
+    "option4": "<p> The Jaduguda mines in Jharkhand are the only source of Thorium in India. / झारखंड में जादूगुड़ा की खानें भारत में थोरियम का एकमात्र स्रोत हैं।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Uranium and Thorium are available in Jharkhand and the Aravalli ranges of Rajasthan. Additionally, the Monazite sands of Kerala are specifically noted for being rich in Thorium, providing a comprehensive distribution picture. / झारखंड और राजस्थान की अरावली पर्वतमाला में यूरेनियम और थोरियम प्रचुर मात्रा में पाए जाते हैं। इसके अतिरिक्त, केरल की मोनाज़ाइट रेत विशेष रूप से थोरियम से भरपूर होने के लिए जानी जाती है, जो इसके वितरण का एक व्यापक चित्र प्रस्तुत करती है।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Assertion (A): The most important bauxite deposits in Odisha are the Panchpatmali deposits in Koraput district.<br/> Reason (R): Odisha is the largest Bauxite producer in India.<br/> </b>अभिकथन <b>(A): </b>ओडिशा में सबसे महत्वपूर्ण बॉक्साइट निक्षेप कोरापुट जिले में पंचपतमाली निक्षेप हैं।<b><br/> </b>कारण <b>(R): </b>ओडिशा भारत में सबसे बड़ा बॉक्साइट उत्पादक है।</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A. / A और R दोनों सत्य हैं और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A. / A और R दोनों सत्य हैं लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true but R is false. / A सत्य है लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false but R is true. / A असत्य है लेकिन R सत्य है।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Both statements are individually correct: Panchpatmali is a key deposit in Odisha, and Odisha is the largest producer. However, R is not the correct explanation for A. R describes the production status of the state, while A identifies a specific deposit within that state. / दोनों कथन व्यक्तिगत रूप से सही हैं: पंचपतमाली ओडिशा में एक प्रमुख निक्षेप है, और ओडिशा सबसे बड़ा उत्पादक है। हालाँकि, R, A की सही व्याख्या नहीं है। R राज्य की उत्पादन स्थिति का वर्णन करता है, जबकि A उस राज्य के भीतर एक विशिष्ट निक्षेप की पहचान करता है।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Consider the following statements about Limestone:<br/> </b>चूना पत्थर के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. It is a sedimentary rock. / </b>यह एक अवसादी चट्टान है।<b><br/> 2. It is an essential raw material for the cement industry. / </b>यह सीमेंट उद्योग के लिए एक आवश्यक कच्चा माल है।<b><br/> 3. It is used for melting copper ore in the blast furnace. / </b>इसका उपयोग वात्या भट्टी में ताँबे के अयस्क को गलाने के लिए किया जाता है।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statements 1 and 2 are correct; Limestone is a sedimentary rock and a basic raw material for the cement industry. Statement 3 is incorrect; Limestone is essential for melting iron ore in a blast furnace, not copper ore. / कथन 1 और 2 सही हैं; चूना पत्थर एक अवसादी चट्टान है और सीमेंट उद्योग के लिए एक बुनियादी कच्चा माल है। कथन 3 गलत है; चूना पत्थर वात्या भट्टी में लौह अयस्क को गलाने के लिए आवश्यक है, न कि ताँबे के अयस्क को।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Match the following iron ore belts with the region/mines associated with them:<br/> </b>निम्नलिखित लौह अयस्क बेल्टों को उनसे जुड़े क्षेत्र<b>/</b>खानों से सुमेलित करें<b>:<br/> | Belt / </b>बेल्ट <b>| Region/Mine / </b>क्षेत्र<b>/</b>खान <b>|<br/> | A. Odisha-Jharkhand Belt / </b>ओडिशा<b>-</b>झारखंड बेल्ट <b>| 1. Bailadila / </b>बैलाडीला <b>|<br/> | B. Durg-Bastar-Chandrapur Belt / </b>दुर्ग<b>-</b>बस्तर<b>-</b>चन्द्रपुर बेल्ट <b>| 2. Baba Budan hills / </b>बाबा बुदन पहाड़ियाँ <b>|<br/> | C. Bellary-Chitradurga-Chikmaglur-Tumkur Belt / </b>बेल्लारी<b>-</b>चित्रदुर्ग<b>-</b>चिकमंगलूर<b>-</b>टुमकुर बेल्ट <b>| 3. Badampahar / </b>बादामपहाड़ <b>|<br/> | D. Maharastra-Goa Belt / </b>महाराष्ट्र<b>-</b>गोवा बेल्ट <b>| 4. Mormugao / </b>मोरमुगाओ <b>|</b></p>",
+    "option1": "<p> A-3, B-1, C-2, D-4</p>",
+    "option2": "<p> A-1, B-3, C-4, D-2</p>",
+    "option3": "<p> A-2, B-4, C-3, D-1</p>",
+    "option4": "<p> A-4, B-2, C-1, D-3</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Odisha-Jharkhand Belt includes mines like Badampahar. Durg-Bastar-Chandrapur Belt includes Bailadila. Bellary-Chitradurga-Chikmaglur-Tumkur Belt includes Baba Budan hills and Kudremukh. The Maharastra-Goa Belt includes Mormugao. / ओडिशा-झारखंड बेल्ट में बादामपहाड़ जैसी खानें शामिल हैं। दुर्ग-बस्तर-चन्द्रपुर बेल्ट में बैलाडीला शामिल है। बेल्लारी-चित्रदुर्ग-चिकमंगलूर-टुमकुर बेल्ट में बाबा बुदन पहाड़ियाँ और कुद्रेमुख शामिल हैं। महाराष्ट्र-गोवा बेल्ट में मोरमुगाओ शामिल है।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Consider the following pairs of Nuclear Power Plants and their respective states:<br/> </b>परमाणु ऊर्जा संयंत्रों और उनके संबंधित राज्यों के निम्नलिखित युग्मों पर विचार करें<b>:<br/> 1. Tarapur: Gujarat / </b>तारापुर<b>: </b>गुजरात<b><br/> 2. Kudankulam: Tamil Nadu / </b>कुडनकुलम<b>: </b>तमिलनाडु<b><br/> 3. Kaiga: Karnataka / </b>कैगा<b>: </b>कर्नाटक<b><br/> 4. Narora: Uttar Pradesh / </b>नरोरा<b>: </b>उत्तर प्रदेश<b><br/> How many of the above pairs are correctly matched?<br/> </b>ऊपर दिए गए युग्मों में से कितने सही सुमेलित हैं<b>?</b></p>",
+    "option1": "<p> Only one / केवल एक</p>",
+    "option2": "<p> Only two / केवल दो</p>",
+    "option3": "<p> Only three / केवल तीन</p>",
+    "option4": "<p> All four / सभी चार</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Tarapur is located in Maharashtra, not Gujarat (Kakrapar is in Gujarat). Kudankulam, Kaiga, and Narora are all correctly matched to Tamil Nadu, Karnataka, and Uttar Pradesh, respectively. / तारापुर महाराष्ट्र में स्थित है, न कि गुजरात में (काकरापार गुजरात में है)। कुडनकुलम, कैगा और नरोरा क्रमशः तमिलनाडु, कर्नाटक और उत्तर प्रदेश से सही ढंग से सुमेलित हैं।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>The largest wind farm cluster in India is located in which state, stretching from Nagarcoil to Madurai?<br/> </b>भारत में सबसे बड़ा पवन फार्म समूह किस राज्य में स्थित है<b>, </b>जो नागरकोइल से मदुरै तक फैला हुआ है<b>?</b></p>",
+    "option1": "<p> Gujarat / गुजरात</p>",
+    "option2": "<p> Maharashtra / महाराष्ट्र</p>",
+    "option3": "<p> Tamil Nadu / तमिलनाडु</p>",
+    "option4": "<p> Andhra Pradesh / आंध्र प्रदेश</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> India has a great potential for wind power, and the largest wind farm cluster is located in Tamil Nadu, running from Nagarcoil to Madurai. This region benefits from consistent, strong wind resources. / भारत में पवन ऊर्जा की अपार संभावनाएँ है, और सबसे बड़ा पवन फार्म समूह (क्लस्टर) तमिलनाडु में, नागरकोइल से मदुरै तक फैला हुआ है। यह क्षेत्र निरंतर, मजबूत पवन संसाधनों से लाभान्वित होता है।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Which two locations in Gujarat are considered ideal conditions for utilizing Tidal Energy in India?<br/> </b>भारत में ज्वारीय ऊर्जा का उपयोग करने के लिए गुजरात में किन दो स्थानों को आदर्श स्थिति माना जाता है<b>?</b></p>",
+    "option1": "<p> Gulf of Mannar and Gulf of Khambhat / मन्नार की खाड़ी और खम्भात की खाड़ी</p>",
+    "option2": "<p> Gulf of Kutch and Gulf of Khambhat / कच्छ की खाड़ी और खम्भात की खाड़ी</p>",
+    "option3": "<p> Gulf of Khambhat and Dahej / खम्भात की खाड़ी और दहेज</p>",
+    "option4": "<p> Gulf of Kutch and Tuticorin / कच्छ की खाड़ी और तूतीकोरिन</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> In India, the Gulf of Khambhat and Gulf of Kutch in Gujarat on the west coast, and the Ganges Delta in the Sundarbans region of West Bengal provide ideal conditions for harnessing tidal energy. / भारत में, पश्चिमी तट पर गुजरात में खम्भात की खाड़ी और कच्छ की खाड़ी, और पश्चिम बंगाल के सुंदरवन क्षेत्र में गंगा डेल्टा ज्वारीय ऊर्जा का उपयोग करने के लिए आदर्श स्थिति प्रदान करते हैं।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Which are the two experimental projects set up in India to harness Geothermal Energy?<br/> </b>भारत में भूतापीय ऊर्जा का उपयोग करने के लिए स्थापित की गई दो प्रायोगिक परियोजनाएँ कौन सी हैं<b>?</b></p>",
+    "option1": "<p> Talcher and Raniganj / तालचेर और रानीगंज</p>",
+    "option2": "<p> Manikarn in Himachal Pradesh and Puga Valley in Ladakh / हिमाचल प्रदेश में मणिकर्ण और लद्दाख में पूगा घाटी</p>",
+    "option3": "<p> Balaghat in MP and Khetri in Rajasthan / मध्य प्रदेश में बालाघाट और राजस्थान में खेतड़ी</p>",
+    "option4": "<p> Tarapur in Maharashtra and Rawatbhata in Rajasthan / महाराष्ट्र में तारापुर और राजस्थान में रावतभाटा</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> 5. Geothermal energy refers to heat derived from the Earth's interior.<br/> 6. Two major geothermal energy pilot projects have been established in India at the following locations:<br/> 7. Manikaran—Located in the Kullu district of Himachal Pradesh. Here, efforts have been made to harness geothermal energy from hot springs.<br/> 8. Puga Valley—Located in the Ladakh region, where energy is available in the form of thermal sources and steam.<br/> At both these sites, pilot projects were conducted to investigate the potential for generating electricity from geothermal energy.<br/> 9. भूतापीय ऊर्जा पृथ्वी के आंतरिक भाग से प्राप्त ऊष्मा को संदर्भित करती है।<br/> 10. भारत में भूतापीय ऊर्जा के दो प्रमुख प्रायोगिक परियोजनाएँ निम्न स्थानों पर स्थापित की गई हैं —<br/> 11. मणिकर्ण — हिमाचल प्रदेश के कुल्लू जिले में स्थित है। यहाँ गर्म झरनों से भूतापीय ऊर्जा प्राप्त करने का प्रयास किया गया है।<br/> 12. पूगा घाटी — लद्दाख क्षेत्र में स्थित है, जहाँ तापीय स्रोतों और भाप के रूप में ऊर्जा उपलब्ध है।<br/> इन दोनों स्थलों पर भूतापीय ऊर्जा से बिजली उत्पादन की संभावनाएँ जांचने के लिए प्रायोगिक परियोजनाएँ चलाई गई थीं।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>The 1,700 km long Hazira-Vijaipur Jagdishpur (HVJ) cross-country gas pipeline was constructed to link the gas fields of these two regions with industrial complexes in western and northern India:<br/> 1,700 </b>किमी लंबी हजीरा–विजयपुर–जगदीशपुर <b>(HVJ) </b>अंतर<b>-</b>राज्यीय गैस पाइपलाइन का निर्माण इन दो क्षेत्रों के गैस क्षेत्रों को भारत के पश्चिमी और उत्तरी औद्योगिक परिसरों से जोड़ने के लिए किया गया थाः</p>",
+    "option1": "<p> Digboi and Naharkatiya / डिगबोई और नाहरकटिया</p>",
+    "option2": "<p> Mumbai High and Bassein / मुंबई हाई और बसीन</p>",
+    "option3": "<p> Ankleshwar and Kalol / अंकलेश्वर और कलोल</p>",
+    "option4": "<p> Tatipaka and Khambat / तातिपाका और खम्भात</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The HVJ pipeline, constructed by GAIL (India), was the first cross-country gas pipeline. It specifically linked the Mumbai High and Bassein gas fields with various fertilizer, power, and industrial complexes in western and northern India.<br/> GAIL (इंडिया) द्वारा निर्मित HVJ पाइपलाइन पहली अंतर-राज्यीय गैस पाइपलाइन थी। इसने विशेष रूप से मुंबई हाई और बेसिन गैस क्षेत्रों को पश्चिमी और उत्तरी भारत के विभिन्न उर्वरक, बिजली और औद्योगिक परिसरों से जोड़ा।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>Which is the correct descending order of the types of coal based on their carbon content?<br/> </b>कार्बन सामग्री के आधार पर कोयले के प्रकारों का सही अवरोही क्रम कौन सा है<b>?</b></p>",
+    "option1": "<p> Bituminous &gt; Anthracite &gt; Lignite &gt; Peat / बिटुमिनस &gt; एन्थ्रेसाइट &gt; लिग्नाइट &gt; पीट</p>",
+    "option2": "<p> Anthracite &gt; Bituminous &gt; Peat &gt; Lignite / एन्थ्रेसाइट &gt; बिटुमिनस &gt; पीट &gt; लिग्नाइट</p>",
+    "option3": "<p> Anthracite &gt; Bituminous &gt; Lignite &gt; Peat / एन्थ्रेसाइट &gt; बिटुमिनस &gt; लिग्नाइट &gt; पीट</p>",
+    "option4": "<p> Lignite &gt; Peat &gt; Bituminous &gt; Anthracite / लिग्नाइट &gt; पीट &gt; बिटुमिनस &gt; एन्थ्रेसाइट</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The carbon content is highest in Anthracite (80-90%), followed by Bituminous (70-80%), then Lignite (50-70%), and finally Peat (Less than 50%), which represents the initial stage of coal formation. The quality and heating capacity decrease in this order. / कार्बन सामग्री एन्थ्रेसाइट (80-90%) में सबसे अधिक होती है, उसके बाद बिटुमिनस (70-80%) में, फिर लिग्नाइट (50-70%) में और अंत में पीट (50% से कम) में, जो कोयले के निर्माण की प्रारंभिक अवस्था का प्रतिनिधित्व करता है। इस क्रम में गुणवत्ता और तापन क्षमता घटती जाती है।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - GEOGRAPHY</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">GEOGRAPHY - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

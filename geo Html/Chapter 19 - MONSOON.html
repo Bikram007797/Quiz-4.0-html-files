@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY - MONSOON QUIZ [31-10-2025] - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>GEOGRAPHY - MONSOON QUIZ [31-10-2025]</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>Which of the following options is not listed as a factor affecting the climate of India?<br/> </b>निम्नलिखित में से कौन सा विकल्प भारत की जलवायु को प्रभावित करने वाले कारक के रूप में सूचीबद्ध नहीं है<b>?</b></p>",
+    "option1": "<p> Altitude / ऊँचाई</p>",
+    "option2": "<p> Ocean Currents / महासागरीय धाराएँ</p>",
+    "option3": "<p> Solar Flares / सौर प्रज्वाल</p>",
+    "option4": "<p> Relief features / उच्चावच विशेषताएँ</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The major factors affecting India's climate include:<br/> 5. Latitude<br/> 6. Altitude<br/> 7. Land and sea distribution<br/> 8. Mountain barriers or relief features<br/> 9. Ocean currents<br/> 10. Monsoon winds<br/> Solar flares have a negligible effect on the Earth's climate system and are not considered a major factor affecting India's climate.<br/> भारत की जलवायु को प्रभावित करने वाले प्रमुख कारकों में शामिल हैं —<br/> 11. अक्षांश<br/> 12. ऊँचाई<br/> 13. स्थल एवं समुद्र वितरण<br/> 14. पर्वतीय अवरोध या उच्चावच विशेषताएँ<br/> 15. महासागरीय धाराएँ<br/> 16. मानसून पवनें<br/> सौर प्रज्वाल का प्रभाव पृथ्वी के जलवायु तंत्र पर नगण्य होता है और इसे भारत की जलवायु को प्रभावित करने वाले प्रमुख कारकों में नहीं गिना जाता।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>The term 'Mahawat' in Rajasthan is associated with which phenomenon during the winter season?<br/> </b>राजस्थान में <b>'</b>महावत<b>' </b>शब्द शीत ऋतु के दौरान किस घटना से जुड़ा है<b>?</b></p>",
+    "option1": "<p> Dust Storms / धूल भरी आंधी</p>",
+    "option2": "<p> Western Cyclonic Disturbances rainfall / पश्चिमी चक्रवाती विक्षोभ वर्षा</p>",
+    "option3": "<p> Tropical Cyclones / उष्णकटिबंधीय चक्रवात</p>",
+    "option4": "<p> Heat Waves / लू की लहरें</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Winter rainfall in the northern plains, caused by jet stream winds carrying western cyclonic disturbances (which blow from the Mediterranean region and bring moisture to northwestern India), is known as \"Mahavat\" in Rajasthan. This rainfall is beneficial for rabi crops like wheat..<br/> उत्तरी मैदानों में पश्चिमी चक्रवाती विक्षोभों (जो भूमध्यसागर क्षेत्र से चलकर भारत के उत्तर-पश्चिमी भागों में नमी लाते हैं) को लाने वाली जेट स्ट्रीम हवाओं के कारण होने वाली शीतकालीन वर्षा को राजस्थान में 'महावत' के नाम से जाना जाता है। यह वर्षा गेहूँ जैसी रबी फसलों के लिए लाभदायक होती है।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>The onset of the Southwest Monsoon in India typically begins in which state and during which week?<br/> </b>भारत में दक्षिण<b>-</b>पश्चिम मानसून का आगमन सामान्यतः किस राज्य में और किस सप्ताह के दौरान होता है<b>?</b></p>",
+    "option1": "<p> Tamil Nadu, 1st week of June / तमिलनाडु, जून का पहला सप्ताह</p>",
+    "option2": "<p> Kerala, 1st week of June / केरल, जून का पहला सप्ताह</p>",
+    "option3": "<p> West Bengal, 1st week of July / पश्चिम बंगाल, जुलाई का पहला सप्ताह</p>",
+    "option4": "<p> Maharashtra, 4th week of June / महाराष्ट्र, जून का चौथा सप्ताह</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The onset of the Monsoon is marked by its beginning in Kerala in the 1st week of June. This marks the start of the Southwest Monsoon, derived from the Arabic word 'Mausim'.<br/> मानसून का आगमन जून के पहले सप्ताह में केरल में इसकी शुरुआत से चिह्नित होता है। यह दक्षिण-पश्चिम मानसून की शुरुआत को चिह्नित करता है, जो अरबी शब्द 'मौसम' से लिया गया है।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>Which pre-monsoon shower is beneficial for the growth and cultivation of coffee in Kerala/Karnataka?<br/> </b>केरल<b>/</b>कर्नाटक में कॉफी की वृद्धि<b>/</b>खेती के लिए कौन सी मानसून<b>-</b>पूर्व वर्षा लाभदायक है<b>?</b></p>",
+    "option1": "<p> Kal Baisakhi / काल बैसाखी</p>",
+    "option2": "<p> Mango Showers / आम्र वृष्टी</p>",
+    "option3": "<p> Blossom Showers / ब्लॉसम वर्षा</p>",
+    "option4": "<p> Nor-Westers / नॉर-वेस्टर</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Pre-monsoon showers are categorized into Nor-Westers (Kal Baisakhi, Bardoli Chheerha), Mango Showers, and Blossom Showers. Blossom Showers are specifically seen in Kerala/Karnataka and help in the growth/cultivation of coffee.<br/> 5. Kal Baisakhi – Thunderstorms and rain in Bengal and Assam<br/> 6. Mango Showers – Rainfall that helps mangoes ripen in South India<br/> 7. Nor-Wester – Strong winds and rain in Bengal and Assam<br/> 8. Bardoli Chheerha – Local storm of the hot season in Assam<br/> मानसून-पूर्व वर्षा को नॉर-वेस्टर (काल बैसाखी, बारदोली छीरहा), आम्र वर्षा और ब्लॉसम वर्षा में वर्गीकृत किया गया है। ब्लॉसम वर्षा विशेष रूप से केरल/कर्नाटक में देखी जाती है और कॉफी की वृद्धि/खेती में मदद करती है।<br/> 9. काल बैसाखी – बंगाल और असम में आँधी-वर्षा<br/> 10. आम्र वृष्टी – दक्षिण भारत में आम पकने में सहायक वर्षा<br/> 11. नॉर-वेस्टर – बंगाल-असम की तेज़ आँधियाँ और बारिश<br/> 12. बारदोली छीरहा असम में गर्म मौसम का स्थानीय तूफ़ान</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>According to Koeppen's classification, a Tropical climate (A) is characterized by the average temperature of the coldest month being how high?<br/> </b>कोपेन के वर्गीकरण के अनुसार<b>, </b>एक उष्णकटिबंधीय जलवायु <b>(A) </b>के सबसे ठंडे महीने का औसत तापमान कितना ऊँचा होता है<b>?<br/> Options:</b></p>",
+    "option1": "<p> 18°C or higher / 18°C या अधिक</p>",
+    "option2": "<p> 18°C or below / 18°C या उससे कम</p>",
+    "option3": "<p> Between 10°C and 18°C / 10°C और 18°C के बीच</p>",
+    "option4": "<p> Below 10°C / 10°C से कम</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Koeppen's classification table states that the Tropical (A) climate group is characterized by the average temperature of the coldest month being 18°C or higher. This signifies consistently high temperatures throughout the year.<br/> कोपेन के वर्गीकरण की तालिका बताती है कि उष्णकटिबंधीय (A) जलवायु समूह की विशेषता यह है कि सबसे ठंडे महीने का औसत तापमान 18°C या उससे अधिक होता है। यह पूरे वर्ष लगातार उच्च तापमान को दर्शाता है।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>The oppressing heat experienced in North India due to the condition of clear skies after the withdrawal of the monsoon is known as?<br/> </b>मानसून की वापसी के बाद उत्तरी भारत में साफ आसमान की स्थिति के कारण अनुभव की जाने वाली असहनीय गर्मी को क्या कहते हैं<b>?</b></p>",
+    "option1": "<p> Loo / लू</p>",
+    "option2": "<p> Heatwave / उष्ण लहर</p>",
+    "option3": "<p> October Heat / अक्टूबर की गर्मी</p>",
+    "option4": "<p> Mahawat / महावत</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 5. After the monsoon retreats, skies become clear and humidity decreases in northern India from late September to early October.<br/> 6. The sun's heat is felt more intensely during this period, and the humidity in the air creates a heavy, unbearable heat.<br/> 7. This condition is called the \"October heat.\"<br/> 8. मानसून की वापसी के बाद, सितंबर के अंत से अक्टूबर की शुरुआत तक उत्तरी भारत में आकाश साफ और नमी कम हो जाती है।<br/> 9. इस स्थिति में सूर्य का ताप अधिक महसूस होता है और हवा में नमी के कारण भारी, असहनीय गर्मी का अनुभव होता है।<br/> 10. इस स्थिति को ही “अक्टूबर की गर्मी” कहा जाता है।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Which of the following places receives the highest rainfall?<br/> </b>निम्नलिखित में से किस स्थान पर सबसे अधिक वर्षा दर्ज की जाती है<b>?</b></p>",
+    "option1": "<p> Kerala / केरल</p>",
+    "option2": "<p> Eastern Ghats / पूर्वी घाट</p>",
+    "option3": "<p> Mawsynram/Cherapunji / मासिनराम/चेरापूंजी</p>",
+    "option4": "<p> Western Ghats / पश्चिमी घाट</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Mawsynram and Cherrapunji are both located in the Khasi Hills of Meghalaya.<br/> This region is considered one of the rainiest places in the world.<br/> 5. The main reason for this heavy rainfall is the moisture-laden monsoon winds from the Bay of Bengal,<br/> 6. which collide with the Khasi Hills and cause mountain rain.<br/> मासिनराम और चेरापूंजी — दोनों ही मेघालय के खासी पहाड़ी में स्थित हैं।<br/> यह क्षेत्र विश्व के सर्वाधिक वर्षा वाले स्थानों में गिना जाता है।<br/> यहाँ की अत्यधिक वर्षा का मुख्य कारण है —<br/> 7. बंगाल की खाड़ी से आने वाली मानसूनी नमी युक्त हवाएँ,<br/> 8. जो खासी पर्वतों से टकराकर पर्वतीय वर्षा कराती हैं।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>The winter rainfall caused by Western Disturbances is primarily beneficial for which crops in India?<br/> </b>पश्चिमी विक्षोभ के कारण होने वाली शीतकालीन वर्षा मुख्य रूप से भारत में किन फसलों के लिए लाभदायक होती है<b>?</b></p>",
+    "option1": "<p> Kharif crops / खरीफ फसलें</p>",
+    "option2": "<p> Zaid crops / जायद फसलें</p>",
+    "option3": "<p> Rabi crops / रबी फसलें</p>",
+    "option4": "<p> Cash crops / नकदी फसलें</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 5. Western disturbances are cyclonic systems originating from the Mediterranean region that bring light rain and sometimes hail to northwest India during the winter season.<br/> 6. This rainfall is particularly beneficial for Rabi crops (such as wheat, barley, gram, mustard, etc.).<br/> Main reason:<br/> 7. Rabi crops require moderate temperatures and adequate moisture for growth.<br/> 8. Rain from western disturbances increases soil moisture and reduces the need for irrigation.<br/> 9. पश्चिमी विक्षोभ भूमध्यसागर क्षेत्र से उत्पन्न चक्रवातीय प्रणालियाँ होती हैं, जो शीत ऋतु में उत्तर-पश्चिम भारत में हल्की वर्षा और कभी-कभी ओले लाती हैं।<br/> 10. यह वर्षा विशेष रूप से रबी फसलों (जैसे गेहूँ, जौ, चना, सरसों आदि) के लिए बहुत लाभदायक होती है।<br/> मुख्य कारण:<br/> 11. रबी फसलों को विकास के लिए मध्यम तापमान और पर्याप्त नमी की आवश्यकता होती है।<br/> 12. पश्चिमी विक्षोभ की वर्षा मिट्टी में नमी बढ़ाती है और सिंचाई की आवश्यकता को कम करती है।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Which two branches of the Southwest Monsoon meet at Punjab?<br/> </b>दक्षिण<b>-</b>पश्चिम मानसून की कौन सी दो शाखाएँ पंजाब में मिलती हैं<b>?</b></p>",
+    "option1": "<p> Arabian Sea branch and Coromandel branch / अरब सागर शाखा और कोरोमंडल शाखा</p>",
+    "option2": "<p> Bay of Bengal branch and North-Eastern Hills branch / बंगाल की खाड़ी शाखा और उत्तर-पूर्वी पहाड़ीय शाखा</p>",
+    "option3": "<p> Arabian Sea branch and Bay of Bengal branch / अरब सागर शाखा और बंगाल की खाड़ी शाखा</p>",
+    "option4": "<p> Western Ghats branch and Khasi Hills branch / पश्चिमी घाट शाखा और खासी पहाड़ी शाखा</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 5. The southwest monsoon has two main branches:<br/> 6. Arabian Sea branch<br/> 7. Bay of Bengal branch<br/> 8. Both branches bring rainfall to different parts of India and, moving northward, converge in the Punjab region.<br/> 9. By the time they reach Punjab, the moisture from both branches is virtually exhausted, resulting in relatively low rainfall.<br/> Key points:<br/> 10. Meeting area → Around Punjab and Haryana<br/> 11. दक्षिण-पश्चिम मानसून की दो मुख्य शाखाएँ होती हैं —<br/> 12. अरब सागर शाखा<br/> 13. बंगाल की खाड़ी शाखा<br/> 14. ये दोनों शाखाएँ भारत के अलग-अलग भागों में वर्षा लाती हैं और उत्तर भारत की ओर बढ़ते हुए पंजाब क्षेत्र में जाकर मिलती हैं।<br/> 15. पंजाब पहुँचते-पहुँचते, दोनों शाखाओं की नमी लगभग समाप्त हो जाती है, इसलिए यहाँ वर्षा अपेक्षाकृत कम होती है।<br/> मुख्य बिंदु:<br/> 16. मिलने का क्षेत्र → पंजाब और हरियाणा के आसपास</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>The Diurnal Range of Temperature is defined as the:<br/> </b>तापमान की दैनिक सीमा को किस प्रकार परिभाषित किया जाता है<b>:</b></p>",
+    "option1": "<p> Difference between the highest and lowest temperature recorded in a day. एक दिन में दर्ज किए गए अधिकतम और न्यूनतम तापमान के बीच का अंतर।</p>",
+    "option2": "<p> Average temperature of a place over a year. किसी स्थान का पूरे वर्ष का औसत तापमान।</p>",
+    "option3": "<p> Difference between the hottest and coldest months of a year. वर्ष के सबसे गर्म और सबसे ठंडे महीनों के बीच तापमान का अंतर।</p>",
+    "option4": "<p> Variation in rainfall during day and night. दिन और रात के बीच वर्षा में परिवर्तन।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 1. Diurnal temperature range refers to the difference between the maximum (daytime) and minimum (nighttime) temperatures recorded at a location in a single day.<br/> Formula:<br/> Diurnal temperature range = Maximum temperature – Minimum temperature<br/> Key facts:<br/> 2. In desert regions (such as the Thar Desert), this difference is very large.<br/> 3. In coastal areas, this difference is less because the ocean moderates temperatures.<br/> 4. दैनिक तापमान सीमा से अभिप्राय है —<br/> किसी स्थान पर एक ही दिन में दर्ज किए गए अधिकतम (दिन का) और न्यूनतम (रात का) तापमान के बीच का अंतर।<br/> सूत्र:<br/> दैनिक तापमान सीमा=अधिकतम तापमान−न्यूनतम तापमान<br/> मुख्य तथ्य:<br/> 5. मरुस्थलीय क्षेत्रों (जैसे थार मरुस्थल) में यह अंतर बहुत अधिक होता है।<br/> 6. तटीय क्षेत्रों में यह अंतर कम होता है क्योंकि समुद्र तापमान को संतुलित करता है।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Consider the following statements regarding climate variation in India:<br/> </b>भारत में जलवायु भिन्नता के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. Coastal cities like Mumbai experience less extremes of climate due to the moderating influence of the sea. / </b>मुंबई जैसे तटीय शहरों में समुद्र के संतुलनकारी प्रभाव के कारण जलवायु में अत्यधिक उतार<b>-</b>चढ़ाव नहीं होता।<b><br/> 2. Inland cities like Kanpur have a greater annual range of temperature compared to coastal cities. / </b>कानपुर जैसे अंतर्देशीय शहरों में तटीय शहरों की तुलना में वार्षिक तापमान का अंतर अधिक होता है ।<b><br/> Which of the statements given above is/are correct?<br/> </b>उपरोक्त कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> I only / केवल I</p>",
+    "option2": "<p> II only / केवल II</p>",
+    "option3": "<p> Both I and II / I और II दोनों</p>",
+    "option4": "<p> Neither I nor II / न तो I और न ही II</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> First statement:<br/> 7. Coastal cities like Mumbai don't experience extreme climate fluctuations due to the moderating effect of the ocean. (Correct)<br/> 8. The ocean moderates temperatures—reducing heat during the day and cooling at night.<br/> 9. Therefore, coastal areas experience very little temperature variation.<br/> Second statement:<br/> 10. Inland cities like Kanpur experience greater annual temperature variation than coastal cities. (Correct)<br/> 11. Inland areas lack the influence of the ocean, so temperatures here are very high in summer and very low in winter.<br/> 12. This is called a greater annual temperature range.<br/> पहला कथन:<br/> 13. मुंबई जैसे तटीय शहरों में समुद्र के संतुलनकारी प्रभाव के कारण जलवायु में अत्यधिक उतार-चढ़ाव नहीं होता। (सही)<br/> 14. समुद्र तापमान को संतुलित करता है — दिन में गर्मी को कम और रात में ठंडक को कम करता है।<br/> 15. इसलिए तटीय क्षेत्रों में तापमान में अंतर बहुत कम होता है।<br/> दूसरा कथन:<br/> 16. कानपुर जैसे अंतर्देशीय शहरों में तटीय शहरों की तुलना में वार्षिक तापमान का अंतर अधिक होता है। (सही)<br/> 17. अंतर्देशीय क्षेत्रों में समुद्र का प्रभाव नहीं होता, इसलिए यहाँ गर्मी में तापमान बहुत ऊँचा और सर्दी में बहुत नीचा होता है।<br/> 18. इसे ही अधिक वार्षिक तापमान सीमा कहा जाता है।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Assertion (A): The inward movement of Western Disturbances through jet streams is marked by an increase in the prevailing night temperature.<br/> Reason (R): These disturbances, originating over the Mediterranean Sea, bring warm, moist air to the subcontinent, which leads to a rise in night temperature.<br/> </b>कथन <b>(A): </b>जेट धाराओं के माध्यम से पश्चिमी विक्षोभों की अंतःगामी गति प्रचलित रात्रि तापमान में वृद्धि द्वारा चिह्नित होती है।<b><br/> </b>कारण <b>(R): </b>ये विक्षोभ<b>, </b>जो भूमध्य सागर से उत्पन्न होते हैं<b>, </b>उपमहाद्वीप में गर्म<b>, </b>आर्द्र वायु लाते हैं<b>, </b>जिससे रात्रि तापमान में वृद्धि होती है।</p>",
+    "option1": "<p> Both A and R are true, and R is the correct explanation of A. / A और R दोनों सत्य हैं, और R, A का सही स्पष्टीकरण है।</p>",
+    "option2": "<p> Both A and R are true, but R is not the correct explanation of A. / A और R दोनों सत्य हैं, लेकिन R, A का सही स्पष्टीकरण नहीं है।</p>",
+    "option3": "<p> A is true, but R is false. / A सत्य है, लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false, but R is true. / A असत्य है, लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> the inward movement of Western Disturbances is marked by an increase in prevailing night temperature (A is true). These disturbances are mid-latitude cyclones that bring clouds and warmer air, reducing the night-time heat loss, thus R is the correct underlying reason for A.<br/> पश्चिमी विक्षोभों की अंतःगामी गति प्रचलित रात्रि तापमान में वृद्धि द्वारा चिह्नित होती है (A सत्य है)।<br/> ये विक्षोभ मध्य अक्षांशीय चक्रवात होते हैं जो बादल और गर्म वायु लाते हैं, जिससे रात्रि के समय ऊष्मा हानि कम होती है; अतः R, A का सही आधारभूत कारण है।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Which of the following statements about the Jet Streams, as mentioned in the text, is/are correct?<br/> </b>जेट धाराओं के बारे में निम्नलिखित में से कौन सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?<br/> 1. In both hemispheres, jet streams blow from west to east. / </b>दोनों गोलार्धों में<b>, </b>जेट धाराएं पश्चिम से पूर्व की ओर बहती हैं।<b><br/> 2. The Subtropical Jet stream is located at a height of 9-13 km (upper troposphere). / </b>उपोष्णकटिबंधीय जेट धाराएं <b>9–13 </b>किमी <b>(</b>ऊपरी क्षोभमंडल<b>) </b>की ऊँचाई पर स्थित होती है।</p>",
+    "option1": "<p> I only / केवल I</p>",
+    "option2": "<p> II only / केवल II</p>",
+    "option3": "<p> Both I and II / I और II दोनों</p>",
+    "option4": "<p> Neither I nor II / न तो I और न ही II</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 7. In both hemispheres, jet streams flow from west to east.<br/> 8. Jet streams are extremely strong air currents flowing from west to east in the upper atmosphere.<br/> 9. They flow in this direction due to the Earth's rotation (Coriolis effect).<br/> 10. Subtropical jet streams are located at altitudes of 9–13 km (upper troposphere) and can reach speeds of about 150–300 km/h.<br/> 11. These currents influence atmospheric circulation.<br/> 12. They also have a significant impact on the direction and intensity of monsoons.<br/> 13. दोनों गोलार्धों में, जेट धाराएं पश्चिम से पूर्व की ओर बहती हैं।<br/> 14. जेट धाराएँ ऊपरी वायुमंडल में पश्चिम से पूर्व दिशा में बहने वाली अत्यधिक तीव्र वायुधाराएँ हैं।<br/> 15. ये पृथ्वी के घूर्णन (कोरिओलिस प्रभाव) के कारण इस दिशा में प्रवाहित होती हैं।<br/> 16. उपोष्णकटिबंधीय जेट धाराएं 9–13 किमी (ऊपरी क्षोभमंडल) की ऊँचाई पर स्थित होती हैं और इनकी गति लगभग 150–300 किमी/घंटा तक हो सकती है।<br/> 17. ये धाराएँ वायुमंडलीय परिसंचरण को प्रभावित करती हैं।<br/> 18. मानसून की दिशा और तीव्रता पर भी इनका महत्वपूर्ण प्रभाव पड़ता है।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Arrange the following stages of Orographic Rainfall in the correct sequence:<br/> </b>पर्वतीय वर्षा की निम्नलिखित अवस्थाओं को सही क्रम में लगाइए<b>:<br/> 1. Moist winds from the South-West blow towards the mountain. / </b>दक्षिण<b>-</b>पश्चिम से आर्द्र हवाएँ पर्वत की ओर बहती हैं।<b><br/> 2. The winds rise along the windward slope and get cooled, causing condensation and rainfall./ </b>हवाएँ पवनमुखी ढाल पर ऊपर उठती हैं<b>, </b>ठंडी होकर संघनित होती हैं और वर्षा होती है।<b><br/> 3. On crossing the mountain, the dry air descends on the leeward side forming a rain shadow region./ </b>पर्वत पार करने के बाद शुष्क वायु पवनविमुख ढाल पर नीचे उतरती है<b>, </b>जिससे वृष्टि छाया क्षेत्र बनता है।<b><br/> Select the correct sequence / </b>सही क्रम चुनिए<b>:</b></p>",
+    "option1": "<p> 1 → 2 → 3</p>",
+    "option2": "<p> 2 → 1 → 3</p>",
+    "option3": "<p> 3 → 2 → 1</p>",
+    "option4": "<p> 1 → 3 → 2</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 8. First, moist winds from the southwest collide with the mountain.<br/> 9. They then rise, cool, and cause rainfall on the windward slope.<br/> 10. Finally, the dry air descends on the other side of the mountain, creating a rain shadow.<br/> Southwest winds → Rain on the windward slope → Formation of a rain shadow.<br/> 11. सबसे पहले दक्षिण-पश्चिम की नम हवाएँ पर्वत से टकराती हैं।<br/> 12. फिर वे ऊपर उठकर ठंडी होती हैं और पवनमुखी ढाल पर वर्षा कराती हैं।<br/> 13. अंत में, शुष्क हवा पर्वत के दूसरी ओर नीचे उतरती है, जिससे वहाँ वृष्टि छाया क्षेत्र बनता है।<br/> दक्षिण-पश्चिम हवाएँ → पवनमुखी ढाल पर वर्षा → वृष्टि छाया क्षेत्र का निर्माण</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Assertion (A): During the summer season, the ITCZ shifts to the upper region and trade winds meet at.<br/> Reason (R): Intense heating over the Tibetan plateau creates a region of low pressure, attracting air from the sea, leading to the monsoon.<br/> </b>कथन <b>(A): </b>गर्मी के मौसम में<b>, ITCZ (</b>अंतर उष्णकटिबंधीय अभिसरण क्षेत्र<b>) </b>ऊपरी क्षेत्र की ओर खिसक जाता है और व्यापारिक पवनें वहीं मिलती हैं।<b><br/> </b>कारण <b>(R): </b>तिब्बती पठार पर तीव्र ऊष्मन एक निम्न दाब क्षेत्र बनाता है<b>, </b>जो समुद्र से वायु को आकर्षित करता है<b>, </b>जिससे मानसून उत्पन्न होता है।</p>",
+    "option1": "<p> Both A and R are true, and R is the correct explanation of A. / A और R दोनों सत्य हैं, और R, A का सही स्पष्टीकरण है।</p>",
+    "option2": "<p> Both A and R are true, but R is not the correct explanation of A. / A और R दोनों सत्य हैं, लेकिन R, A का सही स्पष्टीकरण नहीं है।</p>",
+    "option3": "<p> A is true, but R is false. / A सत्य है, लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false, but R is true. / A असत्य है, लेकिन R सत्य है।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The ITCZ shifts northward in summer due to the Sun’s apparent northward movement and the land heating more than the ocean.<br/> Although heating over the Tibetan Plateau creates a low-pressure area that strengthens the monsoon, it is not the main reason for the ITCZ’s northward shift.<br/> गर्मी के मौसम में सूर्य के उत्तर की ओर जाने और भूमि के समुद्र से अधिक गर्म होने के कारण ITCZ उत्तर की ओर खिसकता है।<br/> तिब्बती पठार का ऊष्मन निम्न दाब बनाकर मानसून को मजबूत करता है, लेकिन यह ITCZ के उत्तर की ओर खिसकने का मुख्य कारण नहीं है।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Which events are associated with the later phase of the monsoon/break in monsoon?<br/> </b>मानसून के बाद के चरण<b>/</b>मानसून में विराम से जुड़े घटनाक्रम कौन<b>-</b>से हैं<b>?<br/> 1. Clear skies and high temperatures (‘October Heat’) in North India.<br/> </b>उत्तर भारत में साफ़ आसमान और उच्च तापमान <b>(‘</b>अक्टूबर की गर्मी’<b>)</b>।<b><br/> 2. Rainfall over the Coromandel Coast (Tamil Nadu and Andhra Pradesh) due to cyclonic disturbances.<br/> </b>चक्रवाती विक्षोभों के कारण कोरोमंडल तट <b>(</b>तमिलनाडु और आंध्र प्रदेश<b>) </b>पर वर्षा।<b><br/> 3. Strengthening of the North-East winds.<br/> </b>उत्तर<b>-</b>पूर्वी पवनों का सशक्त होना।<b><br/> Options:</b></p>",
+    "option1": "<p> I and II only / केवल I और II</p>",
+    "option2": "<p> II and III only / केवल II और III</p>",
+    "option3": "<p> I and III only / केवल I और III</p>",
+    "option4": "<p> I, II, and III / I, II, और III</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> During the final phase of the monsoon season (September to November), the southwest monsoon gradually weakens and begins to retreat from northern and northwestern India. This period is marked by several key phenomena:<br/> 1. Clear skies and high temperatures in northern India, known as the \"October Heat.\" This occurs as the rains end and daytime temperatures rise due to reduced humidity.<br/> 2. Cyclonic disturbances during this time bring rainfall to the Coromandel Coast (Tamil Nadu and Andhra Pradesh). These rains are a hallmark of the monsoon's retreating phase.<br/> 3. Also, northeasterly winds become dominant, signaling the onset of the winter season and blowing southward, carrying moisture from the Bay of Bengal, bringing rainfall to the Tamil Nadu coast.<br/> मानसून के अंतिम चरण (सितंबर से नवंबर) में दक्षिण-पश्चिम मानसून धीरे-धीरे कमजोर पड़ जाता है और भारत के उत्तर तथा उत्तर-पश्चिमी भागों से पीछे हटने लगता है। इस अवधि में कुछ प्रमुख घटनाएँ देखी जाती हैं —<br/> 4. उत्तर भारत में साफ़ आसमान और ऊँचा तापमान, जिसे ‘अक्टूबर की गर्मी ’ कहा जाता है। यह इसलिए होता है क्योंकि वर्षा समाप्त हो जाती है और आर्द्रता कम होने से दिन के तापमान में वृद्धि होती है।<br/> 5. इस समय चक्रवाती विक्षोभों के कारण कोरोमंडल तट (तमिलनाडु और आंध्रप्रदेश) पर वर्षा होती है। ये वर्षाएँ मानसून के वापसी चरण की विशिष्ट पहचान हैं।<br/> 6. साथ ही, उत्तर-पूर्वी पवनों का प्रभुत्व स्थापित हो जाता है, जो सर्दी के मौसम की शुरुआत का संकेत देती हैं और दक्षिण की ओर बहकर बंगाल की खाड़ी से नमी लेकर तमिलनाडु तट पर वर्षा लाती हैं।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Which pre-monsoon shower is incorrectly matched with its associated region and primary benefit?<br/> </b>कौन सी मानसून<b>-</b>पूर्व वर्षा अपने संबंधित क्षेत्र और प्राथमिक लाभ के साथ गलत तरीके से मेल खाती है<b>?</b></p>",
+    "option1": "<p> Kal Baisakhi: West Bengal, helpful for jute and tea. / काल बैसाखी: पश्चिम बंगाल, जूट और चाय के लिए लाभदायक।</p>",
+    "option2": "<p> Bardoli Chheerha: Assam, category of Nor-Westers. / बारदोली छीरहा: असम, नॉर-वेस्टर की श्रेणी।</p>",
+    "option3": "<p> Mango Showers: Kerala, helps in early ripening of mangoes. / आम्र वर्षा: केरल, आमों के जल्दी पकने में मदद करती है।</p>",
+    "option4": "<p> Blossom Showers: West Bengal/Assam, helpful for the cultivation of coffee. / पुष्प वर्षा (ब्लॉसम वर्षा): पश्चिम बंगाल/असम, कॉफी की खेती के लिए लाभदायक।</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Blossom Showers are correctly associated with helping the cultivation of coffee, but they are 'Seen in Kerala/Karnataka', not West Bengal/Assam. The Nor-Westers (Kal Baisakhi and Bardoli Chheerha) are associated with West Bengal and Assam.<br/> ब्लॉसम वर्षा को कॉफी की खेती में मदद करने के साथ सही ढंग से जोड़ा गया है, लेकिन वे पश्चिम बंगाल/असम में नहीं, बल्कि 'केरल/कर्नाटक में देखी जाती हैं'। नॉर-वेस्टर (काल बैसाखी और बारदोली छीरहा) पश्चिम बंगाल और असम से जुड़े हुए हैं।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>The retreating monsoon usually withdraws from the entire northern plains and a significant part of the Deccan Plateau by which month?<br/> </b>लौटता हुआ मानसून आमतौर पर उत्तरी मैदानों की संपूर्णता और दक्कन पठार के एक महत्वपूर्ण हिस्से से किस महीने तक वापस हो जाता है<b>?<br/> Options:</b></p>",
+    "option1": "<p> August / अगस्त</p>",
+    "option2": "<p> September / सितंबर</p>",
+    "option3": "<p> October / अक्टूबर</p>",
+    "option4": "<p> November / नवंबर</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The withdrawal of the South-West Monsoon starts from northwestern India in September and completes over the northern plains and most of the Deccan Plateau by October.<br/> दक्षिण-पश्चिम मानसून की वापसी सितंबर में उत्तर-पश्चिम भारत से शुरू होती है।<br/> अक्टूबर तक यह पूरे उत्तरी मैदानों और दक्कन पठार के अधिकांश हिस्से से लौट जाता है।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Match the Indian Calendar Month pairs with their corresponding season:<br/> </b>भारतीय कैलेंडर माह जोड़े को उनके संबंधित ऋतु के साथ सुमेलित करें<b>:<br/> 1. Vasanta: Chaitra-Vaisakha (March-April) / </b>वसंत<b>: </b>चैत्र<b>-</b>वैशाख <b>(</b>मार्च<b>-</b>अप्रैल<b>)<br/> 2. Sharada: Sravana-Bhadra (July-August) / </b>शरद<b>: </b>श्रवण<b>-</b>भद्रा <b>(</b>जुलाई<b>-</b>अगस्त<b>)<br/> 3. Hemanta: Margashirsa-Pausa (November-December) / </b>हेमन्त<b>: </b>मार्गशीर्ष<b>-</b>पौसा <b>(</b>नवंबर<b>-</b>दिसंबर<b>)</b></p>",
+    "option1": "<p> I only / केवल I</p>",
+    "option2": "<p> I and II only / केवल I और II</p>",
+    "option3": "<p> I and III only / केवल I और III</p>",
+    "option4": "<p> I, II, and III / I, II, और III</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Vasanta = Chaitra-Vaisakha (I is correct) and Hemanta = Margashirsa-Pausa (III is correct). However, Sharada is matched with Asvina-Kartika (September-October), while Sravana-Bhadra (July-August) is Varsha (Monsoon) (II is incorrect).<br/> Winter (Magha-Phalguna, January-February) → Spring (Chaitra-Vaisakha, March-April) → Summer (Jyestha-Ashadha, May-June) → Varsha (Shravan-Bhadrapada, July-August) → Autumn (Ashwina-Kartik, September-October) → Winter (Margashirsha-Paush, November-December)<br/> वसंत = चैत्र-वैसाख (I सही है) और हेमंत = मार्गशीर्ष-पौष (III सही है)। हालांकि, शरद ऋतु अश्विन-कार्तिक (सितंबर-अक्टूबर) के साथ मेल खाती है, जबकि श्रावण-भाद्रपद (जुलाई-अगस्त) वर्षा ऋतु है (II गलत है)।<br/> शिशिर (माघ–फाल्गुन, जनवरी–फरवरी) → वसंत (चैत्र–वैशाख, मार्च–अप्रैल) → ग्रीष्म (ज्येष्ठ–आषाढ़, मई–जून) → वर्षा (श्रावण–भाद्रपद, जुलाई–अगस्त) → शरद (आश्विन–कार्तिक, सितंबर–अक्टूबर) → हेमंत (मार्गशीर्ष–पौष, नवंबर–दिसंबर)</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>In the context of Koeppen's classification codes, what does the suffix 'm' and 'f' signify?<br/> </b>कोपेन के वर्गीकरण कोड के संदर्भ में<b>, </b>प्रत्यय <b>'m' </b>और <b>'f' </b>क्या दर्शाते हैं<b>?</b></p>",
+    "option1": "<p> 'm' signifies Summer Dry, and 'f' signifies Winter Dry. / 'm' ग्रीष्म शुष्क को दर्शाता है, और 'f' शीत शुष्क को दर्शाता है।</p>",
+    "option2": "<p> 'm' signifies Monsoon, and 'f' signifies Full Rainfall (Baarish). / 'm' मानसून को दर्शाता है, और 'f' पूर्ण वर्षा (बारिश) को दर्शाता है।</p>",
+    "option3": "<p> 'm' signifies Polar Type, and 'f' signifies Cold Snow Forest. / 'm' ध्रुवीय प्रकार को दर्शाता है, और 'f' शीत हिम वन को दर्शाता है।</p>",
+    "option4": "<p> 'm' signifies Warm Temperate, and 'f' signifies Desert. / 'm' गर्म शीतोष्ण को दर्शाता है, और 'f' मरुस्थल को दर्शाता है।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The codes for precipitation variation are given as: 'w' for winter dry, 's' for summer dry, 'm' for monsoon, and 'f' for full rainfall (baarish). Hence, 'm' and 'f' stand for Monsoon and Full Rainfall, respectively.<br/> वर्षण भिन्नता के कोड इस प्रकार दिए गए हैं: 'w' शीत शुष्क के लिए, 's' ग्रीष्म शुष्क के लिए, 'm' मानसून के लिए, और 'f' पूर्ण वर्षा (बारिश) के लिए। इसलिए, 'm' और 'f' क्रमशः मानसून और पूर्ण वर्षा को दर्शाते हैं।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Which of the following statements is a correct distinction between the effects of El Niño and La Niña?<br/> </b>निम्नलिखित में से कौन सा कथन अल नीनो और ला नीना के प्रभावों के बीच एक सही अंतर है<b>?</b></p>",
+    "option1": "<p> El Niño causes intense rainfall/floods in India, while La Niña causes droughts. / अल नीनो भारत में तीव्र वर्षा/बाढ़ का कारण बनता है, जबकि ला नीना सूखे का कारण बनता है।</p>",
+    "option2": "<p> La Niña leads to warmer global temperatures, while El Niño leads to cooler global temperatures. / ला नीना गर्म वैश्विक तापमान की ओर ले जाता है, जबकि अल नीनो ठंडा वैश्विक तापमान की ओर ले जाता है।</p>",
+    "option3": "<p> During La Niña, trade winds strengthen, while during El Niño, trade winds weaken. / ला नीना के दौरान, व्यापारिक हवाएँ मजबूत होती हैं, जबकि अल नीनो के दौरान, व्यापारिक हवाएँ कमजोर होती हैं।</p>",
+    "option4": "<p> Fishing industries flourish during El Niño but won't flourish during La Niña. / मछली पकड़ने के उद्योग अल नीनो के दौरान फलते-फूलते हैं, लेकिन ला नीना के दौरान नहीं फलते हैं।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> During La Niña, 'Trade winds strengthen' (pushing warm water westward), while during El Niño, 'Trade winds weaken' (allowing warm water to spread eastwards). This difference in wind strength is the key distinguishing factor between the two phases of ENSO.<br/> ला नीना के दौरान, ‘व्यापारिक हवाएँ मजबूत होती हैं’ (जो गर्म जल को पश्चिम की ओर धकेलती हैं), जबकि अल नीनो के दौरान, ‘व्यापारिक हवाएँ कमजोर होती हैं’ (जिससे गर्म जल पूर्व की ओर फैलता है)।<br/> हवा की ताकत में यह अंतर ENSO के दोनों चरणों के बीच मुख्य भेदकारी तत्व है।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Why does the Arabian Sea branch of the Southwest Monsoon cause little or no rainfall in some Rajasthan region?<br/> </b>दक्षिण<b>-</b>पश्चिम मानसून की अरब सागर शाखा राजस्थान के कुछ क्षेत्रों में कम या बिल्कुल वर्षा क्यों नहीं करती<b>?</b></p>",
+    "option1": "<p> The winds move parallel to the Aravallis hence no rainfall because there is no obstruction for air ascent. / हवाएँ अरावली पहाड़ियों के समानांतर चलती हैं, जिससे हवा ऊपर उठने के लिए कोई बाधा उत्पन्न नहीं होती है।</p>",
+    "option2": "<p> The winds are not moist enough by the time they reach Rajasthan. / जब तक हवाएँ राजस्थान पहुँचती हैं, तब तक वे पर्याप्त नम नहीं होती हैं।</p>",
+    "option3": "<p> Rajasthan falls under a rain shadow zone created by the Western Ghats. / राजस्थान पश्चिमी घाटों द्वारा बनाए गए वृष्टि छाया क्षेत्र के अंतर्गत आता है।</p>",
+    "option4": "<p> The Tibetan Plateau creates a high-pressure zone that repels the monsoon winds. / तिब्बती पठार एक उच्च दबाव क्षेत्र बनाता है जो मानसूनी हवाओं को पीछे हटाता है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> When the Arabian Sea branch of the southwest monsoon moves toward Rajasthan, its direction is parallel to the Aravalli Range. Since the Aravalli Range extends northeastward, and the winds also blow in that direction, they do not have the opportunity to rise. As a result, condensation and precipitation do not occur. This is why most of Rajasthan is dry and receives little rainfall.<br/> दक्षिण-पश्चिम मानसून की अरब सागर शाखा जब राजस्थान की ओर बढ़ती है, तो उसकी दिशा अरावली पर्वतमाला के समानांतर होती है। चूँकि अरावली उत्तर-पूर्व दिशा में फैली है, और हवाएँ भी उसी दिशा में चलती हैं, इसलिए उन्हें ऊपर उठने का अवसर नहीं मिलता। परिणामस्वरूप, संघनन और वर्षा नहीं होती। यही कारण है कि राजस्थान का अधिकांश भाग शुष्क और कम वर्षा वाला है।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Which of the following is the most accurate description of the Winter Rainfall phenomena in North India?<br/> </b>उत्तरी भारत में शीतकालीन वर्षा की घटना का सबसे सटीक विवरण निम्नलिखित में से कौन सा है<b>?</b></p>",
+    "option1": "<p> It is caused by Western Cyclonic Disturbances, carried by Jet Stream winds (Upper Atmospheric Circulation) from the Mediterranean Sea, benefiting Rabi crops. / यह पश्चिमी चक्रवाती विक्षोभ के कारण होता है, जो भूमध्य सागर से जेट स्ट्रीम हवाओं (ऊपरी वायुमंडलीय परिसंचरण) द्वारा लाया जाता है, जिससे रबी फसलों को लाभ होता है।</p>",
+    "option2": "<p> It is known as 'Mahawat' in all parts of Northern India and is marked by an increase in prevailing night temperature. / इसे उत्तरी भारत के सभी हिस्सों में 'महावत' के नाम से जाना जाता है और यह प्रचलित रात के तापमान में वृद्धि से चिह्नित होता है।</p>",
+    "option3": "<p> It is caused by Tropical Cyclones originating in the Bay of Bengal, which benefits Kharif crops. / यह बंगाल की खाड़ी में उत्पन्न होने वाले उष्णकटिबंधीय चक्रवातों के कारण होता है, जो खरीफ फसलों को लाभ पहुंचाता है।</p>",
+    "option4": "<p> It is caused by the North East Monsoon winds strengthening over the Northern Plains. / यह उत्तरी मैदानों पर उत्तर-पूर्व मानसून की हवाओं के मजबूत होने के कारण होता है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Northern India's winter rainfall is caused by western disturbances originating from the Mediterranean Sea, which are carried to India by jet stream winds; this light rainfall is extremely beneficial for rabi crops such as wheat.<br/> उत्तरी भारत की शीतकालीन वर्षा भूमध्य सागर से उत्पन्न पश्चिमी विक्षोभों के कारण होती है, जिन्हें जेट स्ट्रीम हवाएँ भारत तक लाती हैं; यह हल्की वर्षा रबी फसलों जैसे गेहूँ के लिए अत्यंत लाभदायक होती है।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>The occurrence of El Niño is directly linked to which specific change in the air circulation over the Pacific Ocean?<br/> </b>अल नीनो की घटना प्रशांत महासागर के ऊपर वायु परिसंचरण में किस विशिष्ट परिवर्तन से सीधे जुड़ी हुई है<b>?</b></p>",
+    "option1": "<p> Trade winds strengthening, pushing warm water westward. / व्यापारिक हवाओं का मजबूत होना, गर्म पानी को पश्चिम की ओर धकेलना।</p>",
+    "option2": "<p> Trade winds weakening, allowing warm water to spread eastwards. / व्यापारिक हवाओं का कमजोर होना, गर्म पानी को पूर्व की ओर फैलने देना।</p>",
+    "option3": "<p> Strengthening of the Polar Jet Stream, leading to cooler global temperatures. / ध्रुवीय जेट स्ट्रीम का मजबूत होना, जिससे ठंडा वैश्विक तापमान होता है।</p>",
+    "option4": "<p> Below average sea surface temperature in the east-central equatorial Pacific. / पूर्वी-मध्य भूमध्यरेखीय प्रशांत क्षेत्र में समुद्र की सतह का औसत से नीचे तापमान।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 5. An El Niño event occurs when sea surface temperatures in the central and eastern Pacific Ocean become warmer than normal. The primary cause is a weakening of the trade winds, which causes warm water to move from the west to the east (toward South America).<br/> 6. This change disrupts the Walker circulation and impacts global weather patterns—causing droughts in India and floods in South America.<br/> 7. अल नीनो की घटना तब होती है जब प्रशांत महासागर के मध्य और पूर्वी भाग में समुद्र की सतह का तापमान सामान्य से अधिक हो जाता है। इसका मुख्य कारण है — व्यापारिक हवाओं का कमजोर पड़ना, जिससे गर्म पानी पश्चिम से हटकर पूर्व की ओर (दक्षिण अमेरिका की ओर) फैलने लगता है।<br/> 8. यह परिवर्तन वॉकर परिसंचरण को बाधित करता है और वैश्विक मौसम पैटर्न पर असर डालता है — जैसे भारत में सूखा, दक्षिण अमेरिका में बाढ़ आदि।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>How does the intense heating over the Tibetan Plateau during summer influence the Monsoon circulation over India?<br/> </b>ग्रीष्म ऋतु के दौरान तिब्बती पठार पर तीव्र ताप भारत में मानसून परिसंचरण को कैसे प्रभावित करता है<b>?</b></p>",
+    "option1": "<p> It creates a Low-Pressure zone, which acts as a center of attraction for the moisture-laden winds of the Southwest Monsoon. / यह एक निम्न दबाव क्षेत्र बनाता है, जो दक्षिण-पश्चिम मानसून की नमी से भरी हवाओं के लिए आकर्षण के केंद्र के रूप में कार्य करता है।</p>",
+    "option2": "<p> It creates a relatively High-Pressure zone, causing air to descend and suppress rainfall. / यह एक अपेक्षाकृत उच्च दबाव क्षेत्र बनाता है, जिससे हवा नीचे उतरती है और वर्षा को दबाती है।</p>",
+    "option3": "<p> It intensifies the Polar Jet stream, which blocks the entry of the Southwest Monsoon. / यह ध्रुवीय जेट स्ट्रीम को तेज करता है, जो दक्षिण-पश्चिम मानसून के प्रवेश को रोकता है।</p>",
+    "option4": "<p> It causes the ITCZ to shift southwards, leading to the early withdrawal of the monsoon. / यह ITCZ को दक्षिण की ओर स्थानांतरित करता है, जिससे मानसून की जल्दी वापसी होती है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> In summer, the 'summer rays on the Tibetan Plateau' lead to 'intense heating,' which 'creates low pressure.' This low pressure area is important because it draws moisture-laden air from the Indian Ocean, triggering the southwest monsoon.<br/> ग्रीष्म ऋतु में 'तिब्बती पठार पर ग्रीष्मकालीन किरणें' 'तीव्र ताप' की ओर ले जाती हैं, जो 'निम्न दबाव बनाता है'। यह निम्न दबाव क्षेत्र महत्वपूर्ण है क्योंकि यह हिंद महासागर से नमी से भरी हवा को खींचता है, जिससे दक्षिण-पश्चिम मानसून की शुरुआत होती है।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - GEOGRAPHY</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">GEOGRAPHY - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

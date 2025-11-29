@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY - ATMOSPHERE QUIZ [15-10-2025] - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>GEOGRAPHY - ATMOSPHERE QUIZ [15-10-2025]</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>Which gas constitutes the highest percentage by volume in the Earth's atmosphere?<br/> </b>पृथ्वी के वायुमंडल में आयतन के अनुसार किस गैस का प्रतिशत सर्वाधिक है<b>?</b></p>",
+    "option1": "<p> Oxygen / ऑक्सीजन</p>",
+    "option2": "<p> Carbon Dioxide / कार्बन डाइऑक्साइड</p>",
+    "option3": "<p> Nitrogen / नाइट्रोजन</p>",
+    "option4": "<p> Argon / आर्गन</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Nitrogen is the most abundant gas, making up about 78% of the atmosphere by volume. It is relatively inert and plays an important role in the nitrogen cycle.<br/> Percentage of gases in the atmosphere:<br/> Nitrogen (78%) &gt; Oxygen (21%) &gt; Argon (0.9%) &gt; Carbon dioxide (0.036%)<br/> नाइट्रोजन सबसे प्रचुर मात्रा में पाई जाने वाली गैस है, जो आयतन के हिसाब से वायुमंडल का लगभग 78% भाग बनाती है । यह अपेक्षाकृत अक्रिय (Inert) है और नाइट्रोजन चक्र में महत्वपूर्ण भूमिका निभाती है।<br/> वायुमंडल में गैसों का प्रतिशत:<br/> नाइट्रोजन (78%) &gt; ऑक्सीजन (21%) &gt; आर्गन (0.9%) &gt; कार्बन डाई ऑक्साइड (0.036%)</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>In which layer of the atmosphere do almost all-weather phenomena like rain, fog, and hail occur?<br/> </b>वायुमंडल की किस परत में वर्षा<b>, </b>कोहरा और ओलावृष्टि जैसी लगभग सभी मौसम संबंधी घटनाएँ होती हैं<b>?</b></p>",
+    "option1": "<p> Mesosphere / मध्यमंडल</p>",
+    "option2": "<p> Stratosphere / समताप मंडल</p>",
+    "option3": "<p> Exosphere / बहिर्मंडल</p>",
+    "option4": "<p> Troposphere / क्षोभ मंडल</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The troposphere is the lowest layer of the atmosphere, extending to an average altitude of 13 km (8 km at the poles and 18 km at the equator). Almost all weather phenomena (rain, storms, clouds, etc.) occur here, and air, water vapor, and dust particles are present, which is why all weather-related phenomena are confined to this layer.<br/> क्षोभ मंडल वायुमंडल की सबसे निचली परत है, जो औसतन 13 किमी (ध्रुवों पर 8 किमी और भूमध्य रेखा पर 18 किमी) की ऊँचाई तक फैली हुई है। इसमें लगभग सभी मौसमी घटनाएं (वर्षा, तूफान, बादल आदि) घटित होती है एवं हवा, जल वाष्प और धूल के कण मौजूद होते हैं, जिसके कारण सभी मौसम संबंधी घटनाएँ इसी परत तक सीमित रहती हैं ।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>What is the approximate percentage contribution of Oxygen in the Earth's atmosphere?<br/> </b>पृथ्वी के वायुमंडल में ऑक्सीजन का लगभग कितना प्रतिशत योगदान है<b>?</b></p>",
+    "option1": "<p> 78%</p>",
+    "option2": "<p> 21%</p>",
+    "option3": "<p> 0.9%</p>",
+    "option4": "<p> 0.036%</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Oxygen is the second most abundant gas in the Earth's atmosphere. It is vital for respiration and combustion processes on Earth.<br/> ऑक्सीजन पृथ्वी के वायुमंडल में दूसरी सबसे प्रचुर मात्रा में पाई जाने वाली गैस है । यह पृथ्वी पर श्वसन और दहन प्रक्रियाओं के लिए महत्वपूर्ण है।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>The protective ozone layer, which shields the Earth from harmful UV radiation, is found in which layer of the atmosphere?<br/> </b>हानिकारक पराबैंगनी <b>(UV) </b>विकिरण से पृथ्वी की रक्षा करने वाली ओजोन की सुरक्षात्मक परत वायुमंडल की किस परत में पाई जाती है<b>?</b></p>",
+    "option1": "<p> Troposphere / क्षोभ मंडल</p>",
+    "option2": "<p> Stratosphere / समताप मंडल</p>",
+    "option3": "<p> Thermosphere / ताप मंडल</p>",
+    "option4": "<p> Mesosphere / मध्यमंडल</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The ozone layer is located primarily in the stratosphere, between approximately 30 and 35 km in altitude. This is an important layer because it absorbs most of the harmful ultraviolet rays from the sun.<br/> Ozone Day - September 16 (1987, commemorates the Montreal Protocol)<br/> ओजोन परत मुख्य रूप से समताप मंडल में, लगभग 30-35 किमी की ऊँचाई के बीच स्थित होती है । यह एक महत्वपूर्ण परत है क्योंकि यह सूर्य से आने वाले अधिकांश हानिकारक पराबैंगनी किरणों को अवशोषित कर लेती है ।<br/> ओजोन दिवस - 16 सितंबर (1987, मॉन्ट्रियल प्रोटोकॉल के उपलक्ष्य में)</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>Which of the following is the most abundant inert gas present in the atmosphere?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी वायुमंडल में मौजूद सबसे प्रचुर अक्रिय गैस है<b>?</b></p>",
+    "option1": "<p> Neon / नियॉन</p>",
+    "option2": "<p> Helium / हीलियम</p>",
+    "option3": "<p> Argon / आर्गन</p>",
+    "option4": "<p> Krypton / क्रिप्टॉन</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Argon (Ar) makes up about 0.9% of the Earth's atmosphere and is the most abundant noble (inert) gas. It is commonly used in lighting and welding applications.<br/> आर्गन (Ar) पृथ्वी के वायुमंडल का लगभग 0.9% भाग बनाती है और यह सबसे प्रचुर मात्रा में पाई जाने वाली एक अक्रिय गैस है । इसका उपयोग आमतौर पर प्रकाश व्यवस्था और वेल्डिंग अनुप्रयोगों में किया जाता है।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>What is the approximate height of the Troposphere at the Equator, as stated in the context?<br/> </b>संदर्भ में बताए अनुसार<b>, </b>भूमध्य रेखा पर क्षोभमंडल की अनुमानित ऊँचाई कितनी है<b>?</b></p>",
+    "option1": "<p> 8 km</p>",
+    "option2": "<p> 13 km</p>",
+    "option3": "<p> 18 km</p>",
+    "option4": "<p> 50 km</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The height of the Troposphere is variable. It is highest at the Equator (about 18 km) due to stronger convection, and lowest at the Poles (about 8 km). The average height is 13 km.<br/> क्षोभ मंडल की ऊँचाई परिवर्तनशील होती है । यह मजबूत संवहन के कारण भूमध्य रेखा पर सबसे अधिक (18 किमी) और ध्रुवों पर सबसे कम (लगभग 8 किमी) होती है । इसकी औसत ऊँचाई 13 किमी है।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Which layer of the atmosphere is known as the Ionosphere because of the presence of ions that reflect radio waves back to Earth?<br/> </b>वायुमंडल की किस परत को आयनमंडल के रूप में जाना जाता है क्योंकि इसमें आयन मौजूद होते हैं जो रेडियो तरंगों को वापस पृथ्वी पर परावर्तित करते हैं<b>?</b></p>",
+    "option1": "<p> Mesosphere / मध्यमंडल</p>",
+    "option2": "<p> Thermosphere / ताप मंडल</p>",
+    "option3": "<p> Stratosphere / समताप मंडल</p>",
+    "option4": "<p> Exosphere / बहिर्मंडल</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The thermosphere (between 80 and 400 km) contains ions (electrically charged particles) and is therefore called the ionosphere layer. This layer is important for long-distance radio communication because it reflects radio waves back to the Earth's surface. It is the hottest layer of the atmosphere.<br/> तापमंडल (80 से 400 किमी के बीच) में आयन (विद्युत आवेशित कण) होते हैं और इसलिए इसे आयनमंडल परत कहा जाता है। यह परत लंबी दूरी के रेडियो संचार के लिए महत्वपूर्ण है क्योंकि यह रेडियो तरंगों को पृथ्वी की सतह पर वापस परावर्तित करती है । यह वायुमंडल की सबसे गर्म परत है।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>What is the phenomenon where air temperature decreases with increasing height in the Troposphere, at a rate of per kilometer, called?<br/> </b>क्षोभ मंडल में बढ़ती ऊँचाई के साथ वायु के तापमान में प्रति किलोमीटर की दर से होने वाली कमी की घटना को क्या कहा जाता है<b>?</b></p>",
+    "option1": "<p> Temperature Inversion / तापीय प्रतिलोमन</p>",
+    "option2": "<p> Isotherm / समताप रेखा</p>",
+    "option3": "<p> Latent Heat / गुप्त ऊष्मा</p>",
+    "option4": "<p> Lapse Rate / सामान्य ह्रास दर</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Lapse Rate is the standard rate at which air temperature decreases with altitude in the Troposphere. This rate is approximately 6.5°c per kilometer or 1°c per 165 meters.<br/> सामान्य ह्रास दर (Lapse Rate) वह मानक दर है जिस पर क्षोभ मंडल में ऊँचाई के साथ हवा का तापमान कम होता जाता है । यह दर लगभग 6.5°c प्रति किलोमीटर या 1°c -165 मीटर पर होती है ।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Which layer of the atmosphere is the coldest, where meteorites typically burn up?<br/> </b>वायुमंडल की कौन<b>-</b>सी परत सबसे ठंडी है<b>, </b>जहाँ आमतौर पर उल्कापिंड जलकर समाप्त हो जाते हैं<b>?</b></p>",
+    "option1": "<p> Stratosphere / समताप मंडल</p>",
+    "option2": "<p> Thermosphere / ताप मंडल</p>",
+    "option3": "<p> Mesosphere / मध्यमंडल</p>",
+    "option4": "<p> Exosphere / बहिर्मंडल</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Mesosphere is characterized as the coldest layer of the atmosphere. It is the layer where incoming meteors or meteorites usually disintegrate due to friction with air molecules.<br/> मध्यमंडल को वायुमंडल की सबसे ठंडी परत के रूप में जाना जाता है । यह वह परत है जहाँ आने वाले उल्का या उल्कापिंड आमतौर पर हवा के अणुओं के साथ घर्षण के कारण विघटित हो जाते हैं ।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>The horizontal transfer of heat by wind, which results in phenomena like 'loo' in India, is known as:<br/> </b>पवन द्वारा ऊष्मा का क्षैतिज स्थानांतरण<b>, </b>जिसके परिणामस्वरूप भारत में <b>'</b>लू<b>' </b>जैसी घटनाएँ होती हैं<b>, </b>उसे क्या कहा जाता है<b>:</b></p>",
+    "option1": "<p> Conduction / चालन</p>",
+    "option2": "<p> Convection / संवहन</p>",
+    "option3": "<p> Radiation / विकिरण</p>",
+    "option4": "<p> Advection / अभिवहन</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Advection is the process of horizontal transfer of heat in the atmosphere. This process includes the movement of warm or cold air masses, and the 'loo' (hot dry summer wind) is cited as an example of advection.<br/> अभिवहन (Advection) वायुमंडल में ऊष्मा के क्षैतिज स्थानांतरण की प्रक्रिया है । इस प्रक्रिया में गर्म या ठंडी हवा के द्रव्यमान की गति शामिल होती है, और 'लू' (गर्म शुष्क ग्रीष्मकालीन हवा) को अभिवहन के एक उदाहरण के रूप में उद्धृत किया गया है ।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Consider the following statements regarding the Stratosphere:<br/> </b>समताप मंडल के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. Jet planes prefer to fly in this layer due to the absence of weather phenomena. / </b>जेट विमान मौसम संबंधी घटनाओं की अनुपस्थिति के कारण इस परत में उड़ने को प्राथमिकता देते हैं।<b><br/> 2. Temperature in this layer increases with increasing altitude. / </b>इस परत में तापमान ऊँचाई बढ़ने के साथ बढ़ता है।<b><br/> 3. The lowest extent of this layer is defined by the Tropopause. / </b>इस परत की सबसे निचली सीमा ट्रोपोपॉज़ द्वारा परिभाषित है।<b><br/> Which of the statements given above are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> All three statements are correct. Jet planes utilize the stable, non-turbulent conditions of the Stratosphere for smooth flight. The temperature rises here because the ozone layer absorbs UV radiation. The Tropopause is the line separating the Troposphere from the Stratosphere.<br/> तीनों कथन सही हैं। जेट विमान सुचारू उड़ान के लिए समताप मंडल की स्थिर, अशांत परिस्थितियों का उपयोग करते हैं। यहाँ तापमान बढ़ता है क्योंकि ओजोन परत पराबैंगनी विकिरण को अवशोषित करती है । ट्रोपोपॉज़ क्षोभ मंडल को समताप मंडल से अलग करने वाली रेखा है ।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>What percentage of the Earth's total water is available as 'Fresh Water', and which component holds the largest share of this freshwater?<br/> </b>पृथ्वी के कुल जल का कितना प्रतिशत मीठा जल के रूप में उपलब्ध है<b>, </b>और इस मीठे जल का सबसे बड़ा हिस्सा किस घटक में निहित है<b>?</b></p>",
+    "option1": "<p> 97.2%; Groundwater / 97.2%; भूजल</p>",
+    "option2": "<p> 2.8%; Lakes / 2.8%; झील</p>",
+    "option3": "<p> 2.8%; Ice caps/glaciers / 2.8%; हिमशिखर/हिमनद</p>",
+    "option4": "<p> 68.7%; Rivers / 68.7%; नदी</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Only 2.8% of the total global water is fresh water (rest 97.2% is saline). Out of this fresh water, the largest portion (68.7%) is locked up in permanent ice caps and glaciers. The next largest share is groundwater (30.1%).<br/> कुल वैश्विक जल का केवल 2.8% ही ताज़ा/मीठा जल है (शेष 97.2% खारा है)। इस मीठे जल में से सबसे बड़ा हिस्सा (68.7%) स्थायी हिम टोपियों और ग्लेशियरों में बंद है । दूसरा सबसे बड़ा हिस्सा भूजल (30.1%) है ।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Which of the following atmospheric gases, though listed in the context, is specifically mentioned as NOT being a greenhouse gas?<br/> </b>संदर्भ में सूचीबद्ध निम्नलिखित वायुमंडलीय गैसों में से किसे विशेष रूप से ग्रीनहाउस गैस नहीं होने के रूप में उल्लिखित किया गया है<b>?</b></p>",
+    "option1": "<p> Water vapour / जल वाष्प</p>",
+    "option2": "<p> Methane (CH4) / मीथेन (CH4)</p>",
+    "option3": "<p> Nitrous oxide (N₂O) / नाइट्रस ऑक्साइड (N₂O)</p>",
+    "option4": "<p> Sulphur Dioxide (SO2) / सल्फर डाइऑक्साइड (SO2)</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The list of greenhouse gases includes water vapor, carbon dioxide (CO2), methane (CH4), Nitrous oxide (N₂O), etc. Sulphur dioxide (SO₂), however, is not considered a greenhouse gas.</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Assertion (A): Insolation received at the Equator is less compared to the Tropics.<br/> Reason (R): The presence of a good amount of clouds over the Equator reduces the amount of solar radiation reaching the surface.<br/> </b>अभिकथन <b>(A): </b>भूमध्य रेखा पर प्राप्त सूर्यातप की मात्रा उष्णकटिबंधीय क्षेत्रों की तुलना में कम होती है।<b><br/> </b>कारण <b>(R): </b>भूमध्य रेखा के ऊपर बड़ी मात्रा में बादलों की उपस्थिति सतह तक पहुँचने वाले सौर विकिरण की मात्रा को कम कर देती है।</p>",
+    "option1": "<p> Both (A) and (R) are true, and (R) is the correct explanation of (A). / (A) और (R) दोनों सत्य हैं, और (R), (A) का सही स्पष्टीकरण है।</p>",
+    "option2": "<p> Both (A) and (R) are true, but (R) is not the correct explanation of (A). / (A) और (R) दोनों सत्य हैं, लेकिन (R), (A) का सही स्पष्टीकरण नहीं है।</p>",
+    "option3": "<p> (A) is true, but (R) is false. / (A) सत्य है, लेकिन (R) असत्य है।</p>",
+    "option4": "<p> (A) is false, but (R) is true. / (A) असत्य है, लेकिन (R) सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The assertion is true; Insolation is generally less at the Equator compared to the tropics (where it is highest at deserts). The reason is also correct and explains the phenomenon: the high concentration of clouds near the Equator reflects a large portion of the incoming sunlight (high Albedo), thus reducing the Insolation on the ground.<br/> अभिकथन सत्य है; भूमध्य रेखा पर सूर्यातप उष्णकटिबंधीय क्षेत्रों (जहाँ यह रेगिस्तानों में सबसे अधिक होता है) की तुलना में आम तौर पर कम होता है । कारण भी सही है और इस घटना की व्याख्या करता है: भूमध्य रेखा के पास बादलों की उच्च सघनता आने वाले सूर्य के प्रकाश के एक बड़े हिस्से को परावर्तित कर देती है (उच्च एल्बेडो), जिससे जमीन पर सूर्यातप कम हो जाता है ।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>The thickness of the stratospheric ozone layer is measured in which unit?<br/> </b>समताप मंडलीय ओजोन परत की मोटाई किस इकाई में मापी जाती है<b>?</b></p>",
+    "option1": "<p> Dobson / डॉबसन</p>",
+    "option2": "<p> Celsius / सेल्सियस</p>",
+    "option3": "<p> Pascal / पास्कल</p>",
+    "option4": "<p> Decibel / डेसिबल</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The ozone layer thickness is measured in the Dobson Unit (DU). This unit is a measure of the total amount of ozone in a column stretching from the Earth's surface to the top of the atmosphere.<br/> ओज़ोन परत की मोटाई को डॉबसन इकाई (DU) में मापा जाता है। यह इकाई पृथ्वी की सतह से लेकर वायुमंडल के ऊपरी भाग तक फैले एक स्तंभ में उपस्थित कुल ओज़ोन की मात्रा को मापने की एक इकाई है।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Identify the correct set of conditions favorable for the occurrence of 'Temperature Inversion' in the atmosphere:<br/> </b>वायुमंडल में ‘तापीय व्युत्क्रमण’ की घटना के लिए अनुकूल परिस्थितियों के सही समूह की पहचान करें<b>:</b></p>",
+    "option1": "<p> short summer night, fast moving air, cloudy sky / छोटी ग्रीष्मकालीन रात, तेज़ी से चलती हवा, बादल वाला आकाश</p>",
+    "option2": "<p> Long winter night, still air, clear cloudless sky / लंबी शीतकालीन रात, शांत हवा, साफ बादल रहित आकाश</p>",
+    "option3": "<p> Long summer day, still air, cloudy sky / लंबी ग्रीष्मकालीन दिन, शांत हवा, बादल वाला आकाश</p>",
+    "option4": "<p> Short winter day, fast moving air, clear cloudless sky / छोटा शीतकालीन दिन, तेज़ी से चलती हवा, साफ बादल रहित आकाश</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Temperature Inversion, where temperature increases with height, is favored by specific conditions. These conditions include a long winter night (maximum surface cooling), still air (no mixing), and a clear cloudless sky (allowing rapid heat loss by terrestrial radiation).<br/> तापीय प्रतिलोमन/व्युत्क्रमण, जहाँ ऊँचाई के साथ तापमान बढ़ता है, विशिष्ट परिस्थितियों द्वारा समर्थित होता है । इन परिस्थितियों में लंबी शीतकालीन रात (अधिकतम सतह शीतलन), शांत हवा (कोई मिश्रण नहीं), और एक साफ बादल रहित आकाश (स्थलीय विकिरण द्वारा तेजी से ऊष्मा हानि की अनुमति) शामिल हैं ।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Which of the following is an example of an opaque surface having the highest Albedo (reflectivity) as per the provided data?<br/> </b>प्रदान किए गए आंकड़ों के अनुसार<b>, </b>निम्नलिखित में से कौन<b>-</b>सा एक अपारदर्शी सतह का उदाहरण है जिसका एल्बेडो <b>(</b>परावर्तनशीलता<b>) </b>सबसे अधिक है<b>?</b></p>",
+    "option1": "<p> Sand/Desert / रेत/रेगिस्तान</p>",
+    "option2": "<p> Old Snow / पुरानी बर्फ</p>",
+    "option3": "<p> Fresh Snow / ताज़ी बर्फ</p>",
+    "option4": "<p> Oceans, lakes / महासागर, झीलें</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Albedo is the proportion of light reflected by a surface. According to the table, fresh snow has an albedo of 80%, which is the highest value among the listed Earth surface types (Clouds like Cumulonimbus have 90%, but are not strictly a surface).<br/> एल्बेडो (Albedo) एक सतह द्वारा परावर्तित प्रकाश का अनुपात है । तालिका के अनुसार, ताज़ी बर्फ का एल्बेडो 80% है, जो सूचीबद्ध पृथ्वी सतह प्रकारों में सबसे अधिक मान है (क्यूमुलोनिम्बस जैसे बादलों का 90% है, लेकिन वे पूरी तरह से सतह नहीं हैं)।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Match the process of water cycle with its correct transformation:<br/> </b>जल चक्र की प्रक्रिया को उसके सही परिवर्तन के साथ सुमेलित करें<b>:<br/> List I (Process) / </b>सूची <b>I (</b>प्रक्रिया<b>) | List II (Transformation) / </b>सूची <b>II (</b>परिवर्तन<b>) |<br/> | P. Evaporation / </b>वाष्पीकरण <b>| 1. Water Vapour - Water / </b>जलवाष्प <b>- </b>जल <b>|<br/> | Q. Condensation / </b>संघनन <b>| 2. Water - Water Vapour / </b>जल <b>- </b>जलवाष्प <b>|<br/> | R. Precipitation / </b>वर्षण <b>| 3. Release of moisture (rain, snow, hail) / </b>नमी का विमोचन <b>(</b>वर्षा<b>, </b>हिम<b>, </b>ओला<b>) |</b></p>",
+    "option1": "<p> P-1, Q-2, R-3</p>",
+    "option2": "<p> P-2, Q-1, R-3</p>",
+    "option3": "<p> P-3, Q-2, R-1</p>",
+    "option4": "<p> P-1, Q-3, R-2</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Evaporation is the change of state from liquid water to water vapour (gas). Condensation is the opposite, where water vapour changes back into liquid water. Precipitation is the release of moisture in any form that falls from the sky, such as rain or snow.<br/> वाष्पीकरण द्रव जल से जल वाष्प (गैस) में अवस्था का परिवर्तन है । संघनन इसका विपरीत है, जहाँ जल वाष्प वापस तरल जल में बदल जाती है । वर्षण नमी का किसी भी रूप में विमोचन है जो आकाश से गिरता है, जैसे वर्षा या हिम ।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Which process of heat transfer is primarily responsible for the heating of the atmosphere near the Earth's surface after it receives solar radiation?<br/> </b>सौर विकिरण प्राप्त होने के बाद पृथ्वी <b>(</b>सतह के निकट<b>) </b>की सतह द्वारा वायुमंडल को गर्म करने के लिए ऊष्मा स्थानांतरण की कौन<b>-</b>सी प्रक्रिया मुख्य रूप से जिम्मेदार है<b>?</b></p>",
+    "option1": "<p> Radiation (Long wavelength) / विकिरण (लंबी तरंगदैर्ध्य)</p>",
+    "option2": "<p> Conduction (near the surface) / चालन (सतह के नजदीक)</p>",
+    "option3": "<p> Convection (vertical transfer) / संवहन (ऊर्ध्वाधर स्थानांतरण)</p>",
+    "option4": "<p> Advection (horizontal transfer) / अभिवहन (क्षैतिज स्थानांतरण)</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Solar Insolation (short wavelength) heats the Earth's surface, not the atmosphere directly. The layer of air closest to the Earth's surface then heats up through conduction. This heated air then moves vertically via convection, transferring heat higher up.<br/> सौर सूर्यातप (छोटी तरंगदैर्ध्य) पृथ्वी की सतह को गर्म करता है, वायुमंडल को सीधे नहीं। पृथ्वी की सतह के सबसे निकट की हवा की परत फिर चालन (Conduction) के माध्यम से गर्म होती है । यह गर्म हवा फिर संवहन (Convection) के माध्यम से ऊर्ध्वाधर रूप से चलती है, जिससे ऊष्मा ऊपर की ओर स्थानांतरित होती है ।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Assertion (A): Tropospheric Ozone is considered 'bad ozone' for the environment.<br/> Reason (R): It is naturally occurring and helps in filtering harmful UV rays from the Sun.<br/> </b>अभिकथन <b>(A): </b>क्षोभमंडलीय ओजोन को पर्यावरण के लिए <b>'</b>खराब ओजोन<b>' </b>माना जाता है।<b><br/> </b>कारण <b>(R): </b>यह प्राकृतिक रूप से उत्पन्न होती है और सूर्य से आने वाली हानिकारक पराबैंगनी किरणों को छानने में मदद करती है।</p>",
+    "option1": "<p> Both (A) and (R) are true, and (R) is the correct explanation of (A). / (A) और (R) दोनों सत्य हैं, और (R), (A) का सही स्पष्टीकरण है।</p>",
+    "option2": "<p> Both (A) and (R) are true, but (R) is not the correct explanation of (A). / (A) और (R) दोनों सत्य हैं, लेकिन (R), (A) का सही स्पष्टीकरण नहीं है।</p>",
+    "option3": "<p> (A) is true, but (R) is false. / (A) सत्य है, लेकिन (R) असत्य है।</p>",
+    "option4": "<p> (A) is false, but (R) is true. / (A) असत्य है, लेकिन (R) सत्य है।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Assertion (A) is true; the PDF explicitly states that Tropospheric Ozone is bad for our environment (as it is a pollutant). However, Reason (R) is false. The ozone that filters UV rays (good ozone) is in the Stratosphere. Tropospheric ozone is a component of smog and harmful to human health and plant life.<br/> अभिकथन (A) सत्य है; जो स्पष्ट रूप से बताता है कि क्षोभमंडलीय ओजोन हमारे पर्यावरण के लिए खराब है (क्योंकि यह एक प्रदूषक है)। हालाँकि, कारण (R) असत्य है। पराबैंगनी किरणों को छानने वाला ओज़ोन (अच्छा ओज़ोन) समताप मंडल में होता है । क्षोभमंडलीय ओजोन धुंध (स्मॉग) का एक घटक है और मानव स्वास्थ्य तथा पौधों के जीवन के लिए हानिकारक है।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Regarding Orographic Rainfall, consider the following statements:<br/> </b>पर्वतीय वर्षा के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. It is a type of rainfall caused due to the presence of a mountain barrier. / </b>यह एक प्रकार की वर्षा है जो एक पर्वत अवरोध की उपस्थिति के कारण होती है।<b><br/> 2. The Windward side of the mountain receives precipitation from moist, rising air. / </b>पर्वत का पवनमुखी हिस्सा नम<b>, </b>ऊपर उठती हवा से वर्षा प्राप्त करता है।<b><br/> 3. The Leeward side is also known as the rain shadow region because it receives dry, descending air. / </b>पवनाभिमुख हिस्से को वर्षा छाया क्षेत्र के रूप में भी जाना जाता है क्योंकि यह शुष्क<b>, </b>नीचे उतरती हवा प्राप्त करता है।<b><br/> Which of the statements given above are correct? </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Orographic rainfall occurs when moist air is forced to rise over a mountain barrier. The windward side (windward) experiences condensation and precipitation. The descending air on the other side (leeward) is dry and forms a rain shadow..<br/> पर्वतीय वर्षा तब होती है जब नम हवा को पर्वत अवरोध के ऊपर उठने के लिए मजबूर किया जाता है। पवन की ओर मुख वाली तरफ (पवनमुखी) संघनन और वर्षा का अनुभव करती है । दूसरी तरफ नीचे उतरती हवा (पवनाभिमुख) शुष्क होती है और वर्षा छाया क्षेत्र का निर्माण करती है ।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Arrange the following stages of Earth's atmosphere evolution in chronological order (oldest to newest):<br/> </b>पृथ्वी के वायुमंडल के विकास के निम्नलिखित चरणों को कालानुक्रमिक क्रम <b>(</b>सबसे पुराने से सबसे नए<b>) </b>में व्यवस्थित करें<b>:<br/> 1. Loss of primordial atmosphere due to excessive solar flares. / </b>अत्यधिक सौर प्रज्वाल के कारण आदिम वायुमंडल की हानि।<b><br/> 2. Modification by the living world (plants) through photosynthesis. / </b>प्रकाश संश्लेषण के माध्यम से जीवित जगत <b>(</b>पौधों<b>) </b>द्वारा संशोधन।<b><br/> 3. Outgassing of gases from the hot interior of Earth through volcanism. / </b>ज्वालामुखी गतिविधि के माध्यम से पृथ्वी के गर्म आंतरिक भाग से गैसों का उत्सर्जन।</p>",
+    "option1": "<p> 1 - 2 - 3</p>",
+    "option2": "<p> 2 - 3 - 1</p>",
+    "option3": "<p> 1 - 3 - 2</p>",
+    "option4": "<p> 3 - 1 - 2</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The evolution occurred in three main stages: 1. Loss of primordial atmosphere . 2. Outgassing/Volcanism (releasing gases from Earth's hot interior). 3. Modification by the living world (plants started adding oxygen through photosynthesis).<br/> विकास तीन मुख्य चरणों में हुआ:<br/> 1. आदिम वायुमंडल की हानि (जिसमें , He था) ।<br/> 2. गैसों का उत्सर्जन/ज्वालामुखी गतिविधि (पृथ्वी के गर्म आंतरिक भाग से गैसों का उत्सर्जन)।<br/> 3. जीवित जगत द्वारा संशोधन (पौधों ने प्रकाश संश्लेषण के माध्यम से ऑक्सीजन जोड़ना शुरू किया) ।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Differentiate between 'Absolute Humidity' and 'Relative Humidity' based on the definitions provided:<br/> </b>प्रदान की गई परिभाषाओं के आधार पर <b>'</b>निरपेक्ष आर्द्रता <b>(Absolute Humidity)' </b>और <b>'</b>सापेक्ष आर्द्रता <b>(Relative Humidity)' </b>के बीच अंतर स्पष्ट करें<b>:</b></p>",
+    "option1": "<p> Absolute Humidity is the actual amount of water vapor; Relative Humidity is the percentage of moisture present compared to its full capacity. / निरपेक्ष आर्द्रता जल वाष्प की वास्तविक मात्रा है; सापेक्ष आर्द्रता उसकी पूर्ण क्षमता की तुलना में मौजूद नमी का प्रतिशत है।</p>",
+    "option2": "<p> Absolute Humidity is the percentage of moisture; Relative Humidity is the total volume of water vapor. / निरपेक्ष आर्द्रता नमी का प्रतिशत है; सापेक्ष आर्द्रता जल वाष्प की कुल मात्रा है।</p>",
+    "option3": "<p> Absolute Humidity relates to cold air; Relative Humidity relates to warm air. / निरपेक्ष आर्द्रता ठंडी हवा से संबंधित है; सापेक्ष आर्द्रता गर्म हवा से संबंधित है।</p>",
+    "option4": "<p> Absolute Humidity is measured in Dobson Units; Relative Humidity is measured in percent. / निरपेक्ष आर्द्रता डॉबसन इकाइयों में मापी जाती है; सापेक्ष आर्द्रता प्रतिशत में मापी जाती है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Absolute Humidity is the measurement of the actual amount of water vapour present in the atmosphere. Relative Humidity is a ratio, expressed as a percentage (%), that compares the actual moisture to the maximum possible capacity of the air at that temperature (saturation).<br/> निरपेक्ष आर्द्रता वायुमंडल में मौजूद जल वाष्प की वास्तविक मात्रा का माप है । सापेक्ष आर्द्रता एक अनुपात है, जिसे प्रतिशत (%) के रूप में व्यक्त किया जाता है, जो उस तापमान पर हवा की अधिकतम संभव क्षमता (संतृप्ति) से वास्तविक नमी की तुलना करता है ।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Which of the following forms of condensation involves the use of Silver Iodide (AgI) or Potassium Iodide to induce precipitation?<br/> </b>निम्नलिखित में से संघनन का कौन<b>-</b>सा रूप वर्षा को प्रेरित करने के लिए सिल्वर आयोडाइड <b>(AgI) </b>या पोटेशियम आयोडाइड <b>(Kl) </b>के उपयोग को शामिल करता है<b>?</b></p>",
+    "option1": "<p> Frost / पाला</p>",
+    "option2": "<p> Dew / ओस</p>",
+    "option3": "<p> Mist / कुहासा</p>",
+    "option4": "<p> Cloud seeding / मेघ-बीजन</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Cloud seeding (or artificial rain) is an artificial process used to enhance precipitation. It involves adding substances such as Silver Iodide (AgI) or Potassium Iodide (KI) into suspended clouds to help ice crystals form, which causes water droplets to freeze and fall as rain or snow.<br/> .<br/> क्लाउड सीडिंग (मेघ-बीजन या कृत्रिम बारिश) वर्षा को बढ़ावा देने के लिए उपयोग की जाने वाली एक कृत्रिम प्रक्रिया है । इसमें निलंबित बादलों में सिल्वर आयोडाइड (AgI) या पोटेशियम आयोडाइड (Kl) जैसे पदार्थ मिलाए जाते हैं, ताकि बर्फ के क्रिस्टल बनने में मदद मिल सके, जिससे पानी की बूँदें जम जाती हैं और वर्षा या हिमपात के रूप में गिरती हैं ।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>Identify the correct pair of a significant atmospheric boundary/feature and its defining altitude:<br/> </b>एक महत्वपूर्ण वायुमंडलीय सीमा<b>/</b>विशेषता और उसकी परिभाषित ऊँचाई के सही जोड़े की पहचान करें<b>:</b></p>",
+    "option1": "<p> Karman line: 600 km / कर्मन रेखा: 600 किमी</p>",
+    "option2": "<p> Ozone layer (maximum concentration): 85 km / ओजोन परत (अधिकतम सांद्रता): 85 किमी</p>",
+    "option3": "<p> Stratopause: Boundary between Stratosphere and Mesosphere / समताप सीमा (स्ट्रैटोपॉज़): समताप मंडल और मध्यमंडल के बीच की सीमा</p>",
+    "option4": "<p> Mesosphere base: 25 km / मध्यमंडल आधार: 25 किमी</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Stratopause is correctly defined as the dividing line between the Stratosphere and the Mesosphere. The Karman line is defined as the boundary between the Earth's atmosphere and the Exosphere at 100 km. The ozone layer is between 30-35 km.<br/> समताप सीमा (स्ट्रैटोपॉज़) को समताप मंडल और मध्यमंडल के बीच की विभाजक रेखा के रूप में सही ढंग से परिभाषित किया गया है । कर्मन रेखा को पृथ्वी के वायुमंडल और बहिर्मंडल के बीच 100 किमी पर सीमा के रूप में परिभाषित किया गया है। ओजोन परत 30-35 किमी के बीच स्थित है।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - GEOGRAPHY</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">GEOGRAPHY - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

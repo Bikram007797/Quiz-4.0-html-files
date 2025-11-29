@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY - AGRICULTURE QUIZ [05-11-2025] - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>GEOGRAPHY - AGRICULTURE QUIZ [05-11-2025]</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>The White Revolution, launched in 1970 to reduce the scarcity of milk production in India, is also known by which name?<br/> </b>भारत में दूध उत्पादन की कमी को कम करने के लिए <b>1970 </b>में शुरू की गई श्वेत क्रांति को किस अन्य नाम से भी जाना जाता है<b>?</b></p>",
+    "option1": "<p> Operation Dairy / ऑपरेशन डेयरी</p>",
+    "option2": "<p> Operation Flood / ऑपरेशन फ्लड</p>",
+    "option3": "<p> Operation Milk / ऑपरेशन मिल्क</p>",
+    "option4": "<p> Operation Success / ऑपरेशन सक्सेस</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The White Revolution, spearheaded by Verghese Kurien in India, is famously known as Operation Flood. This revolution aimed to create a nationwide milk grid to make milk production a large-scale, self-sustaining industry.<br/> श्वेत क्रांति, जिसका नेतृत्व भारत में वर्गीज कुरियन ने किया था, को प्रसिद्ध रूप से ऑपरेशन फ्लड के नाम से जाना जाता है। इस क्रांति का उद्देश्य दूध उत्पादन को एक बड़े पैमाने पर, आत्मनिर्भर उद्योग बनाने के लिए एक राष्ट्रव्यापी दूध ग्रिड बनाना था।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>Who is regarded as the Father of the Yellow Revolution in India, a movement primarily focused on Oil Seeds production?<br/> </b>भारत में पीली क्रांति का जनक किसे माना जाता है<b>, </b>जो मुख्य रूप से तिलहन उत्पादन पर केंद्रित आंदोलन था<b>?</b></p>",
+    "option1": "<p> Harilal Chaudhuri / हरिलाल चौधरी</p>",
+    "option2": "<p> M.S. Swaminathan / एम.एस. स्वामीनाथन</p>",
+    "option3": "<p> Norman Borlaug / नॉर्मन बोरलॉग</p>",
+    "option4": "<p> Sam Pitroda / सैम पित्रोदा</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Sam Pitroda is the designated Father of the Yellow Revolution. This revolution was launched to boost the production of oil seeds in India, aiming for self-reliance in edible oils.<br/> पित्रोदा को पीली क्रांति का जनक माना जाता है । यह क्रांति भारत में तिलहन के उत्पादन को बढ़ावा देने के लिए शुरू की गई थी, जिसका लक्ष्य खाद्य तेलों में आत्मनिर्भरता प्राप्त करना था।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>Which Fibre Crop is famously known as the 'Golden Fibre'?<br/> </b>किस रेशेदार फसल को <b>'</b>स्वर्ण रेशा<b>' (</b>गोल्डन फाइबर<b>) </b>के नाम से जाना जाता है<b>?</b></p>",
+    "option1": "<p> Cotton / कपास</p>",
+    "option2": "<p> Hemp / भाँग</p>",
+    "option3": "<p> Jute / जूट</p>",
+    "option4": "<p> Silk / रेशम</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Jute is popularly known as the 'Golden Fibre' due to its shiny brown colour and its significant role as a cash crop in the economy. Jute requires a specific climate for its growth.<br/> जूट को इसके चमकदार भूरे रंग और अर्थव्यवस्था में नकदी फसल के रूप में इसकी महत्वपूर्ण भूमिका के कारण लोकप्रिय रूप से 'स्वर्ण रेशा' (गोल्डन फाइबर) के रूप में जाना जाता है। जूट को इसके विकास के लिए एक विशिष्ट जलवायु की आवश्यकता होती है।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>The practice of rearing silkworms for the production of raw silk is called:<br/> </b>कच्चे रेशम के उत्पादन के लिए रेशम के कीड़ों के पालन की प्रथा को क्या कहा जाता है<b>?</b></p>",
+    "option1": "<p> Horticulture / हॉर्टीकल्चर</p>",
+    "option2": "<p> Sericulture / सेरीकल्चर</p>",
+    "option3": "<p> Pisciculture / पिसिकल्चर</p>",
+    "option4": "<p> Apiculture / एपिकल्चर</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The technical term for the rearing of silkworms to produce silk is Sericulture. This practice is an important part of the textile and agricultural sector in many parts of India.<br/> Horticulture - growing fruits, vegetables, flowers, and ornamental plants<br/> Pisciculture – fish farming<br/> Apiculture – Beekeeping<br/> रेशम उत्पादन के लिए रेशम के कीड़ों के पालन के लिए तकनीकी शब्द सेरीकल्चर है । यह प्रथा भारत के कई हिस्सों में कपड़ा और कृषि क्षेत्र का एक महत्वपूर्ण हिस्सा है।<br/> 5. हॉर्टीकल्चर - बागवानी<br/> 6. पिसिकल्चर - मछली पालन<br/> 7. एपिकल्चर - मधुमक्खी पालन</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>According to the crop calendar, the Zaid season is characterized by a short cropping season primarily between which months?<br/> </b>फसल कैलेंडर के अनुसार<b>, </b>जायद मौसम मुख्य रूप से किन महीनों के बीच एक छोटे फसली मौसम की विशेषता रखता है<b>?</b></p>",
+    "option1": "<p> Sept-Oct / सितंबर-अक्टूबर</p>",
+    "option2": "<p> Oct-April / अक्टूबर-अप्रैल</p>",
+    "option3": "<p> May-June / मई-जून</p>",
+    "option4": "<p> July-Sept / जुलाई-सितंबर</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Zaid season is a short cropping season that falls between the harvesting of Rabi crops and the sowing of Kharif crops.<br/> It mainly runs from March to June, with the main period occurring in the months of May–June.<br/> Main Zaid crops: watermelon, muskmelon, cucumber, etc.<br/> जायद मौसम एक लघु फसली मौसम होता है, जो रबी फसलों की कटाई और खरीफ फसलों की बुवाई के बीच आता है।<br/> यह मुख्य रूप से मार्च से जून तक चलता है, और इसकी मुख्य अवधि मई–जून के महीनों में होती है।<br/> मुख्य जायद फसलें: तरबूज , खरबूजा, खीरा, ककड़ी आदि।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>Which country is referred to as the 'Coffee bowl of the world' and is the topmost producer of Coffee?<br/> </b>किस देश को <b>'</b>विश्व का कॉफी का कटोरा<b>' </b>कहा जाता है और यह कॉफी का शीर्ष उत्पादक है<b>?</b></p>",
+    "option1": "<p> India / भारत</p>",
+    "option2": "<p> Kenya / केन्या</p>",
+    "option3": "<p> Brazil / ब्राजील</p>",
+    "option4": "<p> China / चीन</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Brazil holds the title of the 'Coffee bowl of the world' and is listed as the topmost producer of Coffee. India, in comparison, produces a relatively small percentage of the world's coffee.<br/> ब्राजील 'विश्व का कॉफी का कटोरा' का खिताब रखता है और कॉफी का शीर्ष उत्पादक देश के रूप में सूचीबद्ध है । इसकी तुलना में, भारत विश्व की कॉफी का अपेक्षाकृत छोटा प्रतिशत उत्पादन करता है।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Which major Rabi crop requires rainfall between 50–75 cm?<br/> </b>कौन सी प्रमुख रबी फसल को <b>50–75 </b>सेमी के बीच वर्षा की आवश्यकता होती है<b>?</b></p>",
+    "option1": "<p> Rice / चावल</p>",
+    "option2": "<p> Sugarcane / गन्ना</p>",
+    "option3": "<p> Wheat / गेहूँ</p>",
+    "option4": "<p> Jowar / ज्वार</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Wheat is a major Rabi crop, requiring a cool climate and 50–75 cm of annual rainfall.<br/> Excessive rainfall damages the crop, so it grows best in irrigated areas or areas with balanced rainfall.<br/> Main producing states: Uttar Pradesh, Punjab, Haryana, Madhya Pradesh, and Rajasthan.<br/> गेहूँ एक प्रमुख रबी फसल है, जिसे ठंडी जलवायु और 50–75 सेमी वार्षिक वर्षा की आवश्यकता होती है।<br/> अधिक वर्षा होने पर फसल को नुकसान पहुँचता है, इसलिए यह मुख्यतः सिंचित क्षेत्रों या संतुलित वर्षा वाले क्षेत्रों में अच्छी उपज देती है।<br/> मुख्य उत्पादक राज्य: उत्तर प्रदेश, पंजाब, हरियाणा, मध्य प्रदेश, राजस्थान।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>Which type of farming involves the use of primitive tools like hoe, dao, and digging sticks, and is heavily dependent on the monsoon?<br/> </b>किस प्रकार की खेती में कुदाल<b>, </b>दाव<b>, </b>और खोदने वाली छड़ियों जैसे पारंपरिक उपकरणों का उपयोग शामिल होता है<b>, </b>और जो मानसून पर अत्यधिक निर्भर करती है<b>?</b></p>",
+    "option1": "<p> Commercial Farming / वाणिज्यिक खेती</p>",
+    "option2": "<p> Intensive Subsistence Farming / गहन निर्वाह खेती</p>",
+    "option3": "<p> Primitive Subsistence Farming / आदिम निर्वाह खेती</p>",
+    "option4": "<p> Mixed Farming / मिश्रित खेती</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Primitive Subsistence Farming is defined as being practiced on small land patches with the help of primitive tools. This farming type relies heavily on the natural fertility of the soil and the monsoon.<br/> आदिम निर्वाह खेती को पारंपरिक उपकरणों की मदद से छोटे भूमि खंडों पर की जाने वाली खेती के रूप में परिभाषित किया गया है। यह खेती का प्रकार मिट्टी की प्राकृतिक उर्वरता और मानसून पर अत्यधिक निर्भर करता है ।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Which two crops are referred to as India's most consumed staple crops?<br/> </b>किन दो फसलों को भारत की सबसे अधिक खपत वाली मुख्य फसलें कहा जाता है<b>?</b></p>",
+    "option1": "<p> Maize and Millet / मक्का और बाजरा</p>",
+    "option2": "<p> Rice and Wheat / चावल और गेहूँ</p>",
+    "option3": "<p> Sugarcane and Jute / गन्ना और जूट</p>",
+    "option4": "<p> Cotton and Tobacco / कपास और तम्बाकू</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Rice and Wheat are explicitly named as India's most consumed staple crops. Rice is the staple in the East and South, while Wheat dominates the North and West.<br/> चावल और गेहूँ को स्पष्ट रूप से भारत की सबसे अधिक खपत वाली मुख्य फसलें कहा गया है । चावल पूर्व और दक्षिण में मुख्य भोजन है, जबकि गेहूँ उत्तर और पश्चिम में प्रमुख है।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>Who is regarded as the “Father of the Green Revolution in India”?<br/> </b>भारत में <b>\"</b>हरित क्रांति के जनक<b>\" </b>के रूप में किसे जाना जाता है<b>?</b></p>",
+    "option1": "<p> M. S. Swaminathan / एम. एस. स्वामीनाथन</p>",
+    "option2": "<p> Norman Borlaug / नॉर्मन बोरलॉग</p>",
+    "option3": "<p> Verghese Kurien / वर्गीज़ कुरियन</p>",
+    "option4": "<p> C. Subramaniam / सी. सुब्रमण्यम</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Dr. M. S. Swaminathan is known as the Father of the Green Revolution in India for introducing and promoting High Yielding Variety (HYV) seeds and modern farming techniques in India.<br/> The Green Revolution began in the mid-1960s, leading to a massive increase in wheat and rice production, making India self-sufficient in food grains<br/> डॉ. एम. एस. स्वामीनाथन को भारत में हरित क्रांति के जनक कहा जाता है क्योंकि उन्होंने उच्च उपज वाली बीज किस्मों (HYV seeds), रासायनिक उर्वरकों और आधुनिक कृषि तकनीकों को 1960 के दशक के मध्य में भारत में प्रोत्साहित किया।<br/> उनके प्रयासों से गेहूँ और चावल का उत्पादन तेजी से बढ़ा और भारत खाद्यान्न के क्षेत्र में आत्मनिर्भर बन गया।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Assertion (A): The first phase of the Green Revolution primarily focused on the affluent states of Punjab, Haryana, and Andhra Pradesh.<br/> </b>अभिकथन <b>(A): </b>हरित क्रांति का पहला चरण मुख्य रूप से पंजाब<b>, </b>हरियाणा और आंध्र प्रदेश के समृद्ध राज्यों पर केंद्रित था।<b><br/> Reason (R): This phase emphasized the use of High Yielding Variety (HYV) seeds, which were imported from Mexico (for wheat) and the Philippines (for rice).<br/> </b>कारण <b>(R): </b>इस चरण में उच्च उपज वाली किस्म <b>(HYV) </b>के बीजों के उपयोग पर जोर दिया गया<b>, </b>जिन्हें मेक्सिको <b>(</b>गेहूँ के लिए<b>) </b>और फिलीपींस <b>(</b>चावल के लिए<b>) </b>से आयात किया गया था।</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A / A और R दोनों सत्य हैं और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A / A और R दोनों सत्य हैं लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true but R is false / A सत्य है लेकिन R असत्य है ।</p>",
+    "option4": "<p> A is false but R is true / A असत्य है लेकिन R सत्य है ।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Both A and R are factually true. However, the reason (R) explains the methodology and inputs of the Green Revolution, not why it was focused only on affluent states (A). The focus was on areas with existing irrigation infrastructure.<br/> A और R दोनों तथ्यात्मक रूप से सत्य हैं । हालांकि, कारण (R) हरित क्रांति की कार्यप्रणाली और आदानों की व्याख्या करता है, न कि यह क्यों केवल समृद्ध राज्यों (A) पर केंद्रित था। ध्यान मौजूदा सिंचाई बुनियादी ढांचे वाले क्षेत्रों पर था।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Consider the following statements about Leguminous Crops:<br/> </b>फलीदार फसलों के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. They are a major source of protein, and India is the largest consumer and producer of them. / </b>ये प्रोटीन का एक प्रमुख स्रोत हैं<b>, </b>और भारत इनका सबसे बड़ा उपभोक्ता और उत्पादक है।<b><br/> 2. Nitrogen-fixing bacteria (Rhizobium) reside in the roots of these plants. / </b>नाइट्रोजन<b>-</b>स्थिरीकरण जीवाणु <b>(</b>राइजोबियम<b>) </b>इन पौधों की जड़ों में निवास करते हैं।<b><br/> 3. Millets like Bajra and Ragi are examples of leguminous crops./ </b>बाजरा और रागी जैसे मोटे अनाज फलीदार फसलों के उदाहरण हैं।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statements 1 and 2 are correct. Leguminous crops, such as pulses, are nitrogen-fixing and India is a top consumer/producer. Statement 3 is incorrect; Millets do not have Rhizobium bacteria in their roots and are distinct from leguminous crops.<br/> कथन 1 और 2 सही हैं । फलीदार/दलहनी फसलें, जैसे दालें, नाइट्रोजन-स्थिरीकरण करने वाली होती हैं और भारत एक शीर्ष उपभोक्ता/उत्पादक है। कथन 3 गलत है; बाजरा की जड़ों में राइजोबियम जीवाणु नहीं होते हैं और वे दलहनी फसलों से अलग हैं।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Match the Revolution with its correct association:<br/> </b>क्रांति को उसके सही संबंध के साथ सुमेलित करें<b>:<br/> | Revolution (</b>क्रांति<b>) | Product/Focus (</b>उत्पाद<b>/</b>केंद्रित<b>) |<br/> | A. Black Revolution (</b>काली क्रांति<b>) | 1. Meat/Tomato / </b>मांस<b>/</b>टमाटर <b>|<br/> | B. Red Revolution (</b>लाल क्रांति<b>) | 2. Oil Seeds / </b>तिलहन <b>|<br/> | C. Yellow Revolution (</b>पीली क्रांति<b>) | 3. Petroleum / </b>पेट्रोलियम <b>|</b></p>",
+    "option1": "<p> A-3, B-1, C-2</p>",
+    "option2": "<p> A-2, B-1, C-3</p>",
+    "option3": "<p> A-1, B-3, C-2</p>",
+    "option4": "<p> A-3, B-2, C-1</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The correct match is: Black Revolution focuses on Petroleum (A-3), Red Revolution on Meat/Tomato (B-1), and Yellow Revolution on Oil Seeds (C-2). These revolutions aimed at increasing the production and availability of their respective products.<br/> सही मिलान है: काली क्रांति पेट्रोलियम (A-3) पर केंद्रित है, लाल क्रांति मांस/टमाटर (B-1) पर, और पीली क्रांति तिलहन (C-2) पर । इन क्रांतियों का उद्देश्य उनके संबंधित उत्पादों के उत्पादन और उपलब्धता को बढ़ाना था।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Consider the following statements about Commercial Farming and Plantation:<br/> </b>वाणिज्यिक खेती और बागान के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. Plantation is a type of Commercial Farming where a single crop is grown on a large area. </b>बागान वाणिज्यिक खेती का एक प्रकार है जहाँ एक ही फसल बड़े क्षेत्र में उगाई जाती है।<b><br/> 2. The entire produce of Plantation crops is used as food grains for local consumption. </b>बागान फसलों का पूरा उत्पादन स्थानीय खपत के लिए खाद्यान्न के रूप में उपयोग किया जाता है।<b><br/> 3. Higher doses of modern inputs like fertilisers and pesticides are used to obtain high productivity. </b>उच्च उत्पादकता प्राप्त करने के लिए उर्वरकों और पीड़कनाशकों जैसे आधुनिक आदानों की उच्च खुराक का उपयोग किया जाता है।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statements 1 and 3 are correct descriptions of commercial farming and plantation. Statement 2 is incorrect; the entire produce of Plantation crops (like tea/coffee) is used as raw materials for industry, not as food grains.<br/> कथन 1 और 3 वाणिज्यिक खेती और बागान के सही विवरण हैं । कथन 2 गलत है; बागान फसलों (जैसे चाय/कॉफी) का पूरा उत्पादन उद्योग के लिए कच्चे माल के रूप में उपयोग किया जाता है, न कि खाद्यान्न के रूप में ।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Assertion (A): Strip Farming is a type of farming that involves growing crops in alternating long, narrow strips.<br/> Reason (R): This practice is a key method of soil conservation, especially against wind erosion.<br/> </b>अभिकथन <b>(A): </b>पट्टीदार खेती एक प्रकार की खेती है जिसमें फसलों को बारी<b>-</b>बारी से लंबी<b>, </b>संकरी पट्टियों में उगाया जाता है।<b><br/> </b>कारण <b>(R): </b>यह प्रथा मृदा संरक्षण<b>, </b>विशेष रूप से वायु अपरदन के विरुद्ध<b>, </b>की एक प्रमुख विधि है।</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A / A और R दोनों सत्य हैं और R, A की सही व्याख्या है</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A / A और R दोनों सत्य हैं लेकिन R, A की सही व्याख्या नहीं है</p>",
+    "option3": "<p> A is true but R is false / A सत्य है लेकिन R असत्य है</p>",
+    "option4": "<p> A is false but R is true / A असत्य है लेकिन R सत्य है</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Assertion (A) accurately describes Strip Farming. Reason (R) is the purpose of this method; the alternating strips break the force of the wind and water flow, thus making it an effective soil conservation practice.<br/> अभिकथन (A) पट्टीदार खेती का सटीक वर्णन करता है। कारण (R) यह है कि इस पद्धति का उद्देश्य; एकांतर पट्टियाँ हवा और पानी के प्रवाह के बल को तोड़ती हैं, जिससे यह एक प्रभावी मृदा संरक्षण पद्धति बन जाती है।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Which of the following is NOT an example of the drawbacks or negative consequences of the Green Revolution?<br/> </b>हरित क्रांति के दुष्परिणामों या नकारात्मक परिणामों का निम्नलिखित में से कौन सा उदाहरण नहीं है<b>?</b></p>",
+    "option1": "<p> Groundwater levels became low (जलस्तर कम हो गया)</p>",
+    "option2": "<p> Soil alkalinity became high (मृदा की क्षारीयता अधिक हो गई)</p>",
+    "option3": "<p> Reduction in cereals production (अनाज उत्पादन में कमी)</p>",
+    "option4": "<p> Disparity between farmers increased (किसानों के बीच असमानता बढ़ी)</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Green Revolution was characterized by a massive increase in cereals production (from 72.4M to 131M tonnes). Low groundwater, high soil alkalinity, and increased farmer disparity are explicitly mentioned as the major drawbacks.<br/> हरित क्रांति की विशेषता अनाज उत्पादन में भारी वृद्धि थी (72.4 मिलियन से 131 मिलियन टन तक)। कम भूजल, उच्च मृदा क्षारीयता, और बढ़ी हुई किसान असमानता को स्पष्ट रूप से प्रमुख कमियों के रूप में उल्लेख किया गया है ।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Which pair of crops is listed as being suitable for cultivation in Red Laterite Soil regions?<br/> </b>फसलों का कौन सा जोड़ा लाल लैटेराइट मृदा क्षेत्रों में खेती के लिए उपयुक्त के रूप में सूचीबद्ध है<b>?</b></p>",
+    "option1": "<p> Wheat and Maize / गेहूँ और मक्का</p>",
+    "option2": "<p> Tea and Coffee / चाय और कॉफी</p>",
+    "option3": "<p> Cotton and Sugarcane / कपास और गन्ना</p>",
+    "option4": "<p> Rice and Jute / चावल और जूट</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Laterite soil is mentioned as favourable for the growing of tea and coffee (especially in Karnataka), and red laterite soil regions are suitable for cashew nut crops.<br/> लैटेराइट मृदा को चाय और कॉफी (विशेष रूप से कर्नाटक में) उगाने के लिए अनुकूल बताया गया है, और लाल लैटेराइट मृदा क्षेत्र काजू की फसलों के लिए भी उपयुक्त हैं ।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Assertion (A): Jute, known as the 'Golden Fibre', is the topmost produced crop in India (West Bengal).<br/> Reason (R): The Nor-westers (seasonal thunderstorms) are good for the growth of Jute crops.<br/> </b>अभिकथन <b>(A): </b>जूट<b>, </b>जिसे <b>'</b>स्वर्ण रेशा<b>' </b>के रूप में जाना जाता है<b>, </b>भारत <b>(</b>पश्चिम बंगाल<b>) </b>में शीर्ष उत्पादित फसल है।<b><br/> </b>कारण <b>(R): </b>नॉर<b>-</b>वेस्टर्स <b>(</b>मौसमी तूफान<b>) </b>जूट की फसलों के विकास के लिए अच्छे होते हैं।</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A / A और R दोनों सत्य हैं और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A / A और R दोनों सत्य हैं लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true but R is false / A सत्य है लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false but R is true / A असत्य है लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Both statements are correct. The Nor-westers (or Kalbaishakhi) provide the necessary moisture and slightly acidic conditions that are crucial for the growth and quality of the Jute crop, making R the reason for A's success.<br/> दोनों कथन सही हैं । नॉर-वेस्टर्स (या कालबैसाखी) आवश्यक नमी और थोड़े अम्लीय परिस्थितियों प्रदान करते हैं जो जूट की फसल के विकास और गुणवत्ता के लिए महत्वपूर्ण हैं, जिससे R, A की सफलता का कारण बनता है।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>What is the fundamental difference between Mixed Cropping and Intercropping?<br/> </b>मिश्रित खेती और अंतरफसलन के बीच मूलभूत अंतर क्या है<b>?</b></p>",
+    "option1": "<p> Mixed Cropping uses HYV seeds, while Intercropping uses native seeds. / मिश्रित खेती में HYV बीज का उपयोग होता है, जबकि अंतरफसलन में देशी बीज का उपयोग होता है।</p>",
+    "option2": "<p> Mixed Cropping involves mixing seeds before sowing, while Intercropping grows crops in a row format. / मिश्रित खेती में बुवाई से पहले बीजों को मिलाना शामिल है, जबकि अंतरफसलन में फसलों को पंक्ति प्रारूप में उगाया जाता है।</p>",
+    "option3": "<p> Mixed Cropping is for commercial use, while Intercropping is for subsistence use. / मिश्रित खेती वाणिज्यिक उपयोग के लिए है, जबकि अंतरफसलन निर्वाह उपयोग के लिए है।</p>",
+    "option4": "<p> Mixed Cropping is for Rabi season, while Intercropping is for Kharif season. / मिश्रित खेती रबी मौसम के लिए है, जबकि अंतरफसलन खरीफ मौसम के लिए है।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The core difference is the planting method: in Mixed Cropping, the seeds of the two different crops are mixed before sowing; in Intercropping, the seeds are not mixed, and crops are grown in a definitive row format.<br/> मूल अंतर रोपण विधि है: मिश्रित खेती में, दो अलग-अलग फसलों के बीज बुवाई से पहले मिलाए जाते हैं; अंतरफसलन में, बीज नहीं मिलाए जाते हैं, और फसलें एक निश्चित पंक्ति प्रारूप में उगाई जाती हैं ।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Consider the climatic conditions required for the growth of Sugarcane:<br/> </b>गन्ने के विकास के लिए आवश्यक जलवायु परिस्थितियों पर विचार करें<b>:<br/> 1. Temperature required: 21°C to 27°C / </b>आवश्यक तापमान<b>: 21°C </b>से <b>27°C<br/> 2. Rainfall required: 75–100 cm / </b>आवश्यक वर्षा<b>: 75-100 </b>सेमी<b><br/> 3. It is an important Kharif crop. / </b>यह एक महत्वपूर्ण खरीफ फसल है।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> All three statements are correct. Sugarcane is a tropical crop that requires a warm and humid climate. Temperatures between 21°C and 27°C and annual rainfall of 75–100 cm are ideal. It is primarily sown during the Kharif season and harvested during the winter season.<br/> Main producing states: Uttar Pradesh, Maharashtra, Karnataka, Tamil Nadu, Bihar, and Punjab.<br/> तीनों कथन सही हैं। गन्ना एक उष्णकटिबंधीय फसल है जिसे गर्म और आर्द्र जलवायु की आवश्यकता होती है। इसके लिए 21°C से 27°C तापमान और 75–100 सेमी वार्षिक वर्षा उपयुक्त होती है। यह मुख्यतः खरीफ मौसम में बोई जाती है और शीत ऋतु में काटी जाती है।<br/> मुख्य उत्पादक राज्य: उत्तर प्रदेश, महाराष्ट्र, कर्नाटक, तमिलनाडु, बिहार, और पंजाब।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Millets are also known by the term 'Sri Anna' and are noted for which of the following characteristics?<br/> </b>बाजरा को <b>'</b>श्री अन्न<b>' </b>के नाम से भी जाना जाता है और निम्नलिखित में से किस विशेषता के लिए इन्हें जाना जाता है<b>?</b></p>",
+    "option1": "<p> They are rich in nitrogen-fixing bacteria (Rhizobium). / ये नाइट्रोजन-स्थिरीकरण जीवाणु (राइजोबियम) में समृद्ध हैं।</p>",
+    "option2": "<p> They are grown only in areas of high rainfall (&gt;100 cm). / ये केवल उच्च वर्षा (&gt;100 सेमी) वाले क्षेत्रों में उगाए जाते हैं।</p>",
+    "option3": "<p> They are categorized as 'Superfoods' (Sri Anna). / इन्हें 'सुपरफूड' (श्री अन्न) के रूप में वर्गीकृत किया गया है।</p>",
+    "option4": "<p> Rajasthan is the topmost producer of Jowar (Sorghum). / ज्वार (सोरघम) का शीर्ष उत्पादक राजस्थान है।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> 5. Bajra and other millets such as sorghum, ragi, kodo, kutki, and savanna have been named “Shri Anna” by the Government of India.<br/> 6. These grains are rich in nutrients, protein, fiber, iron, and calcium, hence the name “superfoods.”<br/> 7. They can be grown well even in arid and semi-arid regions with low rainfall (30–50 cm).<br/> 8. Maharashtra is the top producer of sorghum, not Rajasthan. Rajasthan is generally the top producer of millet.<br/> 9. बाजरा और अन्य मिलेट्स जैसे ज्वार, रागी, कोदो, कुटकी, और सांवा को भारत सरकार ने “श्री अन्न ” नाम दिया है।<br/> 10. ये अनाज पोषक तत्वों, प्रोटीन, फाइबर, आयरन, और कैल्शियम से भरपूर होते हैं, इसलिए इन्हें ‘सुपरफूड’ कहा जाता है।<br/> 11. ये कम वर्षा (30–50 सेमी) वाले शुष्क और अर्ध-शुष्क क्षेत्रों में भी अच्छी तरह उगाए जा सकते हैं।<br/> 12. ज्वार का शीर्ष उत्पादक महाराष्ट्र है, न कि राजस्थान। राजस्थान सामान्य तौर पर बाजरा का शीर्ष उत्पादक है।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Consider the following crops:<br/> Wheat, Linseed, Gram, Mustard. These crops are sown in October and harvested in April. This crop set belongs to which category?<br/> </b>निम्नलिखित फसलों पर विचार करें<b>: </b>गेहूँ<b>, </b>अलसी<b>, </b>चना<b>, </b>सरसों। ये फसलें अक्टूबर में बोई जाती हैं और अप्रैल में काटी जाती हैं। यह फसल समूह किस श्रेणी से संबंधित है<b>?</b></p>",
+    "option1": "<p> Kharif / खरीफ</p>",
+    "option2": "<p> Rabi / रबी</p>",
+    "option3": "<p> Zaid / जायद</p>",
+    "option4": "<p> Commercial / वाणिज्यिक</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The crops listed (Wheat, Linseed, Gram, Mustard) are specifically named as Rabi crops. The defining characteristic of Rabi is the sowing time in October and the harvesting time in April.<br/> सूचीबद्ध फसलें (गेहूँ, अलसी, चना, सरसों) विशेष रूप से रबी फसलों के रूप में नामित हैं । रबी की परिभाषित विशेषता अक्टूबर में बुवाई का समय और अप्रैल में कटाई का समय है ।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Which of the following crops are correctly associated with the Kharif season?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी फसलें खरीफ मौसम से सही ढंग से जुड़ी हुई हैं<b>?</b></p>",
+    "option1": "<p> Barley, Gram, Rapeseed / जौ, चना, रेपसीड</p>",
+    "option2": "<p> Watermelon, Muskmelon, Cucumber / तरबूज, खरबूजा, खीरा</p>",
+    "option3": "<p> Rice, Sugarcane, Jute, Cotton / चावल, गन्ना, जूट, कपास</p>",
+    "option4": "<p> Wheat, Mustard, Castor / गेहूँ, सरसों, अरंडी</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Kharif season, or the Monsoon crops, includes Rice, Sugarcane, Jute, and Cotton. Option (a) and (d) are Rabi crops, and option (b) is associated with the Zaid (short) season. खरीफ मौसम, या मानसून की फसलों में चावल, गन्ना, जूट और कपास शामिल हैं । विकल्प (a) और (d) रबी फसलें हैं , और विकल्प (b) जायद (लघु) मौसम से जुड़ा हुआ है ।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>In West Bengal, Rice is grown in three seasons: Aus, Aman, and Boro. Which option correctly matches the season with its harvesting month?<br/> </b>पश्चिम बंगाल में<b>, </b>चावल तीन मौसमों में उगाया जाता है<b>: </b>ऑस<b>, </b>अमन<b>, </b>और बोरो। कौन सा विकल्प मौसम को उसके कटाई के महीने से सही ढंग से सुमेलित करता है<b>?</b></p>",
+    "option1": "<p> Aus: Nov-Dec / ऑस: नवंबर-दिसंबर</p>",
+    "option2": "<p> Aman: August / अमन: अगस्त</p>",
+    "option3": "<p> Boro: April / बोरो: अप्रैल</p>",
+    "option4": "<p> Aus: April / ऑस: अप्रैल</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The three rice seasons are: Aus (Harvesting: August), Aman (Harvesting: Nov-Dec), and Boro (Harvesting: April). Only option (c) provides the correct match.<br/> चावल के तीन मौसम हैं: ऑस (कटाई: अगस्त) , अमन (कटाई: नवंबर-दिसंबर) , और बोरो (कटाई: अप्रैल) । केवल विकल्प (c) सही मिलान प्रदान करता है।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>Which set of pairs correctly associates the crop/product with the state that is the topmost producer in India?<br/> </b>कौन सा जोड़ा फसल<b>/</b>उत्पाद को भारत में शीर्ष उत्पादक राज्य से सही ढंग से जोड़ता है<b>?<br/> 1. Oil Seeds: Gujarat / </b>तिलहन<b>: </b>गुजरात<b><br/> 2. Millets: Rajasthan / </b>बाजरा<b>: </b>राजस्थान<b><br/> 3. Jute: West Bengal / </b>जूट<b>: </b>पश्चिम बंगाल<b><br/> 4. Soyabeans (Leguminous Crop): Karnataka / </b>सोयाबीन <b>(</b>दलहनी फसल<b>): </b>कर्नाटक</p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2, 3 and 4 only / केवल 2, 3 और 4</p>",
+    "option3": "<p> 1, 2 and 3 only / केवल 1, 2 और 3</p>",
+    "option4": "<p> 1, 2, 3 and 4 / 1, 2, 3 और 4</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Pairs 1, 2, and 3 are correctly matched: Gujarat is the topmost producer of Oil Seeds, Rajasthan is the topmost producer of Millets, and West Bengal is the topmost producer of Jute. Pair 4 is incorrect; Soyabeans (a leguminous crop) are primarily produced by Madhya Pradesh. जोड़े 1, 2, और 3 सही ढंग से सुमेलित हैं: गुजरात तिलहन का शीर्ष उत्पादक है , राजस्थान बाजरा का शीर्ष उत्पादक है , और पश्चिम बंगाल जूट का शीर्ष उत्पादक है । जोड़ा 4 गलत है; सोयाबीन (एक दलहनी फसल) मुख्य रूप से मध्य प्रदेश द्वारा उत्पादित की जाती है ।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - GEOGRAPHY</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">GEOGRAPHY - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

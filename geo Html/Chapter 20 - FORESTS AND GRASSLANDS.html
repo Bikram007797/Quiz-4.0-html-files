@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY - FORESTS AND GRASSLANDS QUIZ [03-11-2025] - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>GEOGRAPHY - FORESTS AND GRASSLANDS QUIZ [03-11-2025]</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>Which type of forest in India is the most widespread and is also called 'Monsoon Forest'?<br/> </b>भारत में किस प्रकार के वन सबसे अधिक व्यापक हैं और उन्हें <b>'</b>मानसूनी वन<b>' </b>भी कहा जाता है<b>?</b></p>",
+    "option1": "<p> Evergreen Forests / सदाबहार वन</p>",
+    "option2": "<p> Deciduous Forests / पर्णपाती वन</p>",
+    "option3": "<p> Thorn Forests / कांटेदार वन</p>",
+    "option4": "<p> Coniferous Forests / शंकुधारी वन</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Deciduous forests are the most widespread forest type in India and are often called Monsoon forests. They are spread over a region receiving rainfall between 70 cm and 200 cm. They shed their leaves for about six to eight weeks in the dry summer to conserve water.<br/> पर्णपाती वन भारत में सबसे व्यापक प्रकार के वन हैं और इन्हें अक्सर मानसूनी वन कहा जाता है। ये 70 सेमी और 200 सेमी के बीच वर्षा प्राप्त करने वाले क्षेत्र में फैले हुए हैं। वे शुष्क गर्मी में पानी बचाने के लिए लगभग छह से आठ सप्ताह तक अपने पत्ते गिराते हैं।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>Who led the famous Chipko Movement, which started in 1973?<br/> 1973 </b>में शुरू हुए प्रसिद्ध चिपको आंदोलन का नेतृत्व किसने किया था<b>?</b></p>",
+    "option1": "<p> Ramachandra Guha / रामचंद्र गुहा</p>",
+    "option2": "<p> Medha Patkar / मेधा पाटक</p>",
+    "option3": "<p> Sundarlal Bahugna / सुंदरलाल बहुगुणा</p>",
+    "option4": "<p> Baba Amte / बाबा आमटे</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Chipko Movement, a forest conservation movement, started in 1973. It was led by Sundarlal Bahugna, who successfully mobilized villagers to protect trees. The movement's main aim was the preservation and restoration of ecological balance.<br/> वन संरक्षण आंदोलन, चिपको आंदोलन, 1973 में शुरू हुआ था। इसका नेतृत्व सुंदरलाल बहुगुणा ने किया था, जिन्होंने पेड़ों की रक्षा के लिए ग्रामीणों को सफलतापूर्वक संगठित किया 8। इस आंदोलन का मुख्य उद्देश्य पारिस्थितिक संतुलन का संरक्षण और बहाली था।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>The temperate grasslands/forests in the Nilgiris (Western Ghats), Anaimalai, and Palani hills are locally known as:<br/> </b>नीलगिरी <b>(</b>पश्चिमी घाट<b>), </b>अन्नामलाई और पलानी पहाड़ियों में समशीतोष्ण घास के मैदानों<b>/</b>वनों को स्थानीय रूप से क्या कहा जाता है<b>?</b></p>",
+    "option1": "<p> Bugyal / बुग्याल</p>",
+    "option2": "<p> Sholas / शोला</p>",
+    "option3": "<p> Llanos / लानोस</p>",
+    "option4": "<p> Steppes / स्टेपी</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Temperate grasslands/forests found in the higher regions of the Southern Montane Forests are specifically called 'Sholas'. These forests are mainly located in the Nilgiris, Anaimalai, and Palani hills of the Western Ghats. 'Bugyal' refers to alpine grasslands at higher altitudes in the Himalayas.<br/> दक्षिणी पर्वतीय वनों के उच्च क्षेत्रों में पाए जाने वाले समशीतोष्ण घास के मैदानों/वनों को विशेष रूप से 'शोला' कहा जाता है। ये वन मुख्य रूप से पश्चिमी घाट की नीलगिरि, अन्नामलाई और पलानी पहाड़ियों में स्थित हैं। 'बुग्याल' हिमालय के ऊंचे पहाड़ों में अल्पाइन घास के मैदानों को संदर्भित करता है।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>What is the approximate target percentage of a country's geographical area that should be under forest or tree cover, according to the Indian Forest Policy (NFP) of 1952?<br/> 1952 </b>की भारतीय वन नीति <b>(</b>एनएफपी<b>) </b>के अनुसार<b>, </b>देश के भौगोलिक क्षेत्र का अनुमानित कितना प्रतिशत वन या वृक्ष आवरण के अंतर्गत होना चाहिए<b>?</b></p>",
+    "option1": "<p> 25.17% / 25.17%</p>",
+    "option2": "<p> 21.76% / 21.76%</p>",
+    "option3": "<p> 33% / 33%</p>",
+    "option4": "<p> 50% / 50%</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Indian Forest Policy (NFP) of 1952, which was later revised in 1988, states that 33% of the total geographical area should be under forest or tree cover. This policy aims at maintaining environmental stability and ecological balance. This benchmark is widely used in national forestry goals.<br/> 1952 की भारतीय वन नीति (एनएफपी), जिसे बाद में 1988 में संशोधित किया गया था, में कहा गया है कि कुल भौगोलिक क्षेत्र का 33% वन या वृक्ष आवरण के अंतर्गत होना चाहिए। इस नीति का उद्देश्य पर्यावरणीय स्थिरता और पारिस्थितिक संतुलन बनाए रखना है। यह बेंचमार्क राष्ट्रीय वानिकी लक्ष्यों में व्यापक रूप से उपयोग किया जाता है।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>In which country are the 'Llanos' grasslands primarily found?<br/> '</b>लानोस<b>' </b>घास के मैदान मुख्य रूप से किस देश में पाए जाते हैं<b>?</b></p>",
+    "option1": "<p> Brazil / ब्राजील</p>",
+    "option2": "<p> South Africa / दक्षिण अफ्रीका</p>",
+    "option3": "<p> North America / उत्तरी अमेरिका</p>",
+    "option4": "<p> Venezuela / वेनेजुएला</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Llanos grasslands are a type of Tropical Grassland and are specifically located in Venezuela. Tropical Grasslands are generally characterized by tall and non-nutritious grass, such as the elephant grass. 'Campos' are in Brazil and 'Savannah' is in Africa.<br/> लानोस घास के मैदान उष्णकटिबंधीय घास के मैदान का एक प्रकार हैं और विशेष रूप से वेनेजुएला में स्थित हैं। उष्णकटिबंधीय घास के मैदान आम तौर पर हाथी घास जैसे लंबे और गैर-पोषक घास की विशेषता रखते हैं। 'कैम्पोस' ब्राजील में हैं और 'सवाना' अफ्रीका में है।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>Which one of the following regions in India is known for having the highest biodiversity?<br/> </b>भारत में निम्नलिखित में से कौन सा क्षेत्र सबसे अधिक जैव विविधता के लिए जाना जाता है<b>?</b></p>",
+    "option1": "<p> Dry Deciduous Forests / शुष्क पर्णपाती वन</p>",
+    "option2": "<p> Thorn Forests / कांटेदार वन</p>",
+    "option3": "<p> Evergreen Forests / सदाबहार वन</p>",
+    "option4": "<p> Coniferous Forests / शंकुधारी वन</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Evergreen Forests are known to have the highest biodiversity. This is primarily because they thrive in areas of high temperature (above 22 °C) and high rainfall (200 cm), which creates ideal conditions for diverse flora and fauna. Examples of vegetation include Ebony, Mahogany, and Rosewood.<br/> सदाबहार वन में सबसे अधिक जैव विविधता पाई जाती है। इसका मुख्य कारण यह है कि वे उच्च तापमान (22 °C से ऊपर) और उच्च वर्षा (200 सेमी) वाले क्षेत्रों में पनपते हैं, जो विविध वनस्पतियों और जीवों के लिए आदर्श स्थिति बनाते हैं। वनस्पति के उदाहरणों में एबोनी, महोगनी और रोज़वुड शामिल हैं।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>What is the process known as 'Slash and Burn agriculture' called in Indonesia?<br/> </b>इंडोनेशिया में <b>'</b>काटो और जलाओ कृषि<b>' (Slash and Burn agriculture) </b>को किस नाम से जाना जाता है<b>?</b></p>",
+    "option1": "<p> Milpa / मिल्पा</p>",
+    "option2": "<p> Chena / चेना</p>",
+    "option3": "<p> Ladang / लदांग</p>",
+    "option4": "<p> Roca / रोका</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Shifting Cultivation, also known as 'Slash and Burn agriculture', has different regional names. In Indonesia, this practice is known as 'Ladang'. This method is considered detrimental to the environment as it causes deforestation and leads to a loss of soil productivity.<br/> स्थानांतरण कृषि, जिसे 'काटो और जलाओ कृषि' के रूप में भी जाना जाता है, के विभिन्न क्षेत्रीय नाम हैं। इंडोनेशिया में, इस पद्धति को 'लदांग' के नाम से जाना जाता है। इस पद्धति को पर्यावरण के लिए हानिकारक माना जाता है क्योंकि इससे वनों की कटाई होती है और मिट्टी की उत्पादकता में कमी आती है।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>The roots of Mangrove trees that are visible above the waterlogged soil and help the tree breathe are called:<br/> </b>मैंग्रोव वृक्षों की जड़ें जो जलभराव वाली मिट्टी के ऊपर दिखाई देती हैं और पेड़ को साँस लेने में मदद करती हैं<b>, </b>कहलाती हैं<b>:</b></p>",
+    "option1": "<p> Prop Roots / प्रॉप जड़ें</p>",
+    "option2": "<p> Pneumatophores / न्यूमेटोफ़ोर्स</p>",
+    "option3": "<p> Stilt Roots / स्टिल्ट जड़ें</p>",
+    "option4": "<p> Tap Roots / मूसला जड़ें</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Mangrove trees, also called Littoral or Swamp forests, are found in coastal areas influenced by tides. Their specialized breathing roots, which grow upward from the mud, are called Pneumatophores (or living roots). This adaptation allows the roots to absorb oxygen in the oxygen-depleted, waterlogged soil.<br/> मैंग्रोव वृक्ष, जिन्हें तटीय या दलदली वन भी कहा जाता है, ज्वार से प्रभावित तटीय क्षेत्रों में पाए जाते हैं। उनकी विशेष श्वसन जड़ें, जो कीचड़ से ऊपर की ओर बढ़ती हैं, न्यूमेटोफ़ोर्स (या जीवित जड़ें) कहलाती हैं। यह अनुकूलन जड़ों को ऑक्सीजन की कमी वाली, जलभराव वाली मिट्टी में ऑक्सीजन अवशोषित करने में मदद करता है।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Which Indian state has the maximum forest cover in terms of area according to the Indian State of Forest Reports?<br/> </b>भारतीय वन रिपोर्ट के अनुसार क्षेत्रफल की दृष्टि से किस भारतीय राज्य में अधिकतम वन आवरण है<b>?</b></p>",
+    "option1": "<p> Arunachal Pradesh / अरुणाचल प्रदेश</p>",
+    "option2": "<p> Chhattisgarh / छत्तीसगढ़</p>",
+    "option3": "<p> Madhya Pradesh / मध्य प्रदेश</p>",
+    "option4": "<p> Mizoram / मिजोरम</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> According to the Indian State of Forest Reports, Madhya Pradesh has the largest forest cover in terms of area. It is followed by Arunachal Pradesh and Chhattisgarh. Conversely, Lakshadweep has the maximum forest cover when considering the percentage of the geographical area.<br/> भारतीय वन रिपोर्ट के अनुसार, क्षेत्रफल की दृष्टि से मध्य प्रदेश में सबसे बड़ा वन आवरण है। इसके बाद अरुणाचल प्रदेश और छत्तीसगढ़ का स्थान है इसके विपरीत, भौगोलिक क्षेत्र के प्रतिशत पर विचार करते हुए लक्षद्वीप में अधिकतम वन आवरण है।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>The term 'Tiaga' or 'Boreal Biome' (untouched) is found in which latitude range?<br/> '</b>टैगा<b>' </b>या <b>'</b>बोरियल बायोम<b>' (</b>अछूता<b>) </b>शब्द किस अक्षांश सीमा में पाया जाता है<b>?</b></p>",
+    "option1": "<p> Beyond 70 ° N/S / 70 ° उत्तर/दक्षिण से परे</p>",
+    "option2": "<p> 35° -50° / 35° -50°</p>",
+    "option3": "<p> 50° -70° N/S / 50° -70° उत्तर/दक्षिण</p>",
+    "option4": "<p> In Mid-latitudinal coastal areas / मध्य-अक्षांशीय तटीय क्षेत्रों में</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Tiaga or Boreal Biome, which is characterized by Coniferous forests, is found between 50° -70° N/S latitude. The area beyond 70° N/S is known as the Tundra biome. The Boreal Biome is one of the world's largest land biomes and is characterized by long, severe winters.<br/> टैगा या बोरियल बायोम, जिसकी विशेषता शंकुधारी वन हैं, 50° -70°उत्तर/दक्षिण अक्षांश के बीच पाया जाता है 70° उत्तर/दक्षिण से परे के क्षेत्र को टुंड्रा बायोम के रूप में जाना जाता है। बोरियल बायोम दुनिया के सबसे बड़े भूमि बायोम में से एक है और लंबी, गंभीर सर्दियों की विशेषता है।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Consider the vertical layers (stratas) present in Evergreen Forests:<br/> </b>सदाबहार वनों में मौजूद ऊर्ध्वाधर परतों <b>(</b>स्तरों<b>) </b>पर विचार करें<b>:<br/> 1. Top vertical: Trees / </b>शीर्ष ऊर्ध्वाधर<b>: </b>वृक्ष<b><br/> 2. Middle vertical: Herbs and Bushes / </b>मध्य ऊर्ध्वाधर<b>: </b>जड़ी<b>-</b>बूटियाँ और झाड़ियाँ<b><br/> 3. Bottom: Shrubs / </b>निचला<b>: </b>झाड़ियाँ<b><br/> Which of the above stratas is/are correctly matched?<br/> </b>उपर्युक्त में से कौन सी<b>/</b>कौन से परतें सही सुमेलित हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2, and 3 / 1, 2, और 3</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Evergreen forests are layered forests. The correct vertical layers are: Top (Trees), Middle (Shrubs), and Bottom (Herbs and Bushes). Statement 2 and 3 have the middle and bottom layers interchanged.<br/> सदाबहार वन स्तरीय वन होते हैं। सही ऊर्ध्वाधर परतें हैं: शीर्ष (वृक्ष), मध्य (झाड़ियाँ), और निचला (जड़ी-बूटियाँ और झाड़ियाँ)। कथन 2 और 3 में मध्य और निचली परतें आपस में बदल गई हैं।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Assertion (A): Evergreen forests appear green all year.<br/> Reason (R): The trees in these forests don't shed their leaves at the same time.<br/> </b>अभिकथन <b>(A): </b>सदाबहार वन पूरे साल हरे<b>-</b>भरे दिखाई देते हैं।<b><br/> </b>कारण <b>(R): </b>इन वनों में पेड़ अपने पत्ते एक ही समय में नहीं गिराते हैं।</p>",
+    "option1": "<p> Both (A) and (R) are true, and (R) is the correct explanation of (A). / (A) और (R) दोनों सत्य हैं, और (R), (A) की सही व्याख्या है।</p>",
+    "option2": "<p> Both (A) and (R) are true, but (R) is not the correct explanation of (A). / (A) और (R) दोनों सत्य हैं, लेकिन (R), (A) की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> (A) is true, but (R) is false. / (A) सत्य है, लेकिन (R) असत्य है</p>",
+    "option4": "<p> (A) is false, but (R) is true. / (A) असत्य है, लेकिन (R) सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Assertion is true; evergreen forests are perpetually green. The Reason is also true, and it directly explains the Assertion: the trees shed their leaves at different times, ensuring the forest always retains a full canopy. This staggered shedding prevents a period of collective barrenness, unlike deciduous forests.<br/> अभिकथन सत्य है; सदाबहार वन वर्ष भर हरे-भरे रहते हैं। कारण भी सत्य है, और यह सीधे अभिकथन की व्याख्या करता है: पेड़ अपने पत्ते अलग-अलग समय पर गिराते हैं, जिससे यह सुनिश्चित होता है कि वन हमेशा एक पूर्ण छत्र बनाए रखता है। पर्णपाती वनों के विपरीत, यह रुक-रुक कर पत्तियाँ गिरना सामूहिक बंजरता की अवधि को रोकता है।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Which of the following pairs of forest type and its region is/are correctly matched?<br/> </b>निम्नलिखित में से वन के प्रकार और उसके क्षेत्र का कौन सा<b>/</b>से युग्म सही सुमेलित है<b>/</b>हैं<b>?<br/> 1. Moist Deciduous: Eastern slopes of Western Ghats / </b>आर्द्र पर्णपाती<b>: </b>पश्चिमी घाट के पूर्वी ढलान<b><br/> 2. Dry Deciduous: Plains of Bihar and Uttar Pradesh / </b>शुष्क पर्णपाती<b>: </b>बिहार और उत्तर प्रदेश के मैदान<b><br/> 3. Evergreen Forests: Tamil Nadu coast (heavy rainfall area) / </b>सदाबहार वन<b>: </b>तमिलनाडु तट <b>(</b>भारी वर्षा क्षेत्र<b>)</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2, and 3 / 1, 2, और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Moist Deciduous forests are found on the eastern slopes of the Western Ghats. Dry Deciduous forests are seen in the plains of Bihar and Uttar Pradesh. Evergreen forests are also found in the heavy rainfall areas of the Tamil Nadu coast.<br/> आर्द्र पर्णपाती वन पश्चिमी घाट के पूर्वी ढलानों पर पाए जाते हैं। शुष्क पर्णपाती वन बिहार और उत्तर प्रदेश के मैदानों में देखे जाते हैं। सदाबहार वन तमिलनाडु तट के भारी वर्षा वाले क्षेत्रों में भी पाए जाते हैं।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Which two states/regions recorded the largest decrease in Forest + Tree cover according to the Indian State of Forest Report?<br/> </b>भारतीय वन रिपोर्ट के अनुसार किन दो राज्यों<b>/</b>क्षेत्रों में वन <b>+ </b>वृक्ष आवरण में सबसे बड़ी कमी दर्ज की गई<b>?</b></p>",
+    "option1": "<p> Mizoram and Gujarat / मिजोरम और गुजरात</p>",
+    "option2": "<p> Madhya Pradesh and Karnataka / मध्य प्रदेश और कर्नाटक</p>",
+    "option3": "<p> Chhattisgarh and Uttar Pradesh / छत्तीसगढ़ और उत्तर प्रदेश</p>",
+    "option4": "<p> Lakshadweep and Mizoram / लक्षद्वीप और मिजोरम</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The report data highlights the largest decrease in forest and tree cover. This decrease was highest in Madhya Pradesh, followed by Karnataka. Conversely, Chhattisgarh and Uttar Pradesh recorded the maximum increase in forest and tree cover.<br/> रिपोर्ट डेटा वन और वृक्ष आवरण में सबसे बड़ी कमी को उजागर करता है। यह कमी मध्य प्रदेश में सबसे अधिक थी, जिसके बाद कर्नाटक का स्थान था। इसके विपरीत, छत्तीसगढ़ और उत्तर प्रदेश में वन और वृक्ष आवरण में अधिकतम वृद्धि दर्ज की गई।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Consider the Montane Forest zones and their approximate altitude range:<br/> </b>पर्वतीय वन क्षेत्रों और उनकी अनुमानित ऊंचाई सीमा पर विचार करें<b>:<br/> Wet Temperate Forests: 1000-2000 m / </b>आर्द्र शीतोष्ण वन<b>: 1000-2000 </b>मीटर<b><br/> Temperate Forests (Coniferous): 1500-3000 m / </b>शीतोष्ण वन <b>(</b>शंकुधारी<b>): 1500-3000 </b>मीटर<b><br/> Alpine Vegetation: Above 3600 m / </b>अल्पाइन वनस्पति<b>: 3600 </b>मीटर से ऊपर<b><br/> Which of the above pairs is/are correctly matched?<br/> </b>उपर्युक्त में से कौन सा<b>/</b>से युग्म सही सुमेलित है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option4": "<p> 1, 2, and 3 / 1, 2, और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Montane forests show a succession of natural vegetation with altitude. The altitude ranges given are correct: Wet Temperate (Oaks, Chestnuts) at 1000-2000 m, Temperate Coniferous (Pine, Deodar) at 1500-3000 m, and Alpine (Silver fir, Junipers) above 3600 m.<br/> पर्वतीय वन ऊंचाई के साथ प्राकृतिक वनस्पति का उत्तराधिकार दिखाते हैं। दी गई ऊंचाई सीमाएँ सही हैं: आर्द्र शीतोष्ण (ओक, चेस्टनट) 1000-2000 मीटर पर, शीतोष्ण शंकुधारी (देवदार, चीड़) 1500-3000 मीटर पर, और अल्पाइन (सिल्वर फ़िर, जुनिपर) 3600 मीटर से ऊपर।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Match the following Grasslands with their respective geographical locations:<br/> </b>निम्नलिखित घास के मैदानों को उनके संबंधित भौगोलिक स्थानों से सुमेलित करें<b>:<br/> | List I (Grassland) / </b>सूची <b>I (</b>घास का मैदान<b>) | List II (Location) / </b>सूची <b>II (</b>स्थान<b>) |<br/> | A. Pampas / </b>पंपास <b>| 1. Australia / </b>ऑस्ट्रेलिया <b>|<br/> | B. Velds / </b>वेल्ड्स <b>| 2. Hungary / </b>हंगरी <b>|<br/> | C. Downs / </b>डाउन्स <b>| 3. South Africa / </b>दक्षिण अफ्रीका <b>|<br/> | D. Pustaz / </b>पुस्टाज़ <b>| 4. Argentina / </b>अर्जेंटीना <b>|<br/> Codes:</b></p>",
+    "option1": "<p> A-4, B-3, C-1, D-2</p>",
+    "option2": "<p> A-3, B-4, C-2, D-1</p>",
+    "option3": "<p> A-1, B-2, C-3, D-4</p>",
+    "option4": "<p> A-4, B-1, C-3, D-2</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Pampas grasslands are found in Argentina and are known for Alpha Alpha grass. Velds are located in South Africa. Downs are the temperate grasslands of Australia. Pustaz is the name of grasslands in Hungary.<br/> पंपास घास के मैदान अर्जेंटीना में पाए जाते हैं और अल्फा अल्फा घास के लिए जाने जाते हैं वेल्ड्स दक्षिण अफ्रीका में स्थित हैं। डाउन्स ऑस्ट्रेलिया के शीतोष्ण घास के मैदान हैं। पुस्टाज़ हंगरी में घास के मैदानों का नाम है।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Assertion (A): Trees in Thorn Forests have long roots penetrating deep inside the soil.<br/> Reason (R): Long roots help the trees to absorb moisture from the deeper soil layers as the region receives very low rainfall.<br/> </b>अभिकथन <b>(A): </b>कांटेदार वनों के पेड़ों की जड़ें लंबी होती हैं जो मिट्टी में गहराई तक प्रवेश करती हैं।<b><br/> </b>कारण <b>(R): </b>चूंकि इस क्षेत्र में बहुत कम वर्षा होती है<b>, </b>इसलिए लंबी जड़ें पेड़ों को गहरी मिट्टी की परतों से नमी अवशोषित करने में मदद करती हैं।</p>",
+    "option1": "<p> Both (A) and (R) are true, and (R) is the correct explanation of (A). / (A) और (R) दोनों सत्य हैं, और (R), (A) की सही व्याख्या है।</p>",
+    "option2": "<p> Both (A) and (R) are true, but (R) is not the correct explanation of (A). / (A) और (R) दोनों सत्य हैं, लेकिन (R), (A) की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> (A) is true, but (R) is false. / (A) सत्य है, लेकिन (R) असत्य है।</p>",
+    "option4": "<p> (A) is false, but (R) is true. / (A) असत्य है, लेकिन (R) सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Thorn Forests are found in regions with less than 70 cm of rainfall (semi-arid areas). Therefore, the Reason is correct, as long roots are a necessary adaptation to access water. The Assertion is an accurate description of the trees in this region, and the Reason provides the exact environmental rationale for this feature.<br/> कांटेदार वन 70 सेमी से कम वर्षा वाले क्षेत्रों (अर्द्ध-शुष्क क्षेत्रों) में पाए जाते हैं। इसलिए, कारण सही है, क्योंकि पानी तक पहुंचने के लिए लंबी जड़ें एक आवश्यक अनुकूलन हैं। अभिकथन इस क्षेत्र के पेड़ों का एक सटीक विवरण है, और कारण इस विशेषता के लिए सटीक पर्यावरणीय तर्क प्रदान करता है ।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Consider the following statements regarding the characteristics of Tropical and Temperate Grasslands:<br/> </b>उष्णकटिबंधीय और शीतोष्ण घास के मैदानों की विशेषताओं के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. Tropical Grasslands are characterized by tall, non-nutritious grass. / </b>उष्णकटिबंधीय घास के मैदानों की विशेषता लंबी<b>, </b>गैर<b>-</b>पोषक घास है।<b><br/> 2. Temperate Grasslands are characterized by short and nutritious grass. / </b>शीतोष्ण घास के मैदानों की विशेषता छोटी और पौष्टिक घास है।<b><br/> 3. Savannah in Africa is an example of Temperate Grassland. / </b>अफ्रीका में सवाना शीतोष्ण घास के मैदान का एक उदाहरण है।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p> 1, 2, and 3 / 1, 2, और 3</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Statements 1 and 2 accurately describe the general characteristics of Tropical and Temperate grasslands, respectively. However, Savannah is a Tropical Grassland in Africa, making Statement 3 incorrect. Temperate grasslands include Steppes, Prairies, and Pampas.<br/> कथन 1 और 2 क्रमशः उष्णकटिबंधीय और शीतोष्ण घास के मैदानों की सामान्य विशेषताओं का सटीक वर्णन करते हैं। हालाँकि, सवाना अफ्रीका का एक उष्णकटिबंधीय घास का मैदान है, जिससे कथन 3 गलत हो जाता है। शीतोष्ण घास के मैदानों में स्टेपीज़, प्रेयरीज़ और पम्पास शामिल हैं।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Which of the following statements about Mangrove forests is INCORRECT?<br/> </b>मैंग्रोव वनों के बारे में निम्नलिखित में से कौन सा कथन गलत है<b>?</b></p>",
+    "option1": "<p> They are also known as Swamp forests or Littoral forests. / उन्हें दलदली वन या तटीय वन के रूप में भी जाना जाता है।</p>",
+    "option2": "<p> They are highly influenced by tides and are seen in coastal areas. / वे ज्वार से अत्यधिक प्रभावित होते हैं और तटीय क्षेत्रों में देखे जाते हैं।</p>",
+    "option3": "<p> The tree species found here are viviparous. / यहां पाए जाने वाले वृक्षों की प्रजातियां जरायुज होती हैं।</p>",
+    "option4": "<p> Sundari trees are primarily found in the deltas of the Krishna and Godavari. / सुंदरी के पेड़ मुख्य रूप से कृष्णा और गोदावरी के डेल्टा में पाए जाते हैं।</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Statements a, b, and c are correct characteristics of Mangrove forests. However, Sundari trees are primarily found in the Sundarban deltas (West Bengal), which gives the region its name, not the Krishna and Godavari deltas. The deltas of Ganga, Mahanadi, Krishna, Godavari, and Kaveri are all covered by such vegetation.<br/> कथन a, b, और c मैंग्रोव वनों की सही विशेषताएँ हैं। हालाँकि, सुंदरी के पेड़ मुख्य रूप से सुंदरबन डेल्टा (पश्चिम बंगाल) में पाए जाते हैं, जो इस क्षेत्र को इसका नाम देता है, न कि कृष्णा और गोदावरी डेल्टा में। गंगा, महानदी, कृष्णा, गोदावरी और कावेरी के डेल्टा सभी ऐसी वनस्पतियों से आच्छादित है।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Match the following regional names of Shifting Cultivation in India:<br/> </b>भारत में स्थानांतरण कृषि के निम्नलिखित क्षेत्रीय नामों को सुमेलित करें<b>:<br/> | List I (Local Name) / </b>सूची <b>I (</b>स्थानीय नाम<b>) | List II (Region) / </b>सूची <b>II (</b>क्षेत्र<b>) |<br/> | A. Jhum / </b>झूम <b>| 1. Western Ghats / </b>पश्चिमी घाट <b>|<br/> | B. Kumari / </b>कुमारी <b>| 2. Odisha / </b>ओडिशा <b>|<br/> | C. Penda/Podu / </b>पेंडा<b>/</b>पोडू <b>| 3. Andhra Pradesh / </b>आंध्र प्रदेश <b>|<br/> | D. Pama Dabi/Bringa / </b>पमा डाबी<b>/</b>ब्रिंगा <b>| 4. North-East / </b>उत्तर<b>-</b>पूर्व <b>|<br/> Codes:</b></p>",
+    "option1": "<p> A-4, B-1, C-3, D-2</p>",
+    "option2": "<p> A-4, B-1, C-2, D-3</p>",
+    "option3": "<p> A-1, B-4, C-3, D-2</p>",
+    "option4": "<p> A-3, B-2, C-1, D-4</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Shifting Cultivation, or Slash and Burn agriculture, has various regional names across India. Jhum is common in the North-East. Kumari is the name used in the Western Ghats. Penda/Podu is used in Andhra Pradesh. Pama Dabi/Bringa are names for this practice in Odisha.<br/> स्थानांतरण कृषि, या काटो और जलाओ कृषि, के पूरे भारत में विभिन्न क्षेत्रीय नाम हैं। झूम उत्तर-पूर्व में आम है। कुमारी पश्चिमी घाटों में इस्तेमाल किया जाने वाला नाम है। पेंडा/पोडू आंध्र प्रदेश में प्रयोग किया जाता है। पमा डाबी/ब्रिंगा ओडिशा में इस प्रथा के नाम हैं ।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Which of the following is the most dominant species of trees found in the Tropical Deciduous Forests of India?<br/> </b>निम्नलिखित में से कौन सी भारत के उष्णकटिबंधीय पर्णपाती वनों में पाई जाने वाली वृक्षों की सबसे प्रमुख प्रजाति है<b>?</b></p>",
+    "option1": "<p> Coconut / नारियल</p>",
+    "option2": "<p> Deodar / देवदार</p>",
+    "option3": "<p> Teak / सागौन</p>",
+    "option4": "<p> Rubber / रबड़</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Teak is the most dominant species of tropical deciduous forests.<br/> Tropical deciduous forests are also known as \"Monsoon\" forests.<br/> They spread over regions that receive rainfall between 70-200 cm.<br/> Trees of this forest type shed their leaves for about six to eight weeks in dry summers.<br/> सागौन उष्णकटिबंधीय पर्णपाती वनों की सबसे प्रमुख प्रजाति है।<br/> उष्णकटिबंधीय पर्णपाती वनों को \"मानसून\" वन भी कहा जाता है।<br/> ये 70-200 सेमी वर्षा वाले क्षेत्रों में फैले हुए हैं।<br/> इस प्रकार के वनों के पेड़ शुष्क ग्रीष्मकाल में लगभग छह से आठ सप्ताह तक अपने पत्ते गिराते हैं।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>As one ascends a mountain in India, how does the sequence of natural vegetation typically change from the base to the top?<br/> </b>भारत में जैसे<b>-</b>जैसे कोई पर्वत पर ऊपर की ओर बढ़ता है<b>, </b>प्राकृतिक वनस्पति का क्रम सामान्यतः किस प्रकार बदलता है<b>?</b></p>",
+    "option1": "<p> Tropical → Subtropical → Temperate → Sub-Alpine → Alpine → Snow(उष्णकटिबंधीय → उपोष्णकटिबंधीय → समशीतोष्ण → उप-अल्पाइन → अल्पाइन → हिम क्षेत्र)</p>",
+    "option2": "<p> Subtropical → Tropical → Temperate → Alpine → Snow → Sub-Alpine(उपोष्णकटिबंधीय → उष्णकटिबंधीय → समशीतोष्ण → अल्पाइन → हिम क्षेत्र → उप-अल्पाइन)</p>",
+    "option3": "<p> Tropical → Temperate → Subtropical → Alpine → Sub-Alpine → Snow(उष्णकटिबंधीय → समशीतोष्ण → उपोष्णकटिबंधीय → अल्पाइन → उप-अल्पाइन → हिम क्षेत्र)</p>",
+    "option4": "<p> Tropical → Subtropical → Alpine → Temperate → Snow → Sub-Alpine(उष्णकटिबंधीय → उपोष्णकटिबंधीय → अल्पाइन → समशीतोष्ण → हिम क्षेत्र → उप-अल्पाइन)</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> As altitude increases, temperature decreases, causing changes in vegetation — from dense tropical forests at the foothills to subtropical and temperate forests, then to sub-alpine and alpine vegetation, and finally snow-covered regions at the highest peaks.<br/> ऊँचाई बढ़ने पर तापमान घटता है, जिससे वनस्पति में क्रमिक परिवर्तन होता है — आधार पर घने उष्णकटिबंधीय वन, फिर उपोष्णकटिबंधीय और समशीतोष्ण वन, उसके बाद उप-अल्पाइन व अल्पाइन वनस्पति, और सबसे ऊपर हिमाच्छादित क्षेत्र पाए जाते हैं।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Which statement correctly distinguishes between Thorn Forests and Dry Deciduous Forests based on rainfall?<br/> </b>वर्षा के आधार पर कांटेदार वनों और शुष्क पर्णपाती वनों के बीच कौन सा कथन सही ढंग से अंतर करता है<b>?</b></p>",
+    "option1": "<p> Dry Deciduous forests receive 100-200 cm, while Thorn forests receive &lt;70 cm of rainfall. / शुष्क पर्णपाती वनों में 100-200 सेमी वर्षा होती है, जबकि कांटेदार वनों में &lt;70 सेमी वर्षा होती है।</p>",
+    "option2": "<p> Thorn forests have a transition to Dry Deciduous forests on their drier margins. / कांटेदार वन अपने शुष्क किनारों पर शुष्क पर्णपाती वनों में परिवर्तित हो जाते हैं|</p>",
+    "option3": "<p> Dry Deciduous forests receive 70-100 cm, while Thorn forests receive &lt;70 cm of rainfall. / शुष्क पर्णपाती वनों में 70-100 सेमी वर्षा होती है, जबकि कांटेदार वनों में &lt;70 सेमी वर्षा होती है।</p>",
+    "option4": "<p> Thorn forests are the most widespread, while Dry Deciduous forests are restricted to the Northwest. / कांटेदार वन सबसे व्यापक हैं, जबकि शुष्क पर्णपाती वन उत्तर-पश्चिम तक ही सीमित हैं।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Dry Deciduous forests are found in areas receiving 70-100 cm of rainfall123. Thorn forests are found in regions with less than (&lt;) 70 cm of rainfall. The PDF also notes that Dry Deciduous forests transition to thorn forests on their drier margins.<br/> शुष्क पर्णपाती वन 70-100 सेमी वर्षा प्राप्त करने वाले क्षेत्रों में पाए जाते हैं। कांटेदार वन 70 सेमी से कम (&lt;) वर्षा वाले क्षेत्रों में पाए जाते हैं। पीडीएफ में यह भी उल्लेख किया गया है कि शुष्क पर्णपाती वन अपनी शुष्क सीमाओं पर कांटेदार वनों में परिवर्तित हो जाते हैं।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>What is the primary objective of 'Social Forestry' as defined in the context of the Indian Forest Policy?<br/> </b>भारतीय वन नीति के संदर्भ में परिभाषित <b>'</b>सामाजिक वानिकी<b>' </b>का प्राथमिक उद्देश्य क्या है<b>?</b></p>",
+    "option1": "<p> To exclusively increase the forest cover of tribal lands for commercial logging. / व्यावसायिक कटाई के लिए विशेष रूप से जनजातीय भूमि के वन आवरण को बढ़ान</p>",
+    "option2": "<p> To manage and protect forests and afforestation on barren lands to aid in environmental, social, and rural development. / पर्यावरणीय, सामाजिक और ग्रामीण विकास में सहायता के लिए बंजर भूमि पर वनों का प्रबंधन और संरक्षण तथा वनीकरण करना।</p>",
+    "option3": "<p> To revise the Indian Forest Policy from 1952 to meet the 33% forest cover target. / 33% वन आवरण लक्ष्य को पूरा करने के लिए 1952 से भारतीय वन नीति को संशोधित करना।</p>",
+    "option4": "<p> To introduce Eucalyptus trees in all parts of the country for quick biomass production. / त्वरित बायोमास उत्पादन के लिए देश के सभी हिस्सों में नीलगिरी के पेड़ लगाना।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Social forestry is defined as the management and protection of forests and the process of afforestation on barren lands. Its stated purpose is explicitly to help in environmental, social, and rural development. This is a community-based approach aimed at meeting local needs and restoring ecological balance.<br/> सामाजिक वानिकी को वनों के प्रबंधन और संरक्षण और बंजर भूमि पर वनीकरण की प्रक्रिया के रूप में परिभाषित किया गया है। इसका घोषित उद्देश्य स्पष्ट रूप से पर्यावरणीय, सामाजिक और ग्रामीण विकास में सहायता करना है। यह स्थानीय जरूरतों को पूरा करने और पारिस्थितिक संतुलन को बहाल करने के उद्देश्य से एक समुदाय-आधारित दृष्टिकोण है।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>Which one of the following is NOT a characteristic feature or vegetation of Evergreen Forests?<br/> </b>निम्नलिखित में से कौन सी सदाबहार वनों की विशेषता या वनस्पति नहीं है<b>?</b></p>",
+    "option1": "<p> Presence of different vertical layers (stratification). / विभिन्न ऊर्ध्वाधर परतों (स्तरीकरण) की उपस्थिति।</p>",
+    "option2": "<p> Trees like Mahogany, Rosewood, and Ebony are common. / महोगनी, रोज़वुड और एबोनी जैसे पेड़ आम हैं।</p>",
+    "option3": "<p> They are found in areas receiving rainfall between 200 cm and 70 cm. / वे 200 सेमी और 70 सेमी के बीच वर्षा प्राप्त करने वाले क्षेत्रों में पाए जाते हैं।</p>",
+    "option4": "<p> They are seen in places with high temperatures (above 22°C). / वे उच्च तापमान (22°Cसे ऊपर) वाले स्थानों पर देखे जाते हैं।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Evergreen forests are characterized by layering, high biodiversity, and high temperature (above 22°C). They are found in areas of high rainfall (200 cm). The rainfall range of 200 cm and 70 cm is characteristic of the Deciduous forests (Monsoon forests), making option (c) incorrect for Evergreen forests.<br/> सदाबहार वन स्तरीकरण, उच्च जैव विविधता और उच्च तापमान (22°C से ऊपर) की विशेषता रखते हैं। वे उच्च वर्षा (200 सेमी) वाले क्षेत्रों में पाए जाते हैं। 200 सेमी और 70 सेमी के बीच की वर्षा सीमा पर्णपाती वनों (मानसूनी वनों) की विशेषता है, जिससे विकल्प (c) सदाबहार वनों के लिए गलत हो जाता है।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - GEOGRAPHY</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">GEOGRAPHY - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

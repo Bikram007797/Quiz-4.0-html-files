@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY - HIMALAYAS QUIZ [23-10-2025] - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>GEOGRAPHY - HIMALAYAS QUIZ [23-10-2025]</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>The Himalayas are classified as which type of mountain range, based on their geological formation?<br/> </b>हिमालय को उनकी भूवैज्ञानिक संरचना के आधार पर किस प्रकार की पर्वत श्रृंखला के रूप में वर्गीकृत किया गया है<b>?</b></p>",
+    "option1": "<p> Block Mountains / भ्रंशोत्थ पर्वत</p>",
+    "option2": "<p> Volcanic Mountains / ज्वालामुखी पर्वत</p>",
+    "option3": "<p> Old Fold Mountains / पुराने वलित पर्वत</p>",
+    "option4": "<p> Young Fold Mountains / युवा वलित पर्वत</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Himalayas are a classic example of Young Fold Mountains. They were formed millions of years ago due to the collision and convergence of the Indian Plate and the Eurasian Plate.<br/> हिमालय युवा वलित पर्वतों का एक उत्कृष्ट उदाहरण है । इनका निर्माण लाखों वर्ष पूर्व भारतीय प्लेट और यूरेशियन प्लेट के अभिसरण (टकराव) के कारण हुआ था ।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>What is the approximate average height of the Great Himalayas, also known as Himadri or Inner Himalayas?<br/> </b>महान हिमालय<b>, </b>जिसे हिमाद्री या आंतरिक हिमालय भी कहा जाता है<b>, </b>की अनुमानित औसत ऊँचाई कितनी है<b>?</b></p>",
+    "option1": "<p> 4000 m</p>",
+    "option2": "<p> 6000 m</p>",
+    "option3": "<p> 8000 m</p>",
+    "option4": "<p> 1000 m</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Great Himalayas, or Himadri, has the highest peaks and a significant average height of 6000 m. The other major ranges like the Lesser Himalayas have an average height of 3500–4500 m , and the Siwaliks have 900–1100 m.<br/> महान हिमालय, या हिमाद्रि, की सबसे ऊंची चोटियां हैं और इसकी औसत ऊंचाई 6000 मीटर है। अन्य प्रमुख श्रेणियां जैसे लघु हिमालय की औसत ऊंचाई लगभग 3500–4500 मीटर है, और शिवालिक की लगभग 900–1100 मीटर है।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>Which river flows in the valley between the Ladakh Range and the Zanskar Range in the Trans-Himalayas?<br/> </b>ट्रांस<b>-</b>हिमालय में लद्दाख श्रृंखला और जास्कर श्रृंखला के बीच की घाटी में कौन सी नदी बहती है<b>?</b></p>",
+    "option1": "<p> Shyok River / श्योक नदी</p>",
+    "option2": "<p> Jhelum River / झेलम नदी</p>",
+    "option3": "<p> Chenab River / चिनाब नदी</p>",
+    "option4": "<p> Indus River / सिंधु नदी</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Trans-Himalayas are composed of three main ranges: Karakoram, Ladakh, and Zanskar. The Indus River flows between the Ladakh and Zanskar ranges. The Shyok River, a tributary of the Indus, flows between the Karakoram and Ladakh ranges.<br/> ट्रांस-हिमालय तीन मुख्य श्रेणियों से बना है: काराकोरम, लद्दाख और जास्कर । सिंधु नदी लद्दाख और जास्कर श्रेणियों के बीच की घाटी में बहती है । श्योक नदी, जो सिंधु की एक सहायक नदी है, काराकोरम और लद्दाख श्रेणियों के बीच बहती है ।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>What is the local name given to the world's highest peak, Mount Everest, in Nepal?<br/> </b>विश्व की सबसे ऊँची चोटी<b>, </b>माउंट एवरेस्ट<b>, </b>को नेपाल में क्या स्थानीय नाम दिया गया है<b>?</b></p>",
+    "option1": "<p> Chomolungma / चोमोलुंगमा</p>",
+    "option2": "<p> Dhaulagiri / धौलागिरी</p>",
+    "option3": "<p> Sagarmatha / सागरमाथा</p>",
+    "option4": "<p> Annapurna / अन्नपूर्णा</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Mount Everest, with a height of 8848 m, is the highest peak in the world. In Nepal, it is known by the local name Sagarmatha. In Tibet, it is known as Chomolungma.<br/> माउंट एवरेस्ट, जिसकी ऊँचाई 8848 मीटर है, विश्व की सबसे ऊँची चोटी है । नेपाल में, इसे स्थानीय नाम सागरमाथा से जाना जाता है। तिब्बत में, इसे चोमोलुंगमा के नाम से जाना जाता है।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>The longest glacier in India and the highest battlefield in the world, Siachen, is a part of which Himalayan Mountain range?<br/> </b>भारत का सबसे लंबा हिमनद और विश्व का सबसे ऊँचा युद्धक्षेत्र<b>, </b>सियाचिन<b>, </b>किस हिमालयी पर्वत श्रृंखला का हिस्सा है<b>?</b></p>",
+    "option1": "<p> Zanskar Range / जास्कर रेंज</p>",
+    "option2": "<p> Pir Panjal Range / पीर पंजाल रेंज</p>",
+    "option3": "<p> Karakoram Range / काराकोरम रेंज</p>",
+    "option4": "<p> Ladakh Range / लद्दाख रेंज</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Siachen is one of the important glaciers of the Karakoram Range. It is known as the highest battlefield in the world and was the site of Operation Meghdoot in 1984.<br/> सियाचिन काराकोरम रेंज के महत्वपूर्ण ग्लेशियरों में से एक है । इसे दुनिया का सबसे ऊँचा युद्धक्षेत्र माना जाता है और यह 1984 में ऑपरेशन मेघदूत का स्थल था।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>What are the longitudinal valleys lying between the Lesser Himalayas and the Siwaliks known as?<br/> </b>लघु हिमालय और शिवालिक के बीच स्थित अनुदैर्ध्य घाटियों को किस नाम से जाना जाता है<b>?</b></p>",
+    "option1": "<p> Duars / द्वार</p>",
+    "option2": "<p> Karewas / करेवास</p>",
+    "option3": "<p> Duns / दून</p>",
+    "option4": "<p> Graben / ग्राबेन</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The longitudinal valleys between the Lesser Himalayas and the Siwaliks are known as Duns. The largest and most famous among them is Dehradun. In the Eastern Himalayas, the Siwaliks are replaced by Duars.<br/> लघु हिमालय और शिवालिक के बीच की अनुदैर्ध्य घाटियों को दून के नाम से जाना जाता है। उनमें से सबसे बड़ा और सबसे प्रसिद्ध देहरादून है । पूर्वी हिमालय में, शिवालिक को द्वार द्वारा प्रतिस्थापित किया जाता है।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Which mountain peak is the Westernmost point of the Great Himalayas/Himadri?<br/> </b>महान हिमालय<b>/</b>हिमाद्री का सबसे पश्चिमी बिंदु कौन सी पर्वत चोटी है<b>?</b></p>",
+    "option1": "<p> Namcha Barwa / नामचा बरवा</p>",
+    "option2": "<p> Nanga Parvat / नंगा पर्वत</p>",
+    "option3": "<p> K2/Godwin Austin / K2/गॉडविन ऑस्टिन</p>",
+    "option4": "<p> Mt. Kamet / माउंट कामेट</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Great Himalayas extend from Nanga Parvat in the west to Namcha Barwa in the east. This bending at the extremes is known as Syntaxial Bending.<br/> महान हिमालय पश्चिम में नंगा पर्वत से पूर्व में नामचा बरवा तक फैला हुआ है। चरम सीमाओं पर इस मोड़ को वाक्यविन्यासीय मोड़ (सिंटैक्सियल बेंडिंग) के रूप में जाना जाता है।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>The Lesser Himalayas (Middle Himalayas) are known by the name of which range in Himachal Pradesh?<br/> </b>लघु हिमालय <b>(</b>मध्य हिमालय<b>) </b>को हिमाचल प्रदेश में किस श्रेणी के नाम से जाना जाता है<b>?</b></p>",
+    "option1": "<p> Pir Panjal Range / पीर पंजाल रेंज</p>",
+    "option2": "<p> Nagtibba / नागटिब्बा</p>",
+    "option3": "<p> Dhauladhar / धौलाधार</p>",
+    "option4": "<p> Mahabharat Range / महाभारत रेंज</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Lesser Himalayas have different names regionally. In Himachal Pradesh, they are known as the Dhauladhar range. In J&amp;K, they are known as the Pir Panjal Range, and in Nepal, they are called the Mahabharat Range.<br/> लघु हिमालय को क्षेत्रीय रूप से अलग-अलग नामों से जाना जाता है । हिमाचल प्रदेश में, उन्हें धौलाधार श्रेणी के नाम से जाना जाता है। जम्मू और कश्मीर में, वे पीर पंजाल श्रेणी हैं, और नेपाल में, उन्हें महाभारत श्रेणी कहा जाता है।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Which of the following is identified as an Old Fold Mountain in India, formed billions of years ago?<br/> </b>निम्नलिखित में से किसे भारत में एक पुराने वलित पर्वत के रूप में पहचाना जाता है<b>, </b>जिसका निर्माण अरबों वर्ष पहले हुआ था<b>?</b></p>",
+    "option1": "<p> The Himalayas / हिमालय</p>",
+    "option2": "<p> Vindhya Range / विंध्य श्रेणी</p>",
+    "option3": "<p> Satpura / सतपुड़ा</p>",
+    "option4": "<p> Aravalli / अरावली</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> While the Himalayas are Young Fold Mountains, the Aravalli mountains are listed among the Old fold mountains. These old fold mountains were formed billions of years ago.<br/> हिमालय युवा वलित पर्वत हैं, जबकि अरावली पर्वत पुराने वलित पर्वतों में आते हैं। इन पुराने वलित पर्वतों का निर्माण अरबों वर्ष पहले हुआ था ।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>The Tibetan Plateau, located to the north of the Himalayas, is famously known by which phrase?<br/> </b>हिमालय के उत्तर में स्थित तिब्बती पठार<b>, </b>किस वाक्यांश से प्रसिद्ध रूप से जाना जाता है<b>?</b></p>",
+    "option1": "<p> Water Tower of Asia / एशिया का जल टॉवर</p>",
+    "option2": "<p> Roof of the World / विश्व की छत</p>",
+    "option3": "<p> Plateau of Fire / आग का पठार</p>",
+    "option4": "<p> Valley of Flowers / फूलों की घाटी</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Tibetan Plateau, also known as the Roof of the World, is a vast high-altitude plateau in Central Asia. It is located just north of the Great Himalayas and the Ganga Plain.<br/> तिब्बती पठार, जिसे विश्व की छत के रूप में भी जाना जाता है, मध्य एशिया में एक विशाल उच्च-ऊंचाई वाला पठार है। यह महान हिमालय और गंगा के मैदान के ठीक उत्तर में स्थित है ।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Assertion (A): The width of the Himalayas decreases generally from West to East.<br/> Reason (R): The intensity of plate convergence was greater in the East, leading to a more compressed and narrow mountain structure.<br/> </b>अभिकथन <b>(A): </b>हिमालय की चौड़ाई सामान्यतः पश्चिम से पूर्व की ओर घटती जाती है।<b><br/> </b>कारण <b>(R): </b>पूर्व में प्लेट अभिसरण की तीव्रता अधिक थी<b>, </b>जिससे अधिक संपीड़ित और संकरी पर्वत संरचना बनी।</p>",
+    "option1": "<p> Both A and R are true, and R is the correct explanation of A. / A और R दोनों सत्य हैं, और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true, but R is not the correct explanation of A. / A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true, but R is false. / A सत्य है, लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false, but R is true. / A असत्य है, लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Assertion (A) is explicitly stated in the general orientation of the Himalayas (Avg. width decreases from West to East). Reason (R) is a standard geographical explanation: greater convergence force (asymmetrical folding) in the eastern side leads to high compression, resulting in a narrower and higher structure.<br/> अभिकथन (A) स्पष्ट रूप से हिमालय के सामान्य अभिविन्यास में बताया गया है (औसत चौड़ाई पश्चिम से पूर्व की ओर घटती है)। कारण (R) एक मानक भौगोलिक व्याख्या है: पूर्वी तरफ अधिक अभिसरण बल (असममित वलन ) के कारण उच्च संपीड़न होता है, जिसके परिणामस्वरूप एक संकरी और उच्च संरचना बनती है।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Which of the following is the correct sequence of the Trans-Himalayan ranges from North to South?<br/> </b>ट्रांस<b>-</b>हिमालयी श्रेणियों का उत्तर से दक्षिण की ओर सही क्रम निम्नलिखित में से कौन सा है<b>?</b></p>",
+    "option1": "<p> Zanskar - Ladakh - Karakoram / जास्कर - लद्दाख - काराकोरम</p>",
+    "option2": "<p> Karakoram - Zanskar - Ladakh / काराकोरम - जास्कर - लद्दाख</p>",
+    "option3": "<p> Karakoram - Ladakh - Zanskar / काराकोरम - लद्दाख - जास्कर</p>",
+    "option4": "<p> Ladakh - Zanskar - Karakoram / लद्दाख - जास्कर - काराकोरम</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Trans-Himalayas consist of three main parallel ranges. The northernmost is the Karakoram, followed by the Ladakh, and finally the Zanskar in the south. The Indus River flows between Ladakh and Zanskar.<br/> ट्रांस-हिमालय में तीन मुख्य समानांतर श्रेणियां शामिल हैं । सबसे उत्तरी श्रेणी काराकोरम है, उसके बाद लद्दाख और अंत में दक्षिण में जास्कर है। सिंधु नदी लद्दाख और जास्कर के बीच बहती है ।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Consider the following statements regarding the Kashmir Himalayas:<br/> 1. They are famous for Karewas formation, which is a type of glacial deposit.<br/> 2. The Karewas are known for the cultivation of 'Zaffran' (Saffron).<br/> </b>कश्मीर हिमालय के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 3. </b>ये करेवा निर्माण के लिए प्रसिद्ध हैं<b>, </b>जो एक प्रकार का हिमनदीय निक्षेप है।<b><br/> 4. </b>करेवा <b>'</b>जैफरॉन<b>' (</b>केसर<b>) </b>की खेती के लिए जाने जाते हैं।</p>",
+    "option1": "<p> 1 only is correct / केवल 1 सही है</p>",
+    "option2": "<p> 2 only is correct / केवल 2 सही है</p>",
+    "option3": "<p> Both 1 and 2 are correct / 1 और 2 दोनों सही हैं</p>",
+    "option4": "<p> Neither 1 nor 2 is correct / न तो 1 और न ही 2 सही है</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Kashmir Himalayas are known for Karewas formation, which are lacustrine (lake) and glacial deposits. These formations are particularly famous for the cultivation of Zaffran, a local variety of saffron.<br/> कश्मीर हिमालय करेवा निर्माण के लिए जाना जाता है, जो सरोवरी (झील) और हिमनदीय निक्षेप हैं । ये संरचनाएँ विशेष रूप से जैफरॉन (केसर की एक स्थानीय किस्म) की खेती के लिए प्रसिद्ध हैं।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>The regional division of the Himalayas lying between the Kali River and the Teesta River is known as the:<br/> </b>काली नदी और तीस्ता नदी के बीच स्थित हिमालय का क्षेत्रीय विभाजन किस नाम से जाना जाता है<b>:</b></p>",
+    "option1": "<p> Punjab Himalayas / पंजाब हिमालय</p>",
+    "option2": "<p> Kumaon Himalayas / कुमाऊं हिमालय</p>",
+    "option3": "<p> Nepal Himalayas / नेपाल हिमालय</p>",
+    "option4": "<p> Assam Himalayas / असम हिमालय</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Himalayan range is divided regionally by rivers. The section between the Kali River and the Teesta River is designated as the Nepal Himalayas. This section is the longest and highest, featuring peaks like Mt. Everest and Kanchenjunga.<br/> हिमालय श्रृंखला नदियों द्वारा क्षेत्रीय रूप से विभाजित है । काली नदी और तीस्ता नदी के बीच के खंड को नेपाल हिमालय के रूप में नामित किया गया है। यह खंड सबसे लंबा और सबसे ऊँचा है, जिसमें माउंट एवरेस्ट और कंचनजंगा जैसी चोटियाँ शामिल हैं ।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Consider the following statements about the Siwalik Range:<br/> 1. It is the outermost and lowest range of the Himalayas, with an average height of 1000 m.<br/> 2. It is replaced by 'Duars' in the Eastern Himalayas (Darjeeling and Sikkim region).<br/> </b>शिवालिक श्रेणी के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> 3. </b>यह हिमालय की सबसे बाहरी और सबसे निचली श्रेणी है<b>, </b>जिसकी औसत ऊँचाई <b>1000 </b>मीटर है।<b><br/> 4. </b>इसे पूर्वी हिमालय <b>(</b>दार्जिलिंग और सिक्किम क्षेत्र<b>) </b>में <b>'</b>द्वार<b>' </b>द्वारा प्रतिस्थापित किया जाता है।</p>",
+    "option1": "<p> 1 only is correct / केवल 1 सही है</p>",
+    "option2": "<p> 2 only is correct / केवल 2 सही है</p>",
+    "option3": "<p> Both 1 and 2 are correct / 1 और 2 दोनों सही हैं</p>",
+    "option4": "<p> Neither 1 nor 2 is correct / न तो 1 और न ही 2 सही है</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Statement 1 is correct as the Siwalik range has an average height of 1000 m. Statement 2 is also correct: in the Eastern Himalayas, especially the Darjeeling and Sikkim regions, the Siwaliks are replaced by the Duars.<br/> कथन 1 सही है क्योंकि शिवालिक श्रेणी की औसत ऊँचाई 1000 मीटर है । कथन 2 भी सही है: पूर्वी हिमालय में, विशेष रूप से दार्जिलिंग और सिक्किम क्षेत्रों में, शिवालिक को द्वार द्वारा प्रतिस्थापित किया जाता है।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Match the following regional names of the Lesser Himalayas (Middle Himalayas) with their respective locations:<br/> | Name | Location |<br/> | 1. Pir Panjal | A. Uttarakhand |<br/> | 2. Nagtibba | B. Jammu &amp; Kashmir |<br/> | 3. Mahabharat Range | C. Nepal |<br/> </b>लघु हिमालय <b>(</b>मध्य हिमालय<b>) </b>के निम्नलिखित क्षेत्रीय नामों को उनके संबंधित स्थानों से सुमेलित करें<b>:<br/> | </b>नाम <b>| </b>स्थान <b>|<br/> | 1. </b>पीर पंजाल <b>| A. </b>उत्तराखंड <b>|<br/> | 2. </b>नागटिब्बा <b>| B. </b>जम्मू और कश्मीर <b>|<br/> | 3. </b>महाभारत श्रेणी <b>| C. </b>नेपाल <b>|</b></p>",
+    "option1": "<p> 1-B, 2-A, 3-C</p>",
+    "option2": "<p> 1-A, 2-B, 3-C</p>",
+    "option3": "<p> 1-C, 2-A, 3-B</p>",
+    "option4": "<p> 1-B, 2-C, 3-A</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Lesser Himalayas (Middle Himalayas) are regionally named as Pir Panjal in J&amp;K, Nagtibba in Uttarakhand, Dhauladhar in Himachal Pradesh, and Mahabharat Range in Nepal.<br/> लघु हिमालय (मध्य हिमालय) को क्षेत्रीय रूप से जम्मू और कश्मीर में पीर पंजाल , उत्तराखंड में नागटिब्बा , हिमाचल प्रदेश में धौलाधार , और नेपाल में महाभारत श्रेणी नाम दिया गया है।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Which of the following is NOT one of the mountain ranges that constitute the Trans-Himalayas?<br/> </b>निम्नलिखित में से कौन सी पर्वत श्रृंखला ट्रांस<b>-</b>हिमालय का निर्माण नहीं करती है<b>?</b></p>",
+    "option1": "<p> Karakoram / काराकोरम</p>",
+    "option2": "<p> Ladakh / लद्दाख</p>",
+    "option3": "<p> Zanskar / जास्कर</p>",
+    "option4": "<p> Dhauladhar / धौलाधार</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Trans-Himalayas (or Tibetan Himalayas) consist of three main ranges: Karakoram, Ladakh, and Zanskar. The Dhauladhar is a range within the Lesser Himalayas (Middle Himalayas), not the Trans-Himalayas.<br/> ट्रांस-हिमालय (या तिब्बती हिमालय) में तीन मुख्य श्रेणियां शामिल हैं: काराकोरम, लद्दाख और जास्कर । धौलाधार लघु हिमालय (मध्य हिमालय) के भीतर एक श्रेणी है, न कि ट्रांस-हिमालय की।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Assertion (A): The Jhelum River exhibits meanders near the city of Srinagar.<br/> Reason (R): River meandering is usually a characteristic of a river's mature or old stage in plain areas, but the Jhelum meanders in its youth stage.<br/> </b>अभिकथन <b>(A): </b>झेलम नदी श्रीनगर शहर के पास विसर्प <b>(</b>मेन्डर्स<b>) </b>प्रदर्शित करती है।<b><br/> </b>कारण <b>(R): </b>नदी का विसर्पण आमतौर पर मैदानी क्षेत्रों में नदी की परिपक्व या वृद्धावस्था की विशेषता है<b>, </b>लेकिन झेलम अपनी युवावस्था में विसर्प करती है।</p>",
+    "option1": "<p> Both A and R are true, and R is the correct explanation of A. / A और R दोनों सत्य हैं, और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true, but R is not the correct explanation of A. / A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true, but R is false. / A सत्य है, लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false, but R is true. / A असत्य है, लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Assertion (A) is true as the Jhelum River is noted to meander near Srinagar. Reason (R) is also true and is the geological reason for the Jhelum's uniqueness: it meanders in its youth stage (i.e., in the Himalayas), which is a characteristic usually found in the mature stage in plains, thus R correctly explains A.<br/> अभिकथन (A) सत्य है क्योंकि झेलम नदी श्रीनगर के पास विसर्प करती हुई बताई गई है । कारण (R) भी सत्य है और झेलम की विशिष्टता का भूवैज्ञानिक कारण है: यह अपनी युवावस्था में (अर्थात् हिमालय में) विसर्प करती है, जो आमतौर पर मैदानों में परिपक्व अवस्था में पाई जाने वाली विशेषता है, इस प्रकार R, A की सही व्याख्या करता है।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Which of the following is the highest peak in India that is located entirely within the political boundaries of the country (according to the given data)?<br/> </b>प्रस्तुत आँकड़ों के अनुसार निम्नलिखित में से कौन सी भारत की सबसे ऊँची चोटी है जो पूरी तरह से देश की राजनीतिक सीमाओं के भीतर स्थित है<b>?</b></p>",
+    "option1": "<p> K2 (Godwin Austin) / K2 (गॉडविन ऑस्टिन)</p>",
+    "option2": "<p> Mount Everest / माउंट एवरेस्ट</p>",
+    "option3": "<p> Mt. Kanchenjunga / माउंट कंचनजंगा</p>",
+    "option4": "<p> Nanda Devi / नंदा देवी</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Mt. Kanchenjunga (8598 m) is listed as the Highest in India (Sikkim). K2 (8611 m) is the highest peak of the Karakoram Range, but it is situated in Pakistan-occupied Kashmir (PoK) and is not entirely within India's political boundary. Mt. Everest is in Nepal.<br/> माउंट कंचनजंगा (8598 मीटर) को भारत में सबसे ऊंचा (सिक्किम) के रूप में सूचीबद्ध किया गया है। K2 (8611 मीटर) काराकोरम रेंज की सबसे ऊंची चोटी है, लेकिन यह पाकिस्तान अधिकृत कश्मीर (PoK) में स्थित है और पूरी तरह से भारत की राजनीतिक सीमा के भीतर नहीं है। माउंट एवरेस्ट नेपाल में है ।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>The Eastern Hills or Purvanchal Hills have a North to South orientation. Which of the following is the correct order of hill ranges from North to South?<br/> </b>पूर्वी पहाड़ियाँ या पूर्वांचल पहाड़ियाँ उत्तर से दक्षिण की ओर उन्मुख हैं। निम्नलिखित में से कौन सा उत्तर से दक्षिण की ओर पहाड़ी श्रृंखलाओं का सही क्रम है<b>?</b></p>",
+    "option1": "<p> Patkai Bum – Naga Hills – Mizo Hills / पटकाई बूम – नागा पहाड़ियाँ – मिजो पहाड़ियाँ</p>",
+    "option2": "<p> Khasi Jaintia – Naga Hills – Mizo Hills / खासी जयंतिया – नागा पहाड़ियाँ – मिजो पहाड़ियाँ</p>",
+    "option3": "<p> Naga Hills – Mizo Hills – Patkai Bum / नागा पहाड़ियाँ – मिजो पहाड़ियाँ – पटकाई बूम</p>",
+    "option4": "<p> Mizo Hills – Naga Hills – Patkai Bum / मिजो पहाड़ियाँ – नागा पहाड़ियाँ – पटकाई बूम</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 5. Purvanchal Hills: Spread across the northeastern states of India and trending north to south.<br/> 6. Major ranges in north to south order:<br/> 7. Patkai Bum – in the northern parts of Arunachal Pradesh and Nagaland<br/> 8. Naga Hills – in the central part of Nagaland<br/> 9. Mizo/Lushai Hills – in the southern part of Mizoram state<br/> Other Hills:<br/> 10. Khasi Jaintia Hills – Located in Meghalaya, these are not part of Purvanchal but are in the southwestern northeastern region.<br/> 11. पूर्वांचल पहाड़ियाँ: भारत के उत्तर-पूर्वी राज्य में फैली हैं और उत्तर से दक्षिण की दिशा में हैं।<br/> 12. प्रमुख श्रृंखलाएँ उत्तर से दक्षिण क्रम में:<br/> 13. पटकाई बूम – अरुणाचल प्रदेश और नागालैंड के उत्तर भाग में<br/> 14. नागा पहाड़ियाँ – नागालैंड के मध्य भाग में<br/> 15. मिजो/लुशाई पहाड़ियाँ – मिज़ोरम राज्य के दक्षिणी भाग में<br/> अन्य पहाड़ियाँ:<br/> 16. खासी जयंतिया पहाड़ियाँ – मेघालय में स्थित, ये पूर्वांचल का हिस्सा नहीं बल्कि दक्षिण-पश्चिमी पूर्वोत्तर क्षेत्र में हैं।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Umling La, mentioned in the context of passes in the region, is significant because it represents which achievement?<br/> </b>क्षेत्र में दर्रों के संदर्भ में उल्लिखित उमलिंग ला<b>, </b>किस उपलब्धि का प्रतिनिधित्व करने के कारण महत्वपूर्ण है<b>?</b></p>",
+    "option1": "<p> It is the highest pass located in the Pir Panjal Range. / यह पीर पंजाल श्रेणी में स्थित सबसे ऊँचा दर्रा है।</p>",
+    "option2": "<p> It connects the Kashmir Valley with Ladakh. / यह कश्मीर घाटी को लद्दाख से जोड़ता है।</p>",
+    "option3": "<p> It is the highest motorable road in the world. / यह विश्व की सबसे ऊँची मोटर योग्य सड़क है।</p>",
+    "option4": "<p> It connects India to China through the Silk Route. / यह सिल्क रूट के माध्यम से भारत को चीन से जोड़ता है।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The document highlights Umling La by stating it is the highest motorable road. It is situated in Ladakh and is crucial for border connectivity. The distinction of 'highest pass' is given to Karakoram Pass in the same section.<br/> दस्तावेज़ उमलिंग ला को विश्व की सबसे ऊँची मोटर योग्य सड़क के रूप में प्रस्तुत करता है। यह लद्दाख में स्थित है और सीमा संपर्क के लिए महत्वपूर्ण है। इसी खंड 'सबसे ऊँचा दर्रा' का गौरव में काराकोरम दर्रे को दिया गया है ।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>The Lipu Lekh Pass is strategically located at the trijunction of which three countries?<br/> </b>लिपु लेख दर्रा रणनीतिक रूप से किन तीन देशों के त्रिसंगम पर स्थित है<b>?</b></p>",
+    "option1": "<p> India, Pakistan, and Afghanistan / भारत, पाकिस्तान और अफगानिस्तान</p>",
+    "option2": "<p> India, China, and Nepal / भारत, चीन और नेपाल</p>",
+    "option3": "<p> India, China, and Bhutan / भारत, चीन और भूटान</p>",
+    "option4": "<p> India, Nepal, and Bhutan / भारत, नेपाल और भूटान</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Lipulekh Pass:<br/> 5. Located in Uttarakhand, India.<br/> 6. It is at the trijunction point of three countries – India, China (Tibet), and Nepal.<br/> 7. Historically important for the traditional Kumbh Mela and Tibet trade route.<br/> लिपु लेख दर्रा :<br/> 8. उत्तराखंड, भारत में स्थित है।<br/> 9. यह तीनों देशों – भारत, चीन (तिब्बत), और नेपाल – के त्रिसंगम बिंदु पर है।<br/> 10. पारंपरिक कुंबमेला और तिब्बत व्यापार मार्ग के लिए ऐतिहासिक रूप से महत्वपूर्ण।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Which one of the following mountain peaks is correctly matched with the state where it is located?<br/> </b>निम्नलिखित में से कौन सी पर्वत चोटी उस राज्य के साथ सही ढंग से सुमेलित है जहाँ वह स्थित है<b>?</b></p>",
+    "option1": "<p> Kangto – Nagaland / कांग्टो – नागालैंड</p>",
+    "option2": "<p> Saramati – Arunachal Pradesh / सारामती – अरुणाचल प्रदेश</p>",
+    "option3": "<p> Phawngpui (Blue Mountain) – Mizoram / फावंगपुई (ब्लू माउंटेन) – मिजोरम</p>",
+    "option4": "<p> Mt. Esii (Tenipu) – Sikkim / माउंट एसाई (टेनिपु) – सिक्किम</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Phawngpui, also known as the Blue Mountain, is the highest peak of Mizoram. Kangto is in Arunachal Pradesh, Saramati in Nagaland, and Mt. Esii is in Manipur.<br/> फावंगपुई, जिसे नीला पर्वत (ब्लू माउंटेन) भी कहा जाता है, मिजोरम की सबसे ऊंची चोटी है। कांग्टो अरुणाचल प्रदेश में , सारामती नागालैंड में , और माउंट एसाई मणिपुर में है।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>The Kashmir Valley is an important physiographic feature located between which two major Himalayan ranges?<br/> </b>कश्मीर घाटी एक महत्वपूर्ण भौतिक विशेषता है जो किन दो प्रमुख हिमालयी श्रेणियों के बीच स्थित है<b>?</b></p>",
+    "option1": "<p> Siwaliks and Lesser Himalayas / शिवालिक और लघु हिमालय</p>",
+    "option2": "<p> Trans-Himalayas and Great Himalayas / ट्रांस-हिमालय और महान हिमालय</p>",
+    "option3": "<p> Great Himalayas and Lesser Himalayas / महान हिमालय और लघु हिमालय</p>",
+    "option4": "<p> Zanskar and Pir Panjal / जास्कर और पीर पंजाल</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Kashmir Valley is a major longitudinal valley located between the Great Himalayas (Himadri) and the Lesser Himalayas (Pir Panjal Range). This valley is famous for the Jhelum River's meanders and the Karewa deposits.<br/> कश्मीर घाटी एक प्रमुख अनुदैर्ध्य घाटी है जो महान हिमालय (हिमाद्री) और लघु हिमालय (पीर पंजाल श्रेणी) के बीच स्थित है। यह घाटी झेलम नदी के विसर्पों और करेवा निक्षेपों के लिए प्रसिद्ध है।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>Which pass in the Sikkim Himalayas is famous for the Doklam trijunction dispute and connects India to China (Tibet)?<br/> </b>सिक्किम हिमालय में कौन सा दर्रा डोकलाम त्रिसंगम विवाद के लिए प्रसिद्ध है और भारत को चीन <b>(</b>तिब्बत<b>) </b>से जोड़ता है<b>?</b></p>",
+    "option1": "<p> Jelep La / जेलेप ला</p>",
+    "option2": "<p> Nathula / नाथुला</p>",
+    "option3": "<p> Shipki La / शिपकी ला</p>",
+    "option4": "<p> Baralacha La / बारालाचा ला</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The document mentions Nathula and Jelep La in the context of Sikkim and the Doklam area. Nathula is one of the most important passes connecting Sikkim with Tibet and is central to the Doklam issue, whereas Jelep La is near the Bhutan trijunction.<br/> दस्तावेज़ में सिक्किम और डोकलाम क्षेत्र के संदर्भ में नाथुला और जेलेप ला का उल्लेख है। नाथुला सिक्किम को तिब्बत से जोड़ने वाले सबसे महत्वपूर्ण दर्रों में से एक है और डोकलाम मुद्दे के केंद्र में है, जबकि जेलेप ला भूटान त्रिसंगम के पास है।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - GEOGRAPHY</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">GEOGRAPHY - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>
