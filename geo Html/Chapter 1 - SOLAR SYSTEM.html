@@ -2060,6 +2060,7 @@ function submitQuiz() {
   });
   
   displayResults(correct, wrong, unattempted, score);
+  sendScoreToHub(score, correct, wrong, timerSeconds);
   
   const fab = document.getElementById('paletteFab');
   const nav = document.getElementById('navigation');
