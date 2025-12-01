@@ -2060,6 +2060,7 @@ function submitQuiz() {
   });
   
   displayResults(correct, wrong, unattempted, score);
+   sendScoreToHub(score, correct, wrong, timerSeconds);
   
   const fab = document.getElementById('paletteFab');
   const nav = document.getElementById('navigation');
@@ -2331,6 +2332,37 @@ window.addEventListener('unload', () => {
     clearInterval(timerInterval);
   }
 });
+  // NEW FUNCTION - Send score back to main hub
+function sendScoreToHub(scorePercentage, correct, wrong, timeInSeconds) {
+  try {
+    // Get chapter info from page title
+    const pageTitle = document.title;
+    
+    // Extract subject and chapter from URL or title
+    // Example: "GEOGRAPHY - SOLAR SYSTEM QUIZ"
+    const match = pageTitle.match(/GEOGRAPHY.*SOLAR SYSTEM/i);
+    
+    // Create a unique key for this quiz
+    const chapterKey = 'Geography-8'; // You'll need to set this for each chapter
+    
+    // Send message to parent window (main hub)
+    if (window.opener && !window.opener.closed) {
+      window.opener.postMessage({
+        type: 'quiz_completed',
+        chapterKey: chapterKey,
+        score: scorePercentage,
+        correct: correct,
+        wrong: wrong,
+        time: timeInSeconds,
+        timestamp: Date.now()
+      }, '*');
+      
+      console.log('Score sent to hub:', chapterKey, scorePercentage);
+    }
+  } catch (err) {
+    console.error('Error sending score:', err);
+  }
+}
 </script>
 </body>
 </html>
