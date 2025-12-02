@@ -2042,11 +2042,14 @@ function submitQuiz() {
   closePalette();
   
   let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  let totalPossibleScore = 0;
   
   questions.forEach(q => {
     const userAns = answers[q.sr_no];
     const posMark = parseFloat(q.positive_marking) || 0;
     const negMark = parseFloat(q.negative_marking) || 0;
+    
+    totalPossibleScore += posMark; // Track maximum possible score
     
     if (!userAns) {
       unattempted++;
@@ -2058,40 +2061,68 @@ function submitQuiz() {
       score -= negMark;
     }
   });
-  // AFTER calculating score, send data back to main app
+  
+  // Ensure score doesn't go negative
+  if (score < 0) score = 0;
+  
+  // Calculate percentage score
+  const percentageScore = totalPossibleScore > 0 ? Math.round((score / totalPossibleScore) * 100) : 0;
+  
+  // Send data back to main app
   const urlParams = new URLSearchParams(window.location.search);
   const subjectId = urlParams.get('subjectId');
   const chapterId = urlParams.get('chapterId');
   const userId = urlParams.get('userId');
   
   if (subjectId && chapterId && userId) {
-    // Store completion in localStorage for main app to read
     const completionData = {
       completed: true,
-      score: score,
+      score: percentageScore, // Send percentage score, not raw score
       subjectId: subjectId,
       chapterId: chapterId,
       userId: userId,
-      timestamp: Date.now()
+      timestamp: Date.now(),
+      forApp: 'quiz-app' // Add identifier for main app
     };
     
-    // Method 1: Store in localStorage (same domain)
+    // Method 1: Store in localStorage
     localStorage.setItem('quizCompletion', JSON.stringify(completionData));
     
-    // Method 2: Send via postMessage if opened from main app
-    if (window.opener) {
-      window.opener.postMessage(completionData, '*');
+    // Method 2: Send via postMessage to main app
+    try {
+      if (window.opener && !window.opener.closed) {
+        window.opener.postMessage(completionData, '*');
+      }
+      
+      // Also try to send to parent if in iframe
+      if (window.parent !== window) {
+        window.parent.postMessage(completionData, '*');
+      }
+    } catch (e) {
+      console.log('Could not send postMessage:', e);
     }
     
-    // Method 3: Update URL for main app to read
+    // Method 3: Update URL (for main app to read when user returns)
     const currentUrl = new URL(window.location.href);
     currentUrl.searchParams.set('completed', 'true');
-    currentUrl.searchParams.set('score', score);
+    currentUrl.searchParams.set('score', percentageScore);
+    currentUrl.searchParams.set('subjectId', subjectId);
+    currentUrl.searchParams.set('chapterId', chapterId);
     window.history.replaceState({}, '', currentUrl.toString());
+    
+    // Method 4: Store in sessionStorage for immediate reading
+    sessionStorage.setItem('lastQuizResult', JSON.stringify({
+      score: percentageScore,
+      subjectId: subjectId,
+      chapterId: chapterId,
+      time: Date.now()
+    }));
   }
   
+  // Display results to user
   displayResults(correct, wrong, unattempted, score);
   
+  // Hide UI elements
   const fab = document.getElementById('paletteFab');
   const nav = document.getElementById('navigation');
   if (fab) fab.style.display = 'none';
@@ -2100,6 +2131,66 @@ function submitQuiz() {
   document.body.style.paddingBottom = '20px';
   
   clearLocalStorage();
+  
+  // Optional: Show a message about returning to main app
+  setTimeout(() => {
+    showReturnToMainMessage(percentageScore);
+  }, 2000);
+}
+
+// Add this helper function
+function showReturnToMainMessage(score) {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'return-message';
+    messageDiv.style.cssText = `
+      background: #e7f3ff;
+      border-left: 4px solid #007bff;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 8px;
+      text-align: center;
+    `;
+    messageDiv.innerHTML = `
+      <p style="margin-bottom: 10px; font-weight: 600; color: #007bff;">
+        🎉 Quiz Completed! Your score: ${score}%
+      </p>
+      <p style="font-size: 14px; color: #666;">
+        Return to the main app to track your progress and earn XP!
+      </p>
+      <button onclick="returnToMainApp()" style="
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        margin-top: 10px;
+        cursor: pointer;
+        font-weight: 600;
+      ">
+        Return to Main App
+      </button>
+    `;
+    
+    // Find action buttons div and insert before it
+    const actionButtons = resultSection.querySelector('.action-buttons');
+    if (actionButtons) {
+      resultSection.insertBefore(messageDiv, actionButtons);
+    } else {
+      resultSection.appendChild(messageDiv);
+    }
+  }
+}
+
+function returnToMainApp() {
+  // Try to close the window if opened in new tab
+  if (window.opener && !window.opener.closed) {
+    window.close();
+  } else {
+    // If can't close, show message
+    alert('You can now return to the main app to see your updated progress!');
+  }
 }
 
 function displayResults(correct, wrong, unattempted, score) {
