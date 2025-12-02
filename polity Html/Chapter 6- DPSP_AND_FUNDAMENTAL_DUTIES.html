@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>General Quiz -  - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>General Quiz - </h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>Directive Principles of State Policy (DPSP) are contained in which part and article range of the Indian Constitution?<br/> </b>राज्य के नीति निदेशक सिद्धांत <b>(DPSP) </b>भारतीय संविधान के किस भाग और अनुच्छेद सीमा में निहित हैं<b>?</b></p>",
+    "option1": "<p> Part III, Article 12-35 / भाग III, अनुच्छेद 12-35</p>",
+    "option2": "<p> Part IV, Article 36-51 / भाग IV, अनुच्छेद 36-51</p>",
+    "option3": "<p> Part IVA, Article 51A / भाग IVA, अनुच्छेद 51A</p>",
+    "option4": "<p> Part IX, Article 243-243O / भाग IX, अनुच्छेद 243-243O</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The DPSP are embodied in Articles 36 to 51 under Part IV of the Constitution, acting as guidelines for the state in law-making and policy formulation. DPSP संविधान के भाग IV के तहत अनुच्छेद 36 से 51 में सन्निहित हैं, जो कानून बनाने और नीति निर्माण में राज्य के लिए दिशानिर्देश के रूप में कार्य करते हैं।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>From which country's constitution was the Directive Principles of State Policy (DPSP) borrowed and incorporated into the Indian Constitution?<br/> </b>राज्य के नीति निदेशक सिद्धांतों <b>(DPSP) </b>को किस देश के संविधान से उधार लेकर भारतीय संविधान में शामिल किया गया था<b>?</b></p>",
+    "option1": "<p> United States of America / संयुक्त राज्य अमेरिका</p>",
+    "option2": "<p> Australia / ऑस्ट्रेलिया</p>",
+    "option3": "<p> Ireland / आयरलैंड</p>",
+    "option4": "<p> Russia (USSR) / रूस (USSR)</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The concept of DPSP was taken from the Constitution of Ireland. They were described by Dr. B.R. Ambedkar as the 'Novel features' of the Indian Constitution. DPSP की अवधारणा को आयरलैंड के संविधान से लिया गया था। डॉ. बी.आर. अम्बेडकर ने इन्हें भारतीय संविधान की 'नवीन विशेषताएँ' बताया था।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>What is the legal nature of the Directive Principles of State Policy (DPSP)?<br/> </b>राज्य के नीति निदेशक सिद्धांतों <b>(DPSP) </b>की कानूनी प्रकृति क्या है<b>?</b></p>",
+    "option1": "<p> Justiciable and enforceable by courts / न्यायसंगत और न्यायालयों द्वारा प्रवर्तनीय</p>",
+    "option2": "<p> Non-justiciable, cannot be enforced by any court / गैर-न्यायसंगत, किसी भी न्यायालय द्वारा लागू नहीं किए जा सकते</p>",
+    "option3": "<p> Justiciable only if Fundamental Rights are violated / केवल मौलिक अधिकारों के उल्लंघन पर ही न्यायसंगत</p>",
+    "option4": "<p> Statutory rights enforceable by Parliament / संसद द्वारा प्रवर्तनीय सांविधिक अधिकार</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 37 states that DPSP are non-justiciable, meaning a citizen cannot compel the state to follow them, unlike Fundamental Rights. They are, however, fundamental to the governance of the country.<br/> अनुच्छेद 37 कहता है कि DPSP गैर-न्यायसंगत हैं, जिसका अर्थ है कि मौलिक अधिकारों के विपरीत, कोई नागरिक राज्य को उनका पालन करने के लिए मजबूर नहीं कर सकता। हालांकि, वे देश के शासन के लिए मौलिक हैं।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>The provision for a 'Uniform Civil Code for the country' (Article 44) is classified under which category of Directive Principles?<br/> </b>देश के लिए <b>'</b>समान नागरिक संहिता<b>' (</b>अनुच्छेद <b>44) </b>का प्रावधान किस नीति निदेशक सिद्धांत श्रेणी के तहत वर्गीकृत किया गया है<b>?</b></p>",
+    "option1": "<p> Socialistic / समाजवादी</p>",
+    "option2": "<p> Gandhian / गांधीवादी</p>",
+    "option3": "<p> Liberal-Intellectual / उदार-बौद्धिक</p>",
+    "option4": "<p> None of the above / उपरोक्त में से कोई नहीं</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Principles focused on individual rights, liberties, and modern administrative setup, such as a Uniform Civil Code and separation of judiciary from executive, fall under the Liberal-Intellectual category.<br/> व्यक्तिगत अधिकारों, स्वतंत्रताओं और आधुनिक प्रशासनिक व्यवस्था पर केंद्रित सिद्धांत, जैसे समान नागरिक संहिता और न्यायपालिका का कार्यपालिका से पृथक्करण, उदार-बौद्धिक श्रेणी के अंतर्गत आते हैं।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>Which Article, classified under the Gandhian Principles, mandates the state to organize Village Panchayats and endow them with powers of self-government?<br/> </b>गांधीवादी सिद्धांतों के तहत वर्गीकृत<b>, </b>कौन सा अनुच्छेद राज्य को ग्राम पंचायतों को संगठित करने और उन्हें स्वशासन की इकाइयों के रूप में कार्य करने के लिए शक्तियों से संपन्न करने का आदेश देता है<b>?</b></p>",
+    "option1": "<p> Article 40 / अनुच्छेद 40</p>",
+    "option2": "<p> Article 44 / अनुच्छेद 44</p>",
+    "option3": "<p> Article 43B / अनुच्छेद 43B</p>",
+    "option4": "<p> Article 41 / अनुच्छेद 41</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 40, a key Gandhian DPSP, aims to establish Village Panchayats as units of self-government, reflecting Mahatma Gandhi's vision of decentralized power. अनुच्छेद 40, एक प्रमुख गांधीवादी DPSP, ग्राम पंचायतों को स्वशासन की इकाइयों के रूप में स्थापित करने का लक्ष्य रखता है, जो महात्मा गांधी के विकेन्द्रीकृत शक्ति के दृष्टिकोण को दर्शाता है।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>Which Article among the Socialistic principles of DPSP ensures 'Equal pay for equal work for all men and women'?<br/> DPSP </b>के समाजवादी सिद्धांतों में से कौन सा अनुच्छेद <b>'</b>सभी पुरुषों और महिलाओं के लिए समान कार्य के लिए समान वेतन<b>' </b>सुनिश्चित करता है<b>?</b></p>",
+    "option1": "<p> Article 38 / अनुच्छेद 38</p>",
+    "option2": "<p> Article 39 / अनुच्छेद 39</p>",
+    "option3": "<p> Article 42 / अनुच्छेद 42</p>",
+    "option4": "<p> Article 43 / अनुच्छेद 43</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 39 lays down several principles of policy to be followed by the State, including securing the right to adequate means of livelihood and ensuring equal pay for equal work for both sexes. अनुच्छेद 39 राज्य द्वारा अनुपालन की जाने वाली नीति के कई सिद्धांतों को निर्धारित करता है, जिसमें आजीविका के पर्याप्त साधनों का अधिकार सुरक्षित करना और दोनों लिंगों के लिए समान कार्य के लिए समान वेतन सुनिश्चित करना शामिल है।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Fundamental Duties (FD) were added to the Constitution under which Part and Article?<br/> </b>मौलिक कर्तव्यों <b>(FD) </b>को संविधान में किस भाग और अनुच्छेद के तहत जोड़ा गया था<b>?</b></p>",
+    "option1": "<p> Part IV, Article 51 / भाग IV, अनुच्छेद 51</p>",
+    "option2": "<p> Part III, Article 35A / भाग III, अनुच्छेद 35A</p>",
+    "option3": "<p> Part IVA, Article 51A / भाग IVA, अनुच्छेद 51A</p>",
+    "option4": "<p> Part II, Article 11A / भाग II, अनुच्छेद 11A</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Fundamental Duties were not part of the original constitution. They were added later through the 42nd Constitutional Amendment Act, 1976, and placed in Part IVA under Article 51A. मौलिक कर्तव्य मूल संविधान का हिस्सा नहीं थे। उन्हें बाद में 42वें संवैधानिक संशोधन अधिनियम, 1976 के माध्यम से जोड़ा गया और अनुच्छेद 51A के तहत भाग IVA में रखा गया।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>The concept of Fundamental Duties in the Indian Constitution was inspired by which country?<br/> </b>भारतीय संविधान में मौलिक कर्तव्यों की अवधारणा किस देश से प्रेरित थी<b>?</b></p>",
+    "option1": "<p> United States of America / संयुक्त राज्य अमेरिका</p>",
+    "option2": "<p> France / फ्रांस</p>",
+    "option3": "<p> Japan / जापान</p>",
+    "option4": "<p> USSR (Russia) / USSR (रूस)</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Fundamental Duties were not originally a part of the Indian Constitution, but they were later added based on the model from the constitution of the former USSR (Union of Soviet Socialist Republics). मौलिक कर्तव्य मूल रूप से भारतीय संविधान का हिस्सा नहीं थे, लेकिन बाद में उन्हें पूर्व USSR (सोवियत समाजवादी गणराज्यों का संघ) के संविधान के मॉडल के आधार पर जोड़ा गया था।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Which Constitutional Amendment Act added the Directive Principle 'Free Legal Aid' (Article 39A) to the Constitution?<br/> </b>किस संवैधानिक संशोधन अधिनियम ने <b>'</b>निःशुल्क कानूनी सहायता<b>' (</b>अनुच्छेद <b>39A) </b>नामक नीति निदेशक सिद्धांत को संविधान में जोड़ा<b>?</b></p>",
+    "option1": "<p> 44th Constitutional Amendment Act / 44वाँ संवैधानिक संशोधन अधिनियम</p>",
+    "option2": "<p> 86th Constitutional Amendment Act / 86वाँ संवैधानिक संशोधन अधिनियम</p>",
+    "option3": "<p> 42nd Constitutional Amendment Act / 42वाँ संवैधानिक संशोधन अधिनियम</p>",
+    "option4": "<p> 97th Constitutional Amendment Act / 97वाँ संवैधानिक संशोधन अधिनियम</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The 42nd Constitutional Amendment Act of 1976 added four new DPSP to the list, including Art 39A (Free legal aid to the poor). It also added Art 43A and Art 48A. 1976 के 42वें संवैधानिक संशोधन अधिनियम ने सूची में चार नए DPSP जोड़े, जिसमें अनुच्छेद 39A (गरीबों को निःशुल्क कानूनी सहायता) शामिल है। इसने अनुच्छेद 43A और अनुच्छेद 48A को भी जोड़ा।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>What is the current total number of Fundamental Duties enshrined in the Indian Constitution under Article 51A?<br/> </b>वर्तमान में भारतीय संविधान के अनुच्छेद <b>51A </b>के तहत निहित मौलिक कर्तव्यों की कुल संख्या कितनी है<b>?</b></p>",
+    "option1": "<p> 8</p>",
+    "option2": "<p> 10</p>",
+    "option3": "<p> 11</p>",
+    "option4": "<p> 12</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Swaran Singh Committee recommended 8 duties, but 10 were initially added by the 42nd CA. The 11th duty (Art 51A(k)) was added later by the 86th CA, 2002, bringing the total to 11. स्वर्ण सिंह समिति ने 8 कर्तव्यों की सिफारिश की थी, लेकिन 42वें संशोधन द्वारा शुरू में 10 जोड़े गए थे। 11वां कर्तव्य (अनुच्छेद 51A(k)) बाद में 86वें संशोधन, 2002 द्वारा जोड़ा गया, जिससे कुल संख्या 11 हो गई।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Consider the following statements regarding the nature of DPSPs:<br/> DPSP </b>की प्रकृति के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. DPSPs are positive obligations, mandating the state to take specific actions. / DPSP </b>सकारात्मक दायित्व हैं<b>, </b>जो राज्य को विशिष्ट कार्य करने का आदेश देते हैं।<b><br/> 2. Courts can invalidate laws violating DPSP directly. / </b>न्यायालय सीधे <b>DPSP </b>का उल्लंघन करने वाले कानूनों को अमान्य कर सकते हैं।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> DPSPs are positive obligations that impose duties on the state to achieve socio-economic goals. However, they are non-justiciable, and courts generally cannot invalidate laws for violating DPSP directly, but may uphold laws aimed at fulfilling them. DPSP सकारात्मक दायित्व हैं जो सामाजिक-आर्थिक लक्ष्यों को प्राप्त करने के लिए राज्य पर कर्तव्य लगाते हैं। हालांकि, वे गैर-न्यायसंगत हैं, और न्यायालय सामान्य तौर पर सीधे DPSP का उल्लंघन करने वाले कानूनों को अमान्य नहीं कर सकते, लेकिन उनका उद्देश्य पूरा करने वाले कानूनों को बरकरार रख सकते हैं।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Assertion (A): According to the Champakam Dorairajan Case (1951), Fundamental Rights would prevail over Directive Principles of State Policy (DPSP).<br/> Reason (R): DPSPs are supported by legal sanctions, whereas Fundamental Rights are supported by moral and political sanctions.<br/> </b>कथन <b>(A): </b>चंपकम दोराइराजन मामले <b>(1951) </b>के अनुसार<b>, </b>मौलिक अधिकार राज्य के नीति निदेशक सिद्धांतों <b>(DPSP) </b>पर प्रभावी होंगे।<b><br/> </b>कारण <b>(R): DPSP </b>कानूनी प्रतिबंधों द्वारा समर्थित हैं<b>, </b>जबकि मौलिक अधिकार नैतिक और राजनीतिक प्रतिबंधों द्वारा समर्थित हैं।</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A. / A और R दोनों सत्य हैं और R, A का सही स्पष्टीकरण है।</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A. / A और R दोनों सत्य हैं लेकिन R, A का सही स्पष्टीकरण नहीं है।</p>",
+    "option3": "<p> A is true but R is false. / A सत्य है लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false but R is true. / A असत्य है लेकिन R सत्य है।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statement A is true as the SC ruled that FRs prevail over DPSP. However, the reason R is false; DPSP are supported by moral/political sanctions, while FRs are backed by legal sanctions. कथन A सत्य है क्योंकि SC ने फैसला सुनाया था कि FRs, DPSP पर प्रभावी होंगे। हालाँकि, कारण R असत्य है; DPSP नैतिक/राजनीतिक प्रतिबंधों द्वारा समर्थित हैं, जबकि FRs कानूनी प्रतिबंधों द्वारा समर्थित हैं।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Consider the following statements about Fundamental Duties:<br/> </b>मौलिक कर्तव्यों के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. They are statutory but non-enforceable in a court of law. / </b>वे सांविधिक हैं लेकिन कानून की अदालत में गैर<b>-</b>प्रवर्तनीय हैं।<b><br/> 2. They are applicable to both Indian citizens and foreigners. / </b>वे भारतीय नागरिकों और विदेशियों दोनों पर लागू होते हैं।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Fundamental Duties are statutory obligations but are non-enforceable, unlike Fundamental Rights. Crucially, they are only applicable to Indian citizens and not to foreigners (aliens). मौलिक कर्तव्य सांविधिक दायित्व हैं लेकिन मौलिक अधिकारों के विपरीत, गैर-प्रवर्तनीय हैं। महत्वपूर्ण रूप से, वे केवल भारतीय नागरिकों पर लागू होते हैं, विदेशियों पर नहीं।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Which of the following principles were added to the DPSP by the 42nd Constitutional Amendment Act of 1976?<br/> </b>निम्नलिखित में से कौन से सिद्धांत <b>1976 </b>के <b>42</b>वें संवैधानिक संशोधन अधिनियम द्वारा <b>DPSP </b>में जोड़े गए थे<b>?<br/> 1. Securing opportunities for healthy development of children (Art 39(f)). / </b>बच्चों के स्वस्थ विकास के लिए अवसर सुरक्षित करना <b>(</b>अनुच्छेद <b>39(f)) </b>।<b><br/> 2. Protection and improvement of the environment and safeguarding of forests and wildlife (Art 48A). / </b>पर्यावरण की सुरक्षा और सुधार तथा वनों और वन्यजीवों की सुरक्षा <b>(</b>अनुच्छेद <b>48A) </b>।<b><br/> 3. Securing participation of workers in the management of industries (Art 43A). / </b>उद्योगों के प्रबंधन में श्रमिकों की भागीदारी सुनिश्चित करना <b>(</b>अनुच्छेद <b>43A) </b>।<b><br/> 4. Minimising inequalities in income, status, facilities, and opportunities (Art 38). / </b>आय<b>, </b>स्थिति<b>, </b>सुविधाओं और अवसरों में असमानताओं को कम करना <b>(</b>अनुच्छेद <b>38) </b>।<b><br/> Select the correct answer using the code given below:<br/> </b>नीचे दिए गए कोड का उपयोग करके सही उत्तर चुनें<b>:</b></p>",
+    "option1": "<p> 1 and 4 only / केवल 1 और 4</p>",
+    "option2": "<p> 2, 3 and 4 only / केवल 2, 3 और 4</p>",
+    "option3": "<p> 1, 2 and 3 only / केवल 1, 2 और 3</p>",
+    "option4": "<p> 1, 2, 3 and 4 / 1, 2, 3 और 4</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Art 39(f), 48A, and 43A were added by the 42nd CA, 1976. The principle of minimising inequalities in income, status, facilities, and opportunities (Art 38) was added later by the 44th CA, 1978. अनुच्छेद 39(f), 48A, और 43A को 42वें संशोधन, 1976 द्वारा जोड़ा गया था। आय, स्थिति, सुविधाओं और अवसरों में असमानताओं को कम करने का सिद्धांत (अनुच्छेद 38) बाद में 44वें संशोधन, 1978 द्वारा जोड़ा गया था।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Which pair correctly represents the primary focus of the DPSP classifications?<br/> DPSP </b>वर्गीकरणों के प्राथमिक फोकस को कौन सा जोड़ा सही ढंग से दर्शाता है<b>?</b></p>",
+    "option1": "<p> Socialistic: Emphasis on individual rights and liberties; Liberal-Intellectual: Emphasis on Socio-economic justice. / समाजवादी: व्यक्तिगत अधिकारों और स्वतंत्रताओं पर जोर; उदार-बौद्धिक: सामाजिक-आर्थिक न्याय पर जोर।</p>",
+    "option2": "<p> Gandhian: Promotion of international peace and security; Liberal-Intellectual: Prohibition of intoxicating drinks. / गांधीवादी: अंतर्राष्ट्रीय शांति और सुरक्षा को बढ़ावा देना; उदार-बौद्धिक: नशीले पेय पदार्थों पर प्रतिबंध।</p>",
+    "option3": "<p> Socialistic: Emphasis on socio-economic justice; Liberal-Intellectual: Focuses on individual rights and liberties. / समाजवादी: सामाजिक-आर्थिक न्याय पर जोर; उदार-बौद्धिक: व्यक्तिगत अधिकारों और स्वतंत्रताओं पर केंद्रित।</p>",
+    "option4": "<p> Gandhian: Protection of monuments; Socialistic: Separation of Judiciary from Executive. / गांधीवादी: स्मारकों का संरक्षण; समाजवादी: न्यायपालिका का कार्यपालिका से पृथक्करण।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Socialistic DPSPs emphasize the welfare of the state and socio-economic justice. Liberal-Intellectual DPSPs focus on individual rights, liberties, and principles of administration, such as a Uniform Civil Code. समाजवादी DPSP राज्य के कल्याण और सामाजिक-आर्थिक न्याय पर जोर देते हैं। उदार-बौद्धिक DPSP व्यक्तिगत अधिकारों, स्वतंत्रताओं और प्रशासन के सिद्धांतों, जैसे समान नागरिक संहिता पर केंद्रित हैं।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Assertion (A): The subject matter of Article 45 of the DPSP was changed by the 86th Constitutional Amendment Act, 2002.<br/> Reason (R): The original provision was replaced to make 'Early childhood care for 0-6 years' the responsibility of the State.<br/> </b>कथन <b>(A): DPSP </b>के अनुच्छेद <b>45 </b>की विषय<b>-</b>वस्तु को <b>86</b>वें संवैधानिक संशोधन अधिनियम<b>, 2002 </b>द्वारा बदल दिया गया था।<b><br/> </b>कारण <b>(R): </b>मूल प्रावधान को बदलकर <b>'0-6 </b>वर्ष के बच्चों की प्रारंभिक बाल्यावस्था देखभाल<b>' </b>को राज्य की जिम्मेदारी बनाना था।</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A. / A और R दोनों सत्य हैं और R, A का सही स्पष्टीकरण है।</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A. / A और R दोनों सत्य हैं लेकिन R, A का सही स्पष्टीकरण नहीं है।</p>",
+    "option3": "<p> A is true but R is false. / A सत्य है लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false but R is true. / A असत्य है लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The 86th CA, 2002, made primary education a Fundamental Right (Art 21A), necessitating the change in Art 45 from 'Free compulsory education for children up to 14 yrs' to 'Early childhood care for 0-6 yrs'. 86वें संशोधन, 2002 ने प्राथमिक शिक्षा को मौलिक अधिकार (अनुच्छेद 21A) बना दिया, जिसके कारण अनुच्छेद 45 में '14 वर्ष तक के बच्चों के लिए मुफ्त अनिवार्य शिक्षा' को बदलकर '0-6 वर्ष के बच्चों की प्रारंभिक बाल्यावस्था देखभाल' करना आवश्यक हो गया।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Which of the following descriptions or comments on DPSP is correctly matched with its proponent?<br/> DPSP </b>पर निम्नलिखित में से कौन सा वर्णन या टिप्पणी उसके समर्थक के साथ सही ढंग से मेल खाती है<b>?</b></p>",
+    "option1": "<p> Manifesto of aims and aspirations - K. T. Shah / लक्ष्यों और आकांक्षाओं का घोषणापत्र - के. टी. शाह</p>",
+    "option2": "<p> Conscience of Constitution - B. N. Rau / संविधान की अंतरात्मा - बी. एन. राव</p>",
+    "option3": "<p> Novel feature of Constitution - B. R. Ambedkar / संविधान की नवीन विशेषता - बी. आर. अम्बेडकर</p>",
+    "option4": "<p> Check payable by the bank at its own convenience - Granville Austine / बैंक द्वारा अपनी सुविधा पर देय चेक - ग्रानविले ऑस्टिन</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Dr. B. R. Ambedkar described DPSP as the 'Novel feature of Constitution'. Granville Austine called them the 'Conscience of Constitution', and K. T. Shah described them as a 'Check payable by the bank at its own convenience'. डॉ. बी. आर. अम्बेडकर ने DPSP को 'संविधान की नवीन विशेषता' बताया। ग्रानविले ऑस्टिन ने इन्हें 'संविधान की अंतरात्मा' कहा, और के. टी. शाह ने इन्हें 'बैंक द्वारा अपनी सुविधा पर देय चेक' बताया।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Which Supreme Court case is noted for establishing that the Indian Constitution is founded on the 'bedrock of balance between Fundamental Rights (FRs) and DPSP'?<br/> </b>सर्वोच्च न्यायालय का कौन सा मामला यह स्थापित करने के लिए जाना जाता है कि भारतीय संविधान <b>'</b>मौलिक अधिकारों <b>(FRs) </b>और <b>DPSP </b>के बीच संतुलन की आधारशिला<b>' </b>पर स्थापित है<b>?</b></p>",
+    "option1": "<p> Golaknath Case (1967) / गोलकनाथ मामला (1967)</p>",
+    "option2": "<p> Keshavnanda Bharti Case (1973) / केशवानंद भारती मामला (1973)</p>",
+    "option3": "<p> Minerva Mill Case (1980) / मिनर्वा मिल मामला (1980)</p>",
+    "option4": "<p> Champakam Dorairajan Case (1951) / चंपकम दोराइराजन मामला (1951)</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> In the Minerva Mill Case (1980), the Supreme Court emphasized that the Constitution is built on the balance between Part III (FRs) and Part IV (DPSP), where neither should be unduly sacrificed for the other. मिनर्वा मिल मामले (1980) में, सर्वोच्च न्यायालय ने जोर दिया कि संविधान भाग III (FRs) और भाग IV (DPSP) के बीच संतुलन पर बना है, जहाँ किसी को भी अनावश्यक रूप से दूसरे के लिए बलि नहीं किया जाना चाहिए।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Which sub-clause of Article 39 of the DPSP was added by the 42nd Constitutional Amendment Act, 1976?<br/> DPSP </b>के अनुच्छेद <b>39 </b>के किस उप<b>-</b>खंड को <b>42</b>वें संवैधानिक संशोधन अधिनियम<b>, 1976 </b>द्वारा जोड़ा गया था<b>?</b></p>",
+    "option1": "<p> Art 39(b): That the ownership and control of the material resources... / अनुच्छेद 39(b): कि भौतिक संसाधनों का स्वामित्व और नियंत्रण...</p>",
+    "option2": "<p> Art 39(d): Equal pay for equal work for both sexes. / अनुच्छेद 39(d): दोनों लिंगों के लिए समान कार्य के लिए समान वेतन।</p>",
+    "option3": "<p> Art 39(e): Health and strength of workers, and children... / अनुच्छेद 39(e): श्रमिकों और बच्चों का स्वास्थ्य और शक्ति...</p>",
+    "option4": "<p> Art 39(f): Opportunities for healthy development of children. / अनुच्छेद 39(f): बच्चों के स्वस्थ विकास के लिए अवसर।</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 39(f), which focuses on securing opportunities for the healthy development of children, was one of the principles added to the DPSP by the 42nd Constitutional Amendment in 1976. अनुच्छेद 39(f), जो बच्चों के स्वस्थ विकास के लिए अवसर सुरक्षित करने पर केंद्रित है, 1976 में 42वें संवैधानिक संशोधन द्वारा DPSP में जोड़े गए सिद्धांतों में से एक था।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Assertion (A): DPSPs are fundamental in the governance of the country and seek to establish Social and Economic democracy.<br/> Reason (R): DPSPs embody the concept of a Welfare State and emphasize societal welfare over individual welfare.<br/> </b>कथन <b>(A): DPSP </b>देश के शासन में मौलिक हैं और सामाजिक और आर्थिक लोकतंत्र स्थापित करने का प्रयास करते हैं।<b><br/> </b>कारण <b>(R): DPSP </b>कल्याणकारी राज्य की अवधारणा को मूर्त रूप देते हैं और व्यक्तिगत कल्याण पर सामाजिक कल्याण पर जोर देते हैं।</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A. / A और R दोनों सत्य हैं और R, A का सही स्पष्टीकरण है।</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A. / A और R दोनों सत्य हैं लेकिन R, A का सही स्पष्टीकरण नहीं है।</p>",
+    "option3": "<p> A is true but R is false. / A सत्य है लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false but R is true. / A असत्य है लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> DPSPs aim to achieve socio-economic justice, establishing social and economic democracy by moving towards the goal of a Welfare State, which naturally prioritizes the good of society as a whole. DPSP सामाजिक-आर्थिक न्याय प्राप्त करने का लक्ष्य रखते हैं, कल्याणकारी राज्य के लक्ष्य की ओर बढ़कर सामाजिक और आर्थिक लोकतंत्र स्थापित करते हैं, जो स्वाभाविक रूप से पूरे समाज की भलाई को प्राथमिकता देता है।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Which Article of the DPSP, classified under the Liberal-Intellectual Principles, mandates the 'Separation of judiciary from the executive' in the public services of the state?<br/> </b>उदार<b>-</b>बौद्धिक सिद्धांतों के तहत वर्गीकृत <b>DPSP </b>का कौन सा अनुच्छेद<b>, </b>राज्य की लोक सेवाओं में <b>'</b>न्यायपालिका को कार्यपालिका से अलग करने<b>' </b>का आदेश देता है<b>?</b></p>",
+    "option1": "<p> Article 49 / अनुच्छेद 49</p>",
+    "option2": "<p> Article 50 / अनुच्छेद 50</p>",
+    "option3": "<p> Article 51 / अनुच्छेद 51</p>",
+    "option4": "<p> Article 47 / अनुच्छेद 47</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 50 deals specifically with the separation of the judicial and executive powers of the state. This principle is considered vital for ensuring the independence of the judiciary. अनुच्छेद 50 विशेष रूप से राज्य की न्यायिक और कार्यकारी शक्तियों के पृथक्करण से संबंधित है। यह सिद्धांत न्यायपालिका की स्वतंत्रता सुनिश्चित करने के लिए महत्वपूर्ण माना जाता है।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>The DPSP regarding 'The state shall endeavour to promote voluntary formation, autonomous functioning, democratic control, and professional management of cooperative societies' (Art 43B) was added by which amendment?<br/> '</b>राज्य सहकारी समितियों के स्वैच्छिक गठन<b>, </b>स्वायत्त कार्यकरण<b>, </b>लोकतांत्रिक नियंत्रण और पेशेवर प्रबंधन को बढ़ावा देने का प्रयास करेगा<b>' (</b>अनुच्छेद <b>43B) </b>से संबंधित <b>DPSP </b>किस संशोधन द्वारा जोड़ा गया था<b>?</b></p>",
+    "option1": "<p> 42nd Constitutional Amendment Act / 42वाँ संवैधानिक संशोधन अधिनियम</p>",
+    "option2": "<p> 44th Constitutional Amendment Act / 44वाँ संवैधानिक संशोधन अधिनियम</p>",
+    "option3": "<p> 86th Constitutional Amendment Act / 86वाँ संवैधानिक संशोधन अधिनियम</p>",
+    "option4": "<p> 97th Constitutional Amendment Act / 97वाँ संवैधानिक संशोधन अधिनियम</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 43B, dealing with cooperative societies, was added by the 97th Constitutional Amendment Act of 2011. This amendment also granted a constitutional status and protection to cooperative societies. सहकारी समितियों से संबंधित अनुच्छेद 43B को 97वें संवैधानिक संशोधन अधिनियम, 2011 द्वारा जोड़ा गया था। इस संशोधन ने सहकारी समितियों को संवैधानिक दर्जा और संरक्षण भी प्रदान किया।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Which DPSP Article states the state's duty is 'to raise the level of nutrition and the standard of living and to improve public health' and is classified under the Socialistic Principles?<br/> </b>कौन सा <b>DPSP </b>अनुच्छेद कहता है कि राज्य का कर्तव्य <b>'</b>पोषण स्तर और जीवन स्तर को ऊपर उठाना और सार्वजनिक स्वास्थ्य में सुधार करना<b>' </b>है और इसे समाजवादी सिद्धांतों के तहत वर्गीकृत किया गया है<b>?</b></p>",
+    "option1": "<p> Article 46 / अनुच्छेद 46</p>",
+    "option2": "<p> Article 47 / अनुच्छेद 47</p>",
+    "option3": "<p> Article 48 / अनुच्छेद 48</p>",
+    "option4": "<p> Article 48A / अनुच्छेद 48A</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 47, which is a Socialistic principle, mandates the state's duty to improve public health and raise the level of nutrition and the standard of living, and also includes the prohibition of intoxicating drinks and drugs. अनुच्छेद 47, जो एक समाजवादी सिद्धांत है, राज्य के कर्तव्य को सार्वजनिक स्वास्थ्य में सुधार करने और पोषण स्तर और जीवन स्तर को ऊपर उठाने का आदेश देता है, और इसमें नशीले पेय और दवाओं पर प्रतिबंध भी शामिल है।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Which committee recommended the inclusion of Fundamental Duties in the Indian Constitution?<br/> </b>किस समिति ने भारतीय संविधान में मौलिक कर्तव्यों को शामिल करने की सिफारिश की थी<b>?</b></p>",
+    "option1": "<p> Sarkaria Commission / सरकारिया आयोग</p>",
+    "option2": "<p> Shah Commission / शाह आयोग</p>",
+    "option3": "<p> Swaran Singh Committee / स्वर्ण सिंह समिति</p>",
+    "option4": "<p> Justice Verma Committee / न्यायमूर्ति वर्मा समिति</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Swaran Singh Committee, in 1976, recommended the inclusion of Fundamental Duties during the time of the national emergency. Based on its recommendations, 10 duties were initially added by the 42nd CA. स्वर्ण सिंह समिति ने 1976 में राष्ट्रीय आपातकाल के दौरान मौलिक कर्तव्यों को शामिल करने की सिफारिश की थी। इसकी सिफारिशों के आधार पर, 42वें संशोधन द्वारा शुरू में 10 कर्तव्य जोड़े गए थे।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>Which one of the following is NOT a Fundamental Duty under Article 51A?<br/> </b>निम्नलिखित में से कौन सा अनुच्छेद <b>51A </b>के तहत मौलिक कर्तव्य नहीं है<b>?</b></p>",
+    "option1": "<p> To uphold and protect the sovereignty, unity and integrity of India. / भारत की संप्रभुता, एकता और अखंडता को बनाए रखना और उसकी रक्षा करना।</p>",
+    "option2": "<p> To develop the scientific temper, humanism and the spirit of inquiry and reform. / वैज्ञानिक सोच, मानवतावाद और जांच और सुधार की भावना का विकास करना।</p>",
+    "option3": "<p> To pay taxes and duties to the government. / सरकार को कर और शुल्क का भुगतान करना।</p>",
+    "option4": "<p> To safeguard public property and to abjure violence. / सार्वजनिक संपत्ति की सुरक्षा करना और हिंसा से दूर रहना।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Swaran Singh Committee had recommended the duty to pay taxes, but this recommendation was rejected and not included in the list of Fundamental Duties. The other options are present in Art 51A. स्वर्ण सिंह समिति ने करों का भुगतान करने के कर्तव्य की सिफारिश की थी, लेकिन इस सिफारिश को अस्वीकार कर दिया गया और मौलिक कर्तव्यों की सूची में शामिल नहीं किया गया। अन्य विकल्प अनुच्छेद 51A में मौजूद हैं।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - General Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">General Quiz - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

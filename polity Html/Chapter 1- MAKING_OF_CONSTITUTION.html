@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>POLITY - MAKING OF CONSTITUTION QUIZ [13-11-2025] - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>POLITY - MAKING OF CONSTITUTION QUIZ [13-11-2025]</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>When was the first meeting of the Constituent Assembly of India held?<br/> </b>भारत की संविधान सभा की पहली बैठक कब आयोजित की गई थी<b>?</b></p>",
+    "option1": "<p> August 29, 1947 / 29 अगस्त 1947</p>",
+    "option2": "<p> December 11, 1946 / 11 दिसंबर 1946</p>",
+    "option3": "<p> December 9, 1946 / 9 दिसंबर 1946</p>",
+    "option4": "<p> November 26, 1949 / 26 नवंबर 1949</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The first sitting of the Constituent Assembly took place on December 9, 1946. Dr. Sachchidananda Sinha was elected as the temporary President for this session.<br/> संविधान सभा की पहली बैठक 9 दिसंबर, 1946 को हुई थी। डॉ. सच्चिदानंद सिन्हा को इस सत्र के लिए अस्थायी अध्यक्ष चुना गया था।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>Who was elected as the permanent President of the Constituent Assembly?<br/> </b>संविधान सभा के स्थायी अध्यक्ष के रूप में किसे चुना गया था<b>?</b></p>",
+    "option1": "<p> Dr. B. R. Ambedkar / डॉ. बी. आर. अम्बेडकर</p>",
+    "option2": "<p> Jawaharlal Nehru / जवाहरलाल नेहरू</p>",
+    "option3": "<p> Dr. Rajendra Prasad / डॉ. राजेंद्र प्रसाद</p>",
+    "option4": "<p> Sardar Vallabhbhai Patel / सरदार वल्लभभाई पटेल</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Dr. Rajendra Prasad was elected as the permanent President of the Constituent Assembly on December 11, 1946, two days after its first meeting.<br/> डॉ. राजेंद्र प्रसाद को 9 दिसंबर 1946 को पहली बैठक के दो दिन बाद 11 दिसंबर 1946 को संविधान सभा का स्थायी अध्यक्ष चुना गया था।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>According to whose plan was the Constituent Assembly of India formed?<br/> </b>भारत की संविधान सभा का गठन किस योजना के अनुसार किया गया था<b>?</b></p>",
+    "option1": "<p> August Offer / अगस्त प्रस्ताव</p>",
+    "option2": "<p> Cripps Proposal / क्रिप्स प्रस्ताव</p>",
+    "option3": "<p> Wavell Plan / वेवेल योजना</p>",
+    "option4": "<p> Cabinet Mission Plan / कैबिनेट मिशन योजना</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Constituent Assembly was formed in 1946 according to the provisions of the Cabinet Mission Plan, which was accepted by both the Congress and the Muslim League.<br/> संविधान सभा का गठन 1946 में कैबिनेट मिशन योजना के प्रावधानों के अनुसार किया गया था, जिसे कांग्रेस और मुस्लिम लीग दोनों ने स्वीकार कर लिया था।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>The Objectives Resolution, which later became the Preamble of the Constitution, was presented by:<br/> </b>उद्देश्य प्रस्ताव<b>, </b>जो बाद में संविधान की प्रस्तावना बना<b>, </b>किसके द्वारा प्रस्तुत किया गया था<b>:</b></p>",
+    "option1": "<p> Dr. B. R. Ambedkar / डॉ. बी. आर. अम्बेडकर</p>",
+    "option2": "<p> Jawaharlal Nehru / जवाहरलाल नेहरू</p>",
+    "option3": "<p> Sardar Vallabhbhai Patel / सरदार वल्लभभाई पटेल</p>",
+    "option4": "<p> B. N. Rao / बी. एन. राव</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Jawaharlal Nehru presented the Objective Resolution in the Constituent Assembly on December 13, 1946. It was unanimously adopted by the Assembly on January 22, 1947.<br/> जवाहरलाल नेहरू ने 13 दिसंबर 1946 को संविधान सभा में उद्देश्य संकल्प/प्रस्ताव प्रस्तुत किया था। इसे 22 जनवरी 1947 को सभा द्वारा सर्वसम्मति से अपनाया गया था।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>When was the Constitution of India adopted by the Constituent Assembly?<br/> </b>संविधान सभा द्वारा भारत का संविधान कब अपनाया गया था<b>?</b></p>",
+    "option1": "<p> January 26, 1950 / 26 जनवरी 1950</p>",
+    "option2": "<p> November 4, 1947 / 4 नवंबर 1947</p>",
+    "option3": "<p> August 29, 1947 / 29 अगस्त 1947</p>",
+    "option4": "<p> November 26, 1949 / 26 नवंबर 1949</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Constitution was adopted and enacted by the people of India on November 26, 1949, which is also celebrated as 'Constitution Day' or 'Samvidhan Diwas'.<br/> संविधान को 26 नवंबर, 1949 को भारत के लोगों द्वारा अपनाया और अधिनियमित किया गया था, जिसे 'संविधान दिवस' के रूप में भी मनाया जाता है।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>Who was the first person to demand a Constituent Assembly for India in 1934?<br/> 1934 </b>में भारत के लिए संविधान सभा की मांग करने वाले पहले व्यक्ति कौन थे<b>?</b></p>",
+    "option1": "<p> Mahatma Gandhi / महात्मा गांधी</p>",
+    "option2": "<p> Jawaharlal Nehru / जवाहरलाल नेहरू</p>",
+    "option3": "<p> M. N. Roy / एम. एन. रॉय</p>",
+    "option4": "<p> Dr. Rajendra Prasad / डॉ. राजेंद्र प्रसाद</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> M. N. Roy, a pioneer of the Communist movement in India, first put forward the idea of a Constituent Assembly for India in 1934.<br/> भारत में कम्युनिस्ट आंदोलन के प्रणेता एम. एन. रॉय ने 1934 में भारत के लिए संविधान सभा का विचार सबसे पहले सामने रखा था।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Who was the Constitutional Advisor to the Constituent Assembly?<br/> </b>संविधान सभा के संवैधानिक सलाहकार कौन थे<b>?</b></p>",
+    "option1": "<p> Dr. B. R. Ambedkar / डॉ. बी. आर. अम्बेडकर</p>",
+    "option2": "<p> K. M. Munshi / के. एम. मुंशी</p>",
+    "option3": "<p> B. N. Rao / बी. एन. राव</p>",
+    "option4": "<p> S. N. Mukherjee / एस. एन. मुखर्जी</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Sir B. N. Rao was appointed as the Legal/Constitutional Advisor to the Constituent Assembly to provide expert legal assistance and advice.<br/> सर बी. एन. राव को विशेषज्ञ कानूनी सहायता और सलाह प्रदान करने के लिए संविधान सभा के कानूनी/संवैधानिक सलाहकार के रूप में नियुक्त किया गया था।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>The total time taken to frame the Indian Constitution was:<br/> </b>भारतीय संविधान को बनाने में कुल कितना समय लगा था<b>?</b></p>",
+    "option1": "<p> 2 years 11 months 12 days / 2 वर्ष 11 महीने 12 दिन</p>",
+    "option2": "<p> 3 years 11 months 17 days / 3 वर्ष 11 महीने 17 दिन</p>",
+    "option3": "<p> 2 years 11 months 18 days / 2 वर्ष 11 महीने 18 दिन</p>",
+    "option4": "<p> 3 years 10 months 18 days / 3 वर्ष 10 महीने 18 दिन</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Constituent Assembly held 11 sessions over a period of 2 years, 11 months, and 17/18 days to finalize the Constitution.<br/> संविधान को अंतिम रूप देने के लिए संविधान सभा ने 2 साल, 11 महीने और 17/18 दिनों की अवधि में 11 सत्र आयोजित किए थे।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Who was the Chief Draftsman of the Constitution of India?<br/> </b>भारत के संविधान के मुख्य प्रारूपकार कौन थे<b>?</b></p>",
+    "option1": "<p> Dr. B. R. Ambedkar / डॉ. बी. आर. अम्बेडकर</p>",
+    "option2": "<p> S. N. Mukherjee / एस. एन. मुखर्जी</p>",
+    "option3": "<p> B. N. Rao / बी. एन. राव</p>",
+    "option4": "<p> Prem Behari Narain Raizada / प्रेम बिहारी नारायण रायज़ादा</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The chief drafter of the Constitution of India was S. N. Mukherjee. He worked to accurately translate the discussions and proposals of the Constituent Assembly into legal language.<br/> 5. Dr. B. R. Ambedkar led the drafting of the Constitution as Chairman, but S. N. Mukherjee played a key role in finalizing it.<br/> 6. B. N. Rao – Constitutional Advisor, who prepared the initial draft.<br/> 7. Prem Bihari Narayan Raizada – who wrote the Constitution in beautiful handwriting.<br/> भारत के संविधान के मुख्य प्रारूपकार एस. एन. मुखर्जी थे। उन्होंने संविधान सभा की चर्चाओं और प्रस्तावों को कानूनी भाषा में सटीक रूप से रूपांतरित करने का कार्य किया।<br/> 8. संविधान के प्रारूप को तैयार करने में डॉ. बी. आर. अंबेडकर ने अध्यक्ष के रूप में नेतृत्व किया, लेकिन एस. एन. मुखर्जी ने उसे अंतिम रूप देने में अहम भूमिका निभाई।<br/> 9. बी. एन. राव – संवैधानिक सलाहकार, जिन्होंने प्रारंभिक मसौदा तैयार किया।<br/> 10. प्रेम बिहारी नारायण रायज़ादा – जिन्होंने संविधान को सुंदर हस्तलिपि में लिखा।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>Who among the following was NOT a member of the Constituent Assembly?<br/> </b>निम्नलिखित में से कौन संविधान सभा के सदस्य नहीं थे<b>?</b></p>",
+    "option1": "<p> Mahatma Gandhi / महात्मा गांधी</p>",
+    "option2": "<p> Sarojini Naidu / सरोजिनी नायडू</p>",
+    "option3": "<p> Jawaharlal Nehru / जवाहरलाल नेहरू</p>",
+    "option4": "<p> Dr. B. R. Ambedkar / डॉ. बी. आर. अम्बेडकर</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Mahatma Gandhi – was not a member of the Constituent Assembly because by that time he had withdrawn from active politics and was focused on social and moral reconstruction after independence. He was the spiritual leader of the independence movement.<br/> महात्मा गांधी – संविधान सभा के सदस्य नहीं थे, क्योंकि उस समय तक वे सक्रिय राजनीति से अलग हो चुके थे और स्वतंत्रता के बाद उनके ध्यान का केंद्र सामाजिक व नैतिक पुनर्निर्माण था। वे स्वतंत्रता आंदोलन के आध्यात्मिक नेता थे</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Which of the following statements about the composition of the Constituent Assembly is/are correct?<br/> </b>संविधान सभा की संरचना के बारे में निम्नलिखित में से कौन सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?<br/> 1. The total strength of the Assembly was 389. / </b>सभा की कुल संख्या <b>389 </b>थी।<b><br/> 2. 296 seats were allotted to British India and 93 seats to the Princely States. / 296 </b>सीटें ब्रिटिश भारत को और <b>93 </b>सीटें रियासतों को आवंटित की गई थीं।<b><br/> 3. The seats allotted to British India were to be divided among Muslim, Sikh, and General communities. / </b>ब्रिटिश भारत को आवंटित सीटें मुस्लिम<b>, </b>सिख और सामान्य समुदायों के बीच विभाजित की जानी थीं।</p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> All three statements are correct regarding the provisions of the Cabinet Mission Plan. The total seats were 389, divided into 296 (British India) and 93 (Princely States). Seats in British provinces were divided among Muslim, Sikh, and General communities.<br/> कैबिनेट मिशन योजना के प्रावधानों के संबंध में तीनों कथन सही हैं। कुल सीटें 389 थीं, जिन्हें 296 (ब्रिटिश भारत) और 93 (रियासतें) में विभाजित किया गया था। ब्रिटिश प्रांतों में सीटें मुस्लिम, सिख और सामान्य समुदायों के बीच विभाजित थीं।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Consider the following pairs of committees and their chairmen in the Constituent Assembly:<br/> </b>संविधान सभा में समितियों और उनके अध्यक्षों के निम्नलिखित जोड़ों पर विचार करें<b>:<br/> 1. Union Powers Committee: Jawaharlal Nehru / </b>संघ शक्ति समिति<b>: </b>जवाहरलाल नेहरू<b><br/> 2. Provincial Constitution Committee: Sardar Patel / </b>प्रांतीय संविधान समिति<b>: </b>सरदार पटेल<b><br/> 3. Rules of Procedure Committee: Dr. B. R. Ambedkar / </b>प्रक्रिया नियम समिति<b>: </b>डॉ<b>. </b>बी<b>. </b>आर<b>. </b>अम्बेडकर<b><br/> Which of the pairs given above is/are correctly matched?<br/> </b>ऊपर दिए गए जोड़ों में से कौन सा<b>/</b>से सही ढंग से मेल खाता<b>/</b>खाते है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Rules of Procedure Committee was chaired by Dr. Rajendra Prasad. Dr. B. R. Ambedkar was the Chairman of the Drafting Committee. Hence, only 1 and 2 are correctly matched.<br/> प्रक्रिया नियम समिति की अध्यक्षता डॉ. राजेंद्र प्रसाद ने की थी। डॉ. बी. आर. अम्बेडकर प्रारूप समिति के अध्यक्ष थे। इसलिए, केवल 1 और 2 सही ढंग से मेल खाते हैं।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Assertion (A): Mahatma Gandhi was not a member of the Constituent Assembly of India.<br/> Reason (R): The Constituent Assembly comprised only elected and nominated members from British India and Princely States.<br/> </b>अभिकथन <b>(A): </b>महात्मा गांधी भारत की संविधान सभा के सदस्य नहीं थे।<b><br/> </b>कारण <b>(R): </b>संविधान सभा में केवल ब्रिटिश भारत और रियासतों से निर्वाचित और मनोनीत सदस्य शामिल थे।</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A. / A और R दोनों सत्य हैं और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A. / A और R दोनों सत्य हैं लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true but R is false. / A सत्य है लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false but R is true. / A असत्य है लेकिन R सत्य है।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> 5. Assertion (A) is correct—Mahatma Gandhi was not actually a member of the Constituent Assembly.<br/> 6. Reason (R) is also correct—The Constituent Assembly consisted only of elected and nominated members from British India and the princely states.<br/> But Gandhiji was not a member of the Constituent Assembly not because the Assembly consisted only of elected and nominated members, but because he himself did not participate in the elections and did not express his desire to become a member.<br/> 7. अभिकथन (A) सही है — महात्मा गांधी वास्तव में संविधान सभा के सदस्य नहीं थे।<br/> 8. कारण (R) भी सही है — संविधान सभा में केवल ब्रिटिश भारत और रियासतों से निर्वाचित तथा मनोनीत सदस्य शामिल थे।<br/> लेकिन गांधीजी का संविधान सभा का सदस्य न होना इस कारण नहीं था कि सभा में केवल निर्वाचित और मनोनीत सदस्य थे, बल्कि इसलिए था क्योंकि उन्होंने स्वयं चुनाव में भाग नहीं लिया और सदस्य बनने की इच्छा नहीं जताई।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Which of the following pairs of Constituent Assembly committees and their chairmen is correctly matched?<br/> </b>संविधान सभा की समितियों और उनके अध्यक्षों के बारे में निम्नलिखित में से कौन<b>-</b>सा युग्म सही रूप से मेल खाता है<b>?<br/> 1. Union Constitution Committee — Dr. Rajendra Prasad<br/> </b>संघ संविधान समिति — डॉ<b>. </b>राजेंद्र प्रसाद<b><br/> 2. Drafting Committee — Dr. B. R. Ambedkar<br/> </b>प्रारूप समिति — डॉ<b>. </b>बी<b>. </b>आर<b>. </b>अम्बेडकर<b><br/> 3. Provincial Constitution Committee — Sardar Vallabhbhai Patel<br/> </b>प्रांतीय संविधान समिति — सरदार वल्लभभाई पटेल<b><br/> 4. States Committee (Committee for Negotiating with the States) — Jawaharlal Nehru<br/> </b>राज्य समिति <b>(</b>रियासतों से वार्ता समिति<b>) — </b>जवाहरलाल नेहरू<b><br/> Options:</b></p>",
+    "option1": "<p> 2, 3 and 4 only / केवल 2, 3 और 4</p>",
+    "option2": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p> 1, 3 and 4 only / केवल 1, 3 और 4</p>",
+    "option4": "<p> 2 and 4 only / केवल 2 और 4</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Pair 1 is incorrect because the Union Constitution Committee was chaired by Jawaharlal Nehru, not Dr. Rajendra Prasad.<br/> युग्म 1 गलत है, क्योंकि संघ संविधान समिति के अध्यक्ष जवाहरलाल नेहरू थे, न कि डॉ. राजेंद्र प्रसाद।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>The Interim Government was formed in 1946. Which of the following leaders of the Muslim League (ML) were part of this government?<br/> </b>अंतरिम सरकार का गठन <b>1946 </b>में हुआ था। मुस्लिम लीग <b>(ML) </b>के निम्नलिखित में से कौन से नेता इस सरकार का हिस्सा थे<b>?<br/> 1. Liaquat Ali Khan / </b>लियाकत अली खान<b><br/> 2. Ibrahim Ismail Chundrigar / </b>इब्राहिम इस्माइल चुंदरीगर<b><br/> 3. Jogendra Nath Mandal / </b>जोगेंद्र नाथ मंडल<b><br/> 4. C. Rajagopalachari / </b>सी<b>. </b>राजगोपालाचारी</p>",
+    "option1": "<p> 1, 2 and 3 only / केवल 1, 2 और 3</p>",
+    "option2": "<p> 2, 3 and 4 only / केवल 2, 3 और 4</p>",
+    "option3": "<p> 1 and 4 only / केवल 1 और 4</p>",
+    "option4": "<p> 1, 2, 3 and 4 / 1, 2, 3 और 4</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Liaquat Ali Khan (Finance), Ibrahim Ismail Chundrigar (Commerce), Jogendra Nath Mandal (Law), Ghazanfar Ali Khan (Health), and Abdur Rab Nishtar (Railways) were the Muslim League members in the Interim Government.<br/> 9. C. Rajagopalachari (Education and Arts) was from the INC.<br/> 10. लियाकत अली खान (वित्त), इब्राहिम इस्माइल चुंदरीगर (वाणिज्य), जोगेंद्र नाथ मंडल (कानून), ग़ज़नफ़र अली खान (स्वास्थ्य), और अब्दुर रब निश्तार (रेलवे) अंतरिम सरकार में मुस्लिम लीग के सदस्य थे।<br/> 11. सी. राजगोपालाचारी (शिक्षा और कला) कांग्रेस से थे।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Which of the following provisions of the Constitution came into effect on November 26, 1949, upon its adoption?<br/> </b>संविधान के निम्नलिखित में से कौन से प्रावधान <b>26 </b>नवंबर<b>, 1949 </b>को इसे अपनाने पर लागू हुए<b>?<br/> 1. Citizenship / </b>नागरिकता<b><br/> 2. Elections / </b>चुनाव<b><br/> 3. Provisional Parliament / </b>अंतरिम संसद<b><br/> 4. Fundamental Rights / </b>मौलिक अधिकार</p>",
+    "option1": "<p> 1, 2 and 3 only / केवल 1, 2 और 3</p>",
+    "option2": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p> 2, 3 and 4 only / केवल 2, 3 और 4</p>",
+    "option4": "<p> 1, 2, 3 and 4 / 1, 2, 3 और 4</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Only some provisions related to Citizenship (Art 5, 6, 7, 8, 9), Elections, and Provisional Parliament were enforced immediately on November 26, 1949. The rest of the Constitution, including Fundamental Rights, came into force on January 26, 1950.<br/> नागरिकता (अनुच्छेद 5, 6, 7, 8, 9), चुनाव और अंतरिम संसद से संबंधित केवल कुछ प्रावधान 26 नवंबर, 1949 को तुरंत लागू किए गए थे। मौलिक अधिकारों सहित शेष संविधान 26 जनवरी, 1950 को लागू हुआ।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Assertion (A): The Congress rejected the August Offer of 1940 and the Cripps Proposal of 1942.<br/> Reason (R): Both the proposals offered the 'Dominion Status' which was less than the 'Purna Swaraj' demanded by the Congress.<br/> </b>अभिकथन <b>(A): </b>कांग्रेस ने <b>1940 </b>के अगस्त प्रस्ताव और <b>1942 </b>के क्रिप्स प्रस्ताव को अस्वीकार कर दिया।<b><br/> </b>कारण <b>(R): </b>दोनों प्रस्तावों ने <b>'</b>डोमिनियन स्टेटस<b>' </b>की पेशकश की जो कांग्रेस द्वारा मांगे गए <b>'</b>पूर्ण स्वराज<b>' </b>से कम था।</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A. / A और R दोनों सत्य हैं और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A. / A और R दोनों सत्य हैं लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true but R is false. / A सत्य है लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false but R is true. / A असत्य है लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Congress had demanded 'Purna Swaraj' (complete independence) in 1929. Since the August Offer and Cripps Proposal offered only 'Dominion Status' (self-governing within the British Empire), the Congress rejected them as insufficient.<br/> कांग्रेस ने 1929 में 'पूर्ण स्वराज' (पूर्ण स्वतंत्रता) की मांग की थी। चूंकि अगस्त प्रस्ताव और क्रिप्स प्रस्ताव ने केवल 'डोमिनियन स्टेटस' (ब्रिटिश साम्राज्य के भीतर स्व-शासन) की पेशकश की, कांग्रेस ने उन्हें अपर्याप्त मानते हुए अस्वीकार कर दिया।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Consider the following regarding the Drafting Committee:<br/> </b>प्रारूप समिति के संबंध में निम्नलिखित पर विचार करें<b>:<br/> 1. It was set up on August 29, 1947. / </b>इसका गठन <b>29 </b>अगस्त<b>, 1947 </b>को किया गया था।<b><br/> 2. It had a total of 7 members, including the Chairman. / </b>इसमें अध्यक्ष सहित कुल <b>7 </b>सदस्य थे।<b><br/> 3. The committee took 141 days to prepare its draft. / </b>समिति ने अपना मसौदा तैयार करने में <b>141 </b>दिन का समय लिया।<b><br/> How many of the above statements are correct?<br/> </b>उपरोक्त में से कितने कथन सही हैं<b>?</b></p>",
+    "option1": "<p> Only one / केवल एक</p>",
+    "option2": "<p> Only two / केवल दो</p>",
+    "option3": "<p> All three / तीनों</p>",
+    "option4": "<p> None / कोई नहीं</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Drafting Committee was formed on August 29, 1947, with Dr. B. R. Ambedkar as Chairman and six other members, totaling seven.<br/> 8. Dr. B. R. Ambedkar (Chairman)<br/> 9. N. Gopalaswami Iyengar<br/> 10. Alladi Krishnaswamy Iyer<br/> 11. K. M. Munshi<br/> 12. Syed Mohammad Saadulla<br/> 13. B. L. Mitter (resigned → replaced by N. Madhava Rau)<br/> 14. D. P. Khaitan (died → replaced by T. T. Krishnamachari)<br/> The committee worked on its draft for 141 days.<br/> प्रारूप समिति का गठन 29 अगस्त, 1947 को किया गया था, जिसमें डॉ. बी. आर. अम्बेडकर अध्यक्ष और 6 अन्य सदस्य थे, जिनकी कुल संख्या 7 थी।<br/> 15. डॉ. बी. आर. अम्बेडकर (अध्यक्ष)<br/> 16. एन. गोपालस्वामी आयंगर<br/> 17. अल्लादी कृष्णस्वामी अय्यर<br/> 18. के. एम. मुंशी<br/> 19. सैयद मोहम्मद सादुल्ला<br/> 20. बी. एल. मित्तर (बाद में फिर एन. माधव राव)<br/> 21. डी. पी. खैतान (टी. टी. कृष्णमाचारी बाद में शामिल)<br/> समिति ने अपने मसौदे पर 141 दिनों तक काम किया था।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Which of the following sub-committees was NOT headed by Sardar Vallabhbhai Patel?<br/> </b>निम्नलिखित में से किस उप<b>-</b>समिति की अध्यक्षता सरदार वल्लभभाई पटेल ने नहीं की थी<b>?</b></p>",
+    "option1": "<p> Advisory Committee on Fundamental Rights / मौलिक अधिकारों पर सलाहकार समिति</p>",
+    "option2": "<p> Advisory Committee on Minority, Tribal and Excluded Areas / अल्पसंख्यक, जनजातीय एवं बहिष्कृत क्षेत्रों पर सलाहकार समिति</p>",
+    "option3": "<p> States Committee / राज्य समिति</p>",
+    "option4": "<p> Provincial Constitution Committee / प्रांतीय संविधान समिति</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Sardar Patel chaired the Advisory Committee on Fundamental Rights, Minorities and Tribal and Excluded Areas, and the Provincial Constitution Committee, but he was not the Chairman of the State Committee. The State Committee was chaired by Jawaharlal Nehru.<br/> सरदार पटेल ने मौलिक अधिकारों, अल्पसंख्यकों और आदिवासी तथा बहिष्कृत क्षेत्रों पर सलाहकार समिति, प्रांतीय संविधान समिति की अध्यक्षता की, लेकिन वह राज्य समिति के अध्यक्ष नहीं थे। राज्य समिति के अध्यक्ष जवाहर लाल नेहरू थे।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Assertion (A): The Constituent Assembly served as the first Parliament of independent India after the Constitution was enforced.<br/> Reason (R): The Constituent Assembly had two major functions: Constitution making and functioning as a law-making body.<br/> </b>अभिकथन <b>(A): </b>संविधान लागू होने के बाद संविधान सभा ने स्वतंत्र भारत की पहली संसद के रूप में कार्य किया।<b><br/> </b>कारण <b>(R): </b>संविधान सभा के दो प्रमुख कार्य थे<b>: </b>संविधान निर्माण और कानून बनाने वाली संस्था के रूप में कार्य करना।</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A. / A और R दोनों सत्य हैं और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A. / A और R दोनों सत्य हैं लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true but R is false. / A सत्य है लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false but R is true. / A असत्य है लेकिन R असत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Constituent Assembly was granted the dual role of Constitution maker (chaired by Dr. Rajendra Prasad) and a law-making body (chaired by G. V. Mavalankar) on different days. Once the Constitution was enforced, it functioned as the Provisional Parliament of India till the first general elections of 1951-52.<br/> संविधान सभा को अलग-अलग दिनों में संविधान निर्माता (डॉ. राजेंद्र प्रसाद की अध्यक्षता में) और कानून बनाने वाली संस्था (जी. वी. मावलंकर की अध्यक्षता में) की दोहरी भूमिका दी गई थी। एक बार संविधान लागू होने के बाद, इसने 1951-52 के पहले आम चुनावों तक भारत की अंतरिम संसद के रूप में कार्य किया।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>With regard to the Constitution, which of the following options is incorrect?<br/> </b>संविधान के संबंध में<b>, </b>निम्नलिखित में से कौन सा विकल्प गलत है<b>?</b></p>",
+    "option1": "<p> The last sitting of the Constituent Assembly was held on November 26, 1949. / संविधान सभा की अंतिम बैठक 26 नवंबर, 1949 को हुई थी।</p>",
+    "option2": "<p> 284 members of the Constituent Assembly signed the handwritten Constitution on January 24, 1950. / संविधान सभा के 284 सदस्यों ने 24 जनवरी, 1950 को हस्तलिखित संविधान पर हस्ताक्षर किए।</p>",
+    "option3": "<p> The President of the Constituent Assembly, Dr. Rajendra Prasad, was elected as the first President of India on January 26, 1950. / संविधान सभा के अध्यक्ष, डॉ. राजेंद्र प्रसाद, 26 जनवरी, 1950 को भारत के पहले राष्ट्रपति चुने गए थे।</p>",
+    "option4": "<p> The Constitution enforced on January 26, 1950, originally contained 22 Parts and 8 Schedules. / 26 जनवरी, 1950 को लागू हुए संविधान में मूल रूप से 22 भाग और 8 अनुसूचियाँ थीं।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The final meeting was held on January 24, 1950, where 284 members signed the Constitution. Dr. Rajendra Prasad was elected President and assumed office on January 26, 1950. The original Constitution consisted of 22 parts and eight schedules.<br/> अंतिम बैठक 24 जनवरी, 1950 को हुई थी, जहाँ 284 सदस्यों ने संविधान पर हस्ताक्षर किए थे। डॉ. राजेंद्र प्रसाद को 26 जनवरी, 1950 को राष्ट्रपति चुना गया था और उन्होंने पदभार संभाला। मूल संविधान में 22 भाग और 8 अनुसूचियाँ थीं।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Which among the following were adopted by the Constituent Assembly on January 24, 1950?<br/> </b>निम्नलिखित में से किसे संविधान सभा द्वारा <b>24 </b>जनवरी<b>, 1950 </b>को अपनाया गया था<b>?<br/> 1. National Anthem / </b>राष्ट्रीय गान<b><br/> 2. National Song / </b>राष्ट्रीय गीत<b><br/> 3. Election of the first Vice President of India / </b>भारत के पहले उपराष्ट्रपति का चुनाव</p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> 1&amp;2 events took place on January 24, 1950. This date marks the last sitting of the Constituent Assembly, during which the National Anthem (Jana Gana Mana) and National Song (Vande Mataram) were adopted.<br/> 1&amp;2 घटनाएँ 24 जनवरी, 1950 को हुई थीं। यह तिथि संविधान सभा की अंतिम बैठक को चिह्नित करती है, जिसके दौरान राष्ट्रीय गान (जन गण मन) और राष्ट्रीय गीत (वंदे मातरम) को अपनाया गया था|</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Identify the female member of the Constituent Assembly who became the first female Chief Minister of an Indian state (Uttar Pradesh):<br/> </b>संविधान सभा की उस महिला सदस्य की पहचान करें जो किसी भारतीय राज्य <b>(</b>उत्तर प्रदेश<b>) </b>की पहली महिला मुख्यमंत्री बनीं<b>:</b></p>",
+    "option1": "<p> Raj Kumari Amritkaur / राजकुमारी अमृतकौर</p>",
+    "option2": "<p> Sarojini Naidu / सरोजिनी नायडू</p>",
+    "option3": "<p> Sucheta Kriplani / सुचेता कृपलानी</p>",
+    "option4": "<p> Annie Mascarene / एनी मास्करेन</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Sucheta Kriplani was an important female member of the Constituent Assembly. She later became the first female Chief Minister of Uttar Pradesh. Raj Kumari Amritkaur was the first health minister, and Sarojini Naidu was the first Governor of Uttar Pradesh.<br/> सुचेता कृपलानी संविधान सभा की एक महत्वपूर्ण महिला सदस्य थीं। बाद में वह उत्तर प्रदेश की पहली महिला मुख्यमंत्री बनीं। राजकुमारी अमृतकौर पहली स्वास्थ्य मंत्री थीं, और सरोजिनी नायडू उत्तर प्रदेश की पहली राज्यपाल थीं।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Who was the calligrapher who penned the handwritten English version of the Indian Constitution?<br/> </b>भारतीय संविधान के हस्तलिखित अंग्रेजी संस्करण को लिखने वाले सुलेखाकार कौन थे<b>?</b></p>",
+    "option1": "<p> Nand Lal Bose / नंदलाल बोस</p>",
+    "option2": "<p> Beohar Ram Manohar Sinha / ब्योहार राममनोहर सिन्हा</p>",
+    "option3": "<p> Vasant Krishan Vaidya / वसंत कृष्ण वैद्य</p>",
+    "option4": "<p> Prem Behari Narain Raizada / प्रेम बिहारी नारायण रायज़ादा</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Prem Bihari Narayan Raizada was the calligrapher who handwrote the original English version of the Constitution. The Hindi version was handwritten by Vasant Krishna Vaidya. The original Constitution was decorated by Nandalal Bose and Byohar Rammanohar Sinha.<br/> प्रेम बिहारी नारायण रायज़ादा वह सुलेखाकार थे जिन्होंने संविधान का मूल अंग्रेजी संस्करण हस्तलिखित किया था। हिंदी संस्करण का सुलेख वसंत कृष्ण वैद्य द्वारा किया गया था। मूल संविधान को नंदलाल बोस और ब्योहार राममनोहर सिन्हा द्वारा सजाया गया था।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>The provisions for the division of seats (296 for British India) in the Constituent Assembly included the allocation of one seat for approximately how much population?<br/> </b>संविधान सभा में सीटों के विभाजन <b>(</b>ब्रिटिश भारत के लिए <b>296) </b>के प्रावधानों में लगभग कितनी जनसंख्या के लिए एक सीट का आवंटन शामिल था<b>?</b></p>",
+    "option1": "<p> 10 lakh / 10 लाख</p>",
+    "option2": "<p> 1 lakh / 1 लाख</p>",
+    "option3": "<p> 5 lakh / 5 लाख</p>",
+    "option4": "<p> 15 lakh / 15 लाख</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> One seat was to be allotted for every one million (10 lakh) of the population in the provinces under British rule. This was the basis for the indirect election of 296 members from British India.<br/> ब्रिटिश शासन के अधीन प्रांतों में प्रत्येक दस लाख (1 मिलियन) जनसंख्या पर एक सीट आवंटित की जानी थी। यह ब्रिटिश भारत से 296 सदस्यों के अप्रत्यक्ष चुनाव का आधार था।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - POLITY</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">POLITY - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

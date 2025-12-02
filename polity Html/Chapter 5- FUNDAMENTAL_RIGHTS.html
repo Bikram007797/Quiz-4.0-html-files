@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>POLITY - FUNDAMENTAL RIGHTS QUIZ [19-11-2025] - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>POLITY - FUNDAMENTAL RIGHTS QUIZ [19-11-2025]</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>Which part of the Indian Constitution contains the Fundamental Rights?<br/> </b>भारतीय संविधान के किस भाग में मौलिक अधिकार शामिल हैं<b>?</b></p>",
+    "option1": "<p> Part II / भाग II</p>",
+    "option2": "<p> Part III / भाग III</p>",
+    "option3": "<p> Part IV / भाग IV</p>",
+    "option4": "<p> Part I / भाग I</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Fundamental Rights are enshrined in Part III of the Indian Constitution, covering Articles 12 to 35. This section is often described as the 'Magna Carta' of India, drawing inspiration from the USA Bill of Rights. / मौलिक अधिकार भारतीय संविधान के भाग III में निहित हैं, जो अनुच्छेद 12 से 35 तक हैं। इस खंड को अक्सर भारत का 'मैग्ना कार्टा' कहा जाता है, जो संयुक्त राज्य अमेरिका के अधिकार विधेयक से प्रेरणा लेता है।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>Article 17 of the Indian Constitution deals with the:<br/> </b>भारतीय संविधान का अनुच्छेद <b>17 </b>किससे संबंधित है<b>?</b></p>",
+    "option1": "<p> Abolition of Titles / उपाधियों का अंत</p>",
+    "option2": "<p> Abolition of Untouchability / अस्पृश्यता का अंत</p>",
+    "option3": "<p> Right to Freedom of Religion / धर्म की स्वतंत्रता का अधिकार</p>",
+    "option4": "<p> Right to Constitutional Remedies / संवैधानिक उपचारों का अधिकार</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 17 abolishes 'Untouchability' and makes its practice in any form a punishable offence. This article is part of the Right to Equality (Articles 14-18) and is a significant step towards social equality. / अनुच्छेद 17 'अस्पृश्यता' को समाप्त करता है और किसी भी रूप में इसके अभ्यास को दंडनीय अपराध बनाता है। यह अनुच्छेद समानता के अधिकार (अनुच्छेद 14-18) का हिस्सा है और सामाजिक समानता की दिशा में एक महत्वपूर्ण कदम है।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>Which Article of the Constitution is referred to as the 'Heart and Soul of the Indian Constitution' by Dr. B.R. Ambedkar?<br/> </b>डॉ<b>. </b>बी<b>.</b>आर<b>. </b>अंबेडकर द्वारा संविधान के किस अनुच्छेद को <b>'</b>भारतीय संविधान का हृदय और आत्मा<b>' </b>कहा गया है<b>?</b></p>",
+    "option1": "<p> Article 19 / अनुच्छेद 19</p>",
+    "option2": "<p> Article 21 / अनुच्छेद 21</p>",
+    "option3": "<p> Article 32 / अनुच्छेद 32</p>",
+    "option4": "<p> Article 14 / अनुच्छेद 14</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 32, the Right to Constitutional Remedies, was called the 'Heart and Soul' because it provides the mechanism for the enforcement of all other Fundamental Rights. It empowers citizens to move the Supreme Court directly for the enforcement of their rights. / अनुच्छेद 32, संवैधानिक उपचारों का अधिकार, को 'हृदय और आत्मा' कहा गया था क्योंकि यह अन्य सभी मौलिक अधिकारों को लागू करने के लिए तंत्र प्रदान करता है। यह नागरिकों को अपने अधिकारों को लागू कराने के लिए सीधे सर्वोच्च न्यायालय में जाने का अधिकार देता है।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>The Fundamental Right to Property was removed from the list of Fundamental Rights by which Constitutional Amendment Act?<br/> </b>संपत्ति के मौलिक अधिकार को किस संवैधानिक संशोधन अधिनियम द्वारा मौलिक अधिकारों की सूची से हटा दिया गया था<b>?</b></p>",
+    "option1": "<p> 42nd Constitutional Amendment Act, 1976 / 42वां संवैधानिक संशोधन अधिनियम, 1976</p>",
+    "option2": "<p> 44th Constitutional Amendment Act, 1978 / 44वां संवैधानिक संशोधन अधिनियम, 1978</p>",
+    "option3": "<p> 86th Constitutional Amendment Act, 2002 / 86वां संवैधानिक संशोधन अधिनियम, 2002</p>",
+    "option4": "<p> 97th Constitutional Amendment Act, 2011 / 97वां संवैधानिक संशोधन अधिनियम, 2011</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Right to Property (originally Article 31) was removed from Part III of the Constitution by the 44th Amendment Act in 1978. It was converted into a Legal Right under Article 300A in Part XII. / संपत्ति का अधिकार (मूल रूप से अनुच्छेद 31) को 1978 में 44वें संशोधन अधिनियम द्वारा संविधान के भाग III से हटा दिया गया था। इसे भाग XII में अनुच्छेद 300A के तहत एक कानूनी अधिकार में बदल दिया गया था।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>Which of the following Articles deals with the 'Protection of Life and Personal Liberty'?<br/> </b>निम्नलिखित में से कौन सा अनुच्छेद <b>'</b>प्राण और दैहिक स्वतंत्रता के संरक्षण<b>' </b>से संबंधित है<b>?</b></p>",
+    "option1": "<p> Article 20 / अनुच्छेद 20</p>",
+    "option2": "<p> Article 21 / अनुच्छेद 21</p>",
+    "option3": "<p> Article 22 / अनुच्छेद 22</p>",
+    "option4": "<p> Article 19 / अनुच्छेद 19</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 21 guarantees the Right to Life and Personal Liberty, stating that no person shall be deprived of his life or personal liberty except according to the procedure established by law. The Supreme Court has given this article a very wide interpretation, encompassing rights like the right to medical care, right to livelihood, right to privacy, and more. / अनुच्छेद 21 प्राण और दैहिक स्वतंत्रता का अधिकार सुनिश्चित करता है, जिसमें कहा गया है कि किसी भी व्यक्ति को विधि द्वारा स्थापित प्रक्रिया के अलावा उसके जीवन या व्यक्तिगत स्वतंत्रता से वंचित नहीं किया जाएगा। सर्वोच्च न्यायालय ने इस अनुच्छेद की बहुत व्यापक व्याख्या की है, जिसमें चिकित्सा देखभाल का अधिकार, आजीविका का अधिकार, निजता का अधिकार आदि शामिल हैं।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>The Right to Education (Article 21A) for children aged 6 to 14 years was added by which Constitutional Amendment Act?<br/> 6 </b>से <b>14 </b>वर्ष की आयु के बच्चों के लिए शिक्षा का अधिकार <b>(</b>अनुच्छेद <b>21A) </b>किस संवैधानिक संशोधन अधिनियम द्वारा जोड़ा गया था<b>?</b></p>",
+    "option1": "<p> 73rd Amendment / 73वां संशोधन</p>",
+    "option2": "<p> 74th Amendment / 74वां संशोधन</p>",
+    "option3": "<p> 86th Amendment / 86वां संशोधन</p>",
+    "option4": "<p> 91st Amendment / 91वां संशोधन</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The 86th Constitutional Amendment Act, 2002, inserted Article 21A, making the Right to free and compulsory education for children in the age group of six to fourteen years a Fundamental Right. It also made changes to the DPSP and Fundamental Duties. / 86वां संवैधानिक संशोधन अधिनियम, 2002, ने अनुच्छेद 21A को सम्मिलित किया, जिसमें छह से चौदह वर्ष के आयु वर्ग के बच्चों के लिए मुफ्त और अनिवार्य शिक्षा का अधिकार एक मौलिक अधिकार बन गया। इसने राज्य के नीति निदेशक तत्वों और मौलिक कर्तव्यों में भी बदलाव किए।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Which writ literally means 'to have the body of'?<br/> </b>किस रिट का शाब्दिक अर्थ है <b>'</b>का शरीर प्राप्त करना<b>'?</b></p>",
+    "option1": "<p> Mandamus / परमादेश</p>",
+    "option2": "<p> Prohibition / प्रतिषेध</p>",
+    "option3": "<p> Certiorari / उत्प्रेषण</p>",
+    "option4": "<p> Habeas Corpus / बंदी प्रत्यक्षीकरण</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The writ of Habeas Corpus literally means 'to have the body of.' It is an order issued by the court to a person who has detained another person, directing him to produce the latter before the court to check the legality of the detention. / बंदी प्रत्यक्षीकरण रिट का शाब्दिक अर्थ है 'का शरीर प्राप्त करना।' यह एक न्यायालय द्वारा किसी अन्य व्यक्ति को हिरासत में लेने वाले व्यक्ति को जारी किया गया आदेश है, जिसमें उसे हिरासत की वैधता की जांच के लिए बाद वाले को न्यायालय के समक्ष पेश करने का निर्देश दिया जाता है।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>Which Fundamental Rights are available only to Indian citizens and not to foreigners?<br/> </b>कौन से मौलिक अधिकार केवल भारतीय नागरिकों के लिए उपलब्ध हैं<b>, </b>विदेशियों के लिए नहीं<b>?</b></p>",
+    "option1": "<p> Article 20, 21, 22 / अनुच्छेद 20, 21, 22</p>",
+    "option2": "<p> Article 15, 16, 19, 29, 30 / अनुच्छेद 15, 16, 19, 29, 30</p>",
+    "option3": "<p> Article 25, 26, 27, 28 / अनुच्छेद 25, 26, 27, 28</p>",
+    "option4": "<p> Article 14, 21, 21A / अनुच्छेद 14, 21, 21A</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Articles 15 (Prohibition of discrimination), 16 (Equality in public employment), 19 (Six freedoms), 29 (Protection of language, script and culture), and 30 (Right to establish and administer educational institutions) are exclusively available to Indian citizens. / अनुच्छेद 15 (भेदभाव का निषेध), 16 (सार्वजनिक रोजगार में समानता), 19 (छह स्वतंत्रताएं), 29 (भाषा, लिपि और संस्कृति का संरक्षण), और 30 (शैक्षणिक संस्थानों की स्थापना और प्रशासन का अधिकार) केवल भारतीय नागरिकों के लिए उपलब्ध हैं।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Which Article prohibits the employment of children below the age of 14 in hazardous employment?<br/> </b>कौन सा अनुच्छेद <b>14 </b>वर्ष से कम उम्र के बच्चों को खतरनाक नियोजन में नियोजित करने का निषेध करता है<b>?</b></p>",
+    "option1": "<p> Article 22 / अनुच्छेद 22</p>",
+    "option2": "<p> Article 23 / अनुच्छेद 23</p>",
+    "option3": "<p> Article 24 / अनुच्छेद 24</p>",
+    "option4": "<p> Article 25 / अनुच्छेद 25</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 24, part of the Right Against Exploitation (Articles 23-24), prohibits the employment of children below the age of 14 years in any factory, mine, or other hazardous employment. They can work in safe places during non-school hours. / अनुच्छेद 24, जो शोषण के विरुद्ध अधिकार (अनुच्छेद 23-24) का हिस्सा है, 14 वर्ष से कम उम्र के बच्चों को किसी भी कारखाने, खदान या अन्य खतरनाक नियोजन में नियोजित करने का निषेध करता है। वे स्कूल समय के अलावा सुरक्षित स्थानों पर काम कर सकते हैं।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>The concept of 'Rule of Law' as contained in Article 14 is primarily taken from which country?<br/> </b>अनुच्छेद <b>14 </b>में निहित <b>'</b>विधि का शासन<b>' </b>की अवधारणा मुख्य रूप से किस देश से ली गई है<b>?</b></p>",
+    "option1": "<p> USA / संयुक्त राज्य अमेरिका</p>",
+    "option2": "<p> UK / यूनाइटेड किंगडम</p>",
+    "option3": "<p> France / फ्रांस</p>",
+    "option4": "<p> Australia / ऑस्ट्रेलिया</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The concept of 'Equality Before Law' in Article 14, which is also called the Rule of Law, is taken from the UK Constitution. However, the 'Equal Protection of Law' concept is taken from the USA. / अनुच्छेद 14 में 'विधि के समक्ष समानता' की अवधारणा, जिसे विधि का शासन भी कहा जाता है, यूके के संविधान से ली गई है। हालांकि, 'विधियों का समान संरक्षण' की अवधारणा यूएसए से ली गई है।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Which of the following statements is/are correct regarding Fundamental Rights?<br/> </b>मौलिक अधिकारों के संबंध में निम्नलिखित में से कौन सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?<br/> 1. They are not absolute but qualified. / </b>वे निरपेक्ष नहीं बल्कि योग्य हैं।<b><br/> 2. They are sacrosanct and permanent. / </b>वे पवित्र और स्थायी हैं।<b><br/> 3. They are protected and guaranteed by the Constitution. / </b>वे संविधान द्वारा संरक्षित और गारंटीकृत हैं।<b><br/> 4. They seek to implement political democracy. / </b>वे राजनीतिक लोकतंत्र को लागू करना चाहते हैं।</p>",
+    "option1": "<p> 1, 2 and 3 only / केवल 1, 2 और 3</p>",
+    "option2": "<p> 1, 3 and 4 only / केवल 1, 3 और 4</p>",
+    "option3": "<p> 2, 3 and 4 only / केवल 2, 3 और 4</p>",
+    "option4": "<p> 1, 2, 3 and 4 / 1, 2, 3 और 4</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Fundamental Rights are not sacrosanct or permanent; they can be changed or amended by amending the Constitution (Article 368). They are qualified (limited), guaranteed by the Constitution, and aim to implement political democracy. / मौलिक अधिकार पवित्र या स्थायी नहीं हैं; उन्हें संविधान में संशोधन करके बदला या संशोधित किया जा सकता है (अनुच्छेद 368) । वे योग्य (सीमित) हैं, संविधान द्वारा गारंटीकृत हैं, और राजनीतिक लोकतंत्र को लागू करने का लक्ष्य रखते हैं ।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Which of the following rights are included under the wide interpretation of Article 21 (Right to Life and Personal Liberty)?<br/> </b>अनुच्छेद <b>21 (</b>प्राण और दैहिक स्वतंत्रता का अधिकार<b>) </b>की व्यापक व्याख्या के तहत निम्नलिखित में से कौन से अधिकार शामिल हैं<b>?<br/> 1. Right to Medical Care / </b>चिकित्सा देखभाल का अधिकार<b><br/> 2. Right to Privacy / </b>निजता का अधिकार<b><br/> 3. Right to Information / </b>सूचना का अधिकार<b><br/> 4. Right to Sleep / </b>नींद का अधिकार</p>",
+    "option1": "<p> 1, 2 and 4 only / केवल 1, 2 और 4</p>",
+    "option2": "<p> 1, 2, 3 and 4 / 1, 2, 3 और 4</p>",
+    "option3": "<p> 1, 2 and 3 only / केवल 1, 2 और 3</p>",
+    "option4": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Rights like the Right to Medical Care, Right to Privacy, and Right to Sleep are all included in the broad judicial interpretation of Article 21. The Right to Information is a hidden right under Article 19 (Speech and Expression). / चिकित्सा देखभाल का अधिकार, निजता का अधिकार, और नींद का अधिकार जैसे अधिकार सभी अनुच्छेद 21 की व्यापक न्यायिक व्याख्या में शामिल हैं। सूचना का अधिकार अनुच्छेद 19 (भाषण और अभिव्यक्ति) के तहत एक छिपा हुआ अधिकार है ।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Assertion (A): The Supreme Court (Art 32) cannot refuse to issue a writ when a Fundamental Right is violated.<br/> Reason (R): The writ jurisdiction of the High Court (Art 226) is wider than that of the Supreme Court (Art 32).<br/> </b>कथन <b>(A): </b>मौलिक अधिकार का उल्लंघन होने पर सर्वोच्च न्यायालय <b>(</b>अनुच्छेद <b>32) </b>रिट जारी करने से इनकार नहीं कर सकता।<b><br/> </b>कारण <b>(R): </b>उच्च न्यायालय <b>(</b>अनुच्छेद <b>226) </b>का रिट क्षेत्राधिकार सर्वोच्च न्यायालय <b>(</b>अनुच्छेद <b>32) </b>की तुलना में व्यापक है।</p>",
+    "option1": "<p> Both A and R are true, and R is the correct explanation of A. / A और R दोनों सत्य हैं, और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true, but R is not the correct explanation of A. / A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true, but R is false. / A सत्य है, लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false, but R is true. / A असत्य है, लेकिन R सत्य है।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Both statements are individually correct. The SC cannot refuse to issue a writ for FR violation, and the HC's writ jurisdiction is wider as it can issue writs for both Fundamental Rights and Legal Rights. However, R explains the scope of the two jurisdictions, not why the SC cannot refuse. / दोनों कथन व्यक्तिगत रूप से सही हैं। मौलिक अधिकार उल्लंघन के लिए सर्वोच्च न्यायालय रिट जारी करने से इनकार नहीं कर सकता , और उच्च न्यायालय का रिट क्षेत्राधिकार व्यापक है क्योंकि यह मौलिक अधिकारों और कानूनी अधिकारों दोनों के लिए रिट जारी कर सकता है । हालांकि, R सर्वोच्च न्यायालय के इनकार न करने के कारण की व्याख्या नहीं करता है, बल्कि दोनों क्षेत्राधिकारों के दायरे की व्याख्या करता है।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Which one of the following is NOT a ground for imposing reasonable restrictions on the Right to Freedom of Speech and Expression (Article 19)?<br/> </b>निम्नलिखित में से कौन सा वाक् और अभिव्यक्ति की स्वतंत्रता के अधिकार <b>(</b>अनुच्छेद <b>19) </b>पर उचित प्रतिबंध लगाने का आधार नहीं है<b>?</b></p>",
+    "option1": "<p> Sovereignty and integrity of India / भारत की संप्रभुता और अखंडता</p>",
+    "option2": "<p> Contempt of Court / न्यायालय की अवमानना</p>",
+    "option3": "<p> Friendly relations with foreign states / विदेशी राज्यों के साथ मैत्रीपूर्ण संबंध</p>",
+    "option4": "<p> Interests of the general public / आम जनता के हित</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The grounds for reasonable restrictions on Article 19 include the sovereignty and integrity of India, security of the State, friendly relations with foreign States, public order, decency or morality, contempt of court, defamation, or incitement to an offence. \"Interests of the general public\" is not explicitly listed as a restriction for this specific freedom in the text. / अनुच्छेद 19 पर उचित प्रतिबंध लगाने के आधारों में भारत की संप्रभुता और अखंडता, राज्य की सुरक्षा, विदेशी राज्यों के साथ मैत्रीपूर्ण संबंध, सार्वजनिक व्यवस्था, शालीनता या नैतिकता, न्यायालय की अवमानना, मानहानि, या किसी अपराध के लिए उकसाना शामिल हैं । \"आम जनता के हित\" इस विशिष्ट स्वतंत्रता के लिए प्रतिबंध के रूप में पाठ में स्पष्ट रूप से सूचीबद्ध नहीं है।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Consider the following pairs regarding the types of Writs and their literal meaning:<br/> </b>रिट के प्रकार और उनके शाब्दिक अर्थ के संबंध में निम्नलिखित युग्मों पर विचार करें<b>:<br/> 1. Mandamus: We command / </b>परमादेश<b>: </b>हम आदेश देते हैं<b><br/> 2. Certiorari: To forbid / </b>उत्प्रेषण<b>: </b>मना करना<b><br/> 3. Quo-Warranto: By what authority or warrant / </b>अधिकार पृच्छा<b>: </b>किस अधिकार या वारंट से<b><br/> 4. Prohibition: To be certified / </b>प्रतिषेध<b>: </b>प्रमाणित होना<b><br/> Which of the pairs given above are correctly matched?<br/> </b>ऊपर दिए गए युग्मों में से कौन से सही सुमेलित हैं<b>?</b></p>",
+    "option1": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option2": "<p> 2 and 4 only / केवल 2 और 4</p>",
+    "option3": "<p> 1, 2 and 3 only / केवल 1, 2 और 3</p>",
+    "option4": "<p> 1, 3 and 4 only / केवल 1, 3 और 4</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The correct meanings are: Mandamus - 'We command', Quo-Warranto - 'By what authority or warrant'. Prohibition means 'to forbid', and Certiorari means 'to be certified' or 'to be informed'. / सही अर्थ हैं: परमादेश - 'हम आदेश देते हैं', अधिकार पृच्छा - 'किस अधिकार या वारंट से' । प्रतिषेध का अर्थ है 'मना करना', और उत्प्रेषण का अर्थ है 'प्रमाणित होना' या 'सूचित होना' ।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Assertion (A): Article 20 and Article 21 can never be suspended, even during a National Emergency.<br/> Reason (R): Article 359 of the Constitution restricts the suspension of Articles 20 and 21 during the operation of a National Emergency.<br/> </b>कथन <b>(A): </b>अनुच्छेद <b>20 </b>और अनुच्छेद <b>21 </b>को कभी भी निलंबित नहीं किया जा सकता<b>, </b>यहां तक कि राष्ट्रीय आपातकाल के दौरान भी नहीं।<b><br/> </b>कारण <b>(R): </b>संविधान का अनुच्छेद <b>359 </b>राष्ट्रीय आपातकाल के संचालन के दौरान अनुच्छेद <b>20 </b>और <b>21 </b>के निलंबन को प्रतिबंधित करता है।</p>",
+    "option1": "<p> Both A and R are true, and R is the correct explanation of A. / A और R दोनों सत्य हैं, और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true, but R is not the correct explanation of A. / A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true, but R is false. / A सत्य है, लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false, but R is true. / A असत्य है, लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The statement that Articles 20 and 21 can never be suspended is correct. This non-suspension is enforced by the provision in the Constitution (Article 359, added by the 44th Amendment Act) which restricts the President from suspending the enforcement of Articles 20 and 21 during a National Emergency. / यह कथन कि अनुच्छेद 20 और 21 को कभी भी निलंबित नहीं किया जा सकता है, सही है । यह गैर-निलंबन संविधान के प्रावधान (अनुच्छेद 359, 44वें संशोधन अधिनियम द्वारा जोड़ा गया) द्वारा लागू किया जाता है, जो राष्ट्रपति को राष्ट्रीय आपातकाल के दौरान अनुच्छेद 20 और 21 के प्रवर्तन को निलंबित करने से प्रतिबंधित करता है।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Which Article provides for the establishment and maintenance of institutions for religious and charitable purposes and to manage religious affairs?<br/> </b>कौन सा अनुच्छेद धार्मिक और धर्मार्थ उद्देश्यों के लिए संस्थानों की स्थापना और रखरखाव तथा धार्मिक मामलों का प्रबंधन करने का प्रावधान करता है<b>?</b></p>",
+    "option1": "<p> Article 25 / अनुच्छेद 25</p>",
+    "option2": "<p> Article 26 / अनुच्छेद 26</p>",
+    "option3": "<p> Article 27 / अनुच्छेद 27</p>",
+    "option4": "<p> Article 28 / अनुच्छेद 28</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 26 provides the collective right to freedom of religion, which includes the right to establish and maintain institutions for religious and charitable purposes and to manage its own affairs in matters of religion. Article 25 deals with the freedom of conscience and the individual right to practice and propagate any religion. / अनुच्छेद 26 धर्म की स्वतंत्रता का सामूहिक अधिकार प्रदान करता है, जिसमें धार्मिक और धर्मार्थ उद्देश्यों के लिए संस्थानों की स्थापना और रखरखाव तथा धर्म के मामलों में अपने मामलों का प्रबंधन करने का अधिकार शामिल है । अनुच्छेद 25 अंतःकरण की स्वतंत्रता और किसी भी धर्म को मानने और प्रचार करने के व्यक्तिगत अधिकार से संबंधित है।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Article 16(4) is an exception to the Right to Equality. What does it allow?<br/> </b>अनुच्छेद <b>16(4) </b>समानता के अधिकार का अपवाद है। यह क्या अनुमति देता है<b>?</b></p>",
+    "option1": "<p> Reservation for economically weaker sections in public employment. / सार्वजनिक रोजगार में आर्थिक रूप से कमजोर वर्गों के लिए आरक्षण।</p>",
+    "option2": "<p> Reservation in appointment for any backward class of citizens that, in the opinion of the State, is not adequately represented. / ऐसी किसी भी पिछड़ी वर्ग के नागरिकों के लिये नियुक्ति में आरक्षण जिन्हें राज्य की राय में पर्याप्त प्रतिनिधित्व नहीं मिला है।</p>",
+    "option3": "<p> Reservation in matters of foreign state employment. / विदेशी राज्य के रोजगार के मामलों में आरक्षण।</p>",
+    "option4": "<p> Special provisions for women and children. / महिलाओं और बच्चों के लिए विशेष प्रावधान।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 16(4) permits the State to make provisions for the reservation in appointments and promotions in favour of any backward class of citizens which, in the opinion of the State, is not adequately represented in the services under the State. This is not considered a violation of the Right to Equality. / अनुच्छेद 16(4) राज्य को नागरिकों के किसी भी पिछड़े वर्ग के पक्ष में नियुक्तियों और पदोन्नति में आरक्षण के लिए प्रावधान करने की अनुमति देता है, जिसका, राज्य की राय में, राज्य के अधीन सेवाओं में पर्याप्त प्रतिनिधित्व नहीं है। इसे समानता के अधिकार का उल्लंघन नहीं माना जाता है ।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Which case led to the Supreme Court upholding the 27% reservation for OBCs in government jobs but setting a 50% cap on total reservations and the identification of the 'Creamy-layer'?<br/> </b>किस मामले के कारण सर्वोच्च न्यायालय ने सरकारी नौकरियों में ओबीसी के लिए <b>27% </b>आरक्षण को बरकरार रखा<b>, </b>लेकिन कुल आरक्षण पर <b>50% </b>की सीमा और <b>'</b>क्रीमी<b>-</b>लेयर<b>' </b>की पहचान निर्धारित की<b>?</b></p>",
+    "option1": "<p> Golaknath Case / गोलकनाथ मामला</p>",
+    "option2": "<p> Keshavananda Bharti Case / केशवानंद भारती मामला</p>",
+    "option3": "<p> Indra Sawhney Case / इंदिरा साहनी मामला</p>",
+    "option4": "<p> Raj Narain Vs State of UP / राज नारायण बनाम उत्तर प्रदेश राज्य</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> In the Indra Sawhney Case (1992), the Supreme Court upheld the 27% reservation for OBCs as recommended by the Mandal Commission, but set the crucial 50% cap on total reservations and mandated the exclusion of the 'Creamy-layer' from reservation benefits. / इंदिरा साहनी मामले (1992) में, सर्वोच्च न्यायालय ने मंडल आयोग द्वारा अनुशंसित ओबीसी के लिए 27% आरक्षण को बरकरार रखा, लेकिन कुल आरक्षण पर महत्वपूर्ण 50% की सीमा निर्धारित की और आरक्षण लाभ से 'क्रीमी-लेयर' को बाहर करने का आदेश दिया ।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Assertion (A): The Fundamental Rights are justiciable in nature.<br/> Reason (R): They are protected and enforced by the ordinary law of the country.<br/> </b>कथन <b>(A): </b>मौलिक अधिकार प्रकृति में न्यायोचित <b>(justiciable) </b>हैं।<b><br/> </b>कारण <b>(R): </b>वे देश के सामान्य कानून द्वारा संरक्षित और लागू होते हैं।</p>",
+    "option1": "<p> Both A and R are true, and R is the correct explanation of A. / A और R दोनों सत्य हैं, और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true, but R is not the correct explanation of A. / A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true, but R is false. / A सत्य है, लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false, but R is true. / A असत्य है, लेकिन R सत्य है।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Assertion (A) is correct: Fundamental Rights are justiciable. However, Reason (R) is false: Fundamental Rights are protected and guaranteed by the Constitution, not by ordinary law. Their enforcement is through constitutional remedies (Articles 32 and 226). / कथन (A) सही है: मौलिक अधिकार न्यायोचित हैं । हालांकि, कारण (R) असत्य है: मौलिक अधिकार संविधान द्वारा संरक्षित और गारंटीकृत होते हैं , न कि सामान्य कानून द्वारा । उनका प्रवर्तन संवैधानिक उपचारों (अनुच्छेद 32 और 226) के माध्यम से होता है।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Which of the following is correct regarding the enforcement of Fundamental Rights?<br/> </b>मौलिक अधिकारों के प्रवर्तन के संबंध में निम्नलिखित में से कौन सा सही है<b>?</b></p>",
+    "option1": "<p> Only the Supreme Court (Art 32) can issue writs for their enforcement. / केवल सर्वोच्च न्यायालय (अनुच्छेद 32) ही उनके प्रवर्तन के लिए रिट जारी कर सकता है।</p>",
+    "option2": "<p> The High Court (Art 226) can issue writs only for the violation of Fundamental Rights. / उच्च न्यायालय (अनुच्छेद 226) केवल मौलिक अधिकारों के उल्लंघन के लिए रिट जारी कर सकता है।</p>",
+    "option3": "<p> Parliament can authorise any other court to issue writs, in addition to the Supreme Court and High Courts. / संसद सर्वोच्च न्यायालय और उच्च न्यायालयों के अतिरिक्त किसी भी अन्य न्यायालय को रिट जारी करने के लिए अधिकृत कर सकती है।</p>",
+    "option4": "<p> The power to make laws to give effect to certain Fundamental Rights is vested in the State Legislatures. / कुछ मौलिक अधिकारों को प्रभावी बनाने के लिए कानून बनाने की शक्ति राज्य विधानमंडलों में निहित है।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Parliament is empowered to authorize any other court (beyond the SC and HC) to issue writs for the enforcement of Fundamental Rights. The HC can issue writs for both Fundamental Rights and Legal Rights (wider jurisdiction) , and the power to make laws to give effect to FRs is vested only in the Parliament (Article 35). / संसद को मौलिक अधिकारों के प्रवर्तन के लिए रिट जारी करने हेतु (एससी और एचसी के अलावा) किसी अन्य न्यायालय को अधिकृत करने का अधिकार है । उच्च न्यायालय मौलिक अधिकारों और कानूनी अधिकारों दोनों के लिए रिट जारी कर सकता है (व्यापक क्षेत्राधिकार) , और मौलिक अधिकारों को प्रभावी बनाने के लिए कानून बनाने की शक्ति केवल संसद में निहित है (अनुच्छेद 35) ।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Which of the following constitutional provisions are affected by the 86th Constitutional Amendment Act, 2002?<br/> </b>निम्नलिखित में से कौन से संवैधानिक प्रावधान <b>86</b>वें संवैधानिक संशोधन अधिनियम<b>, 2002 </b>से प्रभावित हुए हैं<b>?<br/> 1. Fundamental Rights (FRs) / </b>मौलिक अधिकार <b>(FRs)<br/> 2. Directive Principles of State Policy (DPSP) / </b>राज्य के नीति निदेशक तत्व <b>(DPSP)<br/> 3. Fundamental Duties (FD) / </b>मौलिक कर्तव्य <b>(FD)</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The 86th Constitutional Amendment Act, 2002, introduced Article 21A into Fundamental Rights, amended Article 45 in DPSP, and added a new Fundamental Duty (Article 51A(k)), thereby affecting all three parts of the Constitution. / 86वें संवैधानिक संशोधन अधिनियम, 2002, ने मौलिक अधिकारों में अनुच्छेद 21A को सम्मिलित किया, DPSP में अनुच्छेद 45 में संशोधन किया, और एक नया मौलिक कर्तव्य (अनुच्छेद 51A(k)) जोड़ा, जिससे संविधान के ये तीनों भाग प्रभावित हुए ।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Which of the following is an exception to the prohibition of human trafficking and forced labour mentioned in Article 23?<br/> </b>अनुच्छेद <b>23 </b>में उल्लिखित मानव तस्करी और बलात् श्रम के निषेध का निम्नलिखित में से कौन सा एक अपवाद है<b>?</b></p>",
+    "option1": "<p> Forced labour for national security during a financial emergency. / वित्तीय आपातकाल के दौरान राष्ट्रीय सुरक्षा के लिए बलात् श्रम।</p>",
+    "option2": "<p> Compulsory service for public purposes, like during war. / सार्वजनिक प्रयोजनों के लिए अनिवार्य सेवा, जैसे युद्ध के दौरान।</p>",
+    "option3": "<p> Prohibition of discrimination in forced service based on religion. / धर्म के आधार पर बलात् सेवा में भेदभाव का निषेध।</p>",
+    "option4": "<p> Forced labour to repay a debt taken from the State. / राज्य से लिए गए ऋण को चुकाने के लिए बलात् श्रम।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 23 (Prohibition of human trafficking and forced labour) has an exception which states that the State can impose compulsory service for public purposes, such as during a war. The State, however, cannot make discrimination on grounds only of religion, race, caste, or class in imposing such compulsory service. / अनुच्छेद 23 (मानव तस्करी और बलात् श्रम का निषेध) का एक अपवाद है जिसमें कहा गया है कि राज्य सार्वजनिक प्रयोजनों के लिए अनिवार्य सेवा लागू कर सकता है, जैसे युद्ध के दौरान । हालांकि, राज्य ऐसी अनिवार्य सेवा लागू करने में केवल धर्म, मूलवंश, जाति या वर्ग के आधार पर भेदभाव नहीं कर सकता है।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Which of the following statements is/are correct about the concept of 'Due Process of Law' (used in the Menaka Gandhi Case) in the context of Article 21?<br/> </b>अनुच्छेद <b>21 </b>के संदर्भ में <b>'</b>विधि की सम्यक प्रक्रिया<b>' (</b>मेनका गांधी मामले में प्रयुक्त<b>) </b>की अवधारणा के बारे में निम्नलिखित में से कौन सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?<br/> 1. It is explicitly written in the Indian Constitution. / </b>यह भारतीय संविधान में स्पष्ट रूप से लिखा गया है।<b><br/> 2. It allows an unfair law to be declared null and void by the court. / </b>यह न्यायालय द्वारा एक अनुचित कानून को शून्य और शून्य घोषित करने की अनुमति देता है।<b><br/> 3. It gives Article 21 a wider stance compared to 'Procedure established by law' (used in the Gopalan Case). / </b>यह <b>'</b>विधि द्वारा स्थापित प्रक्रिया<b>' (</b>गोपालन मामले में प्रयुक्त<b>) </b>की तुलना में अनुच्छेद <b>21 </b>को व्यापक रुख देता है।</p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The 'Due Process of Law' concept is not explicitly written in the Indian Constitution. It means an unfair law can be declared null and void by the judiciary and gives a wider stance to Article 21, which overturned the narrow interpretation of the Gopalan Case (which used 'Procedure established by law'). / 'विधि की सम्यक प्रक्रिया' की अवधारणा भारतीय संविधान में स्पष्ट रूप से नहीं लिखी गई है । इसका अर्थ है कि एक अनुचित कानून को न्यायपालिका द्वारा शून्य और शून्य घोषित किया जा सकता है और यह अनुच्छेद 21 को एक व्यापक रुख देता है , जिसने गोपालन मामले (जिसमें 'विधि द्वारा स्थापित प्रक्रिया' का उपयोग किया गया था) की संकीर्ण व्याख्या को उलट दिया ।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>Which of the following is correct regarding the freedom to form associations or unions under Article 19(1)(c)?<br/> </b>अनुच्छेद <b>19(1)(c) </b>के तहत संघ या संघ बनाने की स्वतंत्रता के संबंध में निम्नलिखित में से कौन सा सही है<b>?</b></p>",
+    "option1": "<p> The right to form associations is absolute, with no restrictions. / संघ बनाने का अधिकार निरपेक्ष है, बिना किसी प्रतिबंध के।</p>",
+    "option2": "<p> The right to form co-operative societies was added by the 97th Constitutional Amendment Act. / सहकारी समितियों के गठन का अधिकार 97वें संवैधानिक संशोधन अधिनियम द्वारा जोड़ा गया था।</p>",
+    "option3": "<p> Associations like Khalistani association can be formed under this right. / खालिस्तानी संघ जैसे संघ इस अधिकार के तहत बनाए जा सकते हैं।</p>",
+    "option4": "<p> This right is only available to citizens residing in the territory of India. / यह अधिकार केवल भारत के क्षेत्र में रहने वाले नागरिकों के लिए उपलब्ध है।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> <br/> </p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - POLITY</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">POLITY - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

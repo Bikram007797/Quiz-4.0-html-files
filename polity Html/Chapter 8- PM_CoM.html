@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>General Quiz -  - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>General Quiz - </h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>Which Article of the Indian Constitution states that there shall be a Council of Ministers with the Prime Minister as the head to aid and advise the President?<br/> </b>भारतीय संविधान का कौन सा अनुच्छेद कहता है कि राष्ट्रपति को सहायता और सलाह देने के लिए प्रधानमंत्री के नेतृत्व में एक मंत्रिपरिषद होगी<b>?</b></p>",
+    "option1": "<p> Article 78 / अनुच्छेद 78</p>",
+    "option2": "<p> Article 75 / अनुच्छेद 75</p>",
+    "option3": "<p> Article 74 / अनुच्छेद 74</p>",
+    "option4": "<p> Article 72 / अनुच्छेद 72</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 74 (1) is the foundational provision that establishes the Council of Ministers (CoMs) headed by the Prime Minister (PM) to aid and advise the President in the exercise of their functions. This advice is binding on the President after the 42nd Constitutional Amendment Act, though the 44th Amendment Act later allowed the President to ask the CoMs to reconsider the advice once. This mechanism defines the nature of the Parliamentary system in India.<br/> अनुच्छेद 74 (1) वह मौलिक प्रावधान है जो राष्ट्रपति को उनके कार्यों के प्रयोग में सहायता और सलाह देने के लिए प्रधानमंत्री (PM) के नेतृत्व में एक मंत्रिपरिषद की स्थापना करता है। 42वें संवैधानिक संशोधन अधिनियम के बाद यह सलाह राष्ट्रपति पर बाध्यकारी हो गई, हालाँकि 44वें संशोधन अधिनियम ने बाद में राष्ट्रपति को मंत्रिपरिषद से एक बार सलाह पर पुनर्विचार करने के लिए कहने की अनुमति दी। यह तंत्र भारत में संसदीय प्रणाली की प्रकृति को परिभाषित करता है।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>Who among the following is considered the 'de facto' or 'Real Head' of the Government of India?<br/> </b>निम्नलिखित में से किसे भारत सरकार का <b>'</b>वास्तविक प्रमुख<b>' </b>या <b>'</b>वास्तविक मुखिया <b>(</b>डी फैक्टो<b>)' </b>माना जाता है<b>?</b></p>",
+    "option1": "<p> The President / राष्ट्रपति</p>",
+    "option2": "<p> The Vice-President / उपराष्ट्रपति</p>",
+    "option3": "<p> The Prime Minister / प्रधानमंत्री</p>",
+    "option4": "<p> The Chief Justice of India / भारत के मुख्य न्यायाधीश</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> In India's parliamentary system, the President is the 'de jure' or Nominal Head of the country, while the Prime Minister is the 'de facto' or Real Head, and also the Head of the Government. The President acts on the advice of the Council of Ministers, led by the PM, thereby vesting real executive power in the Prime Minister and the CoMs. This distinction is a key feature of the Westminster model of governance adopted by India.<br/> भारत की संसदीय प्रणाली में, राष्ट्रपति देश का 'नाममात्र प्रमुख' या 'नामधारी मुखिया (डी ज्यूरे)' होता है, जबकि प्रधानमंत्री 'वास्तविक प्रमुख' या 'वास्तविक मुखिया (डी फैक्टो)' होता है, और साथ ही सरकार का प्रमुख भी होता है। राष्ट्रपति प्रधानमंत्री के नेतृत्व वाली मंत्रिपरिषद की सलाह पर कार्य करते हैं, जिससे वास्तविक कार्यकारी शक्ति प्रधानमंत्री और मंत्रिपरिषद में निहित होती है। यह अंतर भारत द्वारा अपनाए गए शासन के वेस्टमिंस्टर मॉडल की एक प्रमुख विशेषता है।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>The Prime Minister of India is the ex-officio Chairman of which of the following bodies?<br/> </b>भारत के प्रधानमंत्री निम्नलिखित में से किस निकाय के पदेन अध्यक्ष होते हैं<b>?</b></p>",
+    "option1": "<p> Inter-State Council / अंतर्राज्यीय परिषद</p>",
+    "option2": "<p> National Disaster Management Authority / राष्ट्रीय आपदा प्रबंधन प्राधिकरण</p>",
+    "option3": "<p> NITI AAYOG / नीति आयोग</p>",
+    "option4": "<p> All of the above / उपरोक्त सभी</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Prime Minister holds the position of ex-officio Chairman for several key national bodies, reflecting the importance of the office in policy formulation and national coordination. These include the NITI AAYOG (which replaced the Planning Commission), the Inter-State Council, and the National Disaster Management Authority (NDMA). The PM's role as chairman ensures high-level political direction and coordination across central and state governments. प्रधानमंत्री कई प्रमुख राष्ट्रीय निकायों के पदेन अध्यक्ष का पद संभालते हैं, जो नीति निर्माण और राष्ट्रीय समन्वय में इस कार्यालय के महत्व को दर्शाता है। इनमें नीति आयोग (जिसने योजना आयोग का स्थान लिया), अंतर्राज्यीय परिषद, और राष्ट्रीय आपदा प्रबंधन प्राधिकरण (NDMA) शामिल हैं। अध्यक्ष के रूप में प्रधानमंत्री की भूमिका केंद्र और राज्य सरकारों के बीच उच्च-स्तरीय राजनीतिक दिशा और समन्वय सुनिश्चित करती है।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>The first Indian Prime Minister to resign from office was:<br/> </b>पद से इस्तीफा देने वाले पहले भारतीय प्रधानमंत्री कौन थे<b>?</b></p>",
+    "option1": "<p> Jawaharlal Nehru / जवाहरलाल नेहरू</p>",
+    "option2": "<p> Lal Bahadur Shastri / लाल बहादुर शास्त्री</p>",
+    "option3": "<p> Morarji Desai / मोरारजी देसाई</p>",
+    "option4": "<p> V. P. Singh / वी. पी. सिंह</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Morarji Desai holds the distinction of being the first Prime Minister of India to voluntarily resign from office. He served as Prime Minister from 1977 to 1979, heading a Janata Party government. His resignation was due to internal conflicts and a loss of confidence within the ruling coalition, leading to the collapse of his government.<br/> मोरारजी देसाई के पास भारत के पहले ऐसे प्रधानमंत्री होने का गौरव है जिन्होंने स्वेच्छा से अपने पद से इस्तीफा दिया था। उन्होंने 1977 से 1979 तक जनता पार्टी सरकार के प्रमुख के रूप में प्रधानमंत्री के रूप में कार्य किया। उनका इस्तीफा सत्तारूढ़ गठबंधन के भीतर आंतरिक संघर्षों और विश्वास खोने के कारण हुआ, जिससे उनकी सरकार गिर गई।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>According to Article 76 of the Constitution, a person appointed as the Attorney General for India must be qualified to be a judge of which court?<br/> </b>संविधान के अनुच्छेद <b>76 </b>के अनुसार<b>, </b>भारत के लिए महान्यायवादी के रूप में नियुक्त होने वाले व्यक्ति में किस न्यायालय के न्यायाधीश के रूप में नियुक्त होने की योग्यता होनी चाहिए<b>?</b></p>",
+    "option1": "<p> High Court / उच्च न्यायालय</p>",
+    "option2": "<p> Supreme Court / उच्चतम न्यायालय</p>",
+    "option3": "<p> Any District Court / कोई जिला न्यायालय</p>",
+    "option4": "<p> Both High Court and Supreme Court / उच्च न्यायालय और उच्चतम न्यायालय दोनों</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 76 specifies that the President shall appoint a person who is qualified to be appointed as a Judge of the Supreme Court to be the Attorney General for India. This qualification ensures that the Attorney General, who is the highest law officer of the country and the Central Government's primary lawyer, possesses the highest level of legal expertise and constitutional knowledge.<br/> अनुच्छेद 76 निर्दिष्ट करता है कि राष्ट्रपति ऐसे व्यक्ति को भारत के लिए महान्यायवादी नियुक्त करेंगे जो उच्चतम न्यायालय के न्यायाधीश के रूप में नियुक्त होने के लिए योग्य हो। यह योग्यता सुनिश्चित करती है कि महान्यायवादी, जो देश का सर्वोच्च कानून अधिकारी और केंद्र सरकार का प्राथमिक वकील है, उच्चतम स्तर की कानूनी विशेषज्ञता और संवैधानिक ज्ञान रखता हो।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>What is the maximum limit of the Council of Ministers in the Union Territories of NCT of Delhi and as a percentage of the total strength of its Legislative Assemblies?<br/> </b>राष्ट्रीय राजधानी क्षेत्र दिल्ली केंद्र शासित प्रदेश में मंत्रिपरिषद की अधिकतम सीमा विधानसभा की कुल शक्ति का कितना प्रतिशत हो सकता है<b>?</b></p>",
+    "option1": "<p> 15%</p>",
+    "option2": "<p> 10%</p>",
+    "option3": "<p> 12%</p>",
+    "option4": "<p> 20%</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The strength of the Council of Ministers for the Union is generally limited to 15% of the total strength of the Lok Sabha (added by the 91st Amendment Act, 2003), while for the National Capital Territory of Delhi this maximum limit is specifically fixed at 10% of the total strength of their Legislative Assembly. This lower percentage is a specific constitutional provision for these Union Territories with legislative assemblies, taking into account their unique administrative situation.<br/> संघ के लिए मंत्रिपरिषद की संख्या आम तौर पर लोकसभा की कुल शक्ति के 15% तक सीमित है (91वें संशोधन अधिनियम, 2003 द्वारा जोड़ा गया), जबकि राष्ट्रीय राजधानी क्षेत्र दिल्ली प्रदेश के लिए यह अधिकतम सीमा विशेष रूप से उनकी विधानसभा की कुल शक्ति के 10% पर निर्धारित की गई है। यह कम प्रतिशत विधायी विधानसभाओं वाले इन केंद्र शासित प्रदेशों के लिए एक विशिष्ट संवैधानिक प्रावधान है, जो उनकी अनूठी प्रशासनिक स्थिति को ध्यान में रखता है।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>What is the consequence if the Prime Minister of India resigns from their office?<br/> </b>यदि भारत के प्रधानमंत्री अपने पद से इस्तीफा दे देते हैं तो इसका क्या परिणाम होता है<b>?</b></p>",
+    "option1": "<p> Only the Prime Minister's post becomes vacant. / केवल प्रधानमंत्री का पद रिक्त होता है।</p>",
+    "option2": "<p> The entire Council of Ministers (COMs) is dissolved. / संपूर्ण मंत्रिपरिषद भंग हो जाती है।</p>",
+    "option3": "<p> The Rajya Sabha is automatically dissolved. / राज्यसभा स्वतः भंग हो जाती है।</p>",
+    "option4": "<p> The President becomes the Head of the Government. / राष्ट्रपति सरकार के प्रमुख बन जाते हैं।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The resignation of the Prime Minister automatically leads to the collapse and dissolution of the entire Council of Ministers because the PM is the linchpin and head of the Council. The PM's resignation is considered a move that brings down the entire government, enforcing the principle of collective responsibility, which states that the CoMs works as a team under the leadership of the Prime Minister.<br/> प्रधानमंत्री के इस्तीफा देने से पूरी मंत्रिपरिषद स्वतः ही भंग हो जाती है क्योंकि प्रधानमंत्री मंत्रिपरिषद के केंद्र बिंदु और प्रमुख होते हैं। प्रधानमंत्री का इस्तीफा पूरी सरकार के पतन का कारण माना जाता है, जिससे सामूहिक जिम्मेदारी का सिद्धांत लागू होता है, जो कहता है कि मंत्रिपरिषद प्रधानमंत्री के नेतृत्व में एक टीम के रूप में कार्य करती है।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>The normal full term of the Prime Minister of India is five years, which coincides with the normal life of:<br/> </b>भारत के प्रधानमंत्री का सामान्य पूर्ण कार्यकाल पाँच वर्ष होता है<b>, </b>जो किसके सामान्य जीवन के साथ मेल खाता है<b>?</b></p>",
+    "option1": "<p> Rajya Sabha / राज्यसभा</p>",
+    "option2": "<p> The President's Office / राष्ट्रपति का कार्यालय</p>",
+    "option3": "<p> Lok Sabha / लोकसभा</p>",
+    "option4": "<p> The Supreme Court / उच्चतम न्यायालय</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Prime Minister's normal term is stated to be five years, which is aligned with the standard life of the Lok Sabha, the lower house of the Parliament. However, the term is not fixed, as the PM holds office during the pleasure of the President, and must resign if they lose the confidence of the Lok Sabha, which makes the tenure dependent on the majority support in the Lok Sabha.<br/> प्रधानमंत्री का सामान्य कार्यकाल पाँच वर्ष बताया गया है, जो संसद के निचले सदन, लोकसभा के मानक जीवनकाल के साथ संरेखित होता है। हालाँकि, कार्यकाल निश्चित नहीं है, क्योंकि प्रधानमंत्री राष्ट्रपति के प्रसादपर्यंत पद धारण करते हैं, और यदि वे लोकसभा का विश्वास खो देते हैं तो उन्हें इस्तीफा देना पड़ता है, जो कार्यकाल को लोकसभा में बहुमत के समर्थन पर निर्भर करता है।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Who administers the oaths of office and secrecy to the Prime Minister of India?<br/> </b>भारत के प्रधानमंत्री को पद और गोपनीयता की शपथ कौन दिलाता है<b>?</b></p>",
+    "option1": "<p> The Speaker of the Lok Sabha / लोकसभा अध्यक्ष</p>",
+    "option2": "<p> The Chief Justice of India / भारत के मुख्य न्यायाधीश</p>",
+    "option3": "<p> The President / राष्ट्रपति</p>",
+    "option4": "<p> The Vice-President / उपराष्ट्रपति</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> As per the constitutional provisions, the President is the appointing authority for the Prime Minister and the person who administers the oaths of office and secrecy to them. The President appoints the leader of the majority party in the Lok Sabha as the Prime Minister, and the swearing-in ceremony marks the formal commencement of their tenure in office.<br/> संवैधानिक प्रावधानों के अनुसार, राष्ट्रपति प्रधानमंत्री की नियुक्ति प्राधिकारी होते हैं और वही उन्हें पद और गोपनीयता की शपथ दिलाते हैं। राष्ट्रपति लोकसभा में बहुमत दल के नेता को प्रधानमंत्री के रूप में नियुक्त करते हैं, और शपथ ग्रहण समारोह उनके कार्यकाल की औपचारिक शुरुआत का प्रतीक होता है।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>The longest-serving Prime Minister of India, who died in office in 1964, was:<br/> </b>भारत के सबसे लंबे समय तक सेवा करने वाले प्रधानमंत्री<b>, </b>जिनकी <b>1964 </b>में कार्यालय में मृत्यु हो गई थी<b>, </b>थे<b>:</b></p>",
+    "option1": "<p> Indira Gandhi / इंदिरा गांधी</p>",
+    "option2": "<p> Jawaharlal Nehru / जवाहरलाल नेहरू</p>",
+    "option3": "<p> Manmohan Singh / मनमोहन सिंह</p>",
+    "option4": "<p> Atal Bihari Vajpayee / अटल बिहारी वाजपेयी</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Jawaharlal Nehru served as the first and longest-serving Prime Minister of India, with a tenure spanning over 16 years and 286 days. He held office from 1947 until his death in 1964, a period crucial for the nation-building process and the laying of the foundation for India's foreign and domestic policies. His passing led to Gulzarilal Nanda becoming the acting PM for a brief period.<br/> जवाहरलाल नेहरू ने भारत के पहले और सबसे लंबे समय तक सेवा करने वाले प्रधानमंत्री के रूप में कार्य किया, जिनका कार्यकाल 16 वर्ष और 286 दिनों से अधिक था। उन्होंने 1947 से लेकर 1964 में अपनी मृत्यु तक पद संभाला, यह अवधि राष्ट्र निर्माण प्रक्रिया और भारत की विदेश और घरेलू नीतियों की नींव रखने के लिए महत्वपूर्ण थी। उनके निधन से गुलजारिलाल नंदा थोड़े समय के लिए कार्यवाहक प्रधानमंत्री बने थे।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Statement I: The term of the Prime Minister is not fixed, and they hold office during the pleasure of the President.<br/> Statement II: This 'pleasure of the President' means that the President can dismiss the PM at any time, even if the PM has the confidence of the Lok Sabha.<br/> </b>कथन <b>I: </b>प्रधानमंत्री का कार्यकाल निश्चित नहीं होता है<b>, </b>और वे राष्ट्रपति के प्रसादपर्यंत पद धारण करते हैं।<b><br/> </b>कथन <b>II: </b>इस <b>'</b>राष्ट्रपति के प्रसादपर्यंत<b>' </b>का अर्थ है कि राष्ट्रपति प्रधानमंत्री को किसी भी समय बर्खास्त कर सकते हैं<b>, </b>भले ही प्रधानमंत्री को लोकसभा का विश्वास प्राप्त हो।</p>",
+    "option1": "<p> Statement I is correct, but Statement II is incorrect. / कथन I सही है, लेकिन कथन II गलत है।</p>",
+    "option2": "<p> Statement I is incorrect, but Statement II is correct. / कथन I गलत है, लेकिन कथन II सही है।</p>",
+    "option3": "<p> Both Statements I and II are correct. / दोनों कथन I और II सही हैं।</p>",
+    "option4": "<p> Both Statements I and II are incorrect. / दोनों कथन I और II गलत हैं।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> <br/> </p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Which of the following statements about the Council of Ministers (COMs) is/are correct?<br/> </b>निम्नलिखित में से कौन सा<b>/</b>से कथन मंत्रिपरिषद के बारे में सही है<b>/</b>हैं<b>?<br/> 1. Ministers are collectively responsible to the President. / </b>मंत्री सामूहिक रूप से राष्ट्रपति के प्रति ज़िम्मेदार होते हैं।<b><br/> 2. Ministers are individually responsible to the President. / </b>मंत्री व्यक्तिगत रूप से राष्ट्रपति के प्रति ज़िम्मेदार होते हैं।<b><br/> 3. The salaries and allowances of the Ministers are decided by the Parliament. / </b>मंत्रियों के वेतन और भत्ते संसद तय करती है।<b><br/> 4. The classification of different ministers (like Cabinet, Minister of State, Deputy Minister) is mentioned in the Constitution. / </b>अलग<b>-</b>अलग मंत्रियों <b>(</b>जैसे कैबिनेट<b>, </b>राज्य मंत्री<b>, </b>उप मंत्री<b>) </b>का वर्गीकरण संविधान में बताया गया है।</p>",
+    "option1": "<p> 1 and 4 only / केवल 1 और 4</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1, 2, and 3 only / केवल 1, 2, और 3</p>",
+    "option4": "<p> 2, 3, and 4 only / केवल 2, 3, और 4</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statement 2 is correct as Ministers hold office during the pleasure of the President, making them individually responsible to him. Statement 3 is correct as the Parliament determines the salaries and allowances of the Ministers and the PM. Statement 1 is incorrect because the CoMs is collectively responsible to the Lok Sabha, not the President. Statement 4 is incorrect as the Constitution does not mention the classification of ministers; this is an extra-constitutional convention.<br/> कथन 2 सही है क्योंकि मंत्री राष्ट्रपति के प्रसादपर्यंत पद धारण करते हैं, जिससे वे व्यक्तिगत रूप से उनके प्रति जिम्मेदार होते हैं। कथन 3 सही है क्योंकि संसद मंत्रियों और प्रधानमंत्री के वेतन और भत्ते तय करती है। कथन 1 गलत है क्योंकि मंत्रिपरिषद सामूहिक रूप से लोकसभा के प्रति जिम्मेदार होती है, न कि राष्ट्रपति के प्रति। कथन 4 गलत है क्योंकि संविधान में मंत्रियों के वर्गीकरण का उल्लेख नहीं है; यह एक गैर-संवैधानिक परंपरा है।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Assertion (A): The President of India can ask the Council of Ministers to reconsider the advice tendered by them.<br/> Reason (R): This power was granted to the President through the 44th Constitutional Amendment Act.<br/> </b>कथन <b>(A): </b>भारत के राष्ट्रपति मंत्रिपरिषद द्वारा दी गई सलाह पर पुनर्विचार करने के लिए कह सकते हैं।<b><br/> </b>कारण <b>(R): </b>यह शक्ति राष्ट्रपति को <b>44</b>वें संवैधानिक संशोधन अधिनियम के माध्यम से प्रदान की गई थी।</p>",
+    "option1": "<p> Both (A) and (R) are true, and (R) is the correct explanation of (A). / (A) और (R) दोनों सत्य हैं, और (R), (A) का सही स्पष्टीकरण है।</p>",
+    "option2": "<p> Both (A) and (R) are true, but (R) is not the correct explanation of (A). / (A) और (R) दोनों सत्य हैं, लेकिन (R), (A) का सही स्पष्टीकरण नहीं है।</p>",
+    "option3": "<p> (A) is true, but (R) is false. / (A) सत्य है, लेकिन (R) असत्य है।</p>",
+    "option4": "<p> A) is false, but (R) is true. / (A) असत्य है, लेकिन (R) सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Both the assertion and the reason are factually correct, and the reason correctly explains the assertion. The original provision made the advice binding. The 44th Constitutional Amendment Act (1978) introduced the provison that the President may require the CoMs to reconsider such advice, either generally or otherwise. However, the President shall act in accordance with the advice tendered after such reconsideration, making the reconsidered advice ultimately binding.<br/> कथन और कारण दोनों तथ्यात्मक रूप से सही हैं, और कारण कथन की सही व्याख्या करता है। मूल प्रावधान ने सलाह को बाध्यकारी बना दिया था। 44वें संवैधानिक संशोधन अधिनियम (1978) ने यह परंतुक जोड़ा कि राष्ट्रपति मंत्रिपरिषद से सामान्य रूप से या अन्यथा सलाह पर पुनर्विचार करने के लिए कह सकते हैं। हालाँकि, राष्ट्रपति ऐसे पुनर्विचार के बाद दी गई सलाह के अनुसार कार्य करेंगे, जिससे पुनर्विचारित सलाह अंततः बाध्यकारी हो जाती है।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Consider the different categories of Ministers in the Council of Ministers. Which category, while not specified in the Constitution, holds the important portfolios and participates in the Cabinet meeting?<br/> </b>मंत्रिपरिषद में मंत्रियों की विभिन्न श्रेणियों पर विचार करें। कौन सी श्रेणी<b>, </b>जिसका संविधान में उल्लेख नहीं है<b>, </b>महत्वपूर्ण विभाग रखती है और कैबिनेट बैठक में भाग लेती है<b>?</b></p>",
+    "option1": "<p> Minister of State / राज्य मंत्री</p>",
+    "option2": "<p> Deputy Minister / उप मंत्री</p>",
+    "option3": "<p> Cabinet Minister / कैबिनेट मंत्री</p>",
+    "option4": "<p> Minister of State (Independent Charge) / राज्य मंत्री (स्वतंत्र प्रभार)</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Cabinet Ministers are the highest tier of ministers in the CoMs who hold important portfolios like Defence, Home, and Finance. Although the Constitution does not formally specify the hierarchy, they alone participate in and form the core decision-making body known as the Cabinet. Ministers of State do not generally participate in Cabinet meetings, which makes the Cabinet Minister category distinct.<br/> कैबिनेट मंत्री मंत्रिपरिषद में मंत्रियों का सर्वोच्च स्तर है जो रक्षा, गृह और वित्त जैसे महत्वपूर्ण विभाग रखते हैं। हालाँकि संविधान औपचारिक रूप से पदानुक्रम को निर्दिष्ट नहीं करता है, वे अकेले कैबिनेट नामक मुख्य निर्णय लेने वाले निकाय में भाग लेते हैं और उसका गठन करते हैं। राज्य मंत्री आम तौर पर कैबिनेट बैठकों में भाग नहीं लेते हैं, जो कैबिनेट मंत्री श्रेणी को अलग बनाता है।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>A Minister who for any period of six consecutive months is not a member of either House of the Parliament shall:<br/> </b>कोई मंत्री जो लगातार छह महीने की अवधि तक संसद के किसी भी सदन का सदस्य नहीं है<b>, </b>वह<b>: ‘</b></p>",
+    "option1": "<p> Be automatically transferred to the Cabinet Committee on Parliamentary Affairs. / संसदीय मामलों की कैबिनेट समिति में स्वतः ही स्थानांतरित हो जाएगा।</p>",
+    "option2": "<p> Cease to be a Minister at the expiration of that period. / उस अवधि की समाप्ति पर मंत्री पद पर नहीं रहेगा।</p>",
+    "option3": "<p> Continue as Minister but without the right to vote in the Parliament. / मंत्री के रूप में बना रहेगा लेकिन संसद में वोट देने का अधिकार नहीं होगा।</p>",
+    "option4": "<p> Be re-appointed by the President after consultation with the Prime Minister. / प्रधानमंत्री के परामर्श से राष्ट्रपति द्वारा फिर से नियुक्त किया जाएगा।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> A strict constitutional requirement is that a person must be a member of either the Lok Sabha or the Rajya Sabha to continue as a Minister. If a non-member is appointed, they have a grace period of six consecutive months to secure a seat through election or nomination. Failure to do so automatically results in them ceasing to be a Minister, enforcing accountability to the Parliament.<br/> एक कठोर संवैधानिक आवश्यकता यह है कि किसी व्यक्ति को मंत्री के रूप में बने रहने के लिए लोकसभा या राज्यसभा में से किसी एक का सदस्य होना चाहिए। यदि किसी गैर-सदस्य को नियुक्त किया जाता है, तो उनके पास चुनाव या नामांकन के माध्यम से सीट सुरक्षित करने के लिए लगातार छह महीने की मोहलत होती है। ऐसा करने में विफल रहने पर वह स्वचालित रूप से मंत्री पद पर नहीं रहेगा, जिससे संसद के प्रति जवाबदेही लागू होती है।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Regarding the Attorney General of India (AG), consider the following statements:<br/> </b>भारत के महान्यायवादी <b>(AG) </b>के संबंध में<b>, </b>निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. The AG is the highest law officer of the country and acts as the lawyer for the Central Government. / </b>महान्यायवादी देश के सर्वोच्च विधि अधिकारी होते हैं और केंद्र सरकार के वकील के रूप में कार्य करते हैं।<b><br/> 2. The AG shall hold office during the pleasure of the President and shall receive a fixed salary determined by the Parliament. / </b>महान्यायवादी राष्ट्रपति की इच्छा पर पद धारण करते हैं और संसद द्वारा निर्धारित निश्चित वेतन प्राप्त करते हैं।<b><br/> 3. The AG has the right of audience in all courts in the territory of India. / </b>महान्यायवादी को भारत के क्षेत्र में सभी न्यायालयों में उपस्थित होने का अधिकार है।<b><br/> Select the correct statements:<br/> </b>सही कथनों का चयन करें<b>:</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option3": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p> 1, 2, and 3 / 1, 2, और 3</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statements 1 and 3 are correct, affirming the AG's role as the chief legal advisor and their privilege to be heard in any court in India. Statement 2 is incorrect because while the AG holds office during the pleasure of the President, the remuneration (salary/allowances) is not fixed by the Parliament but is determined by the President, making it an exception to the rule for other high constitutional posts.<br/> कथन 1 और 3 सही हैं, जो मुख्य कानूनी सलाहकार के रूप में महान्यायवादी की भूमिका और भारत के क्षेत्र में किसी भी न्यायालय में सुने जाने के उनके विशेषाधिकार की पुष्टि करते हैं। कथन 2 गलत है क्योंकि महान्यायवादी राष्ट्रपति के प्रसादपर्यंत पद धारण करते हैं, लेकिन पारिश्रमिक (वेतन/भत्ते) संसद द्वारा तय नहीं किया जाता है, बल्कि राष्ट्रपति द्वारा निर्धारित किया जाता है, जिससे यह अन्य उच्च संवैधानिक पदों के नियम का अपवाद बन जाता है।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Which of the following is NOT a duty of the Prime Minister under Article 78 of the Indian Constitution?<br/> </b>निम्नलिखित में से कौन सा भारतीय संविधान के अनुच्छेद <b>78 </b>के तहत प्रधानमंत्री का कर्तव्य नहीं है<b>?</b></p>",
+    "option1": "<p> To communicate to the President all decisions of the CoMs relating to the administration of the affairs of the Union. / राष्ट्रपति को संघ के मामलों के प्रशासन से संबंधित मंत्रिपरिषद के सभी निर्णयों की सूचना देना।</p>",
+    "option2": "<p> To furnish information related to administration and legislation proposals as the President may call for. / प्रशासन और विधायी प्रस्तावों से संबंधित ऐसी जानकारी प्रस्तुत करना जो राष्ट्रपति मांगें।</p>",
+    "option3": "<p> Presiding over joint sessions of Parliament. / संसद की संयुक्त बैठक की अध्यक्षता करना |</p>",
+    "option4": "<p> To submit for the consideration of the CoMs any matter on which a decision has been taken by a minister but not by the Council. / मंत्रिपरिषद के विचार के लिए किसी भी मामले को प्रस्तुत करना जिस पर किसी मंत्री ने निर्णय लिया है लेकिन मंत्रिपरिषद ने नहीं।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The joint session of Parliament is presided over by the Speaker of the Lok Sabha, not the Prime Minister. / संसद की संयुक्त बैठक की अध्यक्षता लोकसभा अध्यक्ष (Speaker) करते हैं, न कि प्रधानमंत्री।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Consider the following statements regarding the relationship between the President and the Prime Minister:<br/> </b>राष्ट्रपति और प्रधानमंत्री के बीच संबंध के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. The President is the nominal executive, and the PM is the real executive. / </b>राष्ट्रपति नाममात्र के कार्यकारी होते हैं<b>, </b>और प्रधानमंत्री वास्तविक कार्यकारी होते हैं।<b><br/> 2. The Prime Minister's primary role is to act as a linkage between the Council of Ministers and the President. / </b>प्रधानमंत्री की मुख्य भूमिका मंत्री परिषद और राष्ट्रपति के बीच सेतु का कार्य करना है।<b><br/> 3. If the Prime Minister loses the confidence of the Lok Sabha, the Council of Ministers must resign, or the President may dismiss the Prime Minister./ </b>यदि प्रधानमंत्री लोकसभा का विश्वास खो देते हैं<b>, </b>तो मंत्रिपरिषद को त्यागपत्र देना पड़ता है या राष्ट्रपति प्रधानमंत्री को पद से हटा सकते हैं।<b><br/> Which of the statements given above is/are correct? / </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2, and 3 / 1, 2, और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statement 1 is correct because the President is the constitutional (nominal) head, while the Prime Minister is the real executive authority.<br/> Statement 2 is correct as the Prime Minister acts as the chief link between the President and the Council of Ministers.<br/> Statement 3 is correct because in a parliamentary system, if the Prime Minister loses the confidence of the Lok Sabha, the Council of Ministers must resign, and the President can dismiss the Prime Minister.<br/> कथन 1 सही है क्योंकि राष्ट्रपति संवैधानिक (नाममात्र) प्रमुख होते हैं और प्रधानमंत्री वास्तविक कार्यकारी शक्ति रखते हैं।<br/> कथन 2 सही है क्योंकि प्रधानमंत्री, राष्ट्रपति और मंत्रिपरिषद के बीच मुख्य सेतु का कार्य करते हैं।<br/> कथन 3 सही है क्योंकि संसदीय प्रणाली में यदि प्रधानमंत्री लोकसभा का विश्वास खो देते हैं, तो मंत्रिपरिषद को त्यागपत्र देना पड़ता है और राष्ट्रपति प्रधानमंत्री को पद से हटा सकते हैं।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Assertion (A): It was stated that 'Collective responsibility can be achieved only through the instrumentality of the Prime Minister.'<br/> Reason (R): The Prime Minister is the head of the Council of Ministers, and his resignation brings about the collapse of the CoMs, thereby enforcing collective responsibility.<br/> </b>कथन <b>(A): </b>यह कहा गया था कि <b>'</b>सामूहिक जिम्मेदारी केवल प्रधानमंत्री के माध्यम से ही प्राप्त की जा सकती है।<b>'<br/> </b>कारण <b>(R): </b>प्रधानमंत्री मंत्रिपरिषद के प्रमुख होते हैं<b>, </b>और उनका इस्तीफा मंत्रिपरिषद के पतन का कारण बनता है<b>, </b>जिससे सामूहिक जिम्मेदारी लागू होती है।</p>",
+    "option1": "<p> Both (A) and (R) are true, and (R) is the correct explanation of (A). / (A) और (R) दोनों सत्य हैं, और (R), (A) का सही स्पष्टीकरण है।</p>",
+    "option2": "<p> Both (A) and (R) are true, but (R) is not the correct explanation of (A). / (A) और (R) दोनों सत्य हैं, लेकिन (R), (A) का सही स्पष्टीकरण नहीं है।</p>",
+    "option3": "<p> (A) is true, but (R) is false. / (A) सत्य है, लेकिन (R) असत्य है।</p>",
+    "option4": "<p> (A) is false, but (R) is true. / (A) असत्य है, लेकिन (R) सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The assertion is a famous quote by Dr. B.R. Ambedkar, and the reason provides the constitutional mechanism that validates this statement. The PM is the central figure who links all ministers and makes the CoMs a cohesive unit. His resignation dissolves the entire body, which is the ultimate enforcement of the principle that they collectively stand or fall together, thus making the PM the instrument of collective responsibility.<br/> यह कथन डॉ. बी.आर. अंबेडकर का एक प्रसिद्ध उद्धरण है, और कारण इस कथन को मान्य करने वाला संवैधानिक तंत्र प्रदान करता है। प्रधानमंत्री केंद्रीय व्यक्ति होते हैं जो सभी मंत्रियों को जोड़ते हैं और मंत्रिपरिषद को एक एकजुट इकाई बनाते हैं। उनका इस्तीफा पूरे निकाय को भंग कर देता है, जो इस सिद्धांत का अंतिम प्रवर्तन है कि वे सामूहिक रूप से एक साथ खड़े होते हैं या गिरते हैं, इस प्रकार प्रधानमंत्री को सामूहिक जिम्मेदारी का माध्यम बनाते हैं।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Which of the following is an accurate distinction between a Cabinet Minister and a Minister of State (MoS)?<br/> </b>निम्नलिखित में से कौन सा कैबिनेट मंत्री और राज्य मंत्री के बीच एक सटीक अंतर है<b>?</b></p>",
+    "option1": "<p> Cabinet Ministers are constitutional, while Ministers of State are extra-constitutional. / कैबिनेट मंत्री संवैधानिक होते हैं, जबकि राज्य मंत्री गैर-संवैधानिक होते हैं।</p>",
+    "option2": "<p> Only Cabinet Ministers have important portfolios like Defence, Home, and Finance. / केवल कैबिनेट मंत्रियों के पास ही रक्षा, गृह और वित्त जैसे महत्वपूर्ण विभाग होते हैं।</p>",
+    "option3": "<p> Cabinet Ministers are individually responsible to the President, while Ministers of State are collectively responsible to the Lok Sabha. / कैबिनेट मंत्री व्यक्तिगत रूप से राष्ट्रपति के प्रति जिम्मेदार होते हैं, जबकि राज्य मंत्री सामूहिक रूप से लोकसभा के प्रति जिम्मेदार होते हैं।</p>",
+    "option4": "<p> Cabinet Ministers are members of Parliament, while Ministers of State are not. / कैबिनेट मंत्री संसद के सदस्य होते हैं, जबकि राज्य मंत्री नहीं होते हैं।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The distinction between Cabinet Minister and Minister of State is based on convention and portfolio importance, not constitutional status or parliamentary membership, as all are ministers under the Constitution. Cabinet Ministers hold the key portfolios and are part of the Cabinet, the inner ring of the Council of Ministers, while Ministers of State usually look after smaller, less important ministries or departments, and do not attend Cabinet meetings unless specifically invited.<br/> कैबिनेट मंत्री और राज्य मंत्री के बीच अंतर परंपरा और विभाग (पोर्टफोलियो) की महत्वता पर आधारित होता है, न कि संवैधानिक दर्जे या संसदीय सदस्यता पर, क्योंकि संविधान के अनुसार सभी मंत्री ही होते हैं। कैबिनेट मंत्री प्रमुख विभागों को संभालते हैं और कैबिनेट के सदस्य होते हैं, जो मंत्रिपरिषद का आंतरिक समूह है, जबकि राज्य मंत्री आमतौर पर छोटे या कम महत्वपूर्ण मंत्रालयों/विभागों को देखते हैं और उन्हें विशेष रूप से आमंत्रित किए बिना कैबिनेट बैठकों में भाग नहीं दिया जाता।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Which of the following Prime Ministers of India were members of the Rajya Sabha at the time of their appointment?<br/> </b>भारत के निम्नलिखित प्रधानमंत्रियों में से कौन अपनी नियुक्ति के समय राज्यसभा के सदस्य थे<b>?</b></p>",
+    "option1": "<p> Indira Gandhi / इंदिरा गांधी</p>",
+    "option2": "<p> H.D. Deve Gowda / एच.डी. देवेगौड़ा</p>",
+    "option3": "<p> Dr. Manmohan Singh / डॉ. मनमोहन सिंह</p>",
+    "option4": "<p> All of the above / उपरोक्त सभी</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Prime Minister can be a member of either the Lok Sabha or the Rajya Sabha. Historically, three individuals have served as Prime Minister while being members of the Rajya Sabha: Indira Gandhi (1966), H.D. Deve Gowda (1996), and Dr. Manmohan Singh (2004). This demonstrates that membership in the lower house (Lok Sabha) is not a constitutional prerequisite for the PM's office, though it is the convention as the PM is the leader of the majority in the Lok Sabha.<br/> प्रधानमंत्री लोकसभा या राज्यसभा में से किसी भी सदन के सदस्य हो सकते हैं। ऐतिहासिक रूप से, तीन व्यक्तियों ने राज्यसभा के सदस्य रहते हुए प्रधानमंत्री के रूप में कार्य किया है: इंदिरा गांधी (1966), एच.डी. देवेगौड़ा (1996), और डॉ. मनमोहन सिंह (2004)। यह दर्शाता है कि निचले सदन (लोकसभा) की सदस्यता प्रधानमंत्री कार्यालय के लिए संवैधानिक रूप से आवश्यक शर्त नहीं है, हालांकि यह परंपरा है क्योंकि प्रधानमंत्री लोकसभा में बहुमत दल के नेता होते हैं।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Select the function(s) which relate to the PM's role as the Leader of the House/Government, and not just the head of the CoMs:<br/> </b>ऐसे कार्यों का चयन करें जो सदन<b>/</b>सरकार के नेता के रूप में प्रधानमंत्री की भूमिका से संबंधित हों<b>, </b>न कि केवल मंत्रिपरिषद के प्रमुख के रूप में<b>:<br/> 1. He/she recommends the dissolution of the Lok Sabha to the President at any time. / </b>वह किसी भी समय राष्ट्रपति से लोकसभा भंग करने की सिफारिश करता है।<b><br/> 2. He/she presides over the meeting of the Council of Ministers and influences its decisions. / </b>वह मंत्रिपरिषद की बैठक की अध्यक्षता करता है और उसके फैसलों पर असर डालता है।<b><br/> 3. He/she announces government policies on the floor of the House. / </b>वह सदन में सरकारी नीतियों की घोषणा करता है।</p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2, and 3 / 1, 2, और 3</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statement 2 is incorrect as presiding over the CoMs is the PM's role as the Head of the CoMs, not specifically the Leader of the House. Statements 1 and 3 are correct. Recommending the dissolution of the Lok Sabha is a powerful function related to government stability and the life of the House, and announcing government policies on the floor of the House is a key duty as the chief spokesperson and Leader of the House. कथन 2 गलत है क्योंकि मंत्रिपरिषद की अध्यक्षता करना प्रधानमंत्री की मंत्रिपरिषद के प्रमुख के रूप में भूमिका है, न कि विशेष रूप से सदन के नेता के रूप में। कथन 1 और 3 सही हैं। लोकसभा को भंग करने की सिफारिश करना सरकार की स्थिरता और सदन के जीवन से संबंधित एक शक्तिशाली कार्य है, और सदन के पटल पर सरकारी नीतियों की घोषणा करना मुख्य प्रवक्ता और सदन के नेता के रूप में एक प्रमुख कर्तव्य है।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Which of the following correctly describes the appointing authority and the required judicial qualification for the Attorney General of India and the Advocate General of a State?<br/> </b>निम्नलिखित में से कौन सा भारत के महान्यायवादी और एक राज्य के महाधिवक्ता के लिए नियुक्ति प्राधिकारी और आवश्यक न्यायिक योग्यता का सही वर्णन करता है<b>?</b></p>",
+    "option1": "<p> AG: Appointed by President; Qualified to be a High Court Judge / महान्यायवादी : राष्ट्रपति द्वारा नियुक्त; उच्च न्यायालय के न्यायाधीश बनने के योग्य</p>",
+    "option2": "<p> Advocate General: Appointed by Governor; Qualified to be a High Court Judge / महाधिवक्ता: राज्यपाल द्वारा नियुक्त; उच्च न्यायालय के न्यायाधीश बनने के योग्य</p>",
+    "option3": "<p> AG: Appointed by the Parliament; Qualified to be a Supreme Court Judge / महान्यायवादी : संसद द्वारा नियुक्त; उच्चतम न्यायालय के न्यायाधीश बनने के योग्य</p>",
+    "option4": "<p> Advocate General: Appointed by President; Qualified to be a District Court Judge / महाधिवक्ता: राष्ट्रपति द्वारा नियुक्त; जिला न्यायालय के न्यायाधीश बनने के योग्य</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Advocate General of a State (Article 165) is appointed by the Governor and must be qualified to be a Judge of a High Court, reflecting their role as the highest law officer of the state government. Conversely, the Attorney General for India (Article 76) is appointed by the President and must be qualified to be a Judge of the Supreme Court, befitting their national-level status. This clear distinction is based on the level of the court they must be qualified for.<br/> राज्य का महाधिवक्ता (अनुच्छेद 165) राज्यपाल द्वारा नियुक्त किया जाता है और उसे उच्च न्यायालय का न्यायाधीश बनने के लिए योग्य होना चाहिए, जो राज्य सरकार के सर्वोच्च कानून अधिकारी के रूप में उनकी भूमिका को दर्शाता है। इसके विपरीत, भारत के महान्यायवादी (अनुच्छेद 76) राष्ट्रपति द्वारा नियुक्त किए जाते हैं और उन्हें उच्चतम न्यायालय के न्यायाधीश बनने के लिए योग्य होना चाहिए, जो उनके राष्ट्रीय स्तर के दर्जे के अनुरूप है। यह स्पष्ट अंतर उस न्यायालय के स्तर पर आधारित है जिसके लिए उन्हें योग्य होना चाहिए।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Which of the following is/are the correct power(s) of the Prime Minister in relation to his Council of Ministers?<br/> </b>निम्नलिखित में से कौन सी प्रधानमंत्री की अपनी मंत्रिपरिषद के संबंध में सही शक्ति<b>/</b>शक्तियाँ है<b>/</b>हैं<b>?<br/> 1. He/she guides, directs, controls, and coordinates the activities of all the ministers. / </b>वह सभी मंत्रियों की गतिविधियों का मार्गदर्शन<b>, </b>निर्देशन<b>, </b>नियंत्रण और समन्वय करता<b>/</b>करती है।<b><br/> 2. He/she can recommend persons who can be appointed as ministers by the President. / </b>वह उन व्यक्तियों की सिफारिश कर सकता<b>/</b>सकती है जिन्हें राष्ट्रपति मंत्री नियुक्त कर सकते हैं।<b><br/> 3. He/she can ask a minister to resign or advise the President to dismiss him/her in case of a difference of opinion. / </b>वह मतभेद की स्थिति में किसी मंत्री से इस्तीफ़ा मांग सकता<b>/</b>सकती है या राष्ट्रपति को उसे पद से हटाने की सलाह दे सकता<b>/</b>सकती है।</p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2, and 3 / 1, 2, और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> All three statements correctly describe the PM's comprehensive powers over the Council of Ministers, which flow from his position as the head of the CoMs and the government. He is the leader of the team, responsible for coordination and discipline (1), selecting the team members (2), and enforcing decisions or removing dissenting members (3). These powers collectively reinforce the PM's dominant and central position in the executive branch.<br/> तीनों कथन मंत्रिपरिषद पर प्रधानमंत्री की व्यापक शक्तियों का सही वर्णन करते हैं, जो मंत्रिपरिषद और सरकार के प्रमुख के रूप में उनके पद से उत्पन्न होती हैं। वह टीम के नेता हैं, समन्वय और अनुशासन के लिए जिम्मेदार हैं (1), टीम के सदस्यों का चयन करते हैं (2), और मतभेद होने पर निर्णय लागू करने या असंतुष्ट सदस्यों को हटाने (3) के लिए जिम्मेदार हैं। ये शक्तियाँ सामूहिक रूप से कार्यपालिका शाखा में प्रधानमंत्री की प्रमुख और केंद्रीय स्थिति को मजबूत करती हैं।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>Which Article of the Constitution mandates that the executive actions of the Government of India shall be expressed to be taken in the name of the President?<br/> </b>संविधान का कौन सा अनुच्छेद यह अनिवार्य करता है कि भारत सरकार की कार्यकारी कार्रवाइयाँ राष्ट्रपति के नाम पर की जाएंगी<b>?</b></p>",
+    "option1": "<p> Article 74 / अनुच्छेद 74</p>",
+    "option2": "<p> Article 75 / अनुच्छेद 75</p>",
+    "option3": "<p> Article 77 / अनुच्छेद 77</p>",
+    "option4": "<p> Article 78 / अनुच्छेद 78</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 77 deals with the 'Conduct of Business of the Government of India.' Clause (1) specifically states that all executive actions of the GOI shall be expressed to be taken in the name of the President. This article reinforces the President's position as the formal, or nominal, executive head, even though the Prime Minister and the CoMs are the ones who make the actual decisions.<br/> अनुच्छेद 77 'भारत सरकार के कार्य संचालन' से संबंधित है। खंड (1) विशेष रूप से कहता है कि भारत सरकार की सभी कार्यकारी कार्रवाइयाँ राष्ट्रपति के नाम पर की जाएंगी। यह अनुच्छेद राष्ट्रपति की स्थिति को औपचारिक, या नाममात्र, कार्यकारी प्रमुख के रूप में मजबूत करता है, भले ही प्रधानमंत्री और मंत्रिपरिषद ही वास्तविक निर्णय लेने वाले होते हैं।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - General Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">General Quiz - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

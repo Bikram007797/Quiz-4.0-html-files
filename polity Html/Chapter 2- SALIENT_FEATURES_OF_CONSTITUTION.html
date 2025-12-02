@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>POLITY - SALIENT FEATURES OF CONSTITUTION QUIZ [14-11-2025] - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>POLITY - SALIENT FEATURES OF CONSTITUTION QUIZ [14-11-2025]</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>Originally, on 26th November 1949, how many Articles did the Constitution of India contain?<br/> </b>मूल रूप से<b>, 26 </b>नवंबर <b>1949 </b>को<b>, </b>भारत के संविधान में कितने अनुच्छेद शामिल थे<b>?</b></p>",
+    "option1": "<p> 470</p>",
+    "option2": "<p> 395</p>",
+    "option3": "<p> 375</p>",
+    "option4": "<p> 448</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Constitution, when originally adopted on November 26, 1949, contained 395 Articles, 22 Parts, and 8 Schedules. Currently, it has around 470 Articles, 25 Parts, and 12 Schedules. / संविधान, जब मूल रूप से 26 नवंबर 1949 को अपनाया गया था, तब इसमें 395 अनुच्छेद, 22 भाग और 8 अनुसूचियां शामिल थीं। वर्तमान में, इसमें लगभग 470 अनुच्छेद, 25 भाग और 12 अनुसूचियां हैं।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>Which country is given as an example of an 'Unwritten Constitution'?<br/> </b>कौन<b>-</b>सा देश ‘अलिखित संविधान’ के उदाहरण के रूप में दिया जाता है<b>?</b></p>",
+    "option1": "<p> India / भारत</p>",
+    "option2": "<p> USA / संयुक्त राज्य अमेरिका</p>",
+    "option3": "<p> UK / यूनाइटेड किंगडम</p>",
+    "option4": "<p> Canada / कनाडा</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Written Constitution (Example: India) compare to Unwritten Constitution, where the latter is not structured and is easy to amend, citing the UK as an example.<br/> लिखित संविधान (उदाहरण: भारत) की तुलना अलिखित संविधान से की जाती है, जहाँ अलिखित संविधान संरचित नहीं होता और संशोधित करना आसान होता है, जिसमें यूके को उदाहरण के रूप में उद्धृत किया जाता है।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>Which of the following is a feature of a 'Unitary' form of government according to the provided features?<br/> </b>निम्नलिखित में से कौन सी विशेषता दी गई विशेषताओं के अनुसार <b>'</b>एकात्मक<b>' </b>शासन प्रणाली की विशेषता है<b>?</b></p>",
+    "option1": "<p> Bicameralism / द्विसदनीयता</p>",
+    "option2": "<p> Independence of Judiciary / न्यायपालिका की स्वतंत्रता</p>",
+    "option3": "<p> Single Citizenship / एकल नागरिकता</p>",
+    "option4": "<p> Supremacy of the Constitution / संविधान की सर्वोच्चता</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Single Citizenship, Integrated Judiciary, All India Services, and Emergency provisions are listed as Unitary Features. Bicameralism and Supremacy of the Constitution are Federal Features. / एकल नागरिकता, एकीकृत न्यायपालिका, अखिल भारतीय सेवाएँ और आपातकालीन प्रावधान एकात्मक विशेषताओं के रूप में सूचीबद्ध हैं। द्विसदनीयता और संविधान की सर्वोच्चता संघीय विशेषताएँ हैं।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>The three tiers of government in India are Union/Centre, States, and what other body?<br/> </b>भारत में सरकार के तीन स्तर संघ<b>/</b>केंद्र<b>, </b>राज्य और कौन सा अन्य निकाय हैं<b>?</b></p>",
+    "option1": "<p> Judiciary / न्यायपालिका</p>",
+    "option2": "<p> Local Bodies / स्थानीय निकाय</p>",
+    "option3": "<p> President / राष्ट्रपति</p>",
+    "option4": "<p> Cabinet / मंत्रिमंडल</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> under Federalism, a \"Three tier of government exists in India\": Union/Centre, States, and Local Bodies (Panchayats and Municipalities). / संघवाद के तहत, भारत में \"सरकार का तीन स्तर\" मौजूद है: संघ/केंद्र, राज्य, और स्थानीय निकाय (पंचायतें और नगर पालिकाएँ)।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>Which Schedule of the Indian Constitution contains the provisions relating to 'Panchayat'?<br/> </b>भारतीय संविधान की कौन सी अनुसूची <b>'</b>पंचायत<b>' </b>से संबंधित प्रावधानों को समाहित करती है<b>?</b></p>",
+    "option1": "<p> Schedule 9 / अनुसूची 9</p>",
+    "option2": "<p> Schedule 10 / अनुसूची 10</p>",
+    "option3": "<p> Schedule 11 / अनुसूची 11</p>",
+    "option4": "<p> Schedule 12 / अनुसूची 12</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Schedule 11 was added by the 73rd Constitutional Amendment Act, 1992, and relates to the provisions concerning Panchayats, dealing with 29 functional matters. / अनुसूची 11 को 73वें संवैधानिक संशोधन अधिनियम, 1992 द्वारा जोड़ा गया था, और यह पंचायतों से संबंधित प्रावधानों से संबंधित है, जिसमें 29 कार्यात्मक विषय शामिल हैं।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>Who commented that the Indian federal system is 'Cooperative Federalism'?<br/> </b>किसने टिप्पणी की कि भारतीय संघीय प्रणाली <b>'</b>सहकारी संघवाद<b>' </b>है<b>?</b></p>",
+    "option1": "<p> K. C. Wheare / के. सी. व्हेयर</p>",
+    "option2": "<p> Granville Austin / ग्रेनविल ऑस्टिन</p>",
+    "option3": "<p> Morris Jones / मॉरिस जोन्स</p>",
+    "option4": "<p> B. R. Ambedkar / बी. आर. अंबेडकर</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The comments on Indian Federalism are listed as:<br/> 5. Quasi-Federal (K. C. Wheare), Cooperative Federalism (Granville Austin), and Bargaining Federalism (Morris Jones). /<br/> भारतीय संघवाद पर टिप्पणियों को सूचीबद्ध किया गया है:<br/> 6. अर्ध-संघीय (के. सी. व्हेयर), सहकारी संघवाद (ग्रेनविल ऑस्टिन), और सौदेबाजी वाला संघवाद (मॉरिस जोन्स)।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Which one of the following subjects belongs to the State List?<br/> </b>निम्नलिखित में से कौन सा विषय राज्य सूची से संबंधित है<b>?</b></p>",
+    "option1": "<p> Foreign affairs / विदेश मामले</p>",
+    "option2": "<p> Education / शिक्षा</p>",
+    "option3": "<p> Public order / लोक व्यवस्था</p>",
+    "option4": "<p> Citizenship / नागरिकता</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Public order, local government, health, pilgrimage, liquor, agriculture, fisheries, betting, and gambling are listed as State List Subjects. Foreign affairs and Citizenship are Union List subjects, and Education is a Concurrent List subject. / लोक व्यवस्था, स्थानीय सरकार, स्वास्थ्य, तीर्थयात्रा, शराब, कृषि, मत्स्य पालन, सट्टेबाजी और जुआ राज्य सूची के विषय हैं। विदेश मामले और नागरिकता संघ सूची के विषय हैं, और शिक्षा समवर्ती सूची का विषय है।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>The 52nd Constitutional Amendment Act of 1985 is related to which Schedule?<br/> 1985 </b>का <b>52</b>वाँ संवैधानिक संशोधन अधिनियम किस अनुसूची से संबंधित है<b>?</b></p>",
+    "option1": "<p> Schedule 8 / अनुसूची 8</p>",
+    "option2": "<p> Schedule 9 / अनुसूची 9</p>",
+    "option3": "<p> Schedule 10 / अनुसूची 10</p>",
+    "option4": "<p> Schedule 11 / अनुसूची 11</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Schedule 10 contains provisions relating to disqualification of MPs and MLAs on the ground of defection, which was added by the 52nd Constitutional Amendment Act of 1985. / अनुसूची 10 में दल-बदल के आधार पर सांसदों और विधायकों की अयोग्यता से संबंधित प्रावधान शामिल हैं, जिसे 1985 के 52वें संवैधानिक संशोधन अधिनियम द्वारा जोड़ा गया था।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>The Indian Constitution is considered the:<br/> </b>भारतीय संविधान को माना जाता है<b>:</b></p>",
+    "option1": "<p> Shortest written Constitution in the world / विश्व का सबसे छोटा लिखित संविधान</p>",
+    "option2": "<p> Lengthiest written Constitution in the world / विश्व का सबसे लंबा लिखित संविधान</p>",
+    "option3": "<p> Unwritten Constitution / अलिखित संविधान</p>",
+    "option4": "<p> Constitution based on one primary source / एक प्राथमिक स्रोत पर आधारित संविधान</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The \"Indian Constitution: Lengthiest written Constitution in the world\". It is a formally compiled and systematically structured document, which contributes to its length. / \"भारतीय संविधान: विश्व का सबसे लंबा लिखित संविधान\" है। यह एक औपचारिक रूप से संकलित और व्यवस्थित रूप से संरचित दस्तावेज़ है, जो इसकी लंबाई में योगदान देता है।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>What is the constitutional status of India regarding religion?<br/> </b>धर्म के संबंध में भारत की संवैधानिक स्थिति क्या है<b>?</b></p>",
+    "option1": "<p> State promotes one religion (Theocratic) / राज्य एक धर्म को बढ़ावा देता है (धर्मतांत्रिक)</p>",
+    "option2": "<p> Negative Secular State (like USA) / नकारात्मक धर्मनिरपेक्ष राज्य (जैसे USA)</p>",
+    "option3": "<p> Positive Secular State / सकारात्मक धर्मनिरपेक्ष राज्य</p>",
+    "option4": "<p> Non-secular state / गैर-धर्मनिरपेक्ष राज्य</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> India as a 'Positive Secular State'. This means the state is involved in religious matters to ensure equality and justice for all religions, unlike a negative secular state which maintains strict separation. / भारत एक 'सकारात्मक धर्मनिरपेक्ष राज्य' है। इसका अर्थ है कि राज्य सभी धर्मों के लिए समानता और न्याय सुनिश्चित करने के लिए धार्मिक मामलों में शामिल होता है, जबकि नकारात्मक धर्मनिरपेक्ष राज्य सख्त अलगाव बनाए रखता है।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Consider the following statements regarding the types of Constitution: </b>संविधान के प्रकारों के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. A Written Constitution is formally constituted and is generally not easy to amend. / </b>लिखित संविधान औपचारिक रूप से निर्मित होता है और आमतौर पर इसमें संशोधन करना आसान नहीं होता।<b><br/> 2. An unwritten constitution is not structured and is easy to amend, an example of which is India. / </b>अलिखित संविधान संरचित नहीं होता और इसे संशोधित करना आसान होता है<b>, </b>जिसका उदाहरण भारत है।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statement 1 is correct: A Written Constitution is formally constituted and not easy to amend. Statement 2 is incorrect because the Unwritten Constitution is exemplified by the UK, while India has a Written Constitution. / कथन 1 सही है: एक लिखित संविधान औपचारिक रूप से गठित होता है और इसे संशोधित करना आसान नहीं होता है। कथन 2 गलत है क्योंकि अलिखित संविधान का उदाहरण यूके है, जबकि भारत में एक लिखित संविधान है।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Which of the following features are Unitary in nature, giving a strong bias to the Centre?<br/> </b>निम्नलिखित में से कौन सी विशेषताएँ प्रकृति में एकात्मक हैं<b>, </b>जो केंद्र को एक मजबूत पूर्वाग्रह प्रदान करती हैं<b>?<br/> 1. Single Constitution / </b>एकल संविधान<b><br/> 2. Integrated Judiciary / </b>एकीकृत न्यायपालिका<b><br/> 3. Bicameralism / </b>द्विसदनीयता<b><br/> 4. Appointment of Governors by Centre / </b>केंद्र द्वारा राज्यपालों की नियुक्ति</p>",
+    "option1": "<p> 1, 2, and 3 only / केवल 1, 2 और 3</p>",
+    "option2": "<p> 2, 3, and 4 only / केवल 2, 3 और 4</p>",
+    "option3": "<p> 1, 2, and 4 only / केवल 1, 2 और 4</p>",
+    "option4": "<p> 1, 3, and 4 only / केवल 1, 3 और 4</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Single Constitution, Integrated Judiciary, and Appointment of Governors by Centre are explicitly listed as Unitary Features. Bicameralism (existence of two houses/levels of legislature) is listed as a Federal Feature. / एकल संविधान, एकीकृत न्यायपालिका, और केंद्र द्वारा राज्यपालों की नियुक्ति को स्पष्ट रूप से एकात्मक विशेषताओं के रूप में सूचीबद्ध किया गया है। द्विसदनीयता (विधानमंडल के दो सदन/स्तर का अस्तित्व) को एक संघीय विशेषता के रूप में सूचीबद्ध किया गया है।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Which of the following subjects were transferred from the State List to the Concurrent List by the 42nd Amendment?<br/> 42</b>वें संशोधन द्वारा निम्नलिखित में से कौन से विषय राज्य सूची से समवर्ती सूची में स्थानांतरित किए गए थे<b>?<br/> 1. Education / </b>शिक्षा<b><br/> 2. Forests / </b>वन<b><br/> 3. Weights and Measures / </b>वजन और माप<b><br/> 4. Administration of Justice / </b>न्याय प्रशासन</p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 1, 2, and 3 only / केवल 1, 2 और 3</p>",
+    "option3": "<p> 2, 3, and 4 only / केवल 2, 3 और 4</p>",
+    "option4": "<p> 1, 2, 3, and 4 / 1, 2, 3, और 4</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The 42nd Amendment Act transferred all these subjects—Education, Forests, Weights and Measures, and Administration of justice —from the State List to the Concurrent List to give the Union more power. / 42वें संशोधन अधिनियम ने इन सभी विषयों—शिक्षा, वन, वजन और माप, और न्याय प्रशासन —को केंद्र को अधिक शक्ति देने के लिए राज्य सूची से समवर्ती सूची में स्थानांतरित कर दिया।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Assertion (A): India is described as a 'Federation with a unitary bias' or 'Federation with a strong Centre'.<br/> Reason (R): The Constitution provides for the Appointment of Governors by the Centre and Emergency provisions.<br/> </b>अभिकथन <b>(A): </b>भारत को <b>'</b>एकात्मक पूर्वाग्रह वाला संघ<b>' </b>या <b>'</b>मजबूत केंद्र वाला संघ<b>' </b>के रूप में वर्णित किया गया है।<b><br/> </b>कारण <b>(R): </b>संविधान केंद्र द्वारा राज्यपालों की नियुक्ति और आपातकालीन प्रावधानों का प्रावधान करता है।</p>",
+    "option1": "<p> Both A and R are individually true, and R is the correct explanation of A. / A और R दोनों व्यक्तिगत रूप से सत्य हैं, और R, A का सही स्पष्टीकरण है।</p>",
+    "option2": "<p> Both A and R are individually true, but R is not the correct explanation of A. / A और R दोनों व्यक्तिगत रूप से सत्य हैं, लेकिन R, A का सही स्पष्टीकरण नहीं है।</p>",
+    "option3": "<p> A is true, but R is false. / A सत्य है, लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false, but R is true. / A असत्य है, लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> 5. Assertion (A) is correct because India is called a \"unitary federation\" or a \"federation with a strong centre\" because the Indian Constitution grants more powers to the centre than to the states.<br/> 6. Reason (R) is also correct because:<br/> Governors are appointed by the central government, which increases the centre's influence over the states.<br/> Under emergency provisions, the central government can usurp many of the powers of the states, making the federal structure more centralized.<br/> 7. अभिकथन (A) सही है क्योंकि भारत को \"एकात्मक पूर्वाग्रह वाला संघ\" या \"मजबूत केंद्र वाला संघ\" इसलिए कहा जाता है कि भारतीय संविधान राज्यों की तुलना में केंद्र को अधिक शक्तियाँ प्रदान करता है।<br/> 8. कारण (R) भी सही है क्योंकि:<br/> 9. राज्यपालों की नियुक्ति केंद्र सरकार द्वारा की जाती है, जिससे राज्यों पर केंद्र का प्रभाव बढ़ता है।<br/> 10. आपातकालीन प्रावधानों के तहत केंद्र सरकार राज्यों की कई शक्तियाँ अपने हाथ में ले सकती है, जिससे संघीय ढाँचा और अधिक केंद्रीकृत हो जाता है।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Consider the provisions related to Scheduled Areas and Tribal Areas: </b>अनुसूचित क्षेत्रों और जनजातीय क्षेत्रों से संबंधित प्रावधानों पर विचार करें<b>:<br/> 1. Schedule 5 relates to the administration of scheduled areas and scheduled tribes in the states of Assam, Tripura, Meghalaya, and Mizoram. / </b>अनुसूची <b>5 </b>असम<b>, </b>त्रिपुरा<b>, </b>मेघालय और मिज़ोरम राज्यों में अनुसूचित क्षेत्रों और अनुसूचित जनजातियों के प्रशासन से संबंधित है।<b><br/> 2. Schedule 6 allows the tribal population in its covered states to set up their own District or Regional Autonomous Councils. / </b>अनुसूची <b>6 </b>अपने अंतर्गत आने वाले राज्यों में जनजातीय आबादी को अपनी ज़िला या क्षेत्रीय स्वायत्त परिषदें स्थापित करने की अनुमति देती है।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statement 1 is incorrect: Schedule 6 (not Schedule 5) relates to the administration of tribal areas in Assam, Tripura, Meghalaya, and Mizoram (ATM-M). Statement 2 is correct, as Schedule 6 grants powers to set up autonomous councils in these four states. / कथन 1 गलत है: अनुसूची 6 (अनुसूची 5 नहीं) असम, त्रिपुरा, मेघालय और मिजोरम (ATM-M) के जनजातीय क्षेत्रों के प्रशासन से संबंधित है। कथन 2 सही है, क्योंकि अनुसूची 6 इन चार राज्यों में स्वायत्त परिषदों की स्थापना की शक्तियाँ प्रदान करती है।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Which of the following represents the correct additions to the Parts of the Constitution over time?<br/> </b>निम्नलिखित में से कौन सा समय के साथ संविधान के भागों में सही जोड़ को दर्शाता है<b>?</b></p>",
+    "option1": "<p> IVA, IXA, IXB, and XIIIA / IVA, IXA, IXB, और XIIIA</p>",
+    "option2": "<p> IVA, IXA, IXB, and XIVA / IVA, IXA, IXB, और XIVA</p>",
+    "option3": "<p> IIA, IXA, IXB, and XIVA / IIA, IXA, IXB, और XIVA</p>",
+    "option4": "<p> Part 7 was replaced by Part IVA / भाग 7 को भाग IVA द्वारा प्रतिस्थापित किया गया</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Part 7 has been deleted and new Parts: IVA (Fundamental Duties), IXA (Municipalities), IXB (Cooperative Societies), and XIV A (Tribunals) have been added, increasing the total parts to 25. /<br/> भाग 7 को हटा दिया गया है और नए भाग: IVA (मौलिक कर्तव्य), IXA (नगरपालिकाएं), IXB (सहकारी समितियां), और XIV A (न्यायाधिकरण) को जोड़ा गया है, जिससे कुल भाग 25 हो गए हैं।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Which of the following subjects can be legislated upon by both the Union and State governments under the Concurrent List?<br/> </b>निम्नलिखित में से कौन से विषय समवर्ती सूची के अंतर्गत आते हैं जिन पर संघ और राज्य दोनों सरकारें कानून बना सकती हैं<b>?<br/> 1. Marriage and divorce / </b>विवाह और तलाक<b><br/> 2. Trade and labour disputes / </b>व्यापार और श्रम विवाद<b><br/> 3. Banking / </b>बैंकिंग<b><br/> 4. Electricity / </b>बिजली</p>",
+    "option1": "<p> 1, 2, and 3 only / केवल 1, 2 और 3</p>",
+    "option2": "<p> 1, 3, and 4 only / केवल 1, 3 और 4</p>",
+    "option3": "<p> 3 and 4 only / केवल 3 और 4</p>",
+    "option4": "<p> 1, 2, and 4 only / केवल 1, 2 और 4</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Marriage and divorce, Trade and labour disputes, and Electricity are listed as Concurrent List Subjects. Banking is exclusively listed as a Union List Subject, where only the Union government can legislate. / विवाह और तलाक, व्यापार और श्रम विवाद, और बिजली समवर्ती सूची के विषय हैं। बैंकिंग को विशेष रूप से संघ सूची विषय के रूप में सूचीबद्ध किया गया है, जहाँ केवल केंद्र सरकार कानून बना सकती है।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Consider the following Constitutional Amendments related to the 8th Schedule:<br/> 8</b>वीं अनुसूची से संबंधित निम्नलिखित संवैधानिक संशोधनों पर विचार करें<b>:<br/> 1. 21st CA added Sindhi language. / 21</b>वें संविधान संशोधन ने सिंधी भाषा जोड़ी।<b><br/> 2. 71st CA added Konkani, Manipuri, and Nepali languages. / 71</b>वें संविधान संशोधन ने कोंकणी<b>, </b>मणिपुरी और नेपाली भाषाएँ जोड़ीं।<b><br/> 3. 92nd CA added Bodo, Dogri, Maithili, and Santhali languages. / 92</b>वें संविधान संशोधन ने बोडो<b>, </b>डोगरी<b>, </b>मैथिली और संथाली भाषाएँ जोड़ीं।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p> 1, 2, and 3 / 1, 2, और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> All three statements are correct. 21st CA (1967) added Sindhi; 71st CA (1992) added Konkani, Manipuri, Nepali; and 92nd CA (2003) added Bodo, Dogri, Maithili, Santhali, increasing the total official languages to 22. / तीनों कथन सही हैं। 21वां संविधान संशोधन (1967) ने सिंधी को जोड़ा; 71वां संविधान संशोधन (1992) ने कोंकणी, मणिपुरी, नेपाली को जोड़ा; और 92वां संसंशोधन विधान (2003) ने बोडो, डोगरी, मैथिली, संथाली को जोड़ा, जिससे कुल आधिकारिक भाषाएं 22 हो गईं।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Which Constitutional Amendment changed the spelling of \"Oriya\" to \"Odia\" language in the 8th Schedule?<br/> </b>किस संवैधानिक संशोधन ने <b>8</b>वीं अनुसूची में <b>\"</b>उड़िया<b>\" </b>भाषा की वर्तनी को बदलकर <b>\"</b>ओडिया<b>\" </b>कर दिया<b>?</b></p>",
+    "option1": "<p> 92nd Constitutional Amendment / 92वाँ संवैधानिक संशोधन</p>",
+    "option2": "<p> 96th Constitutional Amendment / 96वाँ संवैधानिक संशोधन</p>",
+    "option3": "<p> 71st Constitutional Amendment / 71वाँ संवैधानिक संशोधन</p>",
+    "option4": "<p> 1st Constitutional Amendment / पहला संवैधानिक संशोधन</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The 96th Constitutional Amendment (CA), passed in 2011, changed the spelling of the language \"Oriya\" to \"Odia\" in the 8th Schedule. / 96वें संवैधानिक संशोधन (CA), जो 2011 में पारित हुआ, ने 8वीं अनुसूची में भाषा \"उड़िया\" की वर्तनी को बदलकर \"ओडिया\" कर दिया।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Which feature is common to both Federal and Unitary systems of government as implied by the Federal Features list?<br/> </b>संघीय विशेषताओं की सूची के अनुसार कौन सी विशेषता संघीय और एकात्मक दोनों शासन प्रणालियों में समान है<b>?</b></p>",
+    "option1": "<p> Single Citizenship / एकल नागरिकता</p>",
+    "option2": "<p> Dual Government / दोहरी सरकार</p>",
+    "option3": "<p> Written Constitution / लिखित संविधान</p>",
+    "option4": "<p> Integrated Judiciary / एकीकृत न्यायपालिका</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> A Written Constitution is listed under 'Federal Features', which is a characteristic of a Federation (like India). However, a formal, systematically compiled constitution is also common to most modern unitary states, unlike the other three options which are specific to either Unitary (a, d) or Federal (b) systems. / एक लिखित संविधान 'संघीय विशेषताओं' के तहत सूचीबद्ध है, जो एक संघ (जैसे भारत) की एक विशेषता है। हालांकि, एक औपचारिक, व्यवस्थित रूप से संकलित संविधान अधिकांश आधुनिक एकात्मक राज्यों के लिए भी आम है, अन्य तीन विकल्पों के विपरीत जो या तो एकात्मक (a, d) या संघीय (b) प्रणालियों के लिए विशिष्ट हैं।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Match the Schedules with their key subject matter:<br/> </b>अनुसूचियों को उनके मुख्य विषय वस्तु से मिलाएं<b>:<br/> Schedules (</b>अनुसूची<b>)<br/> A. Schedule 2 / </b>अनुसूची <b>2<br/> B. Schedule 4 / </b>अनुसूची <b>4<br/> C. Schedule 9 / </b>अनुसूची <b>9<br/> D. Schedule 10 / </b>अनुसूची <b>10<br/> Subject Matter (</b>विषय वस्तु<b>)<br/> 1. Land reforms / </b>भूमि सुधार<b><br/> 2. Emoluments and Allowances / </b>परिलब्धियां और भत्ते<b><br/> 3. Allocation of seats in Rajya Sabha / </b>राज्यसभा में सीटों का आवंटन<b><br/> 4. Disqualification on ground of defection / </b>दल<b>-</b>बदल के आधार पर अयोग्यता</p>",
+    "option1": "<p> A-2, B-3, C-4, D-1</p>",
+    "option2": "<p> A-2, B-3, C-1, D-4</p>",
+    "option3": "<p> A-3, B-2, C-1, D-4</p>",
+    "option4": "<p> A-3, B-2, C-4, D-1</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Schedule 2 deals with Emoluments of high officials. Schedule 4 is for the Allocation of seats in the Rajya Sabha. Schedule 9 (added by 1st CA) is related to Land reforms. Schedule 10 (added by 52nd CA) relates to disqualification for defection. / अनुसूची 2 उच्च अधिकारियों के परिलब्धियों से संबंधित है। अनुसूची 4 राज्यसभा में सीटों के आवंटन के लिए है। अनुसूची 9 (पहले संविधान संशोधन द्वारा जोड़ा गया) भूमि सुधारों से संबंधित है। अनुसूची 10 (52वें संविधान संशोधन द्वारा जोड़ा गया) दल-बदल के लिए अयोग्यता से संबंधित है।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Which of the following is/are listed as a subject(s) in the Concurrent List in the Constitution?<br/> </b>निम्नलिखित में से कौन सा<b>/</b>से संविधान की समवर्ती सूची में विषय<b>/</b>विषयों के रूप में सूचीबद्ध है<b>/</b>हैं<b>?<br/> 1. Insolvency and bankruptcy / </b>दिवाला और दिवालियापन<b><br/> 2. Insurance / </b>बीमा<b><br/> 3. Liquor / </b>शराब</p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2, and 3 / 1, 2, और 3</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Insolvency and bankruptcy is listed as a Concurrent List subject, allowing both Union and State to legislate. Insurance is listed under the Union List, and Liquor is listed under the State List. / दिवाला और दिवालियापन को समवर्ती सूची विषय के रूप में सूचीबद्ध किया गया है, जो संघ और राज्य दोनों को कानून बनाने की अनुमति देता है। बीमा को संघ सूची के तहत सूचीबद्ध किया गया है, और शराब को राज्य सूची के तहत सूचीबद्ध किया गया है।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Regarding law-making power on Residuary Subjects, which of the following is correct?<br/> </b>अवशिष्ट विषयों पर कानून बनाने की शक्ति के संबंध में<b>, </b>निम्नलिखित में से कौन सा सही है<b>?</b></p>",
+    "option1": "<p> Only the State Legislatures have the power. / केवल राज्य विधानमंडलों के पास शक्ति है।</p>",
+    "option2": "<p> Both Parliament and State Legislatures have concurrent power. / संसद और राज्य विधानमंडल दोनों के पास समवर्ती शक्तियाँ हैं।</p>",
+    "option3": "<p> Parliament has the exclusive lawmaking power. / संसद के पास अनन्य कानून बनाने की शक्ति है।</p>",
+    "option4": "<p> The power rests with the President of India. / शक्ति भारत के राष्ट्रपति के पास निहित है।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Residuary Subjects are those not included in the Union, State, or Concurrent lists. The \"Parliament has lawmaking power\" on these subjects, which is a key feature strengthening the Centre. / अवशिष्ट विषय वे हैं जो संघ, राज्य या समवर्ती सूचियों में शामिल नहीं हैं। \"संसद के पास कानून बनाने की शक्ति है\", जो केंद्र को मजबूत करने वाली एक प्रमुख विशेषता है।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Which of the following constitutional features is not considered a 'Federal Feature' of the Indian Constitution?<br/> </b>निम्नलिखित में से कौन सी संवैधानिक विशेषता भारतीय संविधान की <b>'</b>संघीय विशेषता<b>' </b>नहीं मानी जाती है<b>?</b></p>",
+    "option1": "<p> Supremacy of the Constitution / संविधान की सर्वोच्चता</p>",
+    "option2": "<p> Independence of Judiciary / न्यायपालिका की स्वतंत्रता</p>",
+    "option3": "<p> Single Citizenship / एकल नागरिकता</p>",
+    "option4": "<p> Dual Government / दोहरी सरकार</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Single Citizenship is classified as a Unitary Feature, giving a strong bias to the Centre. Supremacy of the Constitution, Independence of Judiciary, and Dual Government are all listed as Federal Features. / एकल नागरिकता को एक एकात्मक विशेषता के रूप में वर्गीकृत किया गया है, जो केंद्र को एक मजबूत पूर्वाग्रह प्रदान करती है। संविधान की सर्वोच्चता, न्यायपालिका की स्वतंत्रता, और दोहरी सरकार सभी संघीय विशेषताओं के रूप में सूचीबद्ध हैं।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>The Indian Constitution is described as a blend of 'Rigidity' and 'Flexibility'. Which of the following Constitutional Amendments best demonstrates this blend?<br/> </b>भारतीय संविधान को <b>'</b>कठोरता<b>' </b>और <b>'</b>लचीलापन<b>' </b>के मिश्रण के रूप में वर्णित किया गया है। निम्नलिखित में से कौन सा संवैधानिक संशोधन इस मिश्रण को सबसे अच्छी तरह दर्शाता है<b>?</b></p>",
+    "option1": "<p> 1st Constitutional Amendment (Land Reforms) / पहला संवैधानिक संशोधन (भूमि सुधार)</p>",
+    "option2": "<p> 52nd Constitutional Amendment (Anti-defection) / 52वाँ संवैधानिक संशोधन (दल-बदल विरोधी)</p>",
+    "option3": "<p> 42nd Constitutional Amendment (Mini-Constitution) / 42वाँ संवैधानिक संशोधन (लघु-संविधान)</p>",
+    "option4": "<p> 73rd and 74th Constitutional Amendments (Local Bodies) / 73वाँ और 74वाँ संवैधानिक संशोधन (स्थानीय निकाय)</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The 73rd and 74th Amendments which added the 11th and 12th Schedules, respectively, required the special majority of Parliament plus ratification by half of the state legislatures (a highly rigid procedure). However, the implementation of these new parts also demonstrates the flexibility in adapting the structure to local governance needs. / 73वें और 74वें संशोधन जिन्होंने क्रमशः 11वीं और 12वीं अनुसूची को जोड़ा, के लिए संसद के विशेष बहुमत के साथ-साथ आधे राज्य विधानमंडलों के अनुसमर्थन की आवश्यकता थी (एक अत्यधिक कठोर प्रक्रिया) । हालाँकि, इन नए भागों का कार्यान्वयन स्थानीय शासन की जरूरतों के अनुकूल संरचना को ढालने में लचीलापन भी दर्शाता है।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - POLITY</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">POLITY - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>
