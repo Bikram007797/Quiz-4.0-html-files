@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon | PARMAR</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding: 2rem;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* Developer Name */
+        .developer {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 1.2rem;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Main Coming Soon Text */
+        .main-text {
+            font-size: 6rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Individual letter animations */
+        .letter {
+            display: inline-block;
+            position: relative;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+        }
+
+        .c1 { animation-name: bounce1; color: #ff4d94; }
+        .o1 { animation-name: bounce2; color: #4dffd8; }
+        .m { animation-name: bounce3; color: #ffd84d; }
+        .m2 { animation-name: bounce4; color: #9d4dff; }
+        .i { animation-name: bounce5; color: #4dff6a; }
+        .n { animation-name: bounce6; color: #4db8ff; }
+        .g { animation-name: bounce7; color: #ff6b4d; }
+        
+        .s1 { animation-name: bounce1; color: #ffd84d; animation-delay: 0.2s; }
+        .o2 { animation-name: bounce2; color: #4dffd8; animation-delay: 0.4s; }
+        .o3 { animation-name: bounce3; color: #9d4dff; animation-delay: 0.6s; }
+        .n2 { animation-name: bounce4; color: #ff4d94; animation-delay: 0.8s; }
+
+        /* Subtitle */
+        .subtitle {
+            font-size: 2.5rem;
+            margin-top: 2rem;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            animation: pulse 3s infinite;
+        }
+
+        /* Developer Info */
+        .dev-info {
+            margin-top: 3rem;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideUp 1.5s ease-out;
+        }
+
+        .dev-name {
+            font-size: 2.2rem;
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .dev-title {
+            font-size: 1.2rem;
+            color: #b3e5fc;
+            margin-bottom: 15px;
+        }
+
+        /* Progress bar */
+        .progress-container {
+            width: 80%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            height: 20px;
+            border-radius: 10px;
+            margin: 3rem auto;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff4d94, #9d4dff, #4db8ff);
+            border-radius: 10px;
+            animation: progress 5s infinite alternate;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shine 2s infinite;
+        }
+
+        /* Social icons */
+        .social-icons {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .social-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            animation: floatIcon 3s ease-in-out infinite;
+        }
+
+        .social-icon:nth-child(1) { animation-delay: 0s; background: linear-gradient(135deg, #4267B2, #3b5998); }
+        .social-icon:nth-child(2) { animation-delay: 0.5s; background: linear-gradient(135deg, #1DA1F2, #0d8bd9); }
+        .social-icon:nth-child(3) { animation-delay: 1s; background: linear-gradient(135deg, #E4405F, #c13584); }
+        .social-icon:nth-child(4) { animation-delay: 1.5s; background: linear-gradient(135deg, #0077B5, #006699); }
+
+        .social-icon:hover {
+            transform: translateY(-10px) scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Sound control */
+        .sound-control {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 100;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .sound-control:hover {
+            background: rgba(0, 0, 0, 0.7);
+            transform: scale(1.1);
+        }
+
+        /* Particle effects */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            animation: floatParticle linear infinite;
+        }
+
+        /* Animations */
+        @keyframes bounce1 {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        @keyframes bounce2 {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-25px); }
+        }
+
+        @keyframes bounce3 {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes bounce4 {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-35px); }
+        }
+
+        @keyframes bounce5 {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes bounce6 {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-40px); }
+        }
+
+        @keyframes bounce7 {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes slideUp {
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes progress {
+            0% { width: 10%; }
+            100% { width: 90%; }
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .main-text {
+                font-size: 3.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.8rem;
+            }
+            
+            .developer {
+                position:absolute;
+                top: 0;
+                right: 0;
+                margin-bottom: 2rem;
+            }
+            
+            .dev-info {
+                max-width: 90%;
+            }
+            
+            .social-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-text {
+                font-size: 2.5rem;
+                letter-spacing: 1px;
+            }
+            
+            .subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .dev-name {
+                font-size: 1.8rem;
+            }
+            
+            .social-icons {
+                gap: 15px;
+            }
+            
+            .social-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Container -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Sound Control -->
+    <div class="sound-control" id="soundControl">
+        <i class="fas fa-volume-up"></i>
+    </div>
+    
+    <!-- Developer Name Tag -->
+    <div class="developer">
+        <i class="fas fa-code"></i> Developed by Bikr@m
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Animated Main Text -->
+        <h1 class="main-text">
+            <span class="letter c1">C</span>
+            <span class="letter o1">O</span>
+            <span class="letter m">M</span>
+            <span class="letter m2">M</span>
+            <span class="letter i">I</span>
+            <span class="letter n">N</span>
+            <span class="letter g">G</span>
+            <span style="margin: 0 20px;"></span>
+            <span class="letter s1">S</span>
+            <span class="letter o2">O</span>
+            <span class="letter o3">O</span>
+            <span class="letter n2">N</span>
+        </h1>
+        
+        <!-- Subtitle -->
+        <h2 class="subtitle">
+            <i class="fas fa-rocket"></i> Stay Tuned! Something Amazing is Coming <i class="fas fa-rocket"></i>
+        </h2>
+        
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+        
+        <!-- Developer Information -->
+        <div class="dev-info">
+            <div class="dev-name">PARMAR SSC 4.0</div>
+            
+        
+        <!-- Social Icons -->
+        <div class="social-icons">
+            <div class="social-icon">
+                <i class="fab fa-facebook-f"></i>
+            </div>
+            <div class="social-icon">
+                <i class="fab fa-twitter"></i>
+            </div>
+            <div class="social-icon">
+                <i class="fab fa-instagram"></i>
+            </div>
+            <div class="social-icon">
+                <i class="fab fa-linkedin-in"></i>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Audio Elements -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="hoverSound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="clickSound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-plastic-bubble-click-1124.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="letterSound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-game-ball-tap-2073.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        // DOM Elements
+        const soundControl = document.getElementById('soundControl');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const hoverSound = document.getElementById('hoverSound');
+        const clickSound = document.getElementById('clickSound');
+        const letterSound = document.getElementById('letterSound');
+        const particlesContainer = document.getElementById('particles');
+        const letters = document.querySelectorAll('.letter');
+        const socialIcons = document.querySelectorAll('.social-icon');
+        
+        // Sound state
+        let soundEnabled = true;
+        
+        // Initialize audio
+        backgroundMusic.volume = 0.3;
+        hoverSound.volume = 0.4;
+        clickSound.volume = 0.5;
+        letterSound.volume = 0.3;
+        
+        // Play background music if sound is enabled
+        if (soundEnabled) {
+            backgroundMusic.play().catch(e => console.log("Autoplay prevented:", e));
+        }
+        
+        // Toggle sound function
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            
+            if (soundEnabled) {
+                soundControl.innerHTML = '<i class="fas fa-volume-up"></i>';
+                backgroundMusic.play();
+                playSound(clickSound);
+            } else {
+                soundControl.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                backgroundMusic.pause();
+            }
+        }
+        
+        // Play sound function
+        function playSound(soundElement) {
+            if (!soundEnabled) return;
+            
+            soundElement.currentTime = 0;
+            soundElement.play().catch(e => console.log("Sound play error:", e));
+        }
+        
+        // Create particle effects
+        function createParticles() {
+            const particleCount = 100;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size
+                const size = Math.random() * 10 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}vw`;
+                
+                // Random color
+                const colors = [
+                    'rgba(255, 77, 148, 0.8)',
+                    'rgba(77, 255, 216, 0.8)',
+                    'rgba(255, 216, 77, 0.8)',
+                    'rgba(157, 77, 255, 0.8)',
+                    'rgba(77, 184, 255, 0.8)'
+                ];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Random animation
+                const duration = Math.random() * 10 + 10;
+                const delay = Math.random() * 5;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+                
+                // Remove particle after animation completes
+                setTimeout(() => {
+                    particle.remove();
+                }, (duration + delay) * 1000);
+            }
+        }
+        
+        // Letter hover effect with sound
+        letters.forEach(letter => {
+            letter.addEventListener('mouseenter', () => {
+                letter.style.transform = 'scale(1.3)';
+                playSound(letterSound);
+                
+                // Reset transform after animation
+                setTimeout(() => {
+                    letter.style.transform = '';
+                }, 300);
+            });
+        });
+        
+        // Social icon hover effects
+        socialIcons.forEach(icon => {
+            icon.addEventListener('mouseenter', () => {
+                playSound(hoverSound);
+            });
+            
+            icon.addEventListener('click', () => {
+                playSound(clickSound);
+                // Create ripple effect
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.width = '100%';
+                ripple.style.height = '100%';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.3)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                icon.appendChild(ripple);
+                
+                // Remove ripple after animation
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+        
+        // Add ripple animation to CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                0% { transform: scale(0); opacity: 1; }
+                100% { transform: scale(2); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Event Listeners
+        soundControl.addEventListener('click', toggleSound);
+        
+        // Initialize
+        createParticles();
+        
+        // Create particles periodically
+        setInterval(createParticles, 2000);
+        
+        // Add keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                toggleSound();
+            }
+            
+            if (e.code === 'KeyP') {
+                // Trigger all letters to bounce
+                letters.forEach(letter => {
+                    letter.style.animation = 'none';
+                    setTimeout(() => {
+                        letter.style.animation = '';
+                    }, 10);
+                });
+                playSound(letterSound);
+            }
+        });
+        
+        // Add visual feedback for sound toggle
+        soundControl.addEventListener('mouseenter', () => {
+            soundControl.style.transform = 'scale(1.1)';
+            soundControl.style.boxShadow = '0 0 15px rgba(255, 255, 255, 0.5)';
+        });
+        
+        soundControl.addEventListener('mouseleave', () => {
+            soundControl.style.transform = '';
+            soundControl.style.boxShadow = '';
+        });
+        
+        // Add page load animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 1s';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
