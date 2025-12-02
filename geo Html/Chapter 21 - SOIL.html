@@ -2058,6 +2058,37 @@ function submitQuiz() {
       score -= negMark;
     }
   });
+  // AFTER calculating score, send data back to main app
+  const urlParams = new URLSearchParams(window.location.search);
+  const subjectId = urlParams.get('subjectId');
+  const chapterId = urlParams.get('chapterId');
+  const userId = urlParams.get('userId');
+  
+  if (subjectId && chapterId && userId) {
+    // Store completion in localStorage for main app to read
+    const completionData = {
+      completed: true,
+      score: score,
+      subjectId: subjectId,
+      chapterId: chapterId,
+      userId: userId,
+      timestamp: Date.now()
+    };
+    
+    // Method 1: Store in localStorage (same domain)
+    localStorage.setItem('quizCompletion', JSON.stringify(completionData));
+    
+    // Method 2: Send via postMessage if opened from main app
+    if (window.opener) {
+      window.opener.postMessage(completionData, '*');
+    }
+    
+    // Method 3: Update URL for main app to read
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.set('completed', 'true');
+    currentUrl.searchParams.set('score', score);
+    window.history.replaceState({}, '', currentUrl.toString());
+  }
   
   displayResults(correct, wrong, unattempted, score);
   
