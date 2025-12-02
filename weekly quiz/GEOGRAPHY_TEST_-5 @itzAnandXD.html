@@ -1,0 +1,2915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY TEST -5</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.question-image, .option-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: block;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎯 GEOGRAPHY TEST -5</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color)"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color)"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color)"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color)"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">Clear</button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">Submit Quiz</button>
+</div>
+
+<script>
+// MODIFIED: Quiz data structure with time_minutes
+const quizData = {
+  "time_minutes": 50,
+  "questions": [
+    {
+      "sr_no": 1,
+      "question": "<p> <b>Which of the following forest types is most extensive in India?<br/> </b>भारत में निम्नलिखित में से कौन<b>-</b>सा वन प्रकार सबसे व्यापक है<b>?</b></p>",
+      "option1": "<p> Tropical Evergreen Forest / उष्णकटिबंधीय सदाबहार वन</p>",
+      "option2": "<p> Tropical Deciduous Forest / उष्णकटिबंधीय पर्णपाती वन</p>",
+      "option3": "<p> Montane Forest / पर्वतीय वन</p>",
+      "option4": "<p> Mangrove Forest / मैंग्रोव वन</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Tropical deciduous forests cover the largest area in India, mainly in Madhya Pradesh, Chhattisgarh, and Odisha.<br/> उष्णकटिबंधीय पर्णपाती वन भारत के सबसे बड़े क्षेत्र में पाए जाते हैं, विशेषकर मध्य प्रदेश, छत्तीसगढ़ और ओडिशा में।</p>"
+    },
+    {
+      "sr_no": 2,
+      "question": "<p> <b>Consider the following statements about Black Soil:<br/> </b>काली मिट्टी के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is rich in iron and lime. / </b>यह लौह और चूने से समृद्ध होती है।<b><br/> (b) It retains moisture for a long time. / </b>यह लंबे समय तक नमी बनाए रखती है।<b><br/> (c) It is suitable for rice cultivation. / </b>यह धान की खेती के लिए उपयुक्त है।<b><br/> Which of the above statements are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> a and c / a और c</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Black soil (Regur) is rich in iron and lime and retains moisture; however, it is ideal for cotton, not rice.<br/> काली मिट्टी लौह और चूने से समृद्ध होती है तथा नमी बनाए रखती है, परंतु यह धान नहीं बल्कि कपास के लिए उपयुक्त है।</p>"
+    },
+    {
+      "sr_no": 3,
+      "question": "<p> <b>The ‘Manganese Ore’ in India is mainly used for—<br/> </b>भारत में ‘मैंगनीज़ अयस्क’ का मुख्य उपयोग किसके लिए किया जाता है<b>?</b></p>",
+      "option1": "<p> Fertilizer production / उर्वरक उत्पादन</p>",
+      "option2": "<p> Iron and steel industry / लौह एवं इस्पात उद्योग</p>",
+      "option3": "<p> Cement industry / सीमेंट उद्योग</p>",
+      "option4": "<p> Power generation / विद्युत उत्पादन</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Manganese is an essential component in steel production, used in alloying and removing impurities.<br/> मैंगनीज़ इस्पात निर्माण में मिश्र धातु बनाने और अशुद्धियाँ हटाने के लिए आवश्यक तत्व है।</p>"
+    },
+    {
+      "sr_no": 4,
+      "question": "<p> <b>The National Waterway-1 connects which two cities?<br/> </b>राष्ट्रीय जलमार्ग<b>-1 </b>किन दो शहरों को जोड़ता है<b>?</b></p>",
+      "option1": "<p> Prayagraj – Haldia / प्रयागराज – हल्दिया</p>",
+      "option2": "<p> Delhi – Kolkata / दिल्ली – कोलकाता</p>",
+      "option3": "<p> Mumbai – Kochi / मुंबई – कोच्चि</p>",
+      "option4": "<p> Guwahati – Dhubri / गुवाहाटी – धुबरी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> NW-1 runs along the Ganga River from Prayagraj to Haldia, spanning about 1620 km.<br/> राष्ट्रीय जलमार्ग-1 गंगा नदी के साथ प्रयागराज से हल्दिया तक लगभग 1620 किमी लंबा है।</p>"
+    },
+    {
+      "sr_no": 5,
+      "question": "<p> <b>Which of the following crops is classified as a “Zaid crop”?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी फसल “जायद फसल” के रूप में वर्गीकृत है<b>?</b></p>",
+      "option1": "<p> Paddy / धान</p>",
+      "option2": "<p> Maize / मक्का</p>",
+      "option3": "<p> Watermelon / तरबूज</p>",
+      "option4": "<p> Wheat / गेहूं</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Zaid crops are grown between Rabi and Kharif seasons, such as watermelon, muskmelon, and cucumber.<br/> जायद फसलें रबी और खरीफ के बीच उगाई जाती हैं, जैसे तरबूज, खरबूजा और खीरा।</p>"
+    },
+    {
+      "sr_no": 6,
+      "question": "<p> <b>Which state has the largest area under mangrove cover in India?<br/> </b>भारत में किस राज्य में मैंग्रोव आवरण का क्षेत्रफल सबसे अधिक है<b>?</b></p>",
+      "option1": "<p> Gujarat / गुजरात</p>",
+      "option2": "<p> West Bengal / पश्चिम बंगाल</p>",
+      "option3": "<p> Andhra Pradesh / आंध्र प्रदेश</p>",
+      "option4": "<p> Odisha / ओडिशा</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Sundarbans of West Bengal have the largest mangrove forests in India.<br/> पश्चिम बंगाल के सुंदरबन क्षेत्र में भारत के सबसे बड़े मैंग्रोव वन पाए जाते हैं।</p>"
+    },
+    {
+      "sr_no": 7,
+      "question": "<p> <b>Which of the following minerals is a non-metallic mineral?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा खनिज अधातु खनिज है<b>?</b></p>",
+      "option1": "<p> Mica / अभ्रक</p>",
+      "option2": "<p> Iron ore / लौह अयस्क</p>",
+      "option3": "<p> Manganese / मैंगनीज़</p>",
+      "option4": "<p> Copper / तांबा</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Mica is a non-metallic mineral used in electrical and electronic industries for insulation.<br/> अभ्रक एक अधातु खनिज है जिसका उपयोग विद्युत एवं इलेक्ट्रॉनिक उद्योगों में इन्सुलेशन के लिए होता है।</p>"
+    },
+    {
+      "sr_no": 8,
+      "question": "<p> <b>Consider the following statements regarding Red Soil:<br/> </b>लाल मिट्टी के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is rich in nitrogen. / </b>यह नाइट्रोजन से समृद्ध है।<b><br/> (b) It is formed by weathering of crystalline rocks. / </b>यह स्फटिकीय चट्टानों के अपक्षय से बनती है।<b><br/> (c) Its color is due to iron oxide. / </b>इसका लाल रंग लौह ऑक्साइड के कारण होता है।<b><br/> Which statements are correct?<br/> </b>कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b</p>",
+      "option2": "<p> b and c</p>",
+      "option3": "<p> a and c</p>",
+      "option4": "<p> Only c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Red soil forms from crystalline rocks and gets its red color from iron oxides.<br/> लाल मिट्टी स्फटिकीय चट्टानों से बनती है और इसका लाल रंग लौह ऑक्साइड के कारण होता है।</p>"
+    },
+    {
+      "sr_no": 9,
+      "question": "<p> <b>Which of the following grasslands is located in Africa?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा घास का मैदान अफ्रीका में स्थित है<b>?</b></p>",
+      "option1": "<p> Pampas / पम्पास</p>",
+      "option2": "<p> Prairie / प्रेरी</p>",
+      "option3": "<p> Savanna / सवाना</p>",
+      "option4": "<p> Steppe / स्तेपी</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Savanna grasslands are found in Africa and are characterized by tall grasses and scattered trees.<br/> सवाना घास के मैदान अफ्रीका में पाए जाते हैं, जहाँ ऊँची घास और छिटपुट वृक्ष होते हैं।</p>"
+    },
+    {
+      "sr_no": 10,
+      "question": "<p> <b>Which of the following is a Rabi crop?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी रबी फसल है<b>?</b></p>",
+      "option1": "<p> Cotton / कपास</p>",
+      "option2": "<p> Rice / धान</p>",
+      "option3": "<p> Wheat / गेहूं</p>",
+      "option4": "<p> Maize / मक्का</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Wheat is a major Rabi crop, sown in winter and harvested in summer.<br/> गेहूं एक प्रमुख रबी फसल है, जिसे सर्दियों में बोया और गर्मियों में काटा जाता है।</p>"
+    },
+    {
+      "sr_no": 11,
+      "question": "<p> <b>Which of the following minerals is known as ‘fool’s gold’?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा खनिज ‘फूल्स गोल्ड’ के नाम से जाना जाता है<b>?</b></p>",
+      "option1": "<p> Magnetite / मैग्नेटाइट</p>",
+      "option2": "<p> Bauxite / बॉक्साइट</p>",
+      "option3": "<p> Pyrite / पाइराइट</p>",
+      "option4": "<p> Hematite / हेमेटाइट</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Pyrite has a metallic luster and pale brass-yellow color, resembling gold.<br/> पाइराइट का रंग सुनहरा पीत और चमकदार होता है, जिससे यह सोने जैसा दिखता है।</p>"
+    },
+    {
+      "sr_no": 12,
+      "question": "<p> <b>Which of the following is India’s first inland waterway container terminal?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा भारत का पहला अंतर्देशीय जलमार्ग कंटेनर टर्मिनल है<b>?</b></p>",
+      "option1": "<p> Patna / पटना</p>",
+      "option2": "<p> Haldia / हल्दिया</p>",
+      "option3": "<p> Varanasi / वाराणसी</p>",
+      "option4": "<p> Sahibganj / साहिबगंज</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Varanasi was inaugurated as India’s first inland waterway terminal under Jal Marg Vikas Project.<br/> वाराणसी को जल मार्ग विकास परियोजना के तहत भारत का पहला अंतर्देशीय कंटेनर टर्मिनल बनाया गया।</p>"
+    },
+    {
+      "sr_no": 13,
+      "question": "<p> <b>In which type of soil is laterite found?<br/> </b>लेटेराइट किस प्रकार की मिट्टी में पाया जाता है<b>?</b></p>",
+      "option1": "<p> Humid and hot tropical areas / आर्द्र एवं गर्म उष्णकटिबंधीय क्षेत्र</p>",
+      "option2": "<p> Cold and arid areas / शीत एवं शुष्क क्षेत्र</p>",
+      "option3": "<p> River valleys / नदी घाटियाँ</p>",
+      "option4": "<p> Coastal plains / तटीय मैदान</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Laterite soil forms in areas with high rainfall and temperature, due to leaching.<br/> लेटेराइट मिट्टी उच्च वर्षा और तापमान वाले क्षेत्रों में लीचिंग की प्रक्रिया से बनती है।</p>"
+    },
+    {
+      "sr_no": 14,
+      "question": "<p> <b>The NH-44 is the longest National Highway in India connecting—<br/> NH-44 </b>भारत का सबसे लंबा राष्ट्रीय राजमार्ग है जो किन्हें जोड़ता है<b>?</b></p>",
+      "option1": "<p> Srinagar – Kanyakumari / श्रीनगर – कन्याकुमारी</p>",
+      "option2": "<p> Delhi – Mumbai / दिल्ली – मुंबई</p>",
+      "option3": "<p> Kolkata – Chennai / कोलकाता – चेन्नई</p>",
+      "option4": "<p> Amritsar – Ahmedabad / अमृतसर – अहमदाबाद</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> NH-44 connects Srinagar to Kanyakumari, covering about 3745 km.<br/> NH-44 श्रीनगर से कन्याकुमारी तक लगभग 3745 किमी लंबा है।</p>"
+    },
+    {
+      "sr_no": 15,
+      "question": "<p> <b>Which of the following is a fibre crop?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी फाइबर फसल है<b>?</b></p>",
+      "option1": "<p> Sugarcane / गन्ना</p>",
+      "option2": "<p> Jute / जूट</p>",
+      "option3": "<p> Groundnut / मूंगफली</p>",
+      "option4": "<p> Mustard / सरसों</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Jute is a fibre crop mainly grown in West Bengal, Bihar, and Assam.<br/> जूट एक रेशेदार फसल है जो मुख्यतः पश्चिम बंगाल, बिहार और असम में उगाई जाती है।</p>"
+    },
+    {
+      "sr_no": 16,
+      "question": "<p> <b>Which Indian port is known as the “Queen of the Arabian Sea”?<br/> </b>कौन<b>-</b>सा भारतीय बंदरगाह “अरब सागर की रानी” के नाम से प्रसिद्ध है<b>?</b></p>",
+      "option1": "<p> Mangalore / मंगलौर</p>",
+      "option2": "<p> Kandla / कांडला</p>",
+      "option3": "<p> Mumbai / मुंबई</p>",
+      "option4": "<p> Cochin / कोचीन</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Cochin Port in Kerala is called the Queen of the Arabian Sea.<br/> केरल का कोचीन बंदरगाह “अरब सागर की रानी” कहलाता है।</p>"
+    },
+    {
+      "sr_no": 17,
+      "question": "<p> <b>Which of the following is an example of a coniferous forest?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा शंकुधारी वन का उदाहरण है<b>?</b></p>",
+      "option1": "<p> Prairie / प्रेरी</p>",
+      "option2": "<p> Savanna / सवाना</p>",
+      "option3": "<p> Pampas / पम्पास</p>",
+      "option4": "<p> Taiga / टैगा</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Taiga forests are coniferous, found in cold regions like Russia and Canada.<br/> टैगा वन शंकुधारी होते हैं और रूस व कनाडा जैसे ठंडे क्षेत्रों में पाए जाते हैं।</p>"
+    },
+    {
+      "sr_no": 18,
+      "question": "<p> <b>Which river valley is famous for bauxite deposits in India?<br/> </b>भारत में किस नदी घाटी में बॉक्साइट के भंडार प्रसिद्ध हैं<b>?</b></p>",
+      "option1": "<p> Mahanadi Valley / महानदी घाटी</p>",
+      "option2": "<p> Godavari Valley / गोदावरी घाटी</p>",
+      "option3": "<p> Damodar Valley / दामोदर घाटी</p>",
+      "option4": "<p> Narmada Valley / नर्मदा घाटी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Bauxite deposits are mainly found in the Mahanadi valley region of Odisha.<br/> बॉक्साइट के प्रमुख भंडार ओडिशा के महानदी घाटी क्षेत्र में पाए जाते हैं।</p>"
+    },
+    {
+      "sr_no": 19,
+      "question": "<p> <b>Which of the following is not a transport mode?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा परिवहन का माध्यम नहीं है<b>?</b></p>",
+      "option1": "<p> Pipeline / पाइपलाइन</p>",
+      "option2": "<p> Waterway / जलमार्ग</p>",
+      "option3": "<p> Ropeway / रोपवे</p>",
+      "option4": "<p> Aeration / वातन</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Aeration refers to oxygen supply and not related to transport.<br/> वातन का अर्थ ऑक्सीजन आपूर्ति से है, यह परिवहन से संबंधित नहीं है।</p>"
+    },
+    {
+      "sr_no": 20,
+      "question": "<p> <b>The largest producer of coal in India is—<br/> </b>भारत में कोयले का सबसे बड़ा उत्पादक राज्य कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> Jharkhand / झारखंड</p>",
+      "option2": "<p> Odisha / ओडिशा</p>",
+      "option3": "<p> Chhattisgarh / छत्तीसगढ़</p>",
+      "option4": "<p> Madhya Pradesh / मध्य प्रदेश</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Jharkhand produces the maximum coal, followed by Chhattisgarh and Odisha.<br/> झारखंड भारत का सबसे बड़ा कोयला उत्पादक राज्य है, इसके बाद छत्तीसगढ़ और ओडिशा आते हैं।</p>"
+    },
+    {
+      "sr_no": 21,
+      "question": "<p> <b>Consider the following statements about Laterite soil:<br/> </b>लेटेराइट मिट्टी के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is poor in nitrogen and phosphate.<br/> (b) It supports tea and coffee cultivation.<br/> (c) It is mainly found in Kerala and Karnataka.<br/> Which are correct?</b></p>",
+      "option1": "<p> a and b</p>",
+      "option2": "<p> a and c</p>",
+      "option3": "<p> b and c</p>",
+      "option4": "<p> a, b and c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Laterite soil is deficient in fertility but suitable for tea and coffee in Kerala and Karnataka.<br/> लेटेराइट मिट्टी में नाइट्रोजन व फॉस्फेट की कमी होती है, परंतु यह केरल और कर्नाटक में चाय व कॉफी के लिए उपयुक्त है।</p>"
+    },
+    {
+      "sr_no": 22,
+      "question": "<p> <b>Which of the following crops requires alluvial soil?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी फसल दोमट मिट्टी की मांग करती है<b>?</b></p>",
+      "option1": "<p> Cotton / कपास</p>",
+      "option2": "<p> Rice / धान</p>",
+      "option3": "<p> Tea / चाय</p>",
+      "option4": "<p> Coffee / कॉफी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Rice grows best in fertile alluvial soil found in Indo-Gangetic plains.<br/> धान सबसे अधिक उपजाऊ दोमट मिट्टी में उगता है, जो इंडो-गंगेटिक मैदानों में पाई जाती है।</p>"
+    },
+    {
+      "sr_no": 23,
+      "question": "<p> <b>Which forest type acts as a natural carbon sink?<br/> </b>कौन<b>-</b>सा वन प्रकार प्राकृतिक कार्बन सिंक के रूप में कार्य करता है<b>?</b></p>",
+      "option1": "<p> Tropical evergreen forest</p>",
+      "option2": "<p> Thorn forest</p>",
+      "option3": "<p> Montane forest</p>",
+      "option4": "<p> Littoral forest</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Tropical evergreen forests absorb high amounts of CO₂ and act as carbon sinks.<br/> उष्णकटिबंधीय सदाबहार वन अधिक CO₂ अवशोषित करते हैं और प्राकृतिक कार्बन सिंक होते हैं।</p>"
+    },
+    {
+      "sr_no": 24,
+      "question": "<p> <b>Which mineral is obtained from bauxite ore?<br/> </b>बॉक्साइट अयस्क से कौन<b>-</b>सा खनिज प्राप्त होता है<b>?</b></p>",
+      "option1": "<p> Aluminium / एल्यूमिनियम</p>",
+      "option2": "<p> Iron / लोहा</p>",
+      "option3": "<p> Copper / तांबा</p>",
+      "option4": "<p> Lead / सीसा</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Bauxite is the primary ore of aluminium.<br/> बॉक्साइट एल्यूमिनियम का प्रमुख अयस्क है।</p>"
+    },
+    {
+      "sr_no": 25,
+      "question": "<p> <b>Which of the following railways has the highest altitude station in India?<br/> </b>निम्नलिखित में से किस रेलवे में भारत का सबसे ऊँचा स्टेशन है<b>?</b></p>",
+      "option1": "<p> Kalka-Shimla Railway / कालका-शिमला रेलवे</p>",
+      "option2": "<p> Nilgiri Mountain Railway / नीलगिरि पर्वतीय रेलवे</p>",
+      "option3": "<p> Kangra Valley Railway / कांगड़ा घाटी रेलवे</p>",
+      "option4": "<p> Darjeeling Himalayan Railway / दार्जिलिंग हिमालयन रेलवे</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Ghum station on the Darjeeling Himalayan Railway is India’s highest railway station (2,258 m).<br/> (दार्जिलिंग हिमालयन रेलवे का घूम स्टेशन भारत का सबसे ऊँचा रेलवे स्टेशन है।)</p>"
+    },
+    {
+      "sr_no": 26,
+      "question": "<p> <b>Which of the following transport projects is part of the Bharatmala scheme?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी परिवहन परियोजना भारतमाला योजना का हिस्सा है<b>?</b></p>",
+      "option1": "<p> Development of national highways / राष्ट्रीय राजमार्गों का विकास</p>",
+      "option2": "<p> Expansion of railway corridors / रेल गलियारों का विस्तार</p>",
+      "option3": "<p> Construction of inland waterways / अंतर्देशीय जलमार्गों का निर्माण</p>",
+      "option4": "<p> Modernization of airports / हवाई अड्डों का आधुनिकीकरण</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Bharatmala focuses on the development of national highway corridors for seamless road connectivity.<br/> भारतमाला योजना का उद्देश्य राष्ट्रीय राजमार्ग गलियारों का विकास और सड़क संपर्क को सुगम बनाना है।</p>"
+    },
+    {
+      "sr_no": 27,
+      "question": "<p> <b>Which soil is called ‘self-ploughing soil’?<br/> </b>कौन<b>-</b>सी मिट्टी को ‘स्वयं जोतने वाली मिट्टी’ कहा जाता है<b>?</b></p>",
+      "option1": "<p> Alluvial soil / जलोढ़ मिट्टी</p>",
+      "option2": "<p> Black soil / काली मिट्टी</p>",
+      "option3": "<p> Laterite soil / लेटेराइट मिट्टी</p>",
+      "option4": "<p> Red soil / लाल मिट्टी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Black soil cracks in summer and becomes soft when wet, hence called self-ploughing soil.<br/> काली मिट्टी गर्मियों में फट जाती है और गीली होने पर नरम हो जाती है, इसलिए इसे स्वयं जोतने वाली मिट्टी कहा जाता है।</p>"
+    },
+    {
+      "sr_no": 28,
+      "question": "<p> <b>The largest producer of iron ore in India is—<br/> </b>भारत में लौह अयस्क का सबसे बड़ा उत्पादक राज्य कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> Odisha / ओडिशा</p>",
+      "option2": "<p> Jharkhand / झारखंड</p>",
+      "option3": "<p> Chhattisgarh / छत्तीसगढ़</p>",
+      "option4": "<p> Karnataka / कर्नाटक</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Odisha produces the maximum iron ore in India, mainly from Keonjhar and Sundargarh districts.<br/> ओडिशा भारत में सर्वाधिक लौह अयस्क का उत्पादन करता है, विशेषकर क्योंझर और सुंदरगढ़ जिलों में।</p>"
+    },
+    {
+      "sr_no": 29,
+      "question": "<p> <b>Which of the following is not a major port of India?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा भारत का प्रमुख बंदरगाह नहीं है<b>?</b></p>",
+      "option1": "<p> Paradip / पारादीप</p>",
+      "option2": "<p> Marmagao / मार्मागोआ</p>",
+      "option3": "<p> Haldia / हल्दिया</p>",
+      "option4": "<p> Porbandar / पोरबंदर</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Porbandar is a minor port, not included among India’s 13 major ports.<br/> पोरबंदर एक लघु बंदरगाह है, इसे भारत के 13 प्रमुख बंदरगाहों में शामिल नहीं किया गया है।</p>"
+    },
+    {
+      "sr_no": 30,
+      "question": "<p> <b>Which of the following pairs is correctly matched?<br/> </b>निम्नलिखित युग्मों में से कौन<b>-</b>सा सही सुमेलित है<b>?</b></p>",
+      "option1": "<p> Sal - Tropical Evergreen Forest / साल – उष्णकटिबंधीय सदाबहार वन</p>",
+      "option2": "<p> Teak - Tropical Deciduous Forest / सागौन – उष्णकटिबंधीय पर्णपाती वन</p>",
+      "option3": "<p> Silver Fir - Thorn Forest / सिल्वर फ़र – कांटेदार वन</p>",
+      "option4": "<p> Sundari - Montane Forest / सुंदरि – पर्वतीय वन</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Teak is a characteristic tree of tropical deciduous forests.<br/> सागौन उष्णकटिबंधीय पर्णपाती वनों की प्रमुख प्रजाति है।</p>"
+    },
+    {
+      "sr_no": 31,
+      "question": "<p> <b>Which of the following crops is grown mainly in black soil?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी फसल मुख्यतः काली मिट्टी में उगाई जाती है<b>?</b></p>",
+      "option1": "<p> Rice / धान</p>",
+      "option2": "<p> Cotton / कपास</p>",
+      "option3": "<p> Tea / चाय</p>",
+      "option4": "<p> Jute / जूट</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Cotton thrives in black soil due to its moisture retention and clayey texture.<br/> काली मिट्टी की नमी बनाए रखने की क्षमता कपास की खेती के लिए आदर्श बनाती है।</p>"
+    },
+    {
+      "sr_no": 32,
+      "question": "<p> <b>Which type of forest is found on the windward slopes of the Western Ghats?<br/> </b>पश्चिमी घाट की पवनाभिमुख ढलानों पर किस प्रकार का वन पाया जाता है<b>?</b></p>",
+      "option1": "<p> Tropical evergreen forest / उष्णकटिबंधीय सदाबहार वन</p>",
+      "option2": "<p> Thorn forest / कांटेदार वन</p>",
+      "option3": "<p> Alpine forest / अल्पाइन वन</p>",
+      "option4": "<p> Deciduous forest / पर्णपाती वन</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> High rainfall on the windward side of Western Ghats supports evergreen forests.<br/> पश्चिमी घाट की पवनाभिमुख दिशा में अधिक वर्षा के कारण सदाबहार वन विकसित होते हैं।</p>"
+    },
+    {
+      "sr_no": 33,
+      "question": "<p> <b>Which crop is also known as “Golden Fibre”?<br/> </b>कौन<b>-</b>सी फसल को “गोल्डन फाइबर” कहा जाता है<b>?</b></p>",
+      "option1": "<p> Flax / सन</p>",
+      "option2": "<p> Cotton / कपास</p>",
+      "option3": "<p> Jute / जूट</p>",
+      "option4": "<p> Silk / रेशम</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Jute is called Golden Fibre due to its colour and commercial value.<br/> जूट को उसके सुनहरे रंग और वाणिज्यिक महत्व के कारण “गोल्डन फाइबर” कहा जाता है।</p>"
+    },
+    {
+      "sr_no": 34,
+      "question": "<p> <b>Which mineral is used in the manufacture of cement?<br/> </b>सीमेंट निर्माण में कौन<b>-</b>सा खनिज उपयोग होता है<b>?</b></p>",
+      "option1": "<p> Lead / सीसा</p>",
+      "option2": "<p> Copper / तांबा</p>",
+      "option3": "<p> Zinc / जस्ता</p>",
+      "option4": "<p> Limestone / चूना पत्थर</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Limestone is a key raw material used in cement production.<br/> सीमेंट निर्माण में चूना पत्थर मुख्य कच्चा माल होता है।</p>"
+    },
+    {
+      "sr_no": 35,
+      "question": "<p> <b>The “Konkan Railway” runs between which two stations?<br/> “</b>कोकण रेलवे” किन दो स्टेशनों के बीच चलता है<b>?</b></p>",
+      "option1": "<p> Mangalore – Mumbai / मंगलौर – मुंबई</p>",
+      "option2": "<p> Chennai – Kolkata / चेन्नई – कोलकाता</p>",
+      "option3": "<p> Delhi – Goa / दिल्ली – गोवा</p>",
+      "option4": "<p> Kanyakumari – Coimbatore / कन्याकुमारी – कोयंबटूर</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Konkan Railway connects Roha (Maharashtra) and Thokur (Mangalore, Karnataka) along the western coast.<br/> कोकण रेलवे महाराष्ट्र के रोहा से मंगलौर, कर्नाटक के ठोकूर तक पश्चिमी तट के साथ चलता है।</p>"
+    },
+    {
+      "sr_no": 36,
+      "question": "<p> <b>Which type of soil is most fertile?<br/> </b>कौन<b>-</b>सी मिट्टी सर्वाधिक उपजाऊ होती है<b>?</b></p>",
+      "option1": "<p> Alluvial soil / जलोढ़ मिट्टी</p>",
+      "option2": "<p> Black soil / काली मिट्टी</p>",
+      "option3": "<p> Red soil / लाल मिट्टी</p>",
+      "option4": "<p> Laterite soil / लेटेराइट मिट्टी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Alluvial soil is rich in nutrients and found in northern plains.<br/> जलोढ़ मिट्टी पोषक तत्वों से भरपूर होती है और उत्तरी मैदानों में पाई जाती है।</p>"
+    },
+    {
+      "sr_no": 37,
+      "question": "<p> <b>Which of the following regions is famous for tropical thorn forests?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा क्षेत्र उष्णकटिबंधीय कांटेदार वनों के लिए प्रसिद्ध है<b>?</b></p>",
+      "option1": "<p> Sikkim / सिक्किम</p>",
+      "option2": "<p> Western Ghats / पश्चिमी घाट</p>",
+      "option3": "<p> Assam / असम</p>",
+      "option4": "<p> Western Rajasthan / पश्चिमी राजस्थान</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Western Rajasthan’s arid climate supports thorny and scrub vegetation.<br/> पश्चिमी राजस्थान की शुष्क जलवायु कांटेदार वनों के विकास के लिए उपयुक्त है।</p>"
+    },
+    {
+      "sr_no": 38,
+      "question": "<p> <b>Which crop is known as a cash crop?<br/> </b>कौन<b>-</b>सी फसल नकदी फसल कहलाती है<b>?</b></p>",
+      "option1": "<p> Wheat / गेहूं</p>",
+      "option2": "<p> Rice / धान</p>",
+      "option3": "<p> Cotton / कपास</p>",
+      "option4": "<p> Barley / जौ</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Cotton is a cash crop as it is grown mainly for sale and industry use.<br/> कपास एक नकदी फसल है क्योंकि इसे मुख्यतः बिक्री और औद्योगिक उपयोग के लिए उगाया जाता है।</p>"
+    },
+    {
+      "sr_no": 39,
+      "question": "<p> <b>Which is the deepest landlocked and freshwater lake in the world?<br/> </b>विश्व की सबसे गहरी स्थल<b>-</b>आवेष्ठित मीठे पानी की झील कौन<b>-</b>सी है<b>?</b></p>",
+      "option1": "<p> Lake Baikal / बैकाल झील</p>",
+      "option2": "<p> Lake Superior / सुपीरियर झील</p>",
+      "option3": "<p> Lake Victoria / विक्टोरिया झील</p>",
+      "option4": "<p> Lake Tanganyika / टैंगानयिका झील</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Lake Baikal in Russia is the world’s deepest freshwater lake.<br/> रूस की बैकाल झील विश्व की सबसे गहरी मीठे पानी की झील है।</p>"
+    },
+    {
+      "sr_no": 40,
+      "question": "<p> <b>Which of the following minerals is used in making aluminium?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा खनिज एल्यूमिनियम बनाने में उपयोग होता है<b>?</b></p>",
+      "option1": "<p> Hematite / हेमेटाइट</p>",
+      "option2": "<p> Mica / अभ्रक</p>",
+      "option3": "<p> Bauxite / बॉक्साइट</p>",
+      "option4": "<p> Gypsum / जिप्सम</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Bauxite is the main ore of aluminium.<br/> एल्यूमिनियम का प्रमुख अयस्क बॉक्साइट है।</p>"
+    },
+    {
+      "sr_no": 41,
+      "question": "<p> <b>Which National Highway connects Delhi to Kolkata?<br/> </b>कौन<b>-</b>सा राष्ट्रीय राजमार्ग दिल्ली को कोलकाता से जोड़ता है<b>?</b></p>",
+      "option1": "<p> NH-27</p>",
+      "option2": "<p> NH-44</p>",
+      "option3": "<p> NH-19</p>",
+      "option4": "<p> NH-66</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> NH-19, part of the Golden Quadrilateral, connects Delhi and Kolkata.<br/> NH-19 स्वर्ण चतुर्भुज परियोजना का हिस्सा है जो दिल्ली को कोलकाता से जोड़ता है।</p>"
+    },
+    {
+      "sr_no": 42,
+      "question": "<p> <b>Which type of grassland is found in North America?<br/> </b>उत्तरी अमेरिका में किस प्रकार का घास का मैदान पाया जाता है<b>?</b></p>",
+      "option1": "<p> Pampas / पम्पास</p>",
+      "option2": "<p> Prairie / प्रेरी</p>",
+      "option3": "<p> Steppe / स्तेपी</p>",
+      "option4": "<p> Savanna / सवाना</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The prairies are temperate grasslands found in North America.<br/> प्रेरी उत्तरी अमेरिका में पाए जाने वाले समशीतोष्ण घास के मैदान हैं।</p>"
+    },
+    {
+      "sr_no": 43,
+      "question": "<p> <b>Which of the following is a Kharif crop?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी खरीफ फसल है<b>?</b></p>",
+      "option1": "<p> Wheat / गेहूं</p>",
+      "option2": "<p> Gram / चना</p>",
+      "option3": "<p> Rice / धान</p>",
+      "option4": "<p> Mustard / सरसों</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Rice is a Kharif crop grown in monsoon season.<br/> धान एक खरीफ फसल है जिसे मानसून के मौसम में उगाया जाता है।</p>"
+    },
+    {
+      "sr_no": 44,
+      "question": "<p> <b>Which is the largest public sector company in coal mining in India?<br/> </b>भारत में कोयला खनन की सबसे बड़ी सार्वजनिक क्षेत्र की कंपनी कौन<b>-</b>सी है<b>?</b></p>",
+      "option1": "<p> Coal India Limited / कोल इंडिया लिमिटेड</p>",
+      "option2": "<p> ONGC / ओएनजीसी</p>",
+      "option3": "<p> NALCO / नाल्को</p>",
+      "option4": "<p> NMDC / एनएमडीसी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Coal India Limited is the world’s largest coal mining company.<br/> कोल इंडिया लिमिटेड विश्व की सबसे बड़ी कोयला खनन कंपनी है।</p>"
+    },
+    {
+      "sr_no": 45,
+      "question": "<p> <b>Which of the following is a perennial crop?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी बहुवर्षीय फसल है<b>?</b></p>",
+      "option1": "<p> Sugarcane / गन्ना</p>",
+      "option2": "<p> Maize / मक्का</p>",
+      "option3": "<p> Wheat / गेहूं</p>",
+      "option4": "<p> Mustard / सरसों</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Sugarcane is a semi-perennial crop harvested for several years from the same rootstock (ratoon crop).<br/> गन्ना एक अर्ध-बहुवर्षीय फसल है, जिसे एक ही जड़ से कई बार काटा जा सकता है।</p>"
+    },
+    {
+      "sr_no": 46,
+      "question": "<p> <b>Which soil is ideal for tea cultivation?<br/> </b>चाय की खेती के लिए कौन<b>-</b>सी मिट्टी उपयुक्त है<b>?</b></p>",
+      "option1": "<p> Desert soil / मरु मिट्टी</p>",
+      "option2": "<p> Alluvial soil / जलोढ़ मिट्टी</p>",
+      "option3": "<p> Black soil / काली मिट्टी</p>",
+      "option4": "<p> Laterite soil / लेटेराइट मिट्टी</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Tea grows best in acidic, well-drained laterite soil.<br/> चाय अम्लीय और जल निकासी वाली लेटेराइट मिट्टी में सबसे अच्छी उगती है।</p>"
+    },
+    {
+      "sr_no": 47,
+      "question": "<p> <b>Which of the following minerals is obtained from veins in sedimentary rocks?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा खनिज अवसादी चट्टानों की दरारों से प्राप्त होता है<b>?</b></p>",
+      "option1": "<p> Copper / तांबा</p>",
+      "option2": "<p> Coal / कोयला</p>",
+      "option3": "<p> Iron / लोहा</p>",
+      "option4": "<p> Gypsum / जिप्सम</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Gypsum occurs in sedimentary formations and is used in cement and fertilizer.<br/> जिप्सम अवसादी चट्टानों में पाया जाता है और इसका उपयोग सीमेंट व उर्वरक उद्योगों में होता है।</p>"
+    },
+    {
+      "sr_no": 48,
+      "question": "<p> <b>The main objective of Pradhan Mantri Gram Sadak Yojana (PMGSY) is—<br/> </b>प्रधानमंत्री ग्राम सड़क योजना <b>(PMGSY) </b>का मुख्य उद्देश्य क्या है<b>?</b></p>",
+      "option1": "<p> Rural road connectivity / ग्रामीण सड़क संपर्क</p>",
+      "option2": "<p> Highway construction / राजमार्ग निर्माण</p>",
+      "option3": "<p> Urban housing / शहरी आवास</p>",
+      "option4": "<p> Port development / बंदरगाह विकास</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> PMGSY aims to provide all-weather road connectivity to rural areas.<br/> पीएमजीएसवाई का उद्देश्य ग्रामीण क्षेत्रों में सभी मौसमों में सड़क संपर्क सुनिश्चित करना है।</p>"
+    },
+    {
+      "sr_no": 49,
+      "question": "<p> <b>Which of the following regions has black cotton soil?<br/> </b>निम्नलिखित में से किस क्षेत्र में काली कपास मिट्टी पाई जाती है<b>?</b></p>",
+      "option1": "<p> Deccan Plateau / दक्कन का पठार</p>",
+      "option2": "<p> Indo-Gangetic Plain / इंडो-गंगेटिक मैदान</p>",
+      "option3": "<p> Thar Desert / थार मरुस्थल</p>",
+      "option4": "<p> Eastern Ghats / पूर्वी घाट</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Black cotton soil is widespread in the Deccan Plateau region.<br/> काली कपास मिट्टी दक्कन के पठारी क्षेत्र में पाई जाती है।</p>"
+    },
+    {
+      "sr_no": 50,
+      "question": "<p> <b>Which of the following ports is a natural harbour?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा बंदरगाह प्राकृतिक है<b>?</b></p>",
+      "option1": "<p> Tuticorin / तूतिकोरिन</p>",
+      "option2": "<p> Kandla / कांडला</p>",
+      "option3": "<p> Mumbai / मुंबई</p>",
+      "option4": "<p> Ennore / एन्नोर</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Mumbai Port is a natural harbour, sheltered by surrounding landforms.<br/> मुंबई बंदरगाह एक प्राकृतिक हार्बर है जो स्थलाकृतियों से संरक्षित है।</p>"
+    },
+    {
+      "sr_no": 51,
+      "question": "<p> <b>Which of the following forests are known as “monsoon forests”?<br/> </b>निम्नलिखित में से कौन<b>-</b>से वन “मानसून वन” कहलाते हैं<b>?</b></p>",
+      "option1": "<p> Tropical evergreen forest / उष्णकटिबंधीय सदाबहार वन</p>",
+      "option2": "<p> Tropical deciduous forest / उष्णकटिबंधीय पर्णपाती वन</p>",
+      "option3": "<p> Alpine forest / अल्पाइन वन</p>",
+      "option4": "<p> Coniferous forest / शंकुधारी वन</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Tropical deciduous forests shed leaves during dry season and are called monsoon forests.<br/> उष्णकटिबंधीय पर्णपाती वन शुष्क ऋतु में पत्ते गिराते हैं, इसलिए इन्हें मानसून वन कहा जाता है।</p>"
+    },
+    {
+      "sr_no": 52,
+      "question": "<p> <b>Which of the following minerals is formed from evaporation in arid regions?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा खनिज शुष्क क्षेत्रों में वाष्पीकरण से बनता है<b>?</b></p>",
+      "option1": "<p> Manganese / मैंगनीज़</p>",
+      "option2": "<p> Gypsum / जिप्सम</p>",
+      "option3": "<p> Iron / लोहा</p>",
+      "option4": "<p> Bauxite / बॉक्साइट</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Gypsum forms through evaporation of saline water in arid climates.<br/> जिप्सम शुष्क क्षेत्रों में खारे जल के वाष्पीकरण से बनता है।</p>"
+    },
+    {
+      "sr_no": 53,
+      "question": "<p> <b>The “Golden Quadrilateral” project connects—<br/> “</b>स्वर्ण चतुर्भुज” परियोजना किन शहरों को जोड़ती है<b>?</b></p>",
+      "option1": "<p> Delhi, Mumbai, Chennai, Kolkata / दिल्ली, मुंबई, चेन्नई, कोलकाता</p>",
+      "option2": "<p> Delhi, Ahmedabad, Hyderabad, Kochi / दिल्ली, अहमदाबाद, हैदराबाद, कोच्चि</p>",
+      "option3": "<p> Bhopal, Lucknow, Jaipur, Patna / भोपाल, लखनऊ, जयपुर, पटना</p>",
+      "option4": "<p> Delhi, Chennai, Pune, Surat / दिल्ली, चेन्नई, पुणे, सूरत</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Golden Quadrilateral connects India’s four major metros — Delhi, Mumbai, Chennai, and Kolkata.<br/> स्वर्ण चतुर्भुज परियोजना भारत के चार प्रमुख महानगरों — दिल्ली, मुंबई, चेन्नई और कोलकाता — को जोड़ती है।</p>"
+    },
+    {
+      "sr_no": 54,
+      "question": "<p> <b>Which of the following states is the largest producer of coffee in India?<br/> </b>भारत में कॉफी का सबसे बड़ा उत्पादक राज्य कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> Karnataka / कर्नाटक</p>",
+      "option2": "<p> Kerala / केरल</p>",
+      "option3": "<p> Tamil Nadu / तमिलनाडु</p>",
+      "option4": "<p> Assam / असम</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Karnataka contributes over 60% of India’s total coffee production.<br/> कर्नाटक भारत के कुल कॉफी उत्पादन का लगभग 60% योगदान देता है।</p>"
+    },
+    {
+      "sr_no": 55,
+      "question": "<p> <b>Which soil is rich in potash but poor in nitrogen?<br/> </b>कौन<b>-</b>सी मिट्टी पोटाश में समृद्ध परंतु नाइट्रोजन में गरीब होती है<b>?</b></p>",
+      "option1": "<p> Alluvial soil / जलोढ़ मिट्टी</p>",
+      "option2": "<p> Red soil / लाल मिट्टी</p>",
+      "option3": "<p> Laterite soil / लेटेराइट मिट्टी</p>",
+      "option4": "<p> Black soil / काली मिट्टी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Red soil contains potassium and iron but lacks nitrogen and humus.<br/> लाल मिट्टी में पोटाश और लौह तत्व होते हैं, परंतु नाइट्रोजन और ह्यूमस की कमी होती है।</p>"
+    },
+    {
+      "sr_no": 56,
+      "question": "<p> <b>Which of the following grasslands is found in South America?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा घास का मैदान दक्षिण अमेरिका में पाया जाता है<b>?</b></p>",
+      "option1": "<p> Pampas / पम्पास</p>",
+      "option2": "<p> Prairie / प्रेरी</p>",
+      "option3": "<p> Steppe / स्तेपी</p>",
+      "option4": "<p> Downs / डाउन</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Pampas are temperate grasslands of Argentina and Uruguay.<br/> पम्पास अर्जेंटीना और उरुग्वे के समशीतोष्ण घास के मैदान हैं।</p>"
+    },
+    {
+      "sr_no": 57,
+      "question": "<p> <b>Which is the largest producer of copper in India?<br/> </b>भारत में तांबे का सबसे बड़ा उत्पादक राज्य कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> Madhya Pradesh / मध्य प्रदेश</p>",
+      "option2": "<p> Rajasthan / राजस्थान</p>",
+      "option3": "<p> Jharkhand / झारखंड</p>",
+      "option4": "<p> Chhattisgarh / छत्तीसगढ़</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Rajasthan is the leading copper producer, mainly from Khetri mines.<br/> राजस्थान तांबे का प्रमुख उत्पादक है, मुख्यतः खेतड़ी खदानों से।</p>"
+    },
+    {
+      "sr_no": 58,
+      "question": "<p> <b>Which of the following is a non-ferrous mineral?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा अधात्विक <b>(Non-ferrous) </b>खनिज है<b>?</b></p>",
+      "option1": "<p> Copper / तांबा</p>",
+      "option2": "<p> Iron / लोहा</p>",
+      "option3": "<p> Manganese / मैंगनीज़</p>",
+      "option4": "<p> Nickel / निकल</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Copper does not contain iron and hence is a non-ferrous metal.<br/> तांबे में लोहा नहीं होता, इसलिए यह अधात्विक खनिज है।</p>"
+    },
+    {
+      "sr_no": 59,
+      "question": "<p> <b>Which of the following crops is known as “poor man’s meat”?<br/> </b>कौन<b>-</b>सी फसल “गरीब का मांस” कहलाती है<b>?</b></p>",
+      "option1": "<p> Barley / जौ</p>",
+      "option2": "<p> Maize / मक्का</p>",
+      "option3": "<p> Pulses / दालें</p>",
+      "option4": "<p> Groundnut / मूंगफली</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Pulses are rich in protein and are often referred to as poor man’s meat.<br/> दालें प्रोटीन से भरपूर होती हैं, इसलिए इन्हें गरीब का मांस कहा जाता है।</p>"
+    },
+    {
+      "sr_no": 60,
+      "question": "<p> <b>Which of the following is the main source of India’s lignite coal?<br/> </b>भारत में लिग्नाइट कोयले का प्रमुख स्रोत कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> Neyveli / नेवेली</p>",
+      "option2": "<p> Raniganj / रानीगंज</p>",
+      "option3": "<p> Jharia / झरिया</p>",
+      "option4": "<p> Bokaro / बोकारो</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Neyveli in Tamil Nadu is India’s main lignite-producing area, while Jharia and Raniganj are rich in bituminous coal.<br/> तमिलनाडु का नेवेली क्षेत्र भारत में लिग्नाइट कोयले का प्रमुख स्रोत है, जबकि झरिया व रानीगंज में बिटुमिनस कोयला पाया जाता है।</p>"
+    },
+    {
+      "sr_no": 61,
+      "question": "<p> <b>Which of the following is a plantation crop?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी बागान फसल है<b>?</b></p>",
+      "option1": "<p> Rice / धान</p>",
+      "option2": "<p> Wheat / गेहूं</p>",
+      "option3": "<p> Maize / मक्का</p>",
+      "option4": "<p> Tea / चाय</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Tea is a plantation crop mainly grown in hilly regions.<br/> चाय एक बागान फसल है जो पहाड़ी क्षेत्रों में उगाई जाती है।</p>"
+    },
+    {
+      "sr_no": 62,
+      "question": "<p> <b>Which river valley hosts the Rourkela Steel Plant?<br/> </b>किस नदी घाटी में राउरकेला इस्पात संयंत्र स्थित है<b>?</b></p>",
+      "option1": "<p> Mahanadi / महानदी</p>",
+      "option2": "<p> Damodar / दामोदर</p>",
+      "option3": "<p> Godavari / गोदावरी</p>",
+      "option4": "<p> Brahmani / ब्राह्मणी</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Rourkela Steel Plant lies on the banks of Brahmani River in Odisha.<br/> राउरकेला इस्पात संयंत्र ओडिशा की ब्राह्मणी नदी के किनारे स्थित है।</p>"
+    },
+    {
+      "sr_no": 63,
+      "question": "<p> <b>Which of the following is the busiest airport in India by passenger traffic?<br/> </b>यात्री संख्या के आधार पर भारत का सबसे व्यस्त हवाई अड्डा कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> Indira Gandhi International, Delhi / इंदिरा गांधी अंतर्राष्ट्रीय, दिल्ली</p>",
+      "option2": "<p> Chhatrapati Shivaji, Mumbai / छत्रपति शिवाजी, मुंबई</p>",
+      "option3": "<p> Kempegowda, Bengaluru / केम्पेगौड़ा, बेंगलुरु</p>",
+      "option4": "<p> Chennai International / चेन्नई अंतर्राष्ट्रीय</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Delhi’s Indira Gandhi International Airport handles the highest passenger traffic in India.<br/> दिल्ली का इंदिरा गांधी अंतर्राष्ट्रीय हवाई अड्डा देश का सबसे व्यस्त हवाई अड्डा है।</p>"
+    },
+    {
+      "sr_no": 64,
+      "question": "<p> <b>Which type of vegetation grows in areas of less than 25 cm rainfall?<br/> 25 </b>सेमी से कम वर्षा वाले क्षेत्रों में किस प्रकार की वनस्पति पाई जाती है<b>?</b></p>",
+      "option1": "<p> Desert vegetation / मरुस्थलीय वनस्पति</p>",
+      "option2": "<p> Evergreen forest / सदाबहार वन</p>",
+      "option3": "<p> Montane forest / पर्वतीय वन</p>",
+      "option4": "<p> Deciduous forest / पर्णपाती वन</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Desert vegetation with thorny bushes grows where rainfall is below 25 cm.<br/> जहाँ वर्षा 25 सेमी से कम होती है वहाँ कांटेदार मरुस्थलीय वनस्पति पाई जाती है।</p>"
+    },
+    {
+      "sr_no": 65,
+      "question": "<p> <b>Which of the following ports handles the maximum cargo traffic in India?<br/> </b>भारत में कौन<b>-</b>सा बंदरगाह अधिकतम कार्गो यातायात संभालता है<b>?</b></p>",
+      "option1": "<p> Paradip / पारादीप</p>",
+      "option2": "<p> Mumbai / मुंबई</p>",
+      "option3": "<p> Kandla / कांडला</p>",
+      "option4": "<p> Chennai / चेन्नई</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Kandla (Deendayal Port) in Gujarat handles the largest cargo volume.<br/> गुजरात का कांडला (दीनदयाल) बंदरगाह भारत में सर्वाधिक माल यातायात संभालता है।</p>"
+    },
+    {
+      "sr_no": 66,
+      "question": "<p> <b>Which of the following crops improves soil fertility through nitrogen fixation?<br/> </b>कौन<b>-</b>सी फसल नाइट्रोजन स्थिरीकरण द्वारा मिट्टी की उर्वरता बढ़ाती है<b>?</b></p>",
+      "option1": "<p> Rice / धान</p>",
+      "option2": "<p> Pulses / दालें</p>",
+      "option3": "<p> Maize / मक्का</p>",
+      "option4": "<p> Wheat / गेहूं</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Pulses fix atmospheric nitrogen through Rhizobium bacteria in root nodules.<br/> दालें राइजोबियम जीवाणुओं की मदद से वायुमंडलीय नाइट्रोजन को स्थिर करती हैं।</p>"
+    },
+    {
+      "sr_no": 67,
+      "question": "<p> <b>Which of the following minerals is essential for cement production?<br/> </b>सीमेंट निर्माण के लिए कौन<b>-</b>सा खनिज आवश्यक है<b>?</b></p>",
+      "option1": "<p> Lead / सीसा</p>",
+      "option2": "<p> Mica / अभ्रक</p>",
+      "option3": "<p> Copper / तांबा</p>",
+      "option4": "<p> Gypsum / जिप्सम</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Gypsum is used to control the setting time of cement.<br/> सीमेंट के जमने के समय को नियंत्रित करने के लिए जिप्सम का उपयोग किया जाता है।</p>"
+    },
+    {
+      "sr_no": 68,
+      "question": "<p> <b>Which of the following mountain passes connects Leh to Manali?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा दर्रा लेह को मनाली से जोड़ता है<b>?</b></p>",
+      "option1": "<p> Rohtang Pass / रोहतांग दर्रा</p>",
+      "option2": "<p> Nathu La / नाथुला</p>",
+      "option3": "<p> Shipki La / शिपकी ला</p>",
+      "option4": "<p> Zoji La / ज़ोजिला</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Rohtang Pass connects Kullu Valley with Lahaul–Spiti and Leh.<br/> रोहतांग दर्रा कुल्लू घाटी को लाहौल-स्पीति और लेह से जोड़ता है।</p>"
+    },
+    {
+      "sr_no": 69,
+      "question": "<p> <b>Which of the following forests is commercially most exploited in India?<br/> </b>भारत में कौन<b>-</b>सा वन प्रकार व्यावसायिक रूप से सर्वाधिक उपयोग में लाया जाता है<b>?</b></p>",
+      "option1": "<p> Montane forest / पर्वतीय वन</p>",
+      "option2": "<p> Evergreen forest / सदाबहार वन</p>",
+      "option3": "<p> Mangrove forest / मैंग्रोव वन</p>",
+      "option4": "<p> Tropical deciduous forest / उष्णकटिबंधीय पर्णपाती वन</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Tropical deciduous forests provide valuable timber such as teak and sal.<br/> उष्णकटिबंधीय पर्णपाती वन सागौन और साल जैसे बहुमूल्य लकड़ी के लिए प्रसिद्ध हैं।</p>"
+    },
+    {
+      "sr_no": 70,
+      "question": "<p> <b>The largest producer of mica in India is—<br/> </b>भारत में अभ्रक का सबसे बड़ा उत्पादक राज्य कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> Rajasthan / राजस्थान</p>",
+      "option2": "<p> Jharkhand / झारखंड</p>",
+      "option3": "<p> Odisha / ओडिशा</p>",
+      "option4": "<p> Madhya Pradesh / मध्य प्रदेश</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Jharkhand, particularly Koderma and Giridih, is India’s top mica-producing region.<br/> झारखंड का कोडरमा और गिरिडीह क्षेत्र भारत का प्रमुख अभ्रक उत्पादक क्षेत्र है।</p>"
+    },
+    {
+      "sr_no": 71,
+      "question": "<p> <b>Which mode of transport is most suitable for heavy and bulky goods?<br/> </b>भारी और विशाल वस्तुओं के लिए कौन<b>-</b>सा परिवहन माध्यम सबसे उपयुक्त है<b>?</b></p>",
+      "option1": "<p> Waterways / जलमार्ग</p>",
+      "option2": "<p> Airways / वायु परिवहन</p>",
+      "option3": "<p> Roadways / सड़क परिवहन</p>",
+      "option4": "<p> Railways / रेल परिवहन</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Waterways are economical and ideal for transporting bulky goods.<br/> जलमार्ग भारी वस्तुओं के परिवहन के लिए सस्ता और उपयुक्त माध्यम है।</p>"
+    },
+    {
+      "sr_no": 72,
+      "question": "<p> <b>Which of the following soils is known for poor drainage and high clay content?<br/> </b>कौन<b>-</b>सी मिट्टी में जल निकासी कमजोर और चिकनी मिट्टी की मात्रा अधिक होती है<b>?</b></p>",
+      "option1": "<p> Alluvial soil / जलोढ़ मिट्टी</p>",
+      "option2": "<p> Red soil / लाल मिट्टी</p>",
+      "option3": "<p> Black soil / काली मिट्टी</p>",
+      "option4": "<p> Desert soil / मरु मिट्टी</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Black soil is clayey, retains moisture, and has poor drainage.<br/> काली मिट्टी चिकनी होती है, नमी रोकती है और जल निकासी कमजोर होती है।</p>"
+    },
+    {
+      "sr_no": 73,
+      "question": "<p> <b>Which transport corridor is being developed under Sagarmala Project?<br/> </b>सागरमाला परियोजना के तहत कौन<b>-</b>सा परिवहन गलियारा विकसित किया जा रहा है<b>?</b></p>",
+      "option1": "<p> Coastal shipping and port-led development / तटीय नौवहन व बंदरगाह आधारित विकास</p>",
+      "option2": "<p> Inland waterways / अंतर्देशीय जलमार्ग</p>",
+      "option3": "<p> Air freight / हवाई माल परिवहन</p>",
+      "option4": "<p> Border trade / सीमावर्ती व्यापार</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Sagarmala focuses on coastal shipping and port-led industrialization.<br/> सागरमाला योजना तटीय नौवहन और बंदरगाह आधारित औद्योगिकीकरण पर केंद्रित है।</p>"
+    },
+    {
+      "sr_no": 74,
+      "question": "<p> <b>Which type of vegetation is found in the Himalayan region?<br/> </b>हिमालयी क्षेत्र में किस प्रकार की वनस्पति पाई जाती है<b>?</b></p>",
+      "option1": "<p> Alpine forest / अल्पाइन वन</p>",
+      "option2": "<p> Tropical evergreen forest / उष्णकटिबंधीय सदाबहार वन</p>",
+      "option3": "<p> Thorn forest / कांटेदार वन</p>",
+      "option4": "<p> Mangrove forest / मैंग्रोव वन</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Alpine forests are found in the higher altitudes of the Himalayas.<br/> हिमालय के ऊँचे भागों में अल्पाइन वन पाए जाते हैं।</p>"
+    },
+    {
+      "sr_no": 75,
+      "question": "<p> <b>Which of the following minerals is extracted from monazite sand?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा खनिज मोनाजाइट बालू से निकाला जाता है<b>?</b></p>",
+      "option1": "<p> Iron / लोहा</p>",
+      "option2": "<p> Thorium / थोरियम</p>",
+      "option3": "<p> Manganese / मैंगनीज़</p>",
+      "option4": "<p> Copper / तांबा</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Monazite sand found on Kerala coasts is rich in thorium used for nuclear energy.<br/> केरल तट की मोनाजाइट बालू में थोरियम पाया जाता है जिसका उपयोग परमाणु ऊर्जा में होता है।</p>"
+    }
+  ]
+};
+
+// Extract questions and time from new structure
+const questions = quizData.questions;
+const totalTimeMinutes = quizData.time_minutes;
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = totalTimeMinutes * 60;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape') {
+      if (isPaletteOpen) {
+        closePalette();
+      }
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimer();
+    
+    // Auto-submit when time runs out
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      alert('Time is up! Submitting quiz automatically.');
+      submitQuiz();
+      return;
+    }
+    
+    if (timerSeconds <= 120) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    questionText.innerHTML = '';
+    const questionContent = createOptionContent(q.question);
+    questionText.appendChild(questionContent);
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message = `You have ${unattempted} unanswered questions. ${message}`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  const timeTaken = (totalTimeMinutes * 60) - timerSeconds;
+  const minutesTaken = Math.floor(timeTaken / 60);
+  const secondsTaken = timeTaken % 60;
+  const timeTakenText = `${minutesTaken}m ${secondsTaken}s`;
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeTakenText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    let questionDisplay = '';
+    if (isImageURL(q.question)) {
+      questionDisplay = `<img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`;
+    } else {
+      questionDisplay = q.question;
+    }
+    html += `<div class="question-review">
+      <h4>Q${q.sr_no}: ${questionDisplay}</h4>`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution && q.solution.trim() !== '') {
+      let solutionDisplay = '';
+      if (isImageURL(q.solution)) {
+        solutionDisplay = `<img src="${q.solution}" class="solution-image" alt="Solution" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">`;
+      } else {
+        solutionDisplay = q.solution;
+      }
+      
+      html += `<div class="solution-section" style="margin-top: 15px; padding: 15px; background: #f0f8ff; border-left: 4px solid #007bff; border-radius: 8px;">
+        <strong style="color: #007bff;">💡 Solution:</strong>
+        <div style="margin-top: 8px; color: #333;">${solutionDisplay}</div>
+      </div>`;
+    }
+    
+    html += `</div>`;
+  });
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https')) &&
+    (str.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i));
+}
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = totalTimeMinutes * 60;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    updateTimer();
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEOGRAPHY TEST -5</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">MOTION 3.0 - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem('quizState', JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem('quizState');
+    if (saved) {
+      const state = JSON.parse(saved);
+      if (Date.now() - state.timestamp < 24 * 60 * 60 * 1000) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || (totalTimeMinutes * 60); // MODIFIED
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem('quizState');
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,2555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>POLITY TEST - 2</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.question-image, .option-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: block;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎯 POLITY TEST - 2</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color)"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color)"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color)"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color)"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">Clear</button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">Submit Quiz</button>
+</div>
+
+<script>
+// MODIFIED: Quiz data structure with time_minutes
+const quizData = {
+  "time_minutes": 30,
+  "questions": [
+    {
+      "sr_no": 1,
+      "question": "<p> <b>Which Article of the Constitution prescribes the term of the President of India?<br/> </b>राष्ट्रपति के कार्यकाल का प्रावधान संविधान का कौन<b>-</b>सा अनुच्छेद करता है<b>?</b></p>",
+      "option1": "<p> Article 52 / अनुच्छेद 52</p>",
+      "option2": "<p> Article 54 / अनुच्छेद 54</p>",
+      "option3": "<p> Article 56 / अनुच्छेद 56</p>",
+      "option4": "<p> Article 61 / अनुच्छेद 61</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 56 specifies the term of the President as five years. The President holds office for five years unless removed earlier.<br/> अनुच्छेद 56 राष्ट्रपति के पांच वर्ष के कार्यकाल का प्रावधान करता है। राष्ट्रपति का कार्यकाल सामान्यत: पांच वर्ष का होता है।</p>"
+    },
+    {
+      "sr_no": 2,
+      "question": "<p> <b>Who presides over the Rajya Sabha?<br/> </b>राज्यसभा की अध्यक्षता कौन करता है<b>?</b></p>",
+      "option1": "<p> President / राष्ट्रपति</p>",
+      "option2": "<p> Prime Minister / प्रधानमंत्री</p>",
+      "option3": "<p> Vice-President / उपराष्ट्रपति</p>",
+      "option4": "<p> Deputy Chairman / उपाध्यक्ष</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Vice-President of India is the ex-officio Chairperson (Chairman) of the Rajya Sabha.<br/> भारत के उपराष्ट्रपति पदेन राज्यसभा के सभापति होते हैं।</p>"
+    },
+    {
+      "sr_no": 3,
+      "question": "<p> <b>Consider the following statements about the election of the President of India:<br/> </b>भारत के राष्ट्रपति के चुनाव के संबंध में निम्न कथनों पर विचार करें<b>:<br/> (a) Elected MPs and elected MLAs vote. / </b>केवल निर्वाचित सांसद और निर्वाचित विधायक मतदान करते हैं।<b><br/> (b) Value of MLA’s vote differs by state. / </b>विधायक के वोट का मूल्य राज्यों के अनुसार भिन्न होता है।<b><br/> (c) Value of MP’s vote equals total value of MLA votes divided by number of MPs. / </b>सांसद के वोट का मूल्य <b>MLA </b>वोट के कुल मूल्य को सांसदों की संख्या से विभाजित करके मिलता है।<b><br/> Which are correct?<br/> </b>कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> (a) and (b) / (a) एवं (b)</p>",
+      "option2": "<p> (b) and (c) / (b) एवं (c)</p>",
+      "option3": "<p> (a) and (c) / (a) एवं (c)</p>",
+      "option4": "<p> (a), (b) and (c) / (a), (b) एवं (c)</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All three statements are correct. Only elected MPs and elected MLAs vote. The value of an MLA’s vote differs by state (based on population and the prescribed formula). The value of an MP’s vote is uniform and is calculated as: (Total value of votes of all elected MLAs) ÷ (Total number of elected MPs)..<br/> तीनों कथन सही हैं। केवल निर्वाचित सांसद और निर्वाचित विधायक मतदान करते हैं। विधायक के वोट का मूल्य राज्यों के अनुसार जनसंख्या व निर्धारित सूत्र के आधार पर भिन्न होता है। सांसद के वोट का मूल्य समान होता है और उसे इस प्रकार निकाला जाता है: (सभी निर्वाचित विधायकों के कुल वोट-मूल्य) ÷ (निर्वाचित सांसदों की कुल संख्या)।</p>"
+    },
+    {
+      "sr_no": 4,
+      "question": "<p> <b>The Vice-President of India is elected by:<br/> </b>उपराष्ट्रपति का चुनाव किसके द्वारा होता है<b>?</b></p>",
+      "option1": "<p> Electoral College of both Houses of Parliament / दोनों सदनों के सांसदों का इलेक्टोरल कॉलेज</p>",
+      "option2": "<p> Lok Sabha members only / केवल लोकसभा सदस्य</p>",
+      "option3": "<p> Elected MPs and elected MLAs / निर्वाचित सांसद और निर्वाचित विधायक</p>",
+      "option4": "<p> Members of Legislative Assemblies only / केवल विधानसभाओं के सदस्य</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Under Article 66, the Vice-President is elected by an electoral college consisting of members of both Houses of Parliament. MLAs do not vote.<br/> अनुच्छेद 66 के अंतर्गत उपराष्ट्रपति का चुनाव दोनों सदनों के सांसदों के इलेक्टोरल कॉलेज द्वारा होता है; विधायकों का इसमें मतदान नहीं होता।</p>"
+    },
+    {
+      "sr_no": 5,
+      "question": "<p> <b>Which body is primarily responsible for advising the President in exercise of his functions?<br/> </b>राष्ट्रपति को अपने कृत्यों के निर्वहन में किस निकाय की सलाह लेना अनिवार्य है<b>?</b></p>",
+      "option1": "<p> Supreme Court / सर्वोच्च न्यायालय</p>",
+      "option2": "<p> Council of Ministers headed by the PM / प्रधानमंत्री की अध्यक्षता वाली मंत्री परिषद्</p>",
+      "option3": "<p> Cabinet Secretary / कैबिनेट सचिव</p>",
+      "option4": "<p> Attorney General / महा-न्यायवादी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> By constitutional convention and Article 74, the President acts on the aid and advice of the Council of Ministers headed by the Prime Minister.<br/> अनुच्छेद 74 एवं संवैधानिक परंपरा के अनुसार राष्ट्रपति को मंत्रिपरिषद् (PM के नेतृत्व में) की सलाह पर कार्य करना होता है।</p>"
+    },
+    {
+      "sr_no": 6,
+      "question": "<p> <b>A Minister who is not a Member of Parliament must get elected to either House within how many months from appointment?<br/> </b>जो मंत्री संसद का सदस्य न हो<b>, </b>उसे नियुक्ति के कितने महीनों के भीतर संसद सदस्य बनना आवश्यक है<b>?</b></p>",
+      "option1": "<p> 1 month / 1 माह</p>",
+      "option2": "<p> 3 months / 3 माह</p>",
+      "option3": "<p> 6 months / 6 माह</p>",
+      "option4": "<p> 12 months / 12 माह</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Constitution provides that a non-MP minister must become a member of either House within six months of appointment.<br/> संविधान के अनुसार सांसद न होने पर मंत्री को नियुक्ति के छह महीनों के भीतर संसद के किसी भी सदन का सदस्य बनना आवश्यक है।</p>"
+    },
+    {
+      "sr_no": 7,
+      "question": "<p> <b>Which Article provides for the office of the President of India?<br/> </b>भारत में राष्ट्रपति के पद का प्रावधान किस अनुच्छेद में है<b>?</b></p>",
+      "option1": "<p> Article 52 / अनुच्छेद 52</p>",
+      "option2": "<p> Article 53 / अनुच्छेद 53</p>",
+      "option3": "<p> Article 54 / अनुच्छेद 54</p>",
+      "option4": "<p> Article 55 / अनुच्छेद 55</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 52 specifically provides for the office of the President. Other articles (53–61) deal with powers, election, term, etc.<br/> अनुच्छेद 52 में राष्ट्रपति के पद का प्रावधान है; अनुच्छेद 53–61 में उनके अधिकार और चुनाव के नियम हैं।</p>"
+    },
+    {
+      "sr_no": 8,
+      "question": "<p> <b>How long may the Rajya Sabha be prorogued by the President without meeting?<br/> </b>राष्ट्रपति द्वारा राज्यसभा को बिना बुलाए अधिकतम कितने समय तक रोका <b>(</b>प्रोरोग<b>) </b>जा सकता है<b>?</b></p>",
+      "option1": "<p> No fixed maximum; but Parliament must meet within 6 months / कोई निश्चित अधिकतम नहीं; पर संसद 6 महीने के भीतर मिलनी चाहिए</p>",
+      "option2": "<p> 3 months / 3 माह</p>",
+      "option3": "<p> 5 months / 5 माह</p>",
+      "option4": "<p> 1 year / 1 वर्ष</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> There is no specific constitutional maximum for prorogation of a House, but Article 85 requires Parliament to meet at least once every six months.<br/> अनुच्छेद 85 के अनुसार संसद छह माह से अधिक न रुके; प्रोरोगेशन का कोई स्वतंत्र अधिकतम समय नहीं दिया गया है।</p>"
+    },
+    {
+      "sr_no": 9,
+      "question": "<p> <b>Which of the following is TRUE about Money Bills?<br/> </b>मनी बिल के संबंध में निम्न में से कौन<b>-</b>सा कथन सत्य है<b>?</b></p>",
+      "option1": "<p> They can be introduced only in Lok Sabha. / इन्हें केवल लोकसभा में पेश किया जा सकता है।</p>",
+      "option2": "<p> Rajya Sabha can amend Money Bills without restriction. / राज्यसभा मनी बिल में बिना सीमा संशोधन कर सकती है।</p>",
+      "option3": "<p> Speaker’s certificate is not required to classify a Bill as Money Bill. / मनी बिल प्रमाणित करने के लिए स्पीकर का प्रमाण पत्र आवश्यक नहीं।</p>",
+      "option4": "<p> Money Bills do not need President’s prior approval before introduction. / मनी बिल पेश करने से पहले राष्ट्रपति की अनुमति आवश्यक नहीं है।</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Money Bills must be introduced only in Lok Sabha; Rajya Sabha can only recommend changes within 14 days; Speaker certifies Money Bill.<br/> मनी बिल केवल लोकसभा में ही पेश होते हैं; राज्यसभा केवल 14 दिनों में सुझाव दे सकती है; स्पीकर मनी बिल का प्रमाणपत्र देते हैं।</p>"
+    },
+    {
+      "sr_no": 10,
+      "question": "<p> <b>Who has the power to dissolve the Lok Sabha?<br/> </b>लोकसभा को भंग करने का अधिकार किसके पास है<b>?</b></p>",
+      "option1": "<p> President acting on aid &amp; advice of Council of Ministers / मंत्रिपरिषद की सलाह पर राष्ट्रपति</p>",
+      "option2": "<p> Prime Minister alone / केवल प्रधानमंत्री</p>",
+      "option3": "<p> Speaker of Lok Sabha / लोकसभा का स्पीकर</p>",
+      "option4": "<p> Supreme Court / सर्वोच्च न्यायालय</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The President dissolves the Lok Sabha, but in practice does so on the aid and advice of the Council of Ministers led by the PM.<br/> लोकसभा का भंग राष्ट्रपति द्वारा किया जाता है, परन्तु यह आम तौर पर मंत्रिमंडल की सलाह पर होता है।</p>"
+    },
+    {
+      "sr_no": 11,
+      "question": "<p> <b>Which Article states that the Council of Ministers shall be collectively responsible to the Lok Sabha?<br/> </b>किस अनुच्छेद में उल्लेख है कि मंत्रिपरिषद संयुक्त रूप से लोकसभा के प्रति उत्तरदायी होगी<b>?</b></p>",
+      "option1": "<p> Article 74 / अनुच्छेद 74</p>",
+      "option2": "<p> Article 75(3) / अनुच्छेद 75(3)</p>",
+      "option3": "<p> Article 77 / अनुच्छेद 77</p>",
+      "option4": "<p> Article 78 / अनुच्छेद 78</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 75(3) provides that the Council of Ministers shall be collectively responsible to the House of the People (Lok Sabha).<br/> अनुच्छेद 75(3) के अनुसार मंत्रिपरिषद लोकसभा के प्रति सामूहिक रूप से उत्तरदायी है।</p>"
+    },
+    {
+      "sr_no": 12,
+      "question": "<p> <b>A Joint Sitting of Parliament can be called to resolve a deadlock on:<br/> </b>संसद के संयुक्त सत्र को किस प्रकार के विधेयक पर मृतबिन्दु समाधान हेतु बुलाया जा सकता है<b>?</b></p>",
+      "option1": "<p> Money Bill / मनी बिल</p>",
+      "option2": "<p> Financial Bill (I) / वित्तीय बिल (I)</p>",
+      "option3": "<p> Ordinary Bill that is passed by one House and rejected by other / साधारण विधेयक (दोनों सदन भिन्न)</p>",
+      "option4": "<p> Constitutional Amendment Bill / संविधान संशोधन विधेयक</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Joint sittings are for ordinary bills where the two Houses disagree; Money Bills and Constitution Amendment Bills are excluded.<br/> संयुक्त सत्र साधारण विधेयकों के लिए बुलाया जाता है यदि दोनों सदनों के बीच मतभेद हों; मनी बिल व संविधान संशोधन इसके बाहर हैं।</p>"
+    },
+    {
+      "sr_no": 13,
+      "question": "<p> <b>Who certifies whether a bill is a Money Bill?<br/> </b>किसे यह प्रमाणित करने का अधिकार है कि कोई विधेयक मनी बिल है या नहीं<b>?</b></p>",
+      "option1": "<p> President / राष्ट्रपति</p>",
+      "option2": "<p> Speaker of Lok Sabha / लोकसभा के स्पीकर</p>",
+      "option3": "<p> Finance Minister / वित्त मंत्री</p>",
+      "option4": "<p> Election Commission / चुनाव आयोग</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Speaker of Lok Sabha has the exclusive authority to certify a bill as a Money Bill. This certification is final.<br/> मनी बिल होने की प्रमाण-पत्र स्पीकर देते हैं और उनका निर्णय अंतिम रहता है।</p>"
+    },
+    {
+      "sr_no": 14,
+      "question": "<p> <b>Consider the following about the President’s ordinance-making power:<br/> </b>राष्ट्रपति के अध्यादेश जारी करने के अधिकार के बारे में विचार करें<b>:<br/> (a) Ordinances can be promulgated only when Parliament is not in session. / </b>अध्यादेश केवल संसद न होने पर ही जारी किया जा सकता है।<b><br/> (b) Ordinance has same force as an Act of Parliament. / </b>अध्यादेश का बल संसद के अधिनियम के समान होता है।<b><br/> (c) Ordinance can amend the Constitution. / </b>अध्यादेश संविधान में संशोधन कर सकता है।<b><br/> Which are correct?<br/> </b>कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> (a) and (b) / (a) एवं (b)</p>",
+      "option2": "<p> (b) and (c) / (b) एवं (c)</p>",
+      "option3": "<p> (a) and (c) / (a) एवं (c)</p>",
+      "option4": "<p> (a), (b), and (c) / (a), (b) एवं (c)</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Ordinances are issued only when Parliament is not in session and have the force of law, but cannot be used to amend the Constitution.<br/> अध्यादेश संसद सत्र ना होने पर ही जारी होता है और वह कानून का समान प्रभाव रखता है; लेकिन संविधान संशोधन की शक्ति इसमें नहीं है।</p>"
+    },
+    {
+      "sr_no": 15,
+      "question": "<p> <b>Who appoints the Attorney General of India?<br/> </b>भारत के अटॉर्नी<b>-</b>जनरल की नियुक्ति कौन करता है<b>?</b></p>",
+      "option1": "<p> President on advice of the cabinet / कैबिनेट की सलाह पर राष्ट्रपति</p>",
+      "option2": "<p> Chief Justice of India / मुख्य न्यायाधीश</p>",
+      "option3": "<p> Law Minister / कानून मंत्री</p>",
+      "option4": "<p> Parliament / संसद</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Attorney General is appointed by the President and is the central government's chief legal advisor; appointment follows PM/Cabinet advice.<br/> अटॉर्नी-जनरल की नियुक्ति राष्ट्रपति द्वारा की जाती है, पर यह प्रधानमंत्री/कबिनेट की सलाह पर होती है।</p>"
+    },
+    {
+      "sr_no": 16,
+      "question": "<p> <b>Which House of Parliament is permanent and cannot be dissolved?<br/> </b>संसद का कौन<b>-</b>सा सदन स्थायी है और जिसे भंग नहीं किया जा सकता<b>?</b></p>",
+      "option1": "<p> Lok Sabha / लोकसभा</p>",
+      "option2": "<p> Rajya Sabha / राज्यसभा</p>",
+      "option3": "<p> Both / दोनों</p>",
+      "option4": "<p> Neither / कोई नहीं</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Rajya Sabha is a permanent body; it is a continuing chamber with one-third members retiring every two years. Lok Sabha can be dissolved.<br/> राज्यसभा एक स्थायी सदन है जिसमें हर दो वर्षों में एक-तिहाई सदस्य सेवानिवृत्त होते हैं; लोकसभा को भंग किया जा सकता है।</p>"
+    },
+    {
+      "sr_no": 17,
+      "question": "<p> <b>Consider the following statements about removal of the President:<br/> </b>राष्ट्रपति की हत्या<b>/</b>अपराध के लिये हटाने <b>(</b>इम्पीचमेंट<b>) </b>से संबंधित कथनों पर विचार करें<b>:<br/> (a) Only a resolution is needed in one House. / </b>केवल एक सदन में प्रस्ताव पर्याप्त है।<b><br/> (b) Grounds are violation of Constitution. / </b>आधार संविधान के उल्लंघन हैं।<b><br/> (c) A special majority of both Houses is required. / </b>दोनों सदनों में विशेष बहुमत आवश्यक है।<b><br/> Which are correct?<br/> </b>कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> (b) and (c) / (b) और (c)</p>",
+      "option2": "<p> (a) and (b) / (a) और (b)</p>",
+      "option3": "<p> (a) and (c) / (a) और (c)</p>",
+      "option4": "<p> (a), (b) and (c) / (a), (b) और (c)</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Impeachment is for violation of Constitution; it requires initiation and passage by both Houses with special majority; statement (a) is wrong because both Houses must act.<br/> महाभियोग केवल संविधान उल्लंघन के लिए है; दोनों सदनों में विशेष बहुमत से पारित होना चाहिए; (a) गलत है।</p>"
+    },
+    {
+      "sr_no": 18,
+      "question": "<p> <b>Who is the real head of the executive in practice in India?<br/> </b>व्यवहार में भारत की कार्यपालिका का वास्तविक प्रमुख कौन है<b>?</b></p>",
+      "option1": "<p> President (Nominal Head) / राष्ट्रपति (नाममात्र)</p>",
+      "option2": "<p> Prime Minister / प्रधानमंत्री</p>",
+      "option3": "<p> Chief Justice / मुख्य न्यायाधीश</p>",
+      "option4": "<p> Vice-President / उपराष्ट्रपति</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Though President is the nominal head, real executive authority in practice lies with the Prime Minister and the Council of Ministers.<br/> राष्ट्रपति नाममात्र प्रमुख हैं; वास्तविक कार्यकारी शक्ति प्रधानमंत्री व मंत्रिपरिषद के पास होती है।</p>"
+    },
+    {
+      "sr_no": 19,
+      "question": "<p> <b>Which article deals with the election of the Vice-President?<br/> </b>उपराष्ट्रपति के चुनाव का प्रावधान किस अनुच्छेद में है<b>?</b></p>",
+      "option1": "<p> Article 63 / अनुच्छेद 63</p>",
+      "option2": "<p> Article 64 / अनुच्छेद 64</p>",
+      "option3": "<p> Article 65 / अनुच्छेद 65</p>",
+      "option4": "<p> Article 66 / अनुच्छेद 66</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 66 provides for the election of the Vice-President by members of both Houses of Parliament.<br/> अनुच्छेद 66 में उपराष्ट्रपति के चुनाव का प्रावधान है; चुनाव दोनों सदनों के सांसद करते हैं।</p>"
+    },
+    {
+      "sr_no": 20,
+      "question": "<p> <b>Which of the following is NOT a function of the Speaker of the Lok Sabha?<br/> </b>निम्न में से कौन<b>-</b>सा लोकसभा के स्पीकर का कार्य नहीं है<b>?</b></p>",
+      "option1": "<p> Presiding over joint sittings of Parliament / संसद के संयुक्त सत्र की अध्यक्षता</p>",
+      "option2": "<p> Certifying a Money Bill / मनी बिल का प्रमाणन</p>",
+      "option3": "<p> Deciding disqualification under Tenth Schedule / दसवीं अनुसूची के तहत अयोग्यता का निर्णय</p>",
+      "option4": "<p> Appointing the Prime Minister / प्रधानमंत्री की नियुक्ति</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The President appoints the Prime Minister; Speaker does preside over joint sittings, certifies Money Bills, and decides disqualification matters.<br/> प्रधानमंत्री की नियुक्ति राष्ट्रपति करते हैं; स्पीकर संयुक्त सत्र की अध्यक्षता करते हैं व मनी बिल प्रमाणित करते हैं और दसवीं अनुसूची के तहत निर्णय लेते हैं।</p>"
+    },
+    {
+      "sr_no": 21,
+      "question": "<p> <b>What is the minimum quorum for a sitting of the Lok Sabha?<br/> </b>लोकसभा की बैठक के लिए न्यूनतम कोरम क्या है<b>?</b></p>",
+      "option1": "<p> One-third of total members / कुल सदस्यों का एक-तिहाई</p>",
+      "option2": "<p> One-tenth of total members / कुल सदस्यों का एक-दशमांश</p>",
+      "option3": "<p> One-fifth of total members / कुल सदस्यों का एक-पाँचवाँ</p>",
+      "option4": "<p> Half of total members / कुल सदस्यों का आधा</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 100 states that the quorum of either House is one-tenth of the total number of members of that House.<br/> अनुच्छेद 100 के अनुसार किसी भी सदन के लिए कोरम कुल सदस्यों का एक-दशमांश होता है।</p>"
+    },
+    {
+      "sr_no": 22,
+      "question": "<p> <b>Which Schedule of the Constitution allocates seats to states in the Rajya Sabha?<br/> </b>संविधान की कौन<b>-</b>सी अनुसूची राज्यसभा में राज्यों को सीटें आवंटित करती है<b>?</b></p>",
+      "option1": "<p> First Schedule / प्रथम अनुसूची</p>",
+      "option2": "<p> Fourth Schedule / चतुर्थ अनुसूची</p>",
+      "option3": "<p> Sixth Schedule / Sixth अनुसूची</p>",
+      "option4": "<p> Seventh Schedule / सप्तम अनुसूची</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Fourth Schedule provides allocation of seats in Rajya Sabha to the States and Union Territories.<br/> चतुर्थ अनुसूची में राज्यसभा में राज्यों तथा केन्द्र शासित प्रदेशों की सीटों का आवंटन दिया गया है।</p>"
+    },
+    {
+      "sr_no": 23,
+      "question": "<p> <b>A Financial Bill (I) requires which precondition before introduction in Parliament?<br/> </b>वित्तीय बिल <b>(I) </b>संसद में पेश करने से पहले किस पूर्व<b>-</b>शर्त की आवश्यकता होती है<b>?</b></p>",
+      "option1": "<p> Speaker’s certification / स्पीकर का प्रमाणन</p>",
+      "option2": "<p> President’s recommendation / राष्ट्रपति की अनुशंसा</p>",
+      "option3": "<p> Rajya Sabha approval / राज्यसभा की स्वीकृति</p>",
+      "option4": "<p> PM’s written consent / प्रधानमंत्री की लिखित सहमति</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Financial Bills (Part I) affecting taxation and government receipts require prior recommendation of the President before introduction.<br/> कर संबंधी वित्तीय बिल (I) संसद में पेश होने से पहले राष्ट्रपति की अनुशंसा आवश्यक होती है।</p>"
+    },
+    {
+      "sr_no": 24,
+      "question": "<p> <b>Which of the following may the President do in the case of a Bill passed by Parliament?<br/> </b>संसद द्वारा पारित विधेयक के संबंध में राष्ट्रपति कौन<b>-</b>सा कार्य कर सकते हैं<b>?</b></p>",
+      "option1": "<p> Return the Bill for reconsideration (except Money Bills) / पुनर्विचार हेतु विधेयक लौटा दें (मनी बिल के तब्त पर नहीं)</p>",
+      "option2": "<p> Give assent / सहमति दें</p>",
+      "option3": "<p> Withhold assent / सहमति न दें</p>",
+      "option4": "<p> All of the above / उपर्युक्त सभी</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> President can assent, withhold assent, or (except for Money Bills) return a bill to Parliament for reconsideration.<br/> राष्ट्रपति सहमति दे सकते हैं, अस्वीकार कर सकते हैं, या (मनी बिल को छोड़कर) पुनर्विचार के लिए विधेयक लौटा सकते हैं।</p>"
+    },
+    {
+      "sr_no": 25,
+      "question": "<p> <b>Which Article establishes the office of the Council of Ministers with the Prime Minister at the head?<br/> </b>किस अनुच्छेद के अंतर्गत प्रधानमंत्री के नेतृत्व में मंत्रिपरिषद का प्रावधान है<b>?</b></p>",
+      "option1": "<p> Article 73 / अनुच्छेद 73</p>",
+      "option2": "<p> Article 74 / अनुच्छेद 74</p>",
+      "option3": "<p> Article 75 / अनुच्छेद 75</p>",
+      "option4": "<p> Article 76 / अनुच्छेद 76</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 74 provides for Council of Ministers with the Prime Minister as its head to aid and advise the President.<br/> अनुच्छेद 74 में मंत्रीपरिषद का प्रावधान है, जिसका नेतृत्व प्रधानमंत्री करते हैं और जो राष्ट्रपति की सहायता व सलाह देती है।</p>"
+    },
+    {
+      "sr_no": 26,
+      "question": "<p> <b>Which House is competent to initiate a Money Bill?<br/> </b>किस सदन को मनी बिल शुरू करने का अधिकार है<b>?</b></p>",
+      "option1": "<p> Rajya Sabha / राज्यसभा</p>",
+      "option2": "<p> Lok Sabha / लोकसभा</p>",
+      "option3": "<p> Either House / कोई भी सदन</p>",
+      "option4": "<p> President / राष्ट्रपति</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Only the Lok Sabha can initiate a Money Bill; Rajya Sabha may only recommend amendments which Lok Sabha may accept or reject.<br/> केवल लोकसभा ही मनी बिल शुरू कर सकती है; राज्यसभा को केवल संशोधन सुझाने का अधिकार है।</p>"
+    },
+    {
+      "sr_no": 27,
+      "question": "<p> <b>Who has the authority to decide questions of disqualification of members under the Tenth Schedule?<br/> </b>दसवीं अनुसूची के अन्तर्गत सदस्य की अयोग्यता के प्रश्न का निर्णय करने का अधिकारी कौन है<b>?</b></p>",
+      "option1": "<p> President / राष्ट्रपति</p>",
+      "option2": "<p> Speaker / स्पीकर (or Chairman for Rajya Sabha)</p>",
+      "option3": "<p> Supreme Court / सर्वोच्च न्यायालय</p>",
+      "option4": "<p> Election Commission / चुनाव आयोग</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Speaker of Lok Sabha decides disqualification questions for Lok Sabha members; for Rajya Sabha, the Chairman (Vice-President) decides.<br/> लोकसभा के लिए स्पीकर और राज्यसभा के लिए अध्यक्ष (उपराष्ट्रपति) दसवीं अनुसूची के तहत अयोग्यता के प्रश्नों का निर्णय करते हैं।</p>"
+    },
+    {
+      "sr_no": 28,
+      "question": "<p> <b>The President may declare National Emergency under which Article?<br/> </b>राष्ट्रपति किस अनुच्छेद के अंतर्गत राष्ट्रीय आपातकाल घोषित कर सकते हैं<b>?</b></p>",
+      "option1": "<p> Article 352 / अनुच्छेद 352</p>",
+      "option2": "<p> Article 356 / अनुच्छेद 356</p>",
+      "option3": "<p> Article 360 / अनुच्छेद 360</p>",
+      "option4": "<p> Article 370 / अनुच्छेद 370</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 352 empowers the President to proclaim National Emergency on grounds of war, external aggression or armed rebellion.<br/> अनुच्छेद 352 के अंतर्गत युद्ध, विदेशी आक्रमण या सशस्त्र विद्रोह के आधार पर राष्ट्रपति राष्ट्रीय आपातकाल घोषित कर सकते हैं।</p>"
+    },
+    {
+      "sr_no": 29,
+      "question": "<p> <b>Which of the following statements about Rajya Sabha is/are correct?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा<b>/</b>कौन<b>-</b>से कथन राज्यसभा के बारे में सही हैं<b>?<br/> (a) It represents the States and UTs. / </b>यह राज्यों व केन्द्रशासित प्रदेशों का प्रतिनिधित्व करती है।<b><br/> (b) Its members are elected by MLAs and nominated by the President. / </b>इसके सदस्य विधायकों द्वारा निर्वाचित व राष्ट्रपति द्वारा नामित होते हैं।<b><br/> (c) It can initiate Money Bill. / </b>यह मनी बिल शुरू कर सकती है।<b><br/> Choose:</b></p>",
+      "option1": "<p> (a) and (b) / (a) एवं (b)</p>",
+      "option2": "<p> (b) and (c) / (b) एवं (c)</p>",
+      "option3": "<p> (a) and (c) / (a) एवं (c)</p>",
+      "option4": "<p> All of the above / उपर्युक्त सभी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Rajya Sabha represents states; members elected by MLAs and 12 nominated by President; it cannot initiate Money Bills.<br/> राज्यसभा का प्रतिनिधित्व राज्यों का है; उसके सदस्य विधायकों द्वारा चुने जाते हैं व राष्ट्रपति द्वारा 12 नामित किए जाते हैं; मनी बिल वह शुरू नहीं कर सकती।</p>"
+    },
+    {
+      "sr_no": 30,
+      "question": "<p> <b>What majority is required to pass a Constitutional Amendment Bill in Parliament (unless specified otherwise)?<br/> </b>संसद में सामान्यतः संविधान संशोधन विधेयक पारित करने हेतु किस प्रकार का बहुमत आवश्यक होता है<b>?</b></p>",
+      "option1": "<p> Simple majority / साधारण बहुमत</p>",
+      "option2": "<p> Absolute majority / पूर्ण बहुमत</p>",
+      "option3": "<p> Special majority of two-thirds of members present and voting &amp; majority of total membership / उपस्थित और मतदान कराने वालों का 2/3 विशेष बहुमत तथा कुल सदस्य संख्या का बहुमत</p>",
+      "option4": "<p> Unanimous consent / सर्वसम्मति</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Constitutional amendments generally require special majority: two-thirds of members present and voting and a majority of total membership; some amendments also need ratification by states.<br/> सामान्यतः संविधान संशोधन के लिए उपस्थित और मतदान करने वालों के 2/3 का विशेष बहुमत व कुल सदस्य संख्या का बहुमत आवश्यक होता है; कुछ मामलों में राज्यों की स्वीकृति भी चाहिए।</p>"
+    },
+    {
+      "sr_no": 31,
+      "question": "<p> <b>Which of the following is true about the Prime Minister’s appointment?<br/> </b>प्रधानमंत्री की नियुक्ति के संबंध में कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> Prime Minister is directly elected by people. / प्रधानमंत्री सीधे जनता द्वारा चुने जाते हैं।</p>",
+      "option2": "<p> President appoints the leader of the majority party or coalition in Lok Sabha as PM. / राष्ट्रपति लोकसभा में बहुमत पार्टी/गठबंधन के नेता को PM नियुक्त करते हैं।</p>",
+      "option3": "<p> PM must be a member of Rajya Sabha. / PM को राज्यसभा का सदस्य होना अनिवार्य है।</p>",
+      "option4": "<p> PM is appointed by the Speaker. / PM की नियुक्ति स्पीकर करते हैं।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> President appoints as PM the leader who has majority support in Lok Sabha; if no majority, President chooses someone who is most likely to command a majority.<br/> राष्ट्रपति प्रधानमंत्री के रूप में उस नेता को नियुक्त करते हैं जिसके पास लोकसभा में बहुमत समर्थन हो; हंग पारा में वे ऐसे व्यक्ति का चयन करते हैं जो बहुमत जुटा सके।</p>"
+    },
+    {
+      "sr_no": 32,
+      "question": "<p> <b>Who can remove the Vice-President from office?<br/> </b>उपराष्ट्रपति को कार्यालय से कौन हटा सकता है<b>?</b></p>",
+      "option1": "<p> Impeachment by Lok Sabha / लोकसभा द्वारा महाभियोग</p>",
+      "option2": "<p> A resolution of Rajya Sabha agreed by Lok Sabha / राज्यसभा के प्रस्ताव जिसे लोकसभा द्वारा अनुमोदित किया जाए</p>",
+      "option3": "<p> A Supreme Court order / सर्वोच्च न्यायालय का आदेश</p>",
+      "option4": "<p> President’s fiat / राष्ट्रपति का आदेश</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Vice-President may be removed by a resolution of the Rajya Sabha which is agreed to by the Lok Sabha — a specified process under the Constitution.<br/> उपराष्ट्रपति को राज्यसभा के उस प्रस्ताव द्वारा हटाया जा सकता है जिसे लोकसभा द्वारा भी अनुमोदित किया गया हो।</p>"
+    },
+    {
+      "sr_no": 33,
+      "question": "<p> <b>Consider the following about the President’s role in law-making:<br/> </b>कानून बनाना में राष्ट्रपति की भूमिका के संबंध में विचार करें<b>:<br/> (a) Every bill passed by Parliament becomes law only after President’s assent. / </b>संसद द्वारा पारित सभी बिल राष्ट्रपति की सहमति से ही कानून बनते हैं।<b><br/> (b) President can return a bill (other than Money Bill) for reconsideration. / </b>राष्ट्रपति किसी भी बिल को <b>(</b>मनी बिल के अलावा<b>) </b>पुनर्विचार के लिए लौटा सकता है।<b><br/> (c) President can refuse assent forever and the bill will never become law. / </b>राष्ट्रपति स्थायी रूप से सहमति अस्वीकार कर सकते हैं और विधेयक कभी कानून नहीं बनेगा।<b><br/> Which are correct?<br/> </b>कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> (a) and (b) / (a) एवं (b)</p>",
+      "option2": "<p> (b) and (c) / (b) एवं (c)</p>",
+      "option3": "<p> (a) and (c) / (a) एवं (c)</p>",
+      "option4": "<p> All of the above / उपर्युक्त सभी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> President’s assent is necessary; he may return a non-Money Bill once. However, if Parliament passes again, President must assent — so refusal forever is not absolute.<br/> राष्ट्रपति की सहमति आवश्यक होती है; वे मनी बिल को छोड़कर किसी बिल को एक बार लौटा सकते हैं; यदि संसद पुनः पास कर दे तो राष्ट्रपति को सहमति देनी होगी।</p>"
+    },
+    {
+      "sr_no": 34,
+      "question": "<p> <b>The Comptroller and Auditor General (CAG) of India is appointed by the President under which Article?<br/> </b>भारत के <b>CAG </b>की नियुक्ति राष्ट्रपति द्वारा किस अनुच्छेद के तहत होती है<b>?</b></p>",
+      "option1": "<p> Article 148 / अनुच्छेद 148</p>",
+      "option2": "<p> Article 150 / अनुच्छेद 150</p>",
+      "option3": "<p> Article 151 / अनुच्छेद 151</p>",
+      "option4": "<p> Article 152 / अनुच्छेद 152</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 148 establishes the office of CAG and provides for appointment by the President. CAG audits government accounts.<br/> अनुच्छेद 148 के अंतर्गत CAG के पद का प्रावधान है और उनकी नियुक्ति राष्ट्रपति द्वारा होती है; CAG सरकारी खातों का लेखा परीक्षण करते हैं।</p>"
+    },
+    {
+      "sr_no": 35,
+      "question": "<p> <b>Which of the following statements about a no-confidence motion is correct?<br/> </b>नो<b>-</b>कन्फिडेंस प्रस्ताव के बारे में कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> It is moved in Rajya Sabha. / इसे राज्यसभा में पेश किया जाता है।</p>",
+      "option2": "<p> If passed, the Council of Ministers must resign. / पारित होने पर मंत्रिपरिषद को इस्तीफा देना होगा।</p>",
+      "option3": "<p> It can be moved against an individual Minister only. / यह केवल किसी एक मंत्री के विरुद्ध पेश किया जा सकता है।</p>",
+      "option4": "<p> President decides the result of the motion. / प्रस्ताव का परिणाम राष्ट्रपति तय करते हैं।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> No-confidence motion is moved in Lok Sabha; if passed, the Council of Ministers including PM must resign.<br/> नॅो-कन्फिडेंस प्रस्ताव लोकसभा में रखा जाता है; यदि पारित हो जाता है तो मंत्रिपरिषद को इस्तीफा देना होगा।</p>"
+    },
+    {
+      "sr_no": 36,
+      "question": "<p> <b>Which body recommends President’s impeachment procedure and time limits in the Constitution?<br/> </b>संविधान में राष्ट्रपति के महाभियोग की प्रक्रिया और समय<b>-</b>सीमाओं की सिफारिश किसने की थी<b>?</b></p>",
+      "option1": "<p> Constituent Assembly / संविधान सभा</p>",
+      "option2": "<p> Drafting Committee / मसौदा समिति</p>",
+      "option3": "<p> Law Commission / विधि आयोग</p>",
+      "option4": "<p> Supreme Court / सर्वोच्च न्यायालय</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Constituent Assembly framed the provisions regarding impeachment (Articles 61 etc.) as part of the Constitution.<br/> संविधान सभा ने राष्ट्रपति के महाभियोग से सम्बन्धित प्रावधान (जैसे अनुच्छेद 61) संविधान में शामिल किये।</p>"
+    },
+    {
+      "sr_no": 37,
+      "question": "<p> <b>The Prime Minister’s responsibility to the Parliament is mainly based on which principle?<br/> </b>प्रधानमंत्री की संसद के प्रति जिम्मेदारी मुख्य रूप से किस सिद्धांत पर आधारित है<b>?</b></p>",
+      "option1": "<p> Federalism / संघवाद</p>",
+      "option2": "<p> Collective responsibility / सामूहिक उत्तरदायित्व</p>",
+      "option3": "<p> Judicial review / न्यायिक समीक्षा</p>",
+      "option4": "<p> Separation of powers / शक्तियों का पृथक्करण</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The PM leads the Council of Ministers which is collectively responsible to Lok Sabha — the core of parliamentary government.<br/> प्रधानमंत्री मंत्रिपरिषद के नेतृत्वकर्ता हैं और मंत्रिपरिषद लोकसभा के प्रति सामूहिक रूप से उत्तरदायी होती है।</p>"
+    },
+    {
+      "sr_no": 38,
+      "question": "<p> <b>How many members can the President nominate to the Rajya Sabha?<br/> </b>राष्ट्रपति कितने सदस्यों को राज्यसभा में नामित कर सकते हैं<b>?</b></p>",
+      "option1": "<p> 10 / 10</p>",
+      "option2": "<p> 12 / 12</p>",
+      "option3": "<p> 2 / 2</p>",
+      "option4": "<p> 15 / 15</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The President can nominate 12 members to the Rajya Sabha who have special knowledge or practical experience in literature, science, art or social service.<br/> राष्ट्रपति 12 सदस्यों को नामित कर सकते हैं जो साहित्य, विज्ञान, कला या सामाजिक सेवा में विशेषज्ञ हों।</p>"
+    },
+    {
+      "sr_no": 39,
+      "question": "<p> <b>Which of the following is a discretionary power of the President?<br/> </b>निम्न में से कौन<b>-</b>सा राष्ट्रपति का विवेकाधिकार है<b>?</b></p>",
+      "option1": "<p> Giving assent to every bill passed by Parliament / संसद द्वारा पारित हर विधेयक पर स्वीकृति देना</p>",
+      "option2": "<p> Appointing the Prime Minister in a hung Parliament / हंग संसद में प्रधानमंत्री नियुक्त करना</p>",
+      "option3": "<p> Appointing Governor of a State on PM advice / PM की सलाह पर राज्यपाल की नियुक्ति</p>",
+      "option4": "<p> Acting on aid and advice of the Council of Ministers / मंत्रिपरिषद की सलाह पर कार्य करना</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> In a hung Parliament, President exercises discretion in appointing a PM likely to command majority; other functions are largely on ministers’ advice.<br/> हंग संसद की स्थिति में राष्ट्रपति प्रधानमंत्री नियुक्त करने में विवेक का प्रयोग करते हैं; अन्य मामलों में वे आमतौर पर मंत्रिपरिषद की सलाह पर कार्य करते हैं।</p>"
+    },
+    {
+      "sr_no": 40,
+      "question": "<p> <b>What majority is required in Lok Sabha to pass an ordinary bill?<br/> </b>साधारण विधेयक पारित करने हेतु लोकसभा में किस प्रकार का बहुमत आवश्यक है<b>?</b></p>",
+      "option1": "<p> Simple majority of members present and voting / उपस्थित व मतदान करने वालों की साधारण बहुमत</p>",
+      "option2": "<p> Two-thirds majority of total membership / कुल सदस्यों का 2/3 बहुमत</p>",
+      "option3": "<p> Special majority of two-thirds of members present and voting / उपस्थित सदस्यों के 2/3 विशेष बहुमत</p>",
+      "option4": "<p> Unanimous consent / सर्वसम्मति</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> An ordinary bill requires a simple majority of members present and voting to pass in a House.<br/> साधारण विधेयक पारित करने के लिए उपस्थित और मतदान करने वाले सदस्यों की साधारण बहुमत पर्याप्त है।</p>"
+    },
+    {
+      "sr_no": 41,
+      "question": "<p> <b>Which official presides over Lok Sabha in the absence of the Speaker?<br/> </b>स्पीकर की अनुपस्थिति में लोकसभा की अध्यक्षता कौन करता है<b>?</b></p>",
+      "option1": "<p> Deputy Speaker / उप-स्पीकर</p>",
+      "option2": "<p> Prime Minister / प्रधानमंत्री</p>",
+      "option3": "<p> President / राष्ट्रपति</p>",
+      "option4": "<p> Leader of Opposition / विपक्ष के नेता</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Deputy Speaker presides over the Lok Sabha when the Speaker is absent. If both are absent, a member appointed by the Speaker or in absence by the House presides.<br/> स्पीकर अनुपस्थित होने पर उप-स्पीकर लोकसभा की अध्यक्षता करते हैं; दोनों अनुपस्थित हों तो स्पीकर द्वारा नामित सदस्य या सदन उपस्थिति संभालेगा।</p>"
+    },
+    {
+      "sr_no": 42,
+      "question": "<p> <b>Consider the following about the removal of a Judge of the Supreme Court: (trick to test understanding of separation) — (note: not in direct topic but relevant to Parliament’s powers)<br/> </b>सुप्रीम कोर्ट के न्यायाधीश को हटाने के बारे में विचार करें<b>:<br/> (a) Removal is through impeachment by Parliament. / </b>हटाने की प्रक्रिया संसद द्वारा महाभियोग है।<b><br/> (b) A simple majority in both Houses is enough. / </b>दोनों सदनों में सरल बहुमत पर्याप्त है।<b><br/> (c) Trial takes place in Parliament and President orders removal after motion passes. / </b>जांच संसद में होती है और प्रस्ताव पास होने पर राष्ट्रपति हटाने का आदेश देते हैं।<b><br/> Which are correct?<br/> </b>कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> (a) and (c) / (a) और (c)</p>",
+      "option2": "<p> (b) and (c) / (b) और (c)</p>",
+      "option3": "<p> (a) only / केवल (a)</p>",
+      "option4": "<p> All of the above / उपर्युक्त सभी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Judges of SC/HC are removed by impeachment (parliamentary process) — trial in Parliament and President acts on outcome; special majority (not simple) is required, so (b) is wrong.<br/> सुप्रीम कोर्ट के जज महाभियोग प्रक्रिया द्वारा हटाये जा सकते हैं; परीक्षण संसद में होता है और पास होने पर राष्ट्रपति हटाने का आदेश देते हैं; सरल बहुमत पर्याप्त नहीं है।</p>"
+    },
+    {
+      "sr_no": 43,
+      "question": "<p> <b>Which of the following is TRUE about the President’s power to pardon?<br/> </b>राष्ट्रपति के क्षमादान अधिकार के बारे में कौन<b>-</b>सा कथन सत्य है<b>?</b></p>",
+      "option1": "<p> President can pardon death sentence only on PM’s advice. / राष्ट्रपति केवल पीएम की सलाह पर मृत्युदंड माफ कर सकते हैं।</p>",
+      "option2": "<p> President’s power to pardon is absolute and non-justiciable. / राष्ट्रपति का क्षमादान अधिकार पूर्ण और अदालती जांच से बाहर है।</p>",
+      "option3": "<p> President can grant pardon, reprieve, respite or remit sentences. / राष्ट्रपति दंड माफ, रियायत या शेषांश माफ कर सकते हैं।</p>",
+      "option4": "<p> President cannot commute a death sentence to life imprisonment. / राष्ट्रपति मौत की सजा को उम्र कैद में नहीं बदल सकते।</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 72 empowers the President to grant pardons, reprieves, respites or remissions; exercise is generally on aid and advice of Council of Ministers but is justiciable in limited circumstances.<br/> अनुच्छेद 72 के अंतर्गत राष्ट्रपति दंड माफ, रियायत या शेषांश माफ कर सकते हैं; यह सलाह पर होता है और कुछ स्थितियों में अदालत द्वारा जांच भी की जा सकती है।</p>"
+    },
+    {
+      "sr_no": 44,
+      "question": "<p> <b>The Budget (Annual Financial Statement) is presented to Parliament by the:<br/> </b>बजट <b>(</b>वार्षिक वित्तीय विवरण<b>) </b>संसद को किसके द्वारा प्रस्तुत किया जाता है<b>?</b></p>",
+      "option1": "<p> President / राष्ट्रपति</p>",
+      "option2": "<p> Finance Minister / वित्त मंत्री</p>",
+      "option3": "<p> Prime Minister / प्रधानमंत्री</p>",
+      "option4": "<p> Speaker / स्पीकर</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Finance Minister presents the Union Budget to the Parliament annually; it is a responsibility of the executive through the FM.<br/> वार्षिक बजट वित्त मंत्री द्वारा संसद में प्रस्तुत किया जाता है; यह कार्यपालिका की जिम्मेदारी के माध्यम से होता है।</p>"
+    },
+    {
+      "sr_no": 45,
+      "question": "<p> <b>Within how many days must the Rajya Sabha return recommendations on a Money Bill to the Lok Sabha?<br/> </b>राज्यसभा को मनी बिल पर अपने सिफारिशें लोकसभा को कितने दिनों के भीतर लौटानी होती हैं<b>?</b></p>",
+      "option1": "<p> 7 days / 7 दिन</p>",
+      "option2": "<p> 10 days / 10 दिन</p>",
+      "option3": "<p> 14 days / 14 दिन</p>",
+      "option4": "<p> 21 days / 21 दिन</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Rajya Sabha must return any recommendations on a Money Bill within 14 days; Lok Sabha may accept or reject those recommendations.<br/> मनी बिल पर राज्यसभा की सिफारिशें 14 दिनों के भीतर लोकसभा को वापस करनी होती हैं; लोकसभा उन्हें स्वीकार या अस्वीकार कर सकती है।</p>"
+    }
+  ]
+};
+
+// Extract questions and time from new structure
+const questions = quizData.questions;
+const totalTimeMinutes = quizData.time_minutes;
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = totalTimeMinutes * 60;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape') {
+      if (isPaletteOpen) {
+        closePalette();
+      }
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimer();
+    
+    // Auto-submit when time runs out
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      alert('Time is up! Submitting quiz automatically.');
+      submitQuiz();
+      return;
+    }
+    
+    if (timerSeconds <= 120) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    questionText.innerHTML = '';
+    const questionContent = createOptionContent(q.question);
+    questionText.appendChild(questionContent);
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message = `You have ${unattempted} unanswered questions. ${message}`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  const timeTaken = (totalTimeMinutes * 60) - timerSeconds;
+  const minutesTaken = Math.floor(timeTaken / 60);
+  const secondsTaken = timeTaken % 60;
+  const timeTakenText = `${minutesTaken}m ${secondsTaken}s`;
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeTakenText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    let questionDisplay = '';
+    if (isImageURL(q.question)) {
+      questionDisplay = `<img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`;
+    } else {
+      questionDisplay = q.question;
+    }
+    html += `<div class="question-review">
+      <h4>Q${q.sr_no}: ${questionDisplay}</h4>`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution && q.solution.trim() !== '') {
+      let solutionDisplay = '';
+      if (isImageURL(q.solution)) {
+        solutionDisplay = `<img src="${q.solution}" class="solution-image" alt="Solution" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">`;
+      } else {
+        solutionDisplay = q.solution;
+      }
+      
+      html += `<div class="solution-section" style="margin-top: 15px; padding: 15px; background: #f0f8ff; border-left: 4px solid #007bff; border-radius: 8px;">
+        <strong style="color: #007bff;">💡 Solution:</strong>
+        <div style="margin-top: 8px; color: #333;">${solutionDisplay}</div>
+      </div>`;
+    }
+    
+    html += `</div>`;
+  });
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https')) &&
+    (str.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i));
+}
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = totalTimeMinutes * 60;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    updateTimer();
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POLITY TEST - 2</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">MOTION 3.0 - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem('quizState', JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem('quizState');
+    if (saved) {
+      const state = JSON.parse(saved);
+      if (Date.now() - state.timestamp < 24 * 60 * 60 * 1000) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || (totalTimeMinutes * 60); // MODIFIED
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem('quizState');
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

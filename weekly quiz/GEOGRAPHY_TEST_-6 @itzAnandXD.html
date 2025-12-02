@@ -1,0 +1,2495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GEOGRAPHY TEST -6</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.question-image, .option-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: block;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎯 GEOGRAPHY TEST -6</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color)"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color)"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color)"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color)"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">Clear</button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">Submit Quiz</button>
+</div>
+
+<script>
+// MODIFIED: Quiz data structure with time_minutes
+const quizData = {
+  "time_minutes": 30,
+  "questions": [
+    {
+      "sr_no": 1,
+      "question": "<p> <b>Consider the following pairs of straits and connecting water bodies:<br/> </b>निम्नलिखित जलडमरूमध्यों और उनसे जुड़े जल निकायों के युग्मों पर विचार करें<b>:<br/> (a) Bosporus – Black Sea and Mediterranean Sea<br/> </b>बॉस्फोरस – काला सागर और भूमध्य सागर<b><br/> (b) Bering Strait – Arctic Ocean and Pacific Ocean<br/> </b>बेयरिंग जलडमरूमध्य – आर्कटिक महासागर और प्रशांत महासागर<b><br/> (c) Strait of Dover – North Sea and English Channel<br/> </b>डोवर जलडमरूमध्य – उत्तरी सागर और इंग्लिश चैनल<b><br/> Which of the above pairs are correctly matched?<br/> </b>उपरोक्त में से कौन<b>-</b>से युग्म सही मिलाए गए हैं<b>?</b></p>",
+      "option1": "<p> 1 and 2 / 1 और 2</p>",
+      "option2": "<p> 2 and 3 / 2 और 3</p>",
+      "option3": "<p> 1 and 3 / 1 और 3</p>",
+      "option4": "<p> Only 2 / केवल 2</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Bosporus links the Black Sea to the Sea of Marmara, the Bering Strait connects the Arctic and Pacific Oceans, and the Strait of Dover connects the North Sea and the English Channel..<br/> बॉस्फोरस काला सागर को मरमरा सागर से जोड़ता है, बेयरिंग जलडमरूमध्य आर्कटिक और प्रशांत महासागर को जोड़ता है, तथा डोवर जलडमरूमध्य उत्तरी सागर और इंग्लिश चैनल को जोड़ता है।</p>"
+    },
+    {
+      "sr_no": 2,
+      "question": "<p> <b>Which of the following deserts is located in Asia?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा मरुस्थल एशिया में स्थित है<b>?</b></p>",
+      "option1": "<p> Atacama / अटाकामा</p>",
+      "option2": "<p> Gobi / गोबी</p>",
+      "option3": "<p> Great Victoria / ग्रेट विक्टोरिया</p>",
+      "option4": "<p> Mojave / मोहावे</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Gobi Desert lies in Mongolia and China.<br/> गोबी मरुस्थल मंगोलिया और चीन में स्थित है।</p>"
+    },
+    {
+      "sr_no": 3,
+      "question": "<p> <b>The longest latitude is:<br/> </b>सबसे लंबा अक्षांश कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> Arctic Circle / आर्कटिक वृत्त</p>",
+      "option2": "<p> Tropic of Cancer / कर्क रेखा</p>",
+      "option3": "<p> Tropic of Capricorn / मकर रेखा</p>",
+      "option4": "<p> Equator / भूमध्य रेखा</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Equator is the largest circle of latitude.<br/> भूमध्य रेखा सबसे बड़ा अक्षांश वृत्त है।</p>"
+    },
+    {
+      "sr_no": 4,
+      "question": "<p> <b>Which of the following is a primary activity in Human Geography?<br/> </b>मानव भूगोल में निम्नलिखित में से कौन<b>-</b>सी प्राथमिक गतिविधि है<b>?</b></p>",
+      "option1": "<p> Mining / खनन</p>",
+      "option2": "<p> Banking / बैंकिंग</p>",
+      "option3": "<p> Transport / परिवहन</p>",
+      "option4": "<p> Teaching / अध्यापन</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Mining is a primary activity involving extraction of resources.<br/> खनन प्राकृतिक संसाधन निकालने वाली प्राथमिक गतिविधि है।</p>"
+    },
+    {
+      "sr_no": 5,
+      "question": "<p> <b>The International Date Line deviates from 180° meridian to avoid dividing which region?<br/> </b>अंतरराष्ट्रीय तिथि रेखा <b>180° </b>मध्याह्न से हटकर किस क्षेत्र को विभाजित होने से बचाती है<b>?</b></p>",
+      "option1": "<p> Madagascar / मेडागास्कर</p>",
+      "option2": "<p> Maldives / मालदीव</p>",
+      "option3": "<p> Aleutian Islands / एल्युटियन द्वीप</p>",
+      "option4": "<p> Sri Lanka / श्रीलंका</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> IDL bends to avoid splitting the Aleutian Islands.<br/> तिथि रेखा एल्युटियन द्वीपों को विभाजित होने से बचाने हेतु मुड़ती है।</p>"
+    },
+    {
+      "sr_no": 6,
+      "question": "<p> <b>Which country is known as the “Land of the Midnight Sun”?<br/> </b>कौन<b>-</b>सा देश ‘मिडनाइट सन की भूमि’ कहलाता है<b>?</b></p>",
+      "option1": "<p> South Africa / दक्षिण अफ्रीका</p>",
+      "option2": "<p> Egypt / मिस्र</p>",
+      "option3": "<p> Chile / चिली</p>",
+      "option4": "<p> Norway / नॉर्वे</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Norway experiences midnight sun due to high latitude.<br/> उच्च अक्षांश के कारण नॉर्वे में मध्यरात्रि सूर्य दिखाई देता है।</p>"
+    },
+    {
+      "sr_no": 7,
+      "question": "<p> <b>Which region is densely populated?<br/> </b>निम्नलिखित क्षेत्रों में से कौन<b>-</b>सा क्षेत्र घनी आबादी वाला है<b>?</b></p>",
+      "option1": "<p> Equatorial forests / भूमध्य रेखीय वन</p>",
+      "option2": "<p> River valleys / नदी घाटियाँ</p>",
+      "option3": "<p> Hot deserts / गर्म मरुस्थल</p>",
+      "option4": "<p> Polar regions / ध्रुवीय क्षेत्र</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> River valleys provide fertile land and water, supporting dense population.<br/> नदी घाटियाँ उपजाऊ भूमि और जल उपलब्ध कराती हैं, इसलिए जनसंख्या सघन होती है।</p>"
+    },
+    {
+      "sr_no": 8,
+      "question": "<p> <b>Which sea has the highest salinity?<br/> </b>निम्नलिखित में से किस सागर की लवणता सर्वाधिक है<b>?</b></p>",
+      "option1": "<p> Red Sea / लाल सागर</p>",
+      "option2": "<p> Black Sea / काला सागर</p>",
+      "option3": "<p> Baltic Sea / बाल्टिक सागर</p>",
+      "option4": "<p> Arabian Sea / अरब सागर</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> High evaporation and low river inflow make the Red Sea highly saline.<br/> उच्च वाष्पीकरण और कम नदी प्रवाह के कारण लाल सागर की लवणता अधिक है।</p>"
+    },
+    {
+      "sr_no": 9,
+      "question": "<p> <b>Which mountain range separates Europe and Asia?<br/> </b>कौन<b>-</b>सी पर्वतमाला यूरोप और एशिया को अलग करती है<b>?</b></p>",
+      "option1": "<p> Andes / एंडीज</p>",
+      "option2": "<p> Ural / यूराल</p>",
+      "option3": "<p> Rockies / रॉकी</p>",
+      "option4": "<p> Alps / ऐल्प्स</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Ural Mountains form the traditional boundary between Europe and Asia.<br/> यूराल पर्वत यूरोप और एशिया की पारंपरिक सीमा बनाते हैं।</p>"
+    },
+    {
+      "sr_no": 10,
+      "question": "<p> <b>Which of the following rivers flows northward?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी नदी उत्तर की ओर बहती है<b>?</b></p>",
+      "option1": "<p> Congo / कांगो</p>",
+      "option2": "<p> Nile / नील</p>",
+      "option3": "<p> Mississippi / मिसिसिपी</p>",
+      "option4": "<p> Danube / डेन्यूब</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Nile flows from south to north into the Mediterranean Sea.<br/> नील दक्षिण से उत्तर की ओर बहती है।</p>"
+    },
+    {
+      "sr_no": 11,
+      "question": "<p> <b>Which of the following is a secondary activity?<br/> </b>निम्नलिखित में से कौन<b>-</b>सी द्वितीयक गतिविधि है<b>?</b></p>",
+      "option1": "<p> Agriculture / कृषि</p>",
+      "option2": "<p> Manufacturing / विनिर्माण</p>",
+      "option3": "<p> Fishing / मत्स्यन</p>",
+      "option4": "<p> Forestry / वानिकी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Secondary activities involve processing of raw materials.<br/> द्वितीयक गतिविधियाँ कच्चे माल के प्रसंस्करण से जुड़ी होती हैं।</p>"
+    },
+    {
+      "sr_no": 12,
+      "question": "<p> <b>The world’s largest island is:<br/> </b>विश्व का सबसे बड़ा द्वीप कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> Borneo / बोर्नियो</p>",
+      "option2": "<p> New Guinea / न्यू गिनी</p>",
+      "option3": "<p> Madagascar / मेडागास्कर</p>",
+      "option4": "<p> Greenland / ग्रीनलैंड</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Greenland is the world’s largest island not considered a continent.<br/> ग्रीनलैंड विश्व का सबसे बड़ा द्वीप है जिसे महाद्वीप नहीं माना जाता।</p>"
+    },
+    {
+      "sr_no": 13,
+      "question": "<p> <b>The country associated with the Great Rift Valley is:<br/> ‘</b>ग्रेट रिफ्ट वैली’ किस देश से संबंधित है<b>?</b></p>",
+      "option1": "<p> China / चीन</p>",
+      "option2": "<p> Kenya / केन्या</p>",
+      "option3": "<p> Peru / पेरू</p>",
+      "option4": "<p> France / फ्रांस</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Great Rift Valley stretches across East Africa, mainly Kenya.<br/> ग्रेट रिफ्ट वैली पूर्वी अफ्रीका में फैली है और मुख्यतः केन्या में स्थित है।</p>"
+    },
+    {
+      "sr_no": 14,
+      "question": "<p> <b>The smallest continent in the world is:<br/> </b>विश्व का सबसे छोटा महाद्वीप कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> South America / दक्षिण अमेरिका</p>",
+      "option2": "<p> Europe / यूरोप</p>",
+      "option3": "<p> Australia / ऑस्ट्रेलिया</p>",
+      "option4": "<p> Antarctica / अंटार्कटिका</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Australia is the smallest continent by area.<br/> ऑस्ट्रेलिया क्षेत्रफल के आधार पर सबसे छोटा महाद्वीप है।</p>"
+    },
+    {
+      "sr_no": 15,
+      "question": "<p> <b>Which is the deepest ocean in the world?<br/> </b>विश्व का सबसे गहरा महासागर कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> Pacific / प्रशांत</p>",
+      "option2": "<p> Atlantic / अटलांटिक</p>",
+      "option3": "<p> Indian / हिंद महासागर</p>",
+      "option4": "<p> Arctic / आर्कटिक</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Pacific Ocean has the deepest point—Mariana Trench.<br/> प्रशांत महासागर में विश्व का सबसे गहरा स्थान—मेरिआना गर्त स्थित है।</p>"
+    },
+    {
+      "sr_no": 16,
+      "question": "<p> <b>According to latest estimates, the most populous country is:<br/> </b>नवीनतम अनुमानों के अनुसार विश्व का सर्वाधिक जनसंख्या वाला देश कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> China / चीन</p>",
+      "option2": "<p> India / भारत</p>",
+      "option3": "<p> USA / अमेरिका</p>",
+      "option4": "<p> Indonesia / इंडोनेशिया</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> India has surpassed China as the world’s most populous country.<br/> भारत जनसंख्या के मामले में चीन को पीछे कर चुका है।</p>"
+    },
+    {
+      "sr_no": 17,
+      "question": "<p> <b>Which of the following is the largest peninsula in the world?<br/> </b>निम्नलिखित में से विश्व का सबसे बड़ा प्रायद्वीप कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> Korean Peninsula / कोरियाई प्रायद्वीप</p>",
+      "option2": "<p> Arabian Peninsula / अरब प्रायद्वीप</p>",
+      "option3": "<p> Alaska Peninsula / अलास्का प्रायद्वीप</p>",
+      "option4": "<p> Iberian Peninsula / आईबेरियन प्रायद्वीप</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Arabian Peninsula is the world’s largest peninsula.<br/> अरब प्रायद्वीप विश्व का सबसे बड़ा प्रायद्वीप है।</p>"
+    },
+    {
+      "sr_no": 18,
+      "question": "<p> <b>Which of the following is a major push factor of migration?<br/> </b>निम्नलिखित में से प्रवासन का प्रमुख प्रेरक <b>(</b>धक्का<b>) </b>कारक कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> Urban lifestyle / शहरी जीवनशैली</p>",
+      "option2": "<p> Better education / बेहतर शिक्षा</p>",
+      "option3": "<p> Higher wages / अधिक वेतन</p>",
+      "option4": "<p> Unemployment / बेरोज़गारी</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Unemployment pushes people to move out of their region.<br/> बेरोज़गारी लोगों को अपना क्षेत्र छोड़ने के लिए मजबूर करती है।</p>"
+    },
+    {
+      "sr_no": 19,
+      "question": "<p> <b>The narrow water body separating Africa from Europe is:<br/> </b>अफ्रीका और यूरोप को अलग करने वाला संकरा जल निकाय कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> Bering Strait / बेयरिंग जलडमरूमध्य</p>",
+      "option2": "<p> Bosporus / बॉस्फोरस</p>",
+      "option3": "<p> Strait of Gibraltar / जिब्राल्टर जलडमरूमध्य</p>",
+      "option4": "<p> Palk Strait / पाक जलडमरूमध्य</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Strait of Gibraltar separates Africa and Europe.<br/> जिब्राल्टर जलडमरूमध्य अफ्रीका और यूरोप को अलग करता है।</p>"
+    },
+    {
+      "sr_no": 20,
+      "question": "<p> <b>The most urbanized continent in the world is:<br/> </b>विश्व का सर्वाधिक शहरीकृत महाद्वीप कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> Europe / यूरोप</p>",
+      "option2": "<p> Australia / ऑस्ट्रेलिया</p>",
+      "option3": "<p> South America / दक्षिण अमेरिका</p>",
+      "option4": "<p> North America / उत्तरी अमेरिका</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> North America has the highest urban population percentage.<br/> उत्तरी अमेरिका में शहरी जनसंख्या का प्रतिशत सबसे अधिक है।</p>"
+    },
+    {
+      "sr_no": 21,
+      "question": "<p> <b>Which of the following is the largest landlocked country?<br/> </b>निम्नलिखित में से सबसे बड़ा भू<b>-</b>आवेष्ठित देश कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> Kazakhstan / कज़ाख़स्तान</p>",
+      "option2": "<p> Mongolia / मंगोलिया</p>",
+      "option3": "<p> Chad / चाड</p>",
+      "option4": "<p> Bolivia / बोलिविया</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Kazakhstan is the largest landlocked country by area.<br/> कज़ाख़स्तान क्षेत्रफल के अनुसार सबसे बड़ा भू-आवेष्ठित देश है।</p>"
+    },
+    {
+      "sr_no": 22,
+      "question": "<p> <b>Which among the following is a characteristic of human development?<br/> </b>निम्नलिखित में से मानव विकास की प्रमुख विशेषता कौन<b>-</b>सी है<b>?</b></p>",
+      "option1": "<p> Expansion of choices / विकल्पों का विस्तार</p>",
+      "option2": "<p> Higher taxes / अधिक कर</p>",
+      "option3": "<p> Migration bans / प्रवासन प्रतिबंध</p>",
+      "option4": "<p> Increased inequality / बढ़ती असमानता</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Human development stresses expanding people’s choices.<br/> मानव विकास का मूल उद्देश्य लोगों के विकल्पों का विस्तार करना है।</p>"
+    },
+    {
+      "sr_no": 23,
+      "question": "<p> <b>Which country is the largest archipelago nation in the world?<br/> </b>विश्व का सबसे बड़ा द्वीपसमूह राष्ट्र कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> Indonesia / इंडोनेशिया</p>",
+      "option2": "<p> Philippines / फिलीपींस</p>",
+      "option3": "<p> Japan / जापान</p>",
+      "option4": "<p> New Zealand / न्यूज़ीलैंड</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Indonesia has over 17,000 islands, making it the largest archipelagic nation.<br/> इंडोनेशिया में 17,000 से अधिक द्वीप हैं, जो इसे विश्व का सबसे बड़ा द्वीपसमूह राष्ट्र बनाते हैं।</p>"
+    },
+    {
+      "sr_no": 24,
+      "question": "<p> <b>Which latitude passes through the maximum number of countries?<br/> </b>कौन<b>-</b>सा अक्षांश सर्वाधिक देशों से होकर गुजरता है<b>?</b></p>",
+      "option1": "<p> Equator / भूमध्य रेखा</p>",
+      "option2": "<p> Tropic of Cancer / कर्क रेखा</p>",
+      "option3": "<p> Tropic of Capricorn / मकर रेखा</p>",
+      "option4": "<p> Arctic Circle / आर्कटिक वृत्त</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Tropic of Cancer crosses 17 countries, the highest among all latitudes.<br/> कर्क रेखा 17 देशों से गुजरती है, जो सर्वाधिक है।</p>"
+    },
+    {
+      "sr_no": 25,
+      "question": "<p> <b>Which region is known for very low population density?<br/> </b>कौन<b>-</b>सा क्षेत्र अत्यंत कम जनसंख्या घनत्व के लिए जाना जाता है<b>?</b></p>",
+      "option1": "<p> Western Europe / पश्चिमी यूरोप</p>",
+      "option2": "<p> Siberia / साइबेरिया</p>",
+      "option3": "<p> Ganga Plains / गंगा का मैदान</p>",
+      "option4": "<p> Japan / जापान</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Extreme cold and harsh climate make Siberia sparsely populated.<br/> अत्यधिक ठंड और कठोर जलवायु साइबेरिया में कम जनसंख्या का कारण है।</p>"
+    },
+    {
+      "sr_no": 26,
+      "question": "<p> <b>Which of the following is the world’s longest mountain range?<br/> </b>निम्नलिखित में से विश्व की सबसे लंबी पर्वतमाला कौन<b>-</b>सी है<b>?</b></p>",
+      "option1": "<p> Alps / ऐल्प्स</p>",
+      "option2": "<p> Rockies / रॉकी</p>",
+      "option3": "<p> Himalayas / हिमालय</p>",
+      "option4": "<p> Andes / एंडीज</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Andes run along western South America for about 7,000 km.<br/> एंडीज पर्वतमाला लगभग 7,000 किमी लंबी है।</p>"
+    },
+    {
+      "sr_no": 27,
+      "question": "<p> <b>Which demographic trend is typical of developed countries?<br/> </b>विकसित देशों में जनसांख्यिकीय प्रवृत्ति कैसी होती है<b>?</b></p>",
+      "option1": "<p> Low birth rate / कम जन्म दर</p>",
+      "option2": "<p> High death rate / अधिक मृत्यु दर</p>",
+      "option3": "<p> High infant mortality / अधिक शिशु मृत्यु दर</p>",
+      "option4": "<p> High fertility / अधिक प्रजनन दर</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Developed nations have low birth rates due to better living conditions.<br/> बेहतर जीवन स्तर के कारण विकसित देशों में जन्म दर कम होती है।</p>"
+    },
+    {
+      "sr_no": 28,
+      "question": "<p> <b>Which hemisphere contains the maximum landmass?<br/> </b>विश्व के स्थलभाग का अधिकांश हिस्सा किस गोलार्ध में स्थित है<b>?</b></p>",
+      "option1": "<p> Eastern Hemisphere / पूर्वी गोलार्ध</p>",
+      "option2": "<p> Southern Hemisphere / दक्षिणी गोलार्ध</p>",
+      "option3": "<p> Northern Hemisphere / उत्तरी गोलार्ध</p>",
+      "option4": "<p> Western Hemisphere / पश्चिमी गोलार्ध</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> About two-thirds of the landmass lies in the Northern Hemisphere.<br/> विश्व का लगभग दो-तिहाई स्थलभाग उत्तरी गोलार्ध में है।</p>"
+    },
+    {
+      "sr_no": 29,
+      "question": "<p> <b>The largest freshwater lake (by area) in the world is:<br/> </b>क्षेत्रफल के आधार पर विश्व की सबसे बड़ी मीठे पानी की झील कौन<b>-</b>सी है<b>?</b></p>",
+      "option1": "<p> Lake Superior / सुपीरियर झील</p>",
+      "option2": "<p> Lake Victoria / विक्टोरिया झील</p>",
+      "option3": "<p> Lake Baikal / बैकाल झील</p>",
+      "option4": "<p> Great Bear Lake / ग्रेट बियर झील</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Lake Superior is the largest freshwater lake by area.<br/> सुपीरियर झील क्षेत्रफल के आधार पर सबसे बड़ी मीठे पानी की झील है।</p>"
+    },
+    {
+      "sr_no": 30,
+      "question": "<p> <b>Which of the following is the world’s fastest-growing population region?<br/> </b>निम्नलिखित में से किस क्षेत्र में जनसंख्या वृद्धि सर्वाधिक तेजी से हो रही है<b>?</b></p>",
+      "option1": "<p> Europe / यूरोप</p>",
+      "option2": "<p> Africa / अफ्रीका</p>",
+      "option3": "<p> North America / उत्तरी अमेरिका</p>",
+      "option4": "<p> Australia / ऑस्ट्रेलिया</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Africa has the highest population growth rate globally.<br/> अफ्रीका में विश्व की सर्वाधिक जनसंख्या वृद्धि दर है।</p>"
+    },
+    {
+      "sr_no": 31,
+      "question": "<p> <b>Which is the largest ocean current in the world?<br/> </b>विश्व की सबसे बड़ी महासागरीय धारा कौन<b>-</b>सी है<b>?</b></p>",
+      "option1": "<p> Kuroshio Current / कुरोशियो धारा</p>",
+      "option2": "<p> Gulf Stream / गल्फ स्ट्रीम</p>",
+      "option3": "<p> Antarctic Circumpolar Current / अंटार्कटिक परिपश्चिमी धारा</p>",
+      "option4": "<p> Labrador Current / लैब्राडोर धारा</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Antarctic Circumpolar Current is the largest and strongest current.<br/> अंटार्कटिक परिपश्चिमी धारा विश्व की सबसे बड़ी और शक्तिशाली महासागरीय धारा है।</p>"
+    },
+    {
+      "sr_no": 32,
+      "question": "<p> <b>Which region is known as the “Roof of the World”?<br/> </b>किस क्षेत्र को “विश्व की छत” कहा जाता है<b>?</b></p>",
+      "option1": "<p> Andes / एंडीज</p>",
+      "option2": "<p> Altai Mountains / अल्ताई पर्वत</p>",
+      "option3": "<p> Pamir Plateau / पामीर पठार</p>",
+      "option4": "<p> Antarctica / अंटार्कटिका</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Pamir Plateau is famously called the “Roof of the World.”<br/> पामीर पठार को “विश्व की छत” कहा जाता है।</p>"
+    },
+    {
+      "sr_no": 33,
+      "question": "<p> <b>The ‘Lapse Rate’ decreases sharply in which atmospheric layer?<br/> ‘Lapse Rate’ </b>किस वायुमंडलीय परत में अचानक कम हो जाता है<b>?</b></p>",
+      "option1": "<p> Troposphere / क्षोभमंडल</p>",
+      "option2": "<p> Tropopause / क्षोभावरोध</p>",
+      "option3": "<p> Stratosphere / समतापमंडल</p>",
+      "option4": "<p> Mesosphere / मध्यमंडल</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> In the stratosphere, temperature increases with height due to ozone absorption; hence lapse rate nearly drops.<br/> समतापमंडल में ऊँचाई के साथ तापमान बढ़ता है, इसलिए यहाँ lapse rate लगभग समाप्त हो जाता है।</p>"
+    },
+    {
+      "sr_no": 34,
+      "question": "<p> <b>Which of the following regions is known for ‘Block Mountains’?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा क्षेत्र ‘खंड पर्वत’ <b>(Block Mountains) </b>के लिए प्रसिद्ध है<b>?</b></p>",
+      "option1": "<p> Vosges (Europe) / वोज (यूरोप)</p>",
+      "option2": "<p> Himalayas / हिमालय</p>",
+      "option3": "<p> Western Ghats / पश्चिमी घाट</p>",
+      "option4": "<p> Ural Mountains / यूराल पर्वत</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Vosges and Black Forest regions are classic examples of Block Mountains.<br/> वोज और ब्लैक फॉरेस्ट क्षेत्र खंड पर्वत के प्रमुख उदाहरण हैं।</p>"
+    },
+    {
+      "sr_no": 35,
+      "question": "<p> <b>Ox-bow lakes are most commonly found in which stage of a river?<br/> </b>आक्स<b>-</b>बो झीलें नदी के किस चरण में सर्वाधिक पाई जाती हैं<b>?</b></p>",
+      "option1": "<p> Youth stage / युवा अवस्था</p>",
+      "option2": "<p> Mature stage / परिपक्व अवस्था</p>",
+      "option3": "<p> Old stage / वृद्धावस्था</p>",
+      "option4": "<p> All stages / सभी अवस्थाएँ</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Ox-bow lakes develop due to intense meandering typical of the old stage of a river.<br/> नदी के वृद्धावस्था चरण में तीव्र मंद्रता (meandering) से आक्स-बो झीलें बनती हैं।</p>"
+    },
+    {
+      "sr_no": 36,
+      "question": "<p> <b>The ‘Roaring Forties’ are strongest in which hemisphere?<br/> ‘Roaring Forties’ </b>किस गोलार्ध में सर्वाधिक प्रबल होती हैं<b>?</b></p>",
+      "option1": "<p> Northern Hemisphere / उत्तरी गोलार्ध</p>",
+      "option2": "<p> Southern Hemisphere / दक्षिणी गोलार्ध</p>",
+      "option3": "<p> Both equally / दोनों में समान</p>",
+      "option4": "<p> None / कोई नहीं</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Southern Hemisphere has no major landmasses; thus winds blow freely and strongly.<br/> दक्षिणी गोलार्ध में बड़े भूभाग नहीं हैं, इसलिए हवाएँ अत्यंत तेज़ चलती हैं।</p>"
+    },
+    {
+      "sr_no": 37,
+      "question": "<p> <b>Which of the following is a cyclic type of plate boundary movement?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा प्लेट सीमा गति का चक्रीय प्रकार है<b>?</b></p>",
+      "option1": "<p> Wilson Cycle / विल्सन चक्र</p>",
+      "option2": "<p> Slab Pull / स्लैब पुल</p>",
+      "option3": "<p> Ridge Push / रिज पुश</p>",
+      "option4": "<p> Mantle Plume / मेंटल प्लूम</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Wilson Cycle explains the repeated opening and closing of ocean basins.<br/> विल्सन चक्र महासागरों के बार-बार खुलने और बंद होने की प्रक्रिया बताता है।</p>"
+    },
+    {
+      "sr_no": 38,
+      "question": "<p> <b>Which of the following deserts is formed due to ‘cold ocean currents’?<br/> </b>कौन<b>-</b>सा मरुस्थल ‘शीत महासागरीय धाराओं’ के कारण बना है<b>?</b></p>",
+      "option1": "<p> Atacama / अटाकामा</p>",
+      "option2": "<p> Gobi / गोबी</p>",
+      "option3": "<p> Thar / थार</p>",
+      "option4": "<p> Kalahari / कालाहारी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Atacama formed due to the cold Peru Current causing extreme aridity.<br/> अटाकामा शुष्क पेरू धारा (ठंडी धारा) के कारण अत्यधिक शुष्क बना।</p>"
+    },
+    {
+      "sr_no": 39,
+      "question": "<p> <b>The ‘Moho Discontinuity’ separates which two layers?<br/> ‘</b>मोहो असंततता’ पृथ्वी की किन दो परतों को अलग करती है<b>?</b></p>",
+      "option1": "<p> Crust–Mantle / भूपर्पटी–मैंटल</p>",
+      "option2": "<p> Mantle–Outer Core / मैंटल–बाह्य कोर</p>",
+      "option3": "<p> Outer Core–Inner Core / बाह्य कोर–आंतरिक कोर</p>",
+      "option4": "<p> Lithosphere–Asthenosphere / स्थलमंडल–अस्थेनोस्फियर</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Mohorovičić discontinuity lies between crust and mantle.<br/> मोहो असंततता भूपर्पटी और मैंटल के बीच स्थित है।</p>"
+    },
+    {
+      "sr_no": 40,
+      "question": "<p> <b>Which one of the following is an example of ‘Tsunami earthquake’?<br/> </b>निम्नलिखित में से कौन ‘सुनामी भूकंप’ का उदाहरण है<b>?</b></p>",
+      "option1": "<p> 1896 Sanriku Earthquake</p>",
+      "option2": "<p> 2001 Bhuj Earthquake</p>",
+      "option3": "<p> 2015 Nepal Earthquake</p>",
+      "option4": "<p> 1993 Latur Earthquake</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The 1896 Sanriku event caused unusually high tsunami waves relative to its magnitude.<br/> 1896 सानरिकु घटना में परिमाण कम तथा सुनामी लहरें अत्यधिक ऊँची थीं।</p>"
+    }
+  ]
+};
+
+// Extract questions and time from new structure
+const questions = quizData.questions;
+const totalTimeMinutes = quizData.time_minutes;
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = totalTimeMinutes * 60;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape') {
+      if (isPaletteOpen) {
+        closePalette();
+      }
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimer();
+    
+    // Auto-submit when time runs out
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      alert('Time is up! Submitting quiz automatically.');
+      submitQuiz();
+      return;
+    }
+    
+    if (timerSeconds <= 120) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    questionText.innerHTML = '';
+    const questionContent = createOptionContent(q.question);
+    questionText.appendChild(questionContent);
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message = `You have ${unattempted} unanswered questions. ${message}`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  const timeTaken = (totalTimeMinutes * 60) - timerSeconds;
+  const minutesTaken = Math.floor(timeTaken / 60);
+  const secondsTaken = timeTaken % 60;
+  const timeTakenText = `${minutesTaken}m ${secondsTaken}s`;
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeTakenText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    let questionDisplay = '';
+    if (isImageURL(q.question)) {
+      questionDisplay = `<img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`;
+    } else {
+      questionDisplay = q.question;
+    }
+    html += `<div class="question-review">
+      <h4>Q${q.sr_no}: ${questionDisplay}</h4>`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution && q.solution.trim() !== '') {
+      let solutionDisplay = '';
+      if (isImageURL(q.solution)) {
+        solutionDisplay = `<img src="${q.solution}" class="solution-image" alt="Solution" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">`;
+      } else {
+        solutionDisplay = q.solution;
+      }
+      
+      html += `<div class="solution-section" style="margin-top: 15px; padding: 15px; background: #f0f8ff; border-left: 4px solid #007bff; border-radius: 8px;">
+        <strong style="color: #007bff;">💡 Solution:</strong>
+        <div style="margin-top: 8px; color: #333;">${solutionDisplay}</div>
+      </div>`;
+    }
+    
+    html += `</div>`;
+  });
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https')) &&
+    (str.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i));
+}
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = totalTimeMinutes * 60;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    updateTimer();
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEOGRAPHY TEST -6</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">MOTION 3.0 - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem('quizState', JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem('quizState');
+    if (saved) {
+      const state = JSON.parse(saved);
+      if (Date.now() - state.timestamp < 24 * 60 * 60 * 1000) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || (totalTimeMinutes * 60); // MODIFIED
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem('quizState');
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>
