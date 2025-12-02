@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-<title>Quiz Hub — Subjects & Chapters (Geography + 10 more)</title>
+<title>Quiz Hub — Subjects & Chapters + Weekly Tests</title>
 <style>
 /* ---------- Theme / variables (from your file, kept) ---------- */
 :root{
@@ -52,7 +52,8 @@ body{
 .btn{border:0;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600}
 .theme-toggle,.fullscreen-btn{background:var(--bg-tertiary);min-width:44px;min-height:44px}
 .theme-toggle:hover,.fullscreen-btn:hover{background:var(--primary-color);color:#fff}
-
+.btn-primary{background:var(--primary-color);color:white}
+.btn-primary:hover{background:var(--primary-hover)}
 
 /* Hub layout: subjects + details */
 .hub{
@@ -68,6 +69,93 @@ body{
 .subject:hover{box-shadow:var(--shadow)}
 .subject .meta{display:flex;flex-direction:column}
 .subject .meta small{color:var(--text-secondary)}
+
+/* Weekly Quiz Section Styles */
+.weekly-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.weekly-header h3 {
+  font-size: 18px;
+  color: var(--primary-color);
+}
+.weekly-badge {
+  background: linear-gradient(135deg, var(--danger-color), #ff8a00);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.weekly-subject {
+  background: var(--bg-tertiary);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 10px;
+  border-left: 4px solid var(--primary-color);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.weekly-subject:hover {
+  transform: translateX(4px);
+  box-shadow: var(--shadow);
+}
+.weekly-subject.active {
+  background: var(--primary-color);
+  color: white;
+}
+.weekly-subject.active .weekly-meta {
+  color: rgba(255,255,255,0.9);
+}
+.weekly-subject-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.weekly-meta {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.weekly-tests {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+  display: none;
+}
+.weekly-tests.active {
+  display: block;
+}
+.weekly-test-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  border: 1px solid var(--border-color);
+}
+.weekly-test-item:hover {
+  background: var(--bg-tertiary);
+}
+.test-link {
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 600;
+  flex-grow: 1;
+}
+.test-status {
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  background: var(--success-color);
+  color: white;
+  font-weight: 600;
+}
 
 /* Chapter list */
 .chapter-list{margin-top:12px;display:grid;gap:8px}
@@ -93,6 +181,9 @@ body{
 @media(max-width:480px){
   .header h1{font-size:16px}
   .subjects-grid{grid-template-columns:1fr}
+  .hub {
+    gap: 12px;
+  }
 }
 </style>
 </head>
@@ -114,37 +205,41 @@ body{
       <div class="subjects-grid" id="subjectsGrid" style="margin-top:12px">
         <!-- Subjects are injected here -->
       </div>
-
-     
     </div>
 
-    <!-- RIGHT: Simple Info -->
-<div style="display:flex;flex-direction:column;gap:12px">
-  <div class="stat card">
-    <div>
-      <div style="font-weight:700">Welcome to Your Quiz Hub</div>
-      <small>Select a subject below to start learning</small>
-    </div>
-  </div>
-</div>
+    <!-- RIGHT: Weekly Quiz, Stats & Info -->
+    <div class="side-section">
+      <!-- Weekly Quiz Section -->
+      <div class="card">
+        <div class="weekly-header">
+          <h3>Weekly Quiz</h3>
+          <span class="weekly-badge">NEW</span>
+        </div>
+        <div id="weeklyQuizContent">
+          <!-- Content will be populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Welcome Info -->
+      <div class="stat card">
+        <div>
+          <div style="font-weight:700">Welcome to Your Quiz Hub</div>
+          <small>Select a subject below to start learning</small>
+        </div>
+      </div>
+
+      <!-- Daily Streak -->
       <div class="stat card">
         <div style="display:flex;justify-content:space-between;align-items:center">
           <div>
             <div style="font-weight:700">Daily Streak</div>
             <small id="streakText">0 days</small>
           </div>
-          <div>
-            
-          </div>
         </div>
       </div>
-
-      
-            
-          
-        </div>
-        <div id="leaderboard" style="margin-top:10px"></div>
-      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 /* ---------- Data: subjects + chapters (URLs you gave) ---------- */
@@ -179,7 +274,6 @@ const subjects = [
       {no:26,title:'HUMAN GEOGRAPHY', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 26 - HUMAN GEOGRAPHY.html'}
     ]
   },
-
   { id:'polity', title:'Polity', chapters:[
     {no:1,title:'MAKING OF CONSTITUTION', url:'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 1- MAKING_OF_CONSTITUTION.html'},
     {no:2,title:'SALIENT FEATURES OF THE CONSTITUTION', url:'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 2- SALIENT_FEATURES_OF_CONSTITUTION.html'},
@@ -193,53 +287,62 @@ const subjects = [
     {no:10,title:'PARLIAMENT 2', url:'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 10- PARLIAMENT_PART_2.html'}
   ]
   },
-
   { id:'ancient', title:'Ancient History', chapters:[
     {no:1,title:'An. History 1', url:'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html'}
   ]},
-
   { id:'medieval', title:'Medieval History', chapters:[
     {no:1,title:'Med. History 1', url:'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html'}
    ]},
-
   { id:'modern', title:'Modern History', chapters:[
     {no:1,title:'Mod. His. 1', url:'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html'}
-    
   ]},
-
   { id:'economics', title:'Economics', chapters:[
     {no:1,title:'Eco 1', url:'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html'}
-    
   ]},
-
   { id:'biology', title:'Biology', chapters:[
     {no:1,title:'Biology 1', url:'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html'}
-   
   ]},
-
   { id:'chemistry', title:'Chemistry', chapters:[
     {no:1,title:'Chemistry 1', url:'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html'}
-    
   ]},
-
   { id:'physics', title:'Physics', chapters:[
     {no:1,title:'Physics 1', url:'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html'}
-    
   ]},
-
   { id:'environment', title:'Environment', chapters:[
     {no:1,title:'Env 1', url:'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html'}
-    
   ]},
-
   { id:'gk', title:'Static GK', chapters:[
     {no:1,title:'GK 1',url:'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html'}
-    
   ]}
 ];
 
-/* ---------- Local state & storage keys ---------- */
-// Minimal state - only theme
+/* ---------- Weekly Quiz Data ---------- */
+const weeklyQuizzes = [
+  {
+    id: 'geography',
+    title: 'Geography',
+    description: 'Weekly Geography Challenge',
+    tests: [
+      { id: 'geo-test-1', title: 'Weekly Test 1', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/weekly quiz/Weekly Test- 1 (Geo 4.0)', status: 'Available' },
+      { id: 'geo-test-2', title: 'Weekly Test 2', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/weekly quiz/Weekly Test- 2 (Geo 4.0)', status: 'Available' },
+      { id: 'geo-test-2', title: 'Weekly Test 3', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/weekly quiz/Weekly Test- 3 (Geo 4.0)', status: 'Available' },
+      { id: 'geo-test-2', title: 'Weekly Test 4', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/weekly quiz/Weekly Test- 4 (Geo 4.0)', status: 'Available' },
+      { id: 'geo-test-2', title: 'Weekly Test 5', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/weekly quiz/Weekly Test- 5 (Geo 4.0)', status: 'Available' },
+      { id: 'geo-test-2', title: 'Weekly Test 6', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/weekly quiz/Weekly Test-  6 (Geo 4.0)', status: 'Available' },
+      { id: 'geo-test-2', title: 'Weekly Test 7', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/weekly quiz/Weekly Test- 7 (Geo 4.0)', status: 'Available' }
+    ]
+  },
+  {
+    id: 'polity',
+    title: 'Polity',
+    description: 'Weekly Polity Challenge',
+    tests: [
+      { id: 'polity-test-1', title: 'Weekly Test 1', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/weekly quiz/Weekly Test- 1 (Pol 4.0)', status: 'Available' },
+      { id: 'polity-test-2', title: 'Weekly Test 2', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/weekly quiz/Weekly Test- 2 (Pol 4.0)', status: 'Available' }
+    ]
+  }
+];
+
 /* ---------- Utilities ---------- */
 function $(id){return document.getElementById(id)}
 
@@ -259,7 +362,6 @@ function renderSubjects(){
       </div>
     `;
     
-    // Add click listener to expand chapters inline
     const btn = el.querySelector('button');
     btn.addEventListener('click', ()=>{
       showChapters(sub);
@@ -286,9 +388,82 @@ function showChapters(subject){
     </div>
   `;
 }
+
+/* ---------- Weekly Quiz Functions ---------- */
+function renderWeeklyQuiz() {
+  const container = $('weeklyQuizContent');
+  let html = '';
+  
+  // Render subject selection
+  html += '<div id="weeklySubjects">';
+  weeklyQuizzes.forEach((quiz, index) => {
+    const isActive = index === 0 ? 'active' : '';
+    html += `
+      <div class="weekly-subject ${isActive}" data-id="${quiz.id}">
+        <div class="weekly-subject-title">
+          <span>${quiz.title}</span>
+          <span>▶</span>
+        </div>
+        <div class="weekly-meta">${quiz.description}</div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  
+  // Render tests for first subject by default
+  const firstSubject = weeklyQuizzes[0];
+  html += `
+    <div id="weeklyTests" class="weekly-tests active">
+      <div style="margin-bottom: 10px; font-weight: 600; color: var(--primary-color);">
+        ${firstSubject.title} Tests
+      </div>
+      ${firstSubject.tests.map(test => `
+        <div class="weekly-test-item">
+          <a href="${test.url}" target="_blank" class="test-link">${test.title}</a>
+          <span class="test-status">${test.status}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  
+  container.innerHTML = html;
+  
+  // Add event listeners to subject items
+  document.querySelectorAll('.weekly-subject').forEach(subjectEl => {
+    subjectEl.addEventListener('click', function() {
+      const subjectId = this.getAttribute('data-id');
+      const subject = weeklyQuizzes.find(q => q.id === subjectId);
+      
+      // Update active subject
+      document.querySelectorAll('.weekly-subject').forEach(el => {
+        el.classList.remove('active');
+      });
+      this.classList.add('active');
+      
+      // Update tests display
+      const testsContainer = $('weeklyTests');
+      testsContainer.innerHTML = `
+        <div style="margin-bottom: 10px; font-weight: 600; color: var(--primary-color);">
+          ${subject.title} Tests
+        </div>
+        ${subject.tests.map(test => `
+          <div class="weekly-test-item">
+            <a href="${test.url}" target="_blank" class="test-link">${test.title}</a>
+            <span class="test-status">${test.status}</span>
+          </div>
+        `).join('')}
+      `;
+      
+      // Ensure tests are visible
+      testsContainer.classList.add('active');
+    });
+  });
+}
+
 /* ---------- wiring UI actions ---------- */
 function initUI(){
   renderSubjects();
+  renderWeeklyQuiz();
   
   // Theme / fullscreen buttons
   $('themeToggle').addEventListener('click', toggleTheme);
@@ -320,8 +495,6 @@ function toggleFullscreen(){
 document.addEventListener('DOMContentLoaded', ()=>{
   initTheme(); initUI();
 });
-
 </script>
 </body>
 </html>
-
