@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+<title>Quiz Hub — Subjects & Chapters (Geography + 10 more)</title>
+<style>
+/* ---------- Theme / variables (from your file, kept) ---------- */
+:root{
+  --primary-color:#007bff; --primary-hover:#0069d9;
+  --success-color:#28a745; --success-hover:#218838;
+  --danger-color:#dc3545; --warning-color:#ffc107;
+  --secondary-color:#6c757d;
+  --bg-primary:#ffffff; --bg-secondary:#f8f9fa; --bg-tertiary:#e9ecef;
+  --text-primary:#212529; --text-secondary:#6c757d;
+  --border-color:#dee2e6; --shadow:0 4px 6px rgba(0,0,0,.1);
+  --shadow-lg:0 10px 30px rgba(0,0,0,.15);
+  --overlay:rgba(0,0,0,.5);
+  --nav-height:80px;
+}
+
+[data-theme="dark"]{
+  --primary-color:#4dabf7; --primary-hover:#339af0;
+  --success-color:#51cf66; --success-hover:#40c057;
+  --danger-color:#ff6b6b; --warning-color:#ffd43b;
+  --secondary-color:#868e96;
+  --bg-primary:#1a1a1a; --bg-secondary:#2d2d2d; --bg-tertiary:#404040;
+  --text-primary:#f8f9fa; --text-secondary:#adb5bd;
+  --border-color:#495057; --shadow:0 4px 6px rgba(0,0,0,.3);
+  --shadow-lg:0 10px 30px rgba(0,0,0,.4);
+  --overlay:rgba(0,0,0,.7);
+}
+
+/* Basic reset & layout */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background:var(--bg-secondary); color:var(--text-primary); line-height:1.6;
+  padding-bottom:20px;
+  transition:background .25s,color .25s;
+}
+
+/* Container */
+.container{max-width:1200px;margin:20px auto;padding:16px}
+
+/* Header */
+.header{display:flex;justify-content:space-between;align-items:center;background:var(--bg-primary);padding:18px;border-radius:12px;box-shadow:var(--shadow)}
+.header h1{font-size:20px;color:var(--primary-color);font-weight:700;user-select:none}
+.header-controls{display:flex;gap:12px;align-items:center}
+
+/* Buttons */
+.btn{border:0;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600}
+.theme-toggle,.fullscreen-btn{background:var(--bg-tertiary);min-width:44px;min-height:44px}
+.theme-toggle:hover,.fullscreen-btn:hover{background:var(--primary-color);color:#fff}
+
+/* Hub layout: subjects + details */
+.hub{
+  display:grid;grid-template-columns:1fr 380px;gap:18px;margin-top:14px;
+}
+@media(max-width:900px){.hub{grid-template-columns:1fr}}
+
+/* Subjects card */
+.card{background:var(--bg-primary);padding:18px;border-radius:12px;box-shadow:var(--shadow-lg)}
+.subjects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:600px){.subjects-grid{grid-template-columns:repeat(1,1fr)}}
+.subject{padding:12px;border-radius:10px;border:2px solid var(--border-color);display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.subject:hover{box-shadow:var(--shadow)}
+.subject .meta{display:flex;flex-direction:column}
+.subject .meta small{color:var(--text-secondary)}
+
+/* Chapter list */
+.chapter-list{margin-top:12px;display:grid;gap:8px}
+.chapter{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;background:var(--bg-tertiary);border:1px solid var(--border-color)}
+.chapter a{color:var(--text-primary);text-decoration:none;font-weight:600}
+.chapter .open{background:var(--primary-color);color:#fff;padding:6px 10px;border-radius:8px;border:none;cursor:pointer}
+
+/* Right column: simplified stats */
+.side-section{display:flex;flex-direction:column;gap:12px}
+.stat{padding:12px;border-radius:10px;background:linear-gradient(135deg,var(--bg-primary),var(--bg-secondary));border:1px solid var(--border-color)}
+
+/* Panel for quick-chapter */
+.panel-overlay{position:fixed;inset:0;background:var(--overlay);opacity:0;visibility:hidden;transition:all .25s;z-index:997}
+.panel-overlay.active{opacity:1;visibility:visible}
+.panel{position:fixed;right:-100%;top:0;height:100vh;width:420px;max-width:100%;background:var(--bg-primary);box-shadow:-6px 0 30px rgba(0,0,0,.2);transition:right .3s;z-index:999;display:flex;flex-direction:column}
+.panel.active{right:0}
+.panel .panel-header{padding:14px;background:var(--primary-color);color:#fff;display:flex;justify-content:space-between;align-items:center}
+.panel .panel-body{padding:12px;overflow:auto}
+
+/* small utilities */
+.badge-small{background:var(--bg-tertiary);padding:6px 10px;border-radius:999px;border:1px solid var(--border-color);font-weight:700}
+.legend{display:flex;gap:8px;flex-wrap:wrap}
+
+/* print-friendly tweaks */
+@media print{
+  .header-controls,.panel-overlay,.panel{display:none!important}
+  body{background:#fff;padding-bottom:0}
+}
+
+/* small responsive */
+@media(max-width:480px){
+  .header h1{font-size:16px}
+  .subjects-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Quiz Hub🌐</h1>
+    <div class="header-controls">
+      <button class="theme-toggle btn" id="themeToggle" title="Toggle theme">🌙</button>
+      <button class="fullscreen-btn btn" id="fullscreenBtn" title="Toggle fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="hub">
+    <!-- LEFT: Subjects & chapter explorer -->
+    <div class="card">
+      <strong>Subjects</strong>
+      <div class="subjects-grid" id="subjectsGrid" style="margin-top:12px">
+        <!-- Subjects are injected here -->
+      </div>
+    </div>
+
+    <!-- RIGHT: Simple info panel -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <!-- Additional content can go here -->
+    </div>
+  </div>
+
+  <!-- Panel for quick-chapter -->
+  <div class="panel-overlay" id="panelOverlay" aria-hidden></div>
+  <aside class="panel" id="panel">
+    <div class="panel-header">
+      <div>Chapter Links</div>
+      <button id="closePanel" class="btn">✕</button>
+    </div>
+    <div class="panel-body" id="panelBody">
+      <!-- injected -->
+    </div>
+  </aside>
+</div>
+
+<!-- Simple navigation buttons -->
+<div style="display:flex;justify-content:center;gap:12px;margin-top:20px">
+  <!-- Navigation buttons can go here -->
+</div>
+
+<script>
+/* ---------- Data: subjects + chapters (URLs you gave) ---------- */
+const subjects = [
+  {
+    id:'geography', title:'Geography', chapters:[
+      {no:1,title:'SOLAR SYSTEM', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 1 - SOLAR SYSTEM.html'},
+      {no:2,title:'LATITUDE AND LONGITUDE', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 2 - LATITUDE AND LONGITUDE.html'},
+      {no:3,title:"EARTH'S INTERIOR AND PLATE TECHTONICS", url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 3 - EARTH\'S INTERIOR AND PLATE TECHTONICS.html'},
+      {no:4,title:'OCEAN AND CONTINENTS', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 4 - OCEAN AND CONTINENTS.html'},
+      {no:5,title:'ROCKS AND VOLCANO', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 5 - ROCKS AND VOLCANO.html'},
+      {no:6,title:'GEOMORPHIC PROCESSES', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 6 - GEOMORPHIC PROCESSES.html'},
+      {no:7,title:'LANDFORMS', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 7 - LANDFORMS.html'},
+      {no:8,title:'ATMOSPHERE', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 8 - ATMOSPHERE.html'},
+      {no:9,title:'CONDENSATION AND PRECIPITATION', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 9 - CONDENSATION AND PRECIPITATION.html'},
+      {no:10,title:'WIND', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 10 - WIND.html'},
+      {no:11,title:'CYCLONE AND OCEAN CURRENTS', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 11 - CYCLONE AND OCEAN CURRENTS.html'},
+      {no:12,title:"INDIA AND IT'S LOCATION", url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 12 - INDIA AND IT\'S LOCATION.html'},
+      {no:13,title:'HIMALAYAS', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 13 - HIMALAYAS.html'},
+      {no:14,title:'PENINSULAR PLATEAU', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 14 - PENINSULAR PLATEAU.html'},
+      {no:15,title:'PLAINS AND ISLANDS', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 15 - PLAINS AND ISLANDS.html'},
+      {no:16,title:'HIMALAYAN RIVER SYSTEM', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 16 - HIMALAYAN RIVER SYSTEM.html'},
+      {no:17,title:'PENINSULAR RIVERS', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 17 - PENINSULAR RIVERS.html'},
+      {no:18,title:'DAMS LAKES AND WATERFALLS', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 18 - DAMS LAKES AND WATERFALLS.html'},
+      {no:19,title:'MONSOON', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 19 - MONSOON.html'},
+      {no:20,title:'FORESTS AND GRASSLANDS', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 20 - FORESTS AND GRASSLANDS.html'},
+      {no:21,title:'SOIL', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 21 - SOIL.html'},
+      {no:22,title:'AGRICULTURE', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 22 - AGRICULTURE.html'},
+      {no:23,title:'MINERALS', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 23 - MINERALS.html'},
+      {no:24,title:'TRANSPORT', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 24 - TRANSPORT.html'},
+      {no:25,title:'WORLD MAP', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 25 - WORLD MAP.html'},
+      {no:26,title:'HUMAN GEOGRAPHY', url:'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 26 - HUMAN GEOGRAPHY.html'}
+    ]
+  },
+  { 
+    id:'polity', title:'Polity', chapters:[
+      {no:1,title:'MAKING OF CONSTITUTION', url:'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 1- MAKING_OF_CONSTITUTION.html'},
+      {no:2,title:'SALIENT FEATURES OF THE CONSTITUTION', url:'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 2- SALIENT_FEATURES_OF_CONSTITUTION.html'},
+      {no:3,title:'PREAMBLE', url:'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 3- PREAMBLE.html'},
+      {no:4,title:'PART 1 AND 2 OF THE CONSTITUTION', url:'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 4- PART_1_AND_2_OF_CONSTITUTION.html'},
+      {no:5,title:'FUNDAMENTAL RIGHTS', url:'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 5- FUNDAMENTAL_RIGHTS.html'},
+      {no:6,title:'DPSP & FUNDAMENTAL DUTIES', url:'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 6- DPSP_AND_FUNDAMENTAL_DUTIES.html'},
+      {no:7,title:' PRESIDENT AND VICE PRESIDENT', url:'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 7- PRESIDENT_AND_VICE_PRESIDENT.html'},
+      {no:8,title:'PM & CoM', url:'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 8- PM_CoM.html'},
+      {no:9,title:'PARLIAMENT 1', url:'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 9- PARLIAMENT_PART_1.html'},
+      {no:10,title:'PARLIAMENT 2', url:'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 10- PARLIAMENT_PART_2.html'}
+    ]
+  },
+  { 
+    id:'ancient', title:'Ancient History', chapters:[
+      {no:1,title:'An. History 1', url:'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html'}
+    ]
+  },
+  { 
+    id:'medieval', title:'Medieval History', chapters:[
+      {no:1,title:'Med. History 1', url:'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html'}
+    ]
+  },
+  { 
+    id:'modern', title:'Modern History', chapters:[
+      {no:1,title:'Mod. His. 1', url:'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html'}
+    ]
+  },
+  { 
+    id:'economics', title:'Economics', chapters:[
+      {no:1,title:'Eco 1', url:'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html'}
+    ]
+  },
+  { 
+    id:'biology', title:'Biology', chapters:[
+      {no:1,title:'Biology 1', url:'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html'}
+    ]
+  },
+  { 
+    id:'chemistry', title:'Chemistry', chapters:[
+      {no:1,title:'Chemistry 1', url:'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html'}
+    ]
+  },
+  { 
+    id:'physics', title:'Physics', chapters:[
+      {no:1,title:'Physics 1', url:'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html'}
+    ]
+  },
+  { 
+    id:'environment', title:'Environment', chapters:[
+      {no:1,title:'Env 1', url:'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html'}
+    ]
+  },
+  { 
+    id:'gk', title:'Static GK', chapters:[
+      {no:1,title:'GK 1', url:'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html'}
+    ]
+  }
+];
+
+/* ---------- Utilities ---------- */
+function $(id){return document.getElementById(id)}
+
+/* ---------- Render subjects grid ---------- */
+function renderSubjects(){
+  const grid = $('subjectsGrid');
+  grid.innerHTML='';
+  subjects.forEach(sub=>{
+    const el = document.createElement('div');
+    el.className='subject';
+    el.setAttribute('data-id', sub.id);
+    el.innerHTML = `
+      <div class="meta">
+        <div style="font-weight:700">${sub.title}</div>
+        <small>${sub.chapters.length} chapter(s)</small>
+      </div>
+      <div>
+        <button class="btn" data-id="${sub.id}">Open</button>
+      </div>
+    `;
+    grid.appendChild(el);
+  });
+
+  // Add listeners
+  grid.querySelectorAll('button').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      const id = e.currentTarget.getAttribute('data-id');
+      openSubjectPanel(id);
+    });
+  });
+}
+
+/* ---------- Panel: show chapters for subject ---------- */
+function openSubjectPanel(subjectId){
+  const sub = subjects.find(s=>s.id===subjectId);
+  if(!sub) return;
+  const panel = $('panel'); const overlay = $('panelOverlay'); const body = $('panelBody');
+  body.innerHTML = `<h3 style="margin-bottom:8px">${sub.title} — Chapters</h3>`;
+  const list = document.createElement('div');
+  list.className='chapter-list';
+  sub.chapters.forEach(ch=>{
+    const row = document.createElement('div');
+    row.className='chapter';
+    row.innerHTML = `<div><strong>Ch ${ch.no}</strong> — <a href="${ch.url}" target="_blank" rel="noopener noreferrer">${ch.title}</a></div>
+                     <div><button class="open" data-url="${ch.url}">Open</button></div>`;
+    list.appendChild(row);
+  });
+  body.appendChild(list);
+
+  // quick actions
+  const actions = document.createElement('div');
+  actions.style.marginTop='10px';
+  actions.innerHTML = `<div style="display:flex;gap:8px">
+    <button class="btn" id="openAll">Open All Chapters</button>
+  </div>`;
+  body.appendChild(actions);
+
+  // listeners
+  body.querySelectorAll('.open').forEach(b=>b.addEventListener('click', ()=>{
+    window.open(b.getAttribute('data-url'),'_blank','noopener');
+  }));
+  $('openAll').addEventListener('click', ()=>{
+    sub.chapters.forEach(ch => window.open(ch.url,'_blank','noopener'));
+  });
+
+  panel.classList.add('active'); overlay.classList.add('active');
+}
+
+/* ---------- Theme handling ---------- */
+function initTheme(){
+  // Load saved theme or default to light
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeButton();
+}
+
+function updateThemeButton(){
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme(){
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeButton();
+}
+
+function toggleFullscreen(){
+  const elem = document.documentElement;
+  
+  if (!document.fullscreenElement) {
+    // Enter fullscreen
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) { /* Safari */
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE11 */
+      elem.msRequestFullscreen();
+    }
+  } else {
+    // Exit fullscreen
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) { /* Safari */
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { /* IE11 */
+      document.msExitFullscreen();
+    }
+  }
+}
+
+/* ---------- Setup event listeners ---------- */
+function setupEventListeners(){
+  // Theme toggle button
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', toggleTheme);
+  }
+  
+  // Fullscreen button
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+  }
+  
+  // Panel close buttons
+  const panelOverlay = document.getElementById('panelOverlay');
+  const closePanel = document.getElementById('closePanel');
+  const panel = document.getElementById('panel');
+  
+  if (panelOverlay) {
+    panelOverlay.addEventListener('click', () => {
+      panel.classList.remove('active');
+      panelOverlay.classList.remove('active');
+    });
+  }
+  
+  if (closePanel) {
+    closePanel.addEventListener('click', () => {
+      panel.classList.remove('active');
+      panelOverlay.classList.remove('active');
+    });
+  }
+}
+
+/* ---------- Initialize everything ---------- */
+function initUI(){
+  // First setup theme
+  initTheme();
+  
+  // Then setup event listeners
+  setupEventListeners();
+  
+  // Then render subjects
+  renderSubjects();
+}
+
+/* ---------- Initialize when DOM is loaded ---------- */
+document.addEventListener('DOMContentLoaded', initUI);
+</script>
+</body>
+</html>
