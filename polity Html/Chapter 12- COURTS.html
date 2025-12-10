@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>General Quiz -  - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>General Quiz - </h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>A Special Majority (2/3rd members) of each House of Parliament is required for the removal of a judge of the Supreme Court on the ground of:<br/> </b>सुप्रीम कोर्ट के न्यायाधीश को किस आधार पर हटाने के लिए संसद के प्रत्येक सदन के विशेष बहुमत <b>(2/3 </b>सदस्य<b>) </b>की आवश्यकता होती है<b>?</b></p>",
+    "option1": "<p> Absence from duty / कर्तव्य से अनुपस्थिति</p>",
+    "option2": "<p> Misbehaviour or incapacity / दुर्व्यवहार या अक्षमता</p>",
+    "option3": "<p> Voluntary resignation / स्वैच्छिक त्यागपत्र</p>",
+    "option4": "<p> Violation of the Constitution / संविधान का उल्लंघन</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The removal of a Supreme Court judge is based on the grounds of proved misbehaviour or incapacity. The order for removal is issued by the President only after an address has been passed by both Houses of Parliament with a Special Majority. This stringent procedure ensures the independence of the judiciary, protecting judges from executive or legislative overreach.<br/> सुप्रीम कोर्ट के न्यायाधीश को हटाने का आधार सिद्ध दुर्व्यवहार या अक्षमता है। यह आदेश राष्ट्रपति द्वारा तभी जारी किया जाता है जब संसद के दोनों सदनों द्वारा विशेष बहुमत से एक प्रस्ताव पारित किया गया हो। यह कठोर प्रक्रिया न्यायपालिका की स्वतंत्रता सुनिश्चित करती है, जिससे न्यायाधीशों को कार्यपालिका या विधायिका के अत्यधिक हस्तक्षेप से बचाया जाता है।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>Which body has the power to create laws to establish a procedure for investigating a judge's misconduct or incapacity?<br/> </b>न्यायाधीश के दुर्व्यवहार या अक्षमता की जाँच के लिए एक प्रक्रिया स्थापित करने हेतु कानून बनाने की शक्ति किस निकाय के पास है<b>?</b></p>",
+    "option1": "<p> The Supreme Court / सुप्रीम कोर्ट</p>",
+    "option2": "<p> The President / राष्ट्रपति</p>",
+    "option3": "<p> The Parliament / संसद</p>",
+    "option4": "<p> The Chief Justice of India (CJI) / भारत के मुख्य न्यायाधीश (CJI)</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Under Article 124(5) of the Indian Constitution, Parliament is empowered to determine by law how misbehavior or incapacity of a judge of the Supreme Court (and High Courts) shall be investigated. Under this provision, the Judges (Inquiry) Act, 1968 was enacted, which lays down the entire procedure for investigation.<br/> भारतीय संविधान के अनुच्छेद 124(5) के तहत, संसद को यह अधिकार दिया गया है कि वह क़ानून बनाकर यह निर्धारित करे कि सुप्रीम कोर्ट (और हाई कोर्ट) के किसी न्यायाधीश के दुर्व्यवहार या अक्षमता की जाँच किस प्रकार की जाएगी। इसी प्रावधान के अंतर्गत न्यायाधीश (जांच) अधिनियम, 1968 बनाया गया, जो जाँच की पूरी प्रक्रिया तय करता है।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>The National Judicial Appointments Commission (NJAC) was introduced by Parliament through which Constitutional Amendment Act?<br/> </b>संसद द्वारा राष्ट्रीय न्यायिक नियुक्ति आयोग <b>(NJAC) </b>को किस संवैधानिक संशोधन अधिनियम के माध्यम से पेश किया गया था<b>?</b></p>",
+    "option1": "<p> 42nd Constitutional Amendment Act / 42वाँ संवैधानिक संशोधन अधिनियम</p>",
+    "option2": "<p> 99th Constitutional Amendment Act / 99वाँ संवैधानिक संशोधन अधिनियम</p>",
+    "option3": "<p> 7th Constitutional Amendment Act / 7वाँ संवैधानिक संशोधन अधिनियम</p>",
+    "option4": "<p> 43rd Constitutional Amendment Act / 43वाँ संवैधानिक संशोधन अधिनियम</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The 99th Constitutional Amendment Act was passed by the Parliament to replace the Collegium System with the National Judicial Appointments Commission (NJAC). However, the Supreme Court, in the 4th Judges Case (2015), declared this amendment unconstitutional and null and void, restoring the Collegium System for the appointment of judges.<br/> 99वें संवैधानिक संशोधन अधिनियम को संसद द्वारा कॉलेजियम प्रणाली को राष्ट्रीय न्यायिक नियुक्ति आयोग (NJAC) से बदलने के लिए पारित किया गया था। हालाँकि, सुप्रीम कोर्ट ने, चौथे न्यायाधीश मामले (2015) में, इस संशोधन को असंवैधानिक और शून्य घोषित कर दिया, जिससे न्यायाधीशों की नियुक्ति के लिए कॉलेजियम प्रणाली बहाल हो गई।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>The law declared by the Supreme Court is binding on all courts under which Article?<br/> </b>सुप्रीम कोर्ट द्वारा घोषित कानून किस अनुच्छेद के तहत सभी न्यायालयों पर बाध्यकारी है<b>?</b></p>",
+    "option1": "<p> Article 137 / अनुच्छेद 137</p>",
+    "option2": "<p> Article 138 / अनुच्छेद 138</p>",
+    "option3": "<p> Article 141 / अनुच्छेद 141</p>",
+    "option4": "<p> Article 142 / अनुच्छेद 142</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 141 of the Constitution states that the law declared by the Supreme Court shall be binding on all courts within the territory of India. This principle establishes judicial precedent and uniformity in the interpretation and application of law across the country.<br/> संविधान का अनुच्छेद 141 यह निर्धारित करता है कि सुप्रीम कोर्ट द्वारा घोषित कानून भारत के क्षेत्र के भीतर सभी न्यायालयों पर बाध्यकारी होगा। यह सिद्धांत पूरे देश में कानून की व्याख्या और अनुप्रयोग में न्यायिक मिसाल और एकरूपता स्थापित करता है।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>Who among the following filed the Writ Petition that led to the famous verdict of the Supreme Court of India recognising the Right to Privacy as a Fundamental Right?<br/> </b>इनमें से किसने वह रिट याचिका दायर की थी<b>, </b>जिसके फलस्वरूप भारत के उच्चतम न्यायालय ने निजता के अधिकार को मूल अधिकार के रूप में मान्यता देने का प्रसिद्ध निर्णय दिया<b>?<br/> </b><br/> </p>",
+    "option1": "<p> Justice P. N. Bhagwati / न्यायमूर्ति पी० एन० भगवती<br/> <br/> </p>",
+    "option2": "<p> Justice Rohinton Fali Nariman / न्यायमूर्ति रोहिंटन फली नरीमन</p>",
+    "option3": "<p> Justice K. S. Puttaswamy / न्यायमूर्ति के० एस० पुट्टास्वामी<br/> <br/> </p>",
+    "option4": "<p> Justice Anil R. Dave / न्यायमूर्ति अनिल आर० दवे</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The landmark judgment recognizing the Right to Privacy as a fundamental right was delivered in the case of Justice K. S. Puttaswamy (Retd.) v. Union of India (2017). Justice K. S. Puttaswamy was the primary petitioner in this case.<br/> निजता के अधिकार को मूल अधिकार के रूप में मान्यता देने वाला ऐतिहासिक निर्णय न्यायमूर्ति के० एस० पुट्टास्वामी (सेवानिवृत्त) बनाम भारत संघ (2017) के मामले में दिया गया था। न्यायमूर्ति के० एस० पुट्टास्वामी इस मामले में मुख्य याचिकाकर्ता थे।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>Which Constitutional Amendment Act is associated with the establishment of a common High Court for two or more states?<br/> </b>दो या दो से अधिक राज्यों के लिए एक सामान्य उच्च न्यायालय की स्थापना से कौन सा संवैधानिक संशोधन अधिनियम जुड़ा हुआ है<b>?</b></p>",
+    "option1": "<p> 42nd Constitutional Amendment / 42वाँ संवैधानिक संशोधन</p>",
+    "option2": "<p> 99th Constitutional Amendment / 99वाँ संवैधानिक संशोधन</p>",
+    "option3": "<p> 7th Constitutional Amendment / 7वाँ संवैधानिक संशोधन</p>",
+    "option4": "<p> 43rd Constitutional Amendment / 43वाँ संवैधानिक संशोधन</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The 7th Constitutional Amendment (1956) enabled the Parliament to establish a common High Court for two or more states, as outlined in Article 231. This provision is utilized for states like Maharashtra and Goa, which share the Bombay High Court, and several North-Eastern states under the Guwahati High Court.<br/> 7वें संवैधानिक संशोधन (1956) ने संसद को अनुच्छेद 231 में उल्लिखित अनुसार, दो या दो से अधिक राज्यों के लिए एक सामान्य उच्च न्यायालय स्थापित करने में सक्षम बनाया। इस प्रावधान का उपयोग महाराष्ट्र और गोवा जैसे राज्यों के लिए किया जाता है, जो बॉम्बे उच्च न्यायालय साझा करते हैं, और गुवाहाटी उच्च न्यायालय के तहत कई उत्तर-पूर्वी राज्य भी।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>The number of judges (other than the Chief Justice) in a High Court is determined by:<br/> </b>उच्च न्यायालय में <b>(</b>मुख्य न्यायाधीश के अलावा<b>) </b>न्यायाधीशों की संख्या किसके द्वारा निर्धारित की जाती है<b>?</b></p>",
+    "option1": "<p> The Chief Justice of the concerned High Court / संबंधित उच्च न्यायालय के मुख्य न्यायाधीश</p>",
+    "option2": "<p> The Parliament / संसद</p>",
+    "option3": "<p> The President / राष्ट्रपति</p>",
+    "option4": "<p> The Governor of the State / राज्य के राज्यपाल</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> According to Article 216 of the Indian Constitution, the number of judges (other than the Chief Justice) in a High Court is determined from time to time by the President, taking into account the needs and workload of the State/Territory concerned.<br/> भारतीय संविधान के अनुच्छेद 216 के अनुसार, किसी उच्च न्यायालय में (मुख्य न्यायाधीश के अलावा) न्यायाधीशों की संख्या राष्ट्रपति द्वारा समय-समय पर निर्धारित की जाती है। यह संख्या संबंधित राज्य/क्षेत्र की आवश्यकता और कार्यभार को ध्यान में रखकर तय की जाती है।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>The order for the removal of a judge of the Supreme Court is issued by:<br/> </b>सुप्रीम कोर्ट के न्यायाधीश को हटाने का आदेश किसके द्वारा जारी किया जाता है<b>?</b></p>",
+    "option1": "<p> The Chief Justice of India / भारत के मुख्य न्यायाधीश</p>",
+    "option2": "<p> The Prime Minister / प्रधानमंत्री</p>",
+    "option3": "<p> The Parliament / संसद</p>",
+    "option4": "<p> The President / राष्ट्रपति</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The actual 'Order of President' is the final step in the removal process of a Supreme Court judge. This order, however, can only be issued after the address for removal has been passed by the Parliament with a special majority, on the grounds of proved misbehaviour or incapacity. सुप्रीम कोर्ट के न्यायाधीश को हटाने की प्रक्रिया में 'राष्ट्रपति का आदेश' अंतिम चरण होता है। हालाँकि, यह आदेश सिद्ध दुर्व्यवहार या अक्षमता के आधार पर संसद द्वारा विशेष बहुमत से हटाए जाने का प्रस्ताव पारित होने के बाद ही जारी किया जा सकता है।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Who has the power to enlarge the jurisdiction of the Supreme Court under Article 138 of the Constitution?<br/> </b>संविधान के अनुच्छेद <b>138 </b>के तहत सुप्रीम कोर्ट के क्षेत्राधिकार को बढ़ाने की शक्ति किसके पास है<b>?</b></p>",
+    "option1": "<p> The President / राष्ट्रपति</p>",
+    "option2": "<p> The Supreme Court itself / सुप्रीम कोर्ट स्वयं</p>",
+    "option3": "<p> The Parliament by law / संसद द्वारा कानून द्वारा</p>",
+    "option4": "<p> The Chief Justice of India / भारत के मुख्य न्यायाधीश</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 138 explicitly grants the power to the Parliament to enlarge the jurisdiction of the Supreme Court by enacting a law. This allows the Parliament to assign additional powers and functions to the Supreme Court beyond those initially provided in the Constitution.<br/> अनुच्छेद 138 स्पष्ट रूप से संसद को कानून बनाकर सुप्रीम कोर्ट के क्षेत्राधिकार को बढ़ाने की शक्ति प्रदान करता है। यह संसद को सुप्रीम कोर्ट को संविधान में शुरू में दिए गए लोगों के अलावा अतिरिक्त शक्तियाँ और कार्य सौंपने की अनुमति देता है।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>Who submits the report on the Union Accounts to the President for presentation to the Houses of Parliament?<br/> </b>संसद के सदनों में प्रस्तुति के लिए संघीय लेखा पर रिपोर्ट राष्ट्रपति को कौन प्रस्तुत करता है<b>?</b></p>",
+    "option1": "<p> The Prime Minister / प्रधान मंत्री</p>",
+    "option2": "<p> The Minister of Finance / वित्त मंत्री</p>",
+    "option3": "<p> The Comptroller and Auditor General (CAG) / नियंत्रक और महालेखा परीक्षक (CAG)</p>",
+    "option4": "<p> The Speaker of the Lok Sabha / लोकसभा अध्यक्ष</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Comptroller and Auditor General (CAG) of India submits reports on the Union's accounts directly to the President. The President then causes these reports to be laid before both Houses of the Parliament. This ensures Parliamentary oversight over the executive's financial expenditure.<br/> भारत के नियंत्रक और महालेखा परीक्षक (CAG) संघ के खातों पर रिपोर्ट सीधे राष्ट्रपति को प्रस्तुत करते हैं। इसके बाद राष्ट्रपति इन रिपोर्टों को संसद के दोनों सदनों के समक्ष रखवाते हैं। यह कार्यपालिका के वित्तीय व्यय पर संसदीय निगरानी सुनिश्चित करता है।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Consider the following statements regarding the Supreme Court of India:<br/> </b>भारत के उच्चतम न्यायालय के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. Statement I: The maximum possible strength of the Supreme Court, including the CJI, is 34 judges, and this number can be changed by the Parliament.<br/> </b>कथन <b>I: CJI </b>सहित उच्चतम न्यायालय की अधिकतम संभावित संख्या <b>34 </b>न्यायाधीश है<b>, </b>और इस संख्या को संसद द्वारा बदला जा सकता है।<b><br/> 2. Statement II: Article 145 allows the Supreme Court to set its own rules for operation, but these rules cannot conflict with laws made by the Parliament.<br/> </b>कथन <b>II: </b>अनुच्छेद <b>145 </b>उच्चतम न्यायालय को संचालन के लिए अपने नियम निर्धारित करने की अनुमति देता है<b>, </b>लेकिन ये नियम संसद द्वारा बनाए गए कानूनों के साथ संघर्ष नहीं कर सकते।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> Statement I only / केवल कथन I</p>",
+    "option2": "<p> Statement II only / केवल कथन II</p>",
+    "option3": "<p> Statement I and Statement II / कथन I और कथन II दोनों</p>",
+    "option4": "<p> Neither Statement I nor Statement II / न तो कथन I और न ही कथन II</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statement I is correct as the maximum strength is currently 1 CJI + 33 other judges (34 in total), and the power to regulate the constitution and organisation of the SC lies with Parliament. Statement II is correct as the SC's rule-making power under Article 145 is subject to any law made by Parliament and presidential approval.<br/> कथन I सही है क्योंकि अधिकतम संख्या वर्तमान में 1 CJI + 33 अन्य न्यायाधीश (कुल 34) है, और SC के संविधान और संगठन को विनियमित करने की शक्ति संसद के पास है। कथन II सही है क्योंकि अनुच्छेद 145 के तहत SC की नियम बनाने की शक्ति संसद द्वारा बनाए गए किसी भी कानून के अधीन है और इसके लिए राष्ट्रपति की मंजूरी आवश्यक है।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Assertion (A): The Supreme Court, in the 4th Judges Case, declared the 99th Constitutional Amendment Act as unconstitutional and null and void.<br/> </b>अभिकथन <b>(A): </b>सुप्रीम कोर्ट ने<b>, </b>चौथे न्यायाधीश मामले में<b>, 99</b>वें संवैधानिक संशोधन अधिनियम को असंवैधानिक और शून्य घोषित कर दिया।<b><br/> Reason (R): The 99th CA sought to replace the Collegium System with the National Judicial Appointments Commission (NJAC).<br/> </b>कारण <b>(R): 99</b>वें संवैधानिक संशोधन अधिनियम का उद्देश्य कॉलेजियम प्रणाली को राष्ट्रीय न्यायिक नियुक्ति आयोग <b>(NJAC) </b>से बदलना था।</p>",
+    "option1": "<p> Both (A) and (R) are true and (R) is the correct explanation of (A). / (A) और (R) दोनों सत्य हैं और (R), (A) का सही स्पष्टीकरण है।</p>",
+    "option2": "<p> Both (A) and (R) are true but (R) is not the correct explanation of (A). / (A) और (R) दोनों सत्य हैं लेकिन (R), (A) का सही स्पष्टीकरण नहीं है।</p>",
+    "option3": "<p> (A) is true but (R) is false. / (A) सत्य है लेकिन (R) असत्य है।</p>",
+    "option4": "<p> (A) is false but (R) is true. / (A) असत्य है लेकिन (R) सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Supreme Court struck down the 99th CA (Assertion A) because it viewed the creation of the NJAC (Reason R) as an infringement on the principle of judicial independence, which is part of the basic structure of the Constitution. Therefore, the reason directly explains why the SC took the action mentioned in the assertion.<br/> सुप्रीम कोर्ट ने 99वें संवैधानिक संशोधन अधिनियम (अभिकथन A) को इस आधार पर रद्द कर दिया क्योंकि उसने NJAC के निर्माण (कारण R) को न्यायिक स्वतंत्रता के सिद्धांत का उल्लंघन माना, जो संविधान की मूल संरचना का हिस्सा है। इसलिए, कारण सीधे बताता है कि SC ने अभिकथन में उल्लिखित कार्रवाई क्यों की।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Consider the following statements regarding the powers of the Parliament over High Courts:<br/> </b>उच्च न्यायालयों पर संसद की शक्तियों के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. Statement I: Parliament has the power to extend the jurisdiction of a High Court to a Union Territory.<br/> </b>कथन <b>I: </b>संसद के पास उच्च न्यायालय के क्षेत्राधिकार को किसी केंद्र शासित प्रदेश तक विस्तारित करने की शक्ति है।<b><br/> 2. Statement II: The salaries, allowances, leaves, and pension rights of High Court judges are determined by Parliament.<br/> </b>कथन <b>II: </b>उच्च न्यायालय के न्यायाधीशों के वेतन<b>, </b>भत्ते<b>, </b>छुट्टियाँ और पेंशन अधिकार संसद द्वारा निर्धारित किए जाते हैं।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> Statement I only / केवल कथन I</p>",
+    "option2": "<p> Statement II only / केवल कथन II</p>",
+    "option3": "<p> Both Statement I and Statement II / कथन I और कथन II दोनों</p>",
+    "option4": "<p> Neither Statement I nor Statement II / न तो कथन I और न ही कथन II</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Both statements are correct. Article 230 grants Parliament the power to extend the jurisdiction of a High Court to, or exclude the jurisdiction of a High Court from, any Union Territory (Statement I). Also, Article 221 states that the Parliament determines the service conditions, including salary and pension rights, of the High Court judges (Statement II).<br/> दोनों कथन सही हैं। अनुच्छेद 230 संसद को किसी भी केंद्र शासित प्रदेश तक उच्च न्यायालय के क्षेत्राधिकार को विस्तारित करने या किसी उच्च न्यायालय के क्षेत्राधिकार को उससे बाहर करने की शक्ति प्रदान करता है (कथन I)। साथ ही, अनुच्छेद 221 कहता है कि संसद उच्च न्यायालय के न्यायाधीशों के वेतन और पेंशन अधिकारों सहित सेवा शर्तों का निर्धारण करती है (कथन II)।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Which one of the following organizations challenged the constitutionality of Section 377 of the Indian Penal Code in the Supreme Court of India?<br/> </b>निम्नलिखित में से किस संगठन ने भारतीय दंड संहिता की धारा <b>377 </b>की संवैधानिकता को भारत के उच्चतम न्यायालय में चुनौती दी है<b>?</b></p>",
+    "option1": "<p> Naz Foundation (India) Trust / नाज़ फाउंडेशन (इंडिया) ट्रस्ट</p>",
+    "option2": "<p> Bachpan Bachao Andolan / बचपन बचाओ आंदोलन</p>",
+    "option3": "<p> Sambhav Foundation India / संभव फाउंडेशन इंडिया</p>",
+    "option4": "<p> ActionAid India / एक्शनएड इंडिया</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Naz Foundation (India) Trust was the primary organization that first challenged the constitutionality of Section 377 of the Indian Penal Code in the Delhi High Court and subsequently played a crucial role in the legal battle that reached the Supreme Court. The Delhi High Court decision in Naz Foundation v. Govt. of NCT of Delhi (2009) initially decriminalized the section, but the Supreme Court later overturned it in 2013 (Suresh Kumar Koushal v. Naz Foundation). Finally, the Supreme Court's verdict in Navtej Singh Johar v. Union of India (2018) read down Section 377 to exclude consensual sexual acts between adults of the same sex, effectively decriminalizing homosexuality.<br/> नाज़ फाउंडेशन (इंडिया) ट्रस्ट वह प्राथमिक संगठन था जिसने पहले दिल्ली उच्च न्यायालय में भारतीय दंड संहिता की धारा 377 की संवैधानिकता को चुनौती दी थी और बाद में उच्चतम न्यायालय तक पहुँचे कानूनी संघर्ष में महत्वपूर्ण भूमिका निभाई थी। नाज़ फाउंडेशन बनाम एन.सी.टी. दिल्ली सरकार (2009) में दिल्ली उच्च न्यायालय के फैसले ने शुरू में इस धारा को अपराधमुक्त कर दिया था, लेकिन उच्चतम न्यायालय ने बाद में 2013 में इसे उलट दिया (सुरेश कुमार कौशल बनाम नाज़ फाउंडेशन)। अंत में, नवतेज सिंह जौहर बनाम भारत संघ (2018) में उच्चतम न्यायालय के फैसले ने धारा 377 को समलैंगिक वयस्कों के बीच सहमति से यौन कृत्यों को बाहर करने के लिए पढ़ा, जिससे समलैंगिकता को प्रभावी ढंग से अपराधमुक्त कर दिया गया।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Consider the following statements: </b>निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. Statement I: A former Supreme Court judge cannot practice law in any court or before any authority within the territory of India. </b>कथन <b>I: </b>सुप्रीम कोर्ट का एक पूर्व न्यायाधीश भारत के क्षेत्र के भीतर किसी भी अदालत या किसी भी प्राधिकरण के सामने कानून का अभ्यास नहीं कर सकता है।<b><br/> 2. Statement II: A former permanent High Court judge is restricted from practicing law in any court in India, except the Supreme Court and other High Courts. </b>कथन <b>II: </b>एक पूर्व स्थायी उच्च न्यायालय न्यायाधीश को सुप्रीम कोर्ट और अन्य उच्च न्यायालयों को छोड़कर<b>, </b>भारत में किसी भी अदालत में कानून का अभ्यास करने से प्रतिबंधित किया जाता है।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> Statement I only / केवल कथन I</p>",
+    "option2": "<p> Statement II only / केवल कथन II</p>",
+    "option3": "<p> Both Statement I and Statement II / कथन I और कथन II दोनों</p>",
+    "option4": "<p> Neither Statement I nor Statement II / न तो कथन I और न ही कथन II</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statement I is correct; Article 124(7) imposes a complete ban on practice for a former SC judge. Statement II is also correct; Article 220 restricts a former permanent HC judge from practicing in any court except the Supreme Court and the other High Courts(other than the High Court where they served), providing a partial restriction.<br/> कथन I सही है; अनुच्छेद 124(7) एक पूर्व SC न्यायाधीश पर अभ्यास के लिए पूर्ण प्रतिबंध लगाता है। कथन II भी सही है; अनुच्छेद 220 एक पूर्व स्थायी HC न्यायाधीश को सुप्रीम कोर्ट और अन्य उच्च न्यायालयों को छोड़कर भारत में किसी भी अदालत में अभ्यास करने से प्रतिबंधित करता है, एक आंशिक प्रतिबंध प्रदान करता है।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Which of the following is true regarding the removal of both Supreme Court and High Court judges?<br/> </b>सुप्रीम कोर्ट और हाई कोर्ट दोनों के न्यायाधीशों को हटाने के संबंध में निम्नलिखित में से कौन सा सत्य है<b>?</b></p>",
+    "option1": "<p> The process for removal is the same for both. / हटाने की प्रक्रिया दोनों के लिए समान है।</p>",
+    "option2": "<p> The order of removal is issued by the Chief Justice of India. / हटाने का आदेश भारत के मुख्य न्यायाधीश द्वारा जारी किया जाता है।</p>",
+    "option3": "<p> The removal requires a Simple Majority of Parliament. / हटाने के लिए संसद के साधारण बहुमत की आवश्यकता होती है।</p>",
+    "option4": "<p> The grounds for removal are only incapacity. / हटाने का आधार केवल अक्षमता है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The removal process for a High Court judge is the same as that for a Supreme Court judge. Both require an order from the President following an address passed by each House of the Parliament by a Special Majority, on the grounds of proved misbehaviour or incapacity.<br/> एक उच्च न्यायालय के न्यायाधीश को हटाने की प्रक्रिया सुप्रीम कोर्ट के न्यायाधीश के लिए समान है। दोनों को सिद्ध दुर्व्यवहार या अक्षमता के आधार पर, संसद के प्रत्येक सदन द्वारा विशेष बहुमत से पारित प्रस्ताव के बाद राष्ट्रपति के एक आदेश की आवश्यकता होती है।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>The power of the Supreme Court to review its own judgements or orders is provided under:<br/> </b>सुप्रीम कोर्ट को अपने स्वयं के निर्णयों या आदेशों की समीक्षा करने की शक्ति किसके तहत प्रदान की गई है<b>?</b></p>",
+    "option1": "<p> Article 132 / अनुच्छेद 132</p>",
+    "option2": "<p> Article 136 / अनुच्छेद 136</p>",
+    "option3": "<p> Article 137 / अनुच्छेद 137</p>",
+    "option4": "<p> Article 140 / अनुच्छेद 140</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 137 grants the Supreme Court the power to review any judgment pronounced or order made by it. This power is subject to the provisions of any law made by Parliament or any rules made under Article 145, demonstrating a legislative influence on the judicial process. अनुच्छेद 137 सुप्रीम कोर्ट को उसके द्वारा दिए गए किसी भी निर्णय या आदेश की समीक्षा करने की शक्ति प्रदान करता है। यह शक्ति संसद द्वारा बनाए गए किसी भी कानून या अनुच्छेद 145 के तहत बनाए गए किसी भी नियम के प्रावधानों के अधीन है, जो न्यायिक प्रक्रिया पर विधायी प्रभाव को दर्शाता है।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>The enforcement of decrees and orders of the Supreme Court across the territory of India is dealt with by:<br/> </b>भारत के क्षेत्र में सुप्रीम कोर्ट के फैसलों और आदेशों को लागू करने का कार्य किसके द्वारा किया जाता है<b>?</b></p>",
+    "option1": "<p> Article 124 / अनुच्छेद 124</p>",
+    "option2": "<p> Article 142 / अनुच्छेद 142</p>",
+    "option3": "<p> Article 145 / अनुच्छेद 145</p>",
+    "option4": "<p> Article 147 / अनुच्छेद 147</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 142 deals with the enforcement of decrees and orders of the Supreme Court, stating that the SC may pass such decree or order as is necessary for doing complete justice in any cause or matter pending before it. This power is often associated with judicial activism, as demonstrated in the Bhopal Gas Tragedy case.<br/> अनुच्छेद 142 सुप्रीम कोर्ट के फैसलों और आदेशों को लागू करने से संबंधित है, जिसमें कहा गया है कि SC अपने समक्ष लंबित किसी भी कारण या मामले में पूर्ण न्याय करने के लिए आवश्यक ऐसा फैसला या आदेश पारित कर सकता है। यह शक्ति अक्सर न्यायिक सक्रियता से जुड़ी होती है, जैसा कि भोपाल गैस त्रासदी मामले में प्रदर्शित हुआ था।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>The Supreme Court of India exercises advisory jurisdiction under which Article of the Constitution of India?<br/> </b>भारत का उच्चतम न्यायालय भारत के संविधान के किस अनुच्छेद के अधीन सलाहकार अधिकारिता का प्रयोग करता है<b>?<br/> </b><br/> </p>",
+    "option1": "<p> Article 141 / अनुच्छेद 141<br/> <br/> </p>",
+    "option2": "<p> Article 142 / अनुच्छेद 142</p>",
+    "option3": "<p> Article 143 / अनुच्छेद 143</p>",
+    "option4": "<p> Article 144 / अनुच्छेद 144</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 143 of the Constitution of India vests the Supreme Court with the power to advise the President of India on a question of law or fact of public importance. This is known as the Advisory Jurisdiction. Article 141 deals with the binding nature of the law declared by the Supreme Court. Article 142 deals with the power to pass an order for doing complete justice. Article 144 directs all authorities to act in aid of the Supreme Court.<br/> भारत के संविधान का अनुच्छेद 143 उच्चतम न्यायालय को राष्ट्रपति को लोक महत्व के कानून या तथ्य के प्रश्न पर सलाह देने की शक्ति प्रदान करता है। इसे सलाहकार अधिकारिता के रूप में जाना जाता है। अनुच्छेद 141 उच्चतम न्यायालय द्वारा घोषित कानून की बाध्यकारी प्रकृति से संबंधित है। अनुच्छेद 142 पूर्ण न्याय करने के लिए आदेश पारित करने की शक्ति से संबंधित है। अनुच्छेद 144 सभी प्राधिकरणों को उच्चतम न्यायालय की सहायता में कार्य करने का निर्देश देता है।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Assertion (A): The President has the power to consult the Supreme Court on a matter of general public importance.<br/> </b>अभिकथन <b>(A): </b>राष्ट्रपति के पास सामान्य सार्वजनिक महत्व के मामले पर सुप्रीम कोर्ट से परामर्श करने की शक्ति है।<b><br/> Reason (R): The SC's advice is not binding on the President in all cases of advisory jurisdiction.<br/> </b>कारण <b>(R): </b>सलाहकार क्षेत्राधिकार के सभी मामलों में <b>SC </b>की सलाह राष्ट्रपति पर बाध्यकारी नहीं होती है।</p>",
+    "option1": "<p> Both (A) and (R) are true and (R) is the correct explanation of (A). / (A) और (R) दोनों सत्य हैं और (R), (A) का सही स्पष्टीकरण है।</p>",
+    "option2": "<p> Both (A) and (R) are true but (R) is not the correct explanation of (A). / (A) और (R) दोनों सत्य हैं लेकिन (R), (A) का सही स्पष्टीकरण नहीं है।</p>",
+    "option3": "<p> (A) is true but (R) is false. / (A) सत्य है लेकिन (R) असत्य है।</p>",
+    "option4": "<p> (A) is false but (R) is true. / (A) असत्य है लेकिन (R) सत्य है।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Assertion (A) is true as per Article 143 (Advisory Jurisdiction), which allows the President to seek SC's opinion on two types of matters: pre-constitutional and general public importance. Reason (R) is also true as the SC's advice is not binding on the President for matters of general importance, but it does not explain why the President has the power to consult the SC.<br/> अभिकथन (A) अनुच्छेद 143 (सलाहकार क्षेत्राधिकार) के अनुसार सत्य है, जो राष्ट्रपति को दो प्रकार के मामलों पर SC की राय लेने की अनुमति देता है: संवैधानिक पूर्व और सामान्य सार्वजनिक महत्व। कारण (R) भी सत्य है क्योंकि सामान्य महत्व के मामलों के लिए SC की सलाह राष्ट्रपति पर बाध्यकारी नहीं होती है, लेकिन यह इस बात की व्याख्या नहीं करता कि राष्ट्रपति को SC से परामर्श करने की शक्ति क्यों है।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Which one of the following statements with regard to the impeachment of a Judge of the Supreme Court of India is not correct?<br/> </b>भारत के उच्चतम न्यायालय के किसी न्यायाधीश पर महाभियोग चलाने के संबंध में निम्नलिखित कथनों में से कौन<b>-</b>सा सही नहीं है<b>?</b></p>",
+    "option1": "<p> A motion addressed to the President, signed by at least 100 members of both the Houses of the Parliament is delivered to the Speaker. / संसद के दोनों सदनों के कम-से-कम 100 सदस्यों द्वारा हस्ताक्षरित और राष्ट्रपति को संबोधित प्रस्ताव अध्यक्ष को प्रस्तुत किया जाता है।</p>",
+    "option2": "<p> The motion is investigated by Committee of three (The Chief Justice or a judge of the Supreme Court, a Chief Justice of a High Court, and a distinguished jurist.)/ प्रस्ताव की जांच तीन सदस्यों वाली समिति (मुख्य न्यायाधीश या सर्वोच्च न्यायालय के न्यायाधीश, उच्च न्यायालय के मुख्य न्यायाधीश और एक प्रतिष्ठित न्यायविद) द्वारा की जाती है।</p>",
+    "option3": "<p> If the Committee finds the Judge guilty of misbehaviour or that he suffers from incapacity, the motion together with the report of the Committee is taken up for consideration in the House where the motion is pending. / यदि समिति इस निष्कर्ष पर पहुँचती है कि न्यायाधीश कदाचार का दोषी है या असमर्थता से ग्रस्त है, तो समिति की रिपोर्ट के साथ-साथ इस प्रस्ताव पर सदन में विचार किया जाएगा जहाँ यह प्रस्ताव लंबित है।</p>",
+    "option4": "<p> The Judge will be removed after the President gives his order for removal. / राष्ट्रपति द्वारा हटाए जाने का आदेश दिए जाने के पश्चात् न्यायाधीश को हटाया जाएगा।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The motion, signed by the requisite number of members (100 in Lok Sabha or 50 in Rajya Sabha), is delivered to the Speaker (or Chairman). The rest of the process involves the committee investigation and subsequent motion consideration in the Parliament before the President issues the removal order. Statement (a) It is not required that 100 members of both Houses sign the motion.<br/> प्रस्ताव, अपेक्षित सदस्यों (लोकसभा में 100 या राज्यसभा में 50) द्वारा हस्ताक्षरित, अध्यक्ष (या सभापति) को सौंपा जाता है। शेष प्रक्रिया में समिति द्वारा जाँच और राष्ट्रपति द्वारा निष्कासन आदेश जारी करने से पहले संसद में प्रस्ताव पर विचार शामिल होता है। कथन (a) यह आवश्यक नहीं है कि दोनों सदनों के 100 सदस्य प्रस्ताव पर हस्ताक्षर करें।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>The Judgment of the Supreme Court in Peoples' Union for Civil Liberties v. Union of India 2004 is related to which of the following?<br/> </b>पीपल्स यूनियन फॉर सिविल लिबर्टीज़ बनाम भारत संघ <b>2004 </b>मामले में उच्चतम न्यायालय का निर्णय निम्नलिखित में से किससे संबंधित है<b>?</b></p>",
+    "option1": "<p> Right to Shelter / आश्रय का अधिकार</p>",
+    "option2": "<p> Right against Custodial violence / अभिरक्षा में हिंसा के विरुद्ध अधिकार</p>",
+    "option3": "<p> Right to Information / सूचना का अधिकार</p>",
+    "option4": "<p> Right to Speedy trial / शीघ्र विचारण का अधिकार</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The 2004 Supreme Court judgment in Peoples' Union for Civil Liberties v. Union of India dealt with the Right to Information (RTI), specifically in the context of voter's rights. It affirmed the right of voters to know about the assets, liabilities, and educational qualifications of candidates contesting elections, holding it as part of the freedom of speech and expression under Article 19(1)(a) of the Constitution.<br/> पीपल्स यूनियन फॉर सिविल लिबर्टीज़ बनाम भारत संघ मामले में 2004 का उच्चतम न्यायालय का निर्णय सूचना के अधिकार से संबंधित था, विशेष रूप से मतदाता के अधिकारों के संदर्भ में। इसने चुनाव लड़ने वाले उम्मीदवारों की संपत्ति, देनदारियों और शैक्षिक योग्यताओं के बारे में जानने के मतदाताओं के अधिकार की पुष्टि की, इसे संविधान के अनुच्छेद 19(1)(a) के तहत वाक् और अभिव्यक्ति की स्वतंत्रता के हिस्से के रूप में माना।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Which one of the following powers of the Supreme Court is also conferred on a High Court?<br/> </b>उच्चतम न्यायालय की निम्नलिखित शक्तियों में से कौन<b>-</b>सी उच्च न्यायालय को भी प्रदान की गयी है<b>?</b></p>",
+    "option1": "<p> Advisory power / सलाहकारी शक्ति</p>",
+    "option2": "<p> Power of doing complete justice in any cause or matter pending before the court / न्यायालय के समक्ष लंबित किसी वाद या मामले में पूर्ण न्याय करने की शक्ति</p>",
+    "option3": "<p> Power of court of record / अभिलेख न्यायालय की शक्ति</p>",
+    "option4": "<p> Power to allow/refuse Special Leave Petitions / विशेष इजाजत याचिकाओं को मंजूर करने/नामंजूर करने की शक्ति</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Both the Supreme Court (under Article 129) and the High Courts (under Article 215) are designated as Courts of Record. This power means their records and judicial proceedings have evidentiary value and cannot be questioned when produced in any court, and they have the power to punish for contempt of court. Advisory power (Art 143) and Special Leave Petitions (Art 136) are exclusive to the Supreme Court. The power to 'do complete justice' (Art 142) is also exclusive to the Supreme Court.<br/> उच्चतम न्यायालय (अनुच्छेद 129 के तहत) और उच्च न्यायालय (अनुच्छेद 215 के तहत) दोनों को अभिलेख न्यायालय के रूप में नामित किया गया है। इस शक्ति का अर्थ है कि उनके रिकॉर्ड और न्यायिक कार्यवाही साक्ष्य के रूप में मूल्य रखती हैं और किसी भी न्यायालय में प्रस्तुत किए जाने पर उन पर प्रश्न नहीं उठाया जा सकता है, और उनके पास न्यायालय की अवमानना के लिए दंडित करने की शक्ति है। सलाहकारी शक्ति (अनुच्छेद 143) और विशेष इजाजत याचिकाएं (अनुच्छेद 136) उच्चतम न्यायालय के लिए अनन्य हैं। 'पूर्ण न्याय करने की शक्ति' (अनुच्छेद 142) भी उच्चतम न्यायालय के लिए अनन्य है।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Which one of the following statements about the Supreme Court is not correct?<br/> </b>उच्चतम न्यायालय के बारे में निम्नलिखित कथनों में से कौन<b>-</b>सा सही नहीं है<b>?</b></p>",
+    "option1": "<p> Under Article 129 and Article 144 of the Constitution of India, the Supreme Court has been vested with power to punish for contempt of court. / भारत के संविधान के अनुच्छेद 129 और अनुच्छेद 144 के अंतर्गत, न्यायालय की अवमानना के लिए दंड देने की शक्ति उच्चतम न्यायालय में निहित की गयी है।</p>",
+    "option2": "<p> The Supreme Court has been vested with advisory jurisdiction. / सलाहकारी अधिकारिता को उच्चतम न्यायालय में निहित किया गया है।</p>",
+    "option3": "<p> The Supreme Court may refuse to provide opinion to the President, if so asked, in certain circumstances. / यदि राय माँगी जाती है, तो उच्चतम न्यायालय, कतिपय परिस्थितियों में राष्ट्रपति को राय देने से इंकार कर सकता है</p>",
+    "option4": "<p> Law declared by the Supreme Court is binding on all courts within the territory of India. / उच्चतम न्यायालय द्वारा घोषित विधि भारत के राज्यक्षेत्र के भीतर सभी न्यायालयों के लिए आबद्धकर है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 129 declares the Supreme Court a Court of Record and gives it the power to punish for its contempt. However, Article 144 deals with the civil and judicial authorities in India acting in aid of the Supreme Court. Therefore, connecting Article 144 with the power to punish for contempt is incorrect. The rest of the statements are correct: it has advisory jurisdiction (Art 143) , can refuse to advise in certain cases , and its law is binding on all courts (Art 141).<br/> अनुच्छेद 129 उच्चतम न्यायालय को अभिलेख न्यायालय घोषित करता है और इसे अपनी अवमानना के लिए दंडित करने की शक्ति देता है। हालांकि, अनुच्छेद 144 भारत के भीतर सिविल और न्यायिक अधिकारियों से संबंधित है जो उच्चतम न्यायालय की सहायता में कार्य करते हैं। इसलिए, अनुच्छेद 144 को अवमानना के लिए दंडित करने की शक्ति से जोड़ना गलत है। बाकी कथन सही हैं: इसके पास सलाहकार अधिकारिता है (अनुच्छेद 143) , कुछ मामलों में सलाह देने से इंकार कर सकता है , और इसके द्वारा घोषित विधि सभी न्यायालयों पर बाध्यकारी है (अनुच्छेद 141) ।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>Who can be appointed as a Judge of the Supreme Court?<br/> </b>उच्चतम न्यायालय के न्यायाधीश के रूप में किसे नियुक्त किया जा सकता है<b>?</b></p>",
+    "option1": "<p> An advocate who has practised for at least ten years in any court / किसी अधिवक्ता को, जिसने किसी न्यायालय में कम-से-कम दस वर्ष तक विधि व्यवसाय किया है</p>",
+    "option2": "<p> A Judge of a High Court for at least three years / किसी उच्च न्यायालय के न्यायाधीश को, जो कम-से-कम तीन वर्ष तक न्यायाधीश रहा ह</p>",
+    "option3": "<p> A distinguished jurist in the opinion of the President of India / भारत के राष्ट्रपति की राय में पारंगत विधिवेत्ता को</p>",
+    "option4": "<p> A person who has held a judicial office for at least fifteen years / किसी व्यक्ति को, जो कम-से-कम पंद्रह वर्ष तक न्यायिक पद पर रहा है</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 124(3) of the Constitution of India provides for the following qualifications for appointment as a Supreme Court Judge:<br/> 5. (a) Has been a Judge of a High Court for at least five years (Option (b) says three years, which is incorrect).<br/> 6. (b) Has been an advocate of a High Court for at least ten years (Option (a) says in any court, but the standard qualification usually specifies High Court).<br/> 7. (c) Is, in the opinion of the President, a distinguished jurist. Option (c) is one of the explicitly stated qualifications for appointment to the Supreme Court.<br/> भारत के संविधान का अनुच्छेद 124(3) उच्चतम न्यायालय के न्यायाधीश के रूप में नियुक्ति के लिए निम्नलिखित योग्यताएँ प्रदान करता है:<br/> 8. (a) कम-से-कम पाँच वर्ष तक किसी उच्च न्यायालय का न्यायाधीश रहा हो (विकल्प (b) में तीन वर्ष है, जो गलत है)।<br/> 9. (b) कम-से-कम दस वर्ष तक किसी उच्च न्यायालय का अधिवक्ता रहा हो (विकल्प (a) में किसी भी न्यायालय में कहा गया है, लेकिन मानक योग्यता आमतौर पर उच्च न्यायालय को निर्दिष्ट करती है)।<br/> 10. (c) राष्ट्रपति की राय में पारंगत विधिवेत्ता हो। विकल्प (c) उच्चतम न्यायालय में नियुक्ति के लिए स्पष्ट रूप से बताई गई योग्यताओं में से एक है।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - General Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">General Quiz - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

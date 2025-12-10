@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>General Quiz -  - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>General Quiz - </h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>A body mentioned in the Constitution of India under any Article is known as a:<br/> </b>भारत के संविधान में किसी भी अनुच्छेद के तहत बताए गए निकाय को क्या कहा जाता है<b>?</b></p>",
+    "option1": "<p> Statutory Body / सांविधिक निकाय</p>",
+    "option2": "<p> Non-Statutory Body / गैर-सांविधिक निकाय</p>",
+    "option3": "<p> Executive Body / कार्यकारी निकाय</p>",
+    "option4": "<p> Constitutional Body / संवैधानिक निकाय</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> A Constitutional Body is one whose existence and functions are explicitly mentioned in the Constitution under a specific Article, giving it a high degree of independence and authority. These bodies draw their power directly from the Constitution itself. / एक संवैधानिक निकाय वह होता है जिसका अस्तित्व और कार्य स्पष्ट रूप से संविधान में एक विशिष्ट अनुच्छेद के तहत उल्लिखित होते हैं, जो उसे उच्च स्तर की स्वतंत्रता और अधिकार प्रदान करता है। ये निकाय अपनी शक्ति सीधे संविधान से प्राप्त करते हैं।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>Which Article of the Indian Constitution deals with the Election Commission of India (ECI)?<br/> </b>भारतीय संविधान का कौन सा अनुच्छेद भारत निर्वाचन आयोग <b>(ECI) </b>से संबंधित है<b>?</b></p>",
+    "option1": "<p> Article 315 / अनुच्छेद 315</p>",
+    "option2": "<p> Article 280 / अनुच्छेद 280</p>",
+    "option3": "<p> Article 324 / अनुच्छेद 324</p>",
+    "option4": "<p> Article 148 / अनुच्छेद 148</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 324 (Part XV) of the Constitution vests the power of superintendence, direction, and control of elections to Parliament, State Legislatures, and the offices of the President and Vice-President in the Election Commission. / संविधान का अनुच्छेद 324 (भाग XV) संसद, राज्य विधानमंडलों, और राष्ट्रपति तथा उपराष्ट्रपति के कार्यालयों के चुनावों के अधीक्षण, निर्देशन और नियंत्रण की शक्ति निर्वाचन आयोग में निहित करता है।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>What is the term of office for the Chairman and members of the Union Public Service Commission (UPSC)?<br/> </b>संघ लोक सेवा आयोग <b>(UPSC) </b>के अध्यक्ष और सदस्यों का कार्यकाल कितना होता है<b>?</b></p>",
+    "option1": "<p> 5 years or until the age of 62 years / 5 वर्ष या 62 वर्ष की आयु तक</p>",
+    "option2": "<p> 6 years or until the age of 65 years / 6 वर्ष या 65 वर्ष की आयु तक</p>",
+    "option3": "<p> 5 years or until the age of 60 years / 5 वर्ष या 60 वर्ष की आयु तक</p>",
+    "option4": "<p> At the pleasure of the President / राष्ट्रपति के प्रसादपर्यंत</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The members of the UPSC hold office for a term of six years or until they attain the age of 65 years, whichever is earlier. This fixed term ensures the independence of the body. / UPSC के सदस्य छह वर्ष की अवधि के लिए या 65 वर्ष की आयु प्राप्त करने तक, जो भी पहले हो, पद धारण करते हैं। यह निश्चित कार्यकाल निकाय की स्वतंत्रता सुनिश्चित करता है।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>The Comptroller and Auditor General of India (CAG) is mentioned in which Article of the Constitution?<br/> </b>भारत के नियंत्रक और महालेखा परीक्षक <b>(CAG) </b>का उल्लेख संविधान के किस अनुच्छेद में किया गया है<b>?</b></p>",
+    "option1": "<p> Article 76 / अनुच्छेद 76</p>",
+    "option2": "<p> Article 165 / अनुच्छेद 165</p>",
+    "option3": "<p> Article 148 / अनुच्छेद 148</p>",
+    "option4": "<p> Article 338 / अनुच्छेद 338</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Article 148 provides for an independent office of the CAG, who is the head of the Indian Audit and Accounts Department and the guardian of the public purse. / अनुच्छेद 148 CAG के एक स्वतंत्र कार्यालय का प्रावधान करता है, जो भारतीय लेखापरीक्षा और लेखा विभाग का प्रमुख और सार्वजनिक धन का संरक्षक होता है।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>Who is the highest law officer in the country, appointed by the President?<br/> </b>देश में सर्वोच्च कानून अधिकारी कौन होता है<b>, </b>जिसे राष्ट्रपति द्वारा नियुक्त किया जाता है<b>?</b></p>",
+    "option1": "<p> Chief Justice of India / भारत के मुख्य न्यायाधीश</p>",
+    "option2": "<p> Advocate General / महाधिवक्ता</p>",
+    "option3": "<p> Attorney General / महान्यायवादी</p>",
+    "option4": "<p> Solicitor General / सॉलिसिटर जनरल</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Attorney General (AG) is the highest law officer, appointed under Article 76. He gives advice to the Government of India on legal matters referred to him by the President. / महान्यायवादी (AG) सर्वोच्च कानून अधिकारी है, जिसे अनुच्छेद 76 के तहत नियुक्त किया जाता है। वह राष्ट्रपति द्वारा सौंपे गए कानूनी मामलों पर भारत सरकार को सलाह देता है।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>The Finance Commission is constituted by the President every five years and consists of a chairman and how many other members?<br/> </b>वित्त आयोग का गठन राष्ट्रपति द्वारा हर पाँच वर्ष में किया जाता है और इसमें एक अध्यक्ष तथा कितने अन्य सदस्य होते हैं<b>?</b></p>",
+    "option1": "<p> 2 members / 2 सदस्य</p>",
+    "option2": "<p> 4 members / 4 सदस्य</p>",
+    "option3": "<p> 5 members / 5 सदस्य</p>",
+    "option4": "<p> 6 members / 6 सदस्य</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Finance Commission, constituted under Article 280, is a quasi-judicial body composed of one Chairman and four other members. They are all appointed by the President. / अनुच्छेद 280 के तहत गठित वित्त आयोग एक अर्ध-न्यायिक निकाय है जिसमें एक अध्यक्ष और चार अन्य सदस्य होते हैं। इन सभी की नियुक्ति राष्ट्रपति द्वारा की जाती है।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Which Constitutional Amendment Act decreased the voting age from 21 to 18 years for Lok Sabha and State Legislative Assembly elections?<br/> </b>किस संवैधानिक संशोधन अधिनियम ने लोकसभा और राज्य विधानसभा चुनावों के लिए मतदान की आयु <b>21 </b>से घटाकर <b>18 </b>वर्ष कर दी<b>?</b></p>",
+    "option1": "<p> 42nd Amendment Act, 1976 / 42वाँ संशोधन अधिनियम, 1976</p>",
+    "option2": "<p> 61st Amendment Act, 1988 / 61वाँ संशोधन अधिनियम, 1988</p>",
+    "option3": "<p> 73rd Amendment Act, 1992 / 73वाँ संशोधन अधिनियम, 1992</p>",
+    "option4": "<p> 86th Amendment Act, 2002 / 86वाँ संशोधन अधिनियम, 2002</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The 61st Amendment Act of 1988 is a significant milestone in the history of the Election Commission, as it reduced the voting age to 18 years, thereby increasing the participation of youth in the democratic process. / 61वाँ संशोधन अधिनियम 1988 निर्वाचन आयोग के इतिहास में एक महत्वपूर्ण मील का पत्थर है, क्योंकि इसने मतदान की आयु 18 वर्ष कर दी, जिससे लोकतांत्रिक प्रक्रिया में युवाओं की भागीदारी बढ़ी।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>What is the maximum age limit for the Chairman and members of a State Public Service Commission (SPSC)?<br/> </b>राज्य लोक सेवा आयोग <b>(SPSC) </b>के अध्यक्ष और सदस्यों के लिए अधिकतम आयु सीमा क्या है<b>?</b></p>",
+    "option1": "<p> 65 years / 65 वर्ष</p>",
+    "option2": "<p> 62 years / 62 वर्ष</p>",
+    "option3": "<p> 60 years / 60 वर्ष</p>",
+    "option4": "<p> 70 years / 70 वर्ष</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The members of the SPSC hold office for a term of six years or until they attain the age of 62 years, whichever is earlier. Note that this is different from the UPSC age limit (65 years). / SPSC के सदस्य छह वर्ष की अवधि के लिए या 62 वर्ष की आयु प्राप्त करने तक, जो भी पहले हो, पद धारण करते हैं। ध्यान दें कि यह UPSC की आयु सीमा (65 वर्ष) से अलग है।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Who serves as the ex-officio Chairperson of the Goods and Services Tax (GST) Council in India?<br/> </b>भारत में वस्तु एवं सेवा कर <b>(GST) </b>परिषद के पदेन अध्यक्ष के रूप में कौन कार्य करता है<b>?</b></p>",
+    "option1": "<p> Prime Minister / प्रधानमंत्री</p>",
+    "option2": "<p> Union Revenue Secretary / केंद्रीय राजस्व सचिव</p>",
+    "option3": "<p> Union Finance Minister / केंद्रीय वित्त मंत्री</p>",
+    "option4": "<p> Minister of State for Finance / वित्त राज्य मंत्री</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The GST Council, inserted by Article 279-A (101st CAA, 2016), is a joint forum of the Centre and State, and its chairperson is the Union Finance Minister. / अनुच्छेद 279-A (101वां संवैधानिक संशोधन अधिनियम, 2016) द्वारा स्थापित जीएसटी परिषद, केंद्र और राज्य का एक संयुक्त मंच है, और इसके अध्यक्ष केंद्रीय वित्त मंत्री होते हैं।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>Which body was replaced by the National Institution for Transforming India (NITI AAYOG) in January 2015?<br/> </b>जनवरी <b>2015 </b>में राष्ट्रीय भारत परिवर्तन संस्थान <b>(</b>नीति आयोग<b>) </b>ने किस निकाय का स्थान लिया<b>?</b></p>",
+    "option1": "<p> National Development Council / राष्ट्रीय विकास परिषद</p>",
+    "option2": "<p> Finance Commission / वित्त आयोग</p>",
+    "option3": "<p> Planning Commission / योजना आयोग</p>",
+    "option4": "<p> National Human Rights Commission / राष्ट्रीय मानवाधिकार आयोग</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> NITI AAYOG is an Executive Body created by an Executive Resolution to replace the decades-old Planning Commission, shifting from a centrally planned model to a more consultative approach. / नीति आयोग एक कार्यकारी निकाय है, जिसे दशकों पुराने योजना आयोग को प्रतिस्थापित करने के लिए एक कार्यकारी संकल्प द्वारा स्थापित किया गया, जिससे केंद्रीय नियोजना मॉडल से अधिक परामर्शात्मक दृष्टिकोण की ओर बदलाव हुआ।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Consider the following statements regarding the Union Public Service Commission (UPSC) and the State Public Service Commission (SPSC):<br/> </b>संघ लोक सेवा आयोग <b>(UPSC) </b>और राज्य लोक सेवा आयोग <b>(SPSC) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. The members of both UPSC and SPSC are appointed by the President of India. / UPSC </b>और <b>SPSC </b>दोनों के सदस्यों की नियुक्ति भारत के राष्ट्रपति द्वारा की जाती है।<b><br/> 2. The members of both UPSC and SPSC can be removed only by the President of India. / UPSC </b>और <b>SPSC </b>दोनों के सदस्यों को केवल भारत के राष्ट्रपति द्वारा ही हटाया जा सकता है।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The members of UPSC are appointed by the President, but the members of SPSC are appointed by the Governor. However, the power to remove the chairman or any member of either UPSC or SPSC lies only with the President. / UPSC के सदस्यों की नियुक्ति राष्ट्रपति द्वारा की जाती है, लेकिन SPSC के सदस्यों की नियुक्ति राज्यपाल द्वारा की जाती है। हालांकि, UPSC या SPSC दोनों में से किसी के भी अध्यक्ष या किसी सदस्य को हटाने की शक्ति केवल राष्ट्रपति के पास होती है।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Assertion (A): The Comptroller and Auditor General (CAG) is known as the 'Guardian of Public Purse'.<br/> </b>अभिकथन <b>(A): </b>नियंत्रक और महालेखा परीक्षक <b>(CAG) </b>को <b>'</b>सार्वजनिक धन का संरक्षक<b>' </b>कहा जाता है।<b><br/> Reason (R): The CAG is responsible for compiling and maintaining the accounts of both the Central Government and the State Governments.<br/> </b>कारण <b>(R): CAG </b>केंद्र सरकार और राज्य सरकारों दोनों के खातों के संकलन और रखरखाव के लिए जिम्मेदार है।</p>",
+    "option1": "<p> Both A and R are true, and R is the correct explanation of A. / A और R दोनों सत्य हैं, और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true, but R is not the correct explanation of A. / A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true, but R is false. / A सत्य है, लेकिन R असत्य है।</p>",
+    "option4": "<p> A is false, but R is true. / A असत्य है, लेकिन R सत्य है।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The CAG is indeed the 'Guardian of Public Purse' (A is true). However, the CAG compiles and maintains the accounts of the State Governments only, not the Central Government (R is false). / CAG वास्तव में 'सार्वजनिक धन का संरक्षक' है (A सत्य है)। हालाँकि, CAG केवल राज्य सरकारों के खातों का संकलन और रखरखाव करता है, न कि केंद्र सरकार का (R असत्य है)।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Which of the following constitutional bodies were separated by the 89th Constitutional Amendment Act, 2003?<br/> </b>निम्नलिखित में से कौन से संवैधानिक निकाय <b>89</b>वें संवैधानिक संशोधन अधिनियम<b>, 2003 </b>द्वारा अलग किए गए थे<b>?</b></p>",
+    "option1": "<p> National Commission for SC's and National Commission for BC's / राष्ट्रीय अनुसूचित जाति आयोग और राष्ट्रीय पिछड़ा वर्ग आयोग</p>",
+    "option2": "<p> National Commission for SC's and National Commission for ST's / राष्ट्रीय अनुसूचित जाति आयोग और राष्ट्रीय अनुसूचित जनजाति आयोग</p>",
+    "option3": "<p> UPSC and SPSC / UPSC और SPSC</p>",
+    "option4": "<p> Finance Commission and GST Council / वित्त आयोग और GST परिषद</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The 89th CAA, 2003, separated the combined National Commission for SCs and STs into two distinct bodies: the National Commission for SCs (Art 338) and the National Commission for STs (Art 338A). / 89वें संवैधानिक संशोधन अधिनियम, 2003 ने संयुक्त राष्ट्रीय अनुसूचित जाति और जनजाति आयोग को दो अलग-अलग निकायों में विभाजित कर दिया: राष्ट्रीय अनुसूचित जाति आयोग (अनुच्छेद 338) और राष्ट्रीय अनुसूचित जनजाति आयोग (अनुच्छेद 338A)।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Consider the following statements about the Election Commission of India (ECI):<br/> </b>भारत निर्वाचन आयोग <b>(ECI) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. The ECI is not concerned with the election of Panchayats and Municipalities. / ECI </b>का संबंध पंचायतों और नगरपालिकाओं के चुनाव से नहीं है।<b><br/> 2. The term of the Chief Election Commissioner (CEC) is 6 years or until the age of 65 years. / </b>मुख्य चुनाव आयुक्त <b>(CEC) </b>का कार्यकाल <b>6 </b>वर्ष या <b>65 </b>वर्ष की आयु तक होता है।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The ECI is responsible for elections to the Parliament and State Legislatures, but not Panchayats and Municipalities, which fall under the State Election Commission (Statement 1 is correct). The term for CEC and other Election Commissioners is 6 years or 65 years, whichever is earlier (Statement 2 is correct). / ECI संसद और राज्य विधानमंडलों के चुनावों के लिए जिम्मेदार है, लेकिन पंचायतों और नगरपालिकाओं के लिए नहीं, जो राज्य चुनाव आयोग के अंतर्गत आते हैं (कथन 1 सही है)। CEC और अन्य चुनाव आयुक्तों का कार्यकाल 6 वर्ष या 65 वर्ष, जो भी पहले हो, होता है (कथन 2 सही है)।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Which of the following bodies was initially set up by an Executive Resolution but later conferred a Statutory Status in 2003?<br/> </b>निम्नलिखित में से कौन सा निकाय शुरू में एक कार्यकारी संकल्प द्वारा स्थापित किया गया था लेकिन बाद में <b>2003 </b>में इसे सांविधिक दर्जा प्रदान किया गया<b>?</b></p>",
+    "option1": "<p> National Human Rights Commission (NHRC) / राष्ट्रीय मानवाधिकार आयोग (NHRC)</p>",
+    "option2": "<p> Central Bureau of Investigation (CBI) / केंद्रीय जांच ब्यूरो (CBI)</p>",
+    "option3": "<p> Central Vigilance Commission (CVC) / केंद्रीय सतर्कता आयोग (CVC)</p>",
+    "option4": "<p> NITI AAYOG / नीति आयोग</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The CVC was set up in 1964 by an Executive Resolution based on the recommendations of the Santhanam Committee. It was later conferred Statutory Status in 2003 by an Act of Parliament. / केंद्रीय सतर्कता आयोग (CVC) की स्थापना 1964 में संथानम समिति की सिफारिशों के आधार पर एक कार्यकारी संकल्प द्वारा की गई थी। बाद में संसद के एक अधिनियम द्वारा 2003 में इसे सांविधिक दर्जा प्रदान किया गया।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>The National Commission for Backward Classes (NCBC) was conferred constitutional status by which amendment act?<br/> </b>राष्ट्रीय पिछड़ा वर्ग आयोग <b>(NCBC) </b>को किस संशोधन अधिनियम द्वारा संवैधानिक दर्जा प्रदान किया गया था<b>?</b></p>",
+    "option1": "<p> 89th Amendment Act, 2003 / 89वाँ संशोधन अधिनियम, 2003</p>",
+    "option2": "<p> 101st Amendment Act, 2016 / 101वाँ संशोधन अधिनियम, 2016</p>",
+    "option3": "<p> 102nd Amendment Act, 2018 / 102वाँ संशोधन अधिनियम, 2018</p>",
+    "option4": "<p> 7th Amendment Act, 1956 / 7वाँ संशोधन अधिनियम, 1956</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The NCBC was initially a statutory body established in 1993. The 102nd Amendment Act of 2018 conferred constitutional status on it by inserting Article 338B in the Constitution. / राष्ट्रीय पिछड़ा वर्ग आयोग (NCBC) शुरू में 1993 में स्थापित एक सांविधिक निकाय था। 102वें संशोधन अधिनियम, 2018 ने संविधान में अनुच्छेद 338B जोड़कर इसे संवैधानिक दर्जा प्रदान किया।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Which of the following statements regarding the electoral rolls is/are correct?<br/> 1. There is one general electoral roll for every territorial constituency.<br/> 2. No person is ineligible for inclusion in the electoral roll on grounds of religion, race, caste, sex, or any of them.<br/> 3. A citizen of India, not less than 18 years of age, can cast his/her vote unless disqualified under a law of an appropriate legislature.<br/> Select the correct answer using the code given below:<br/> </b>मतदाता सूची के संबंध में निम्नलिखित में से कौन सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?<br/> 4. </b>प्रत्येक प्रादेशिक निर्वाचन क्षेत्र के लिए एक सामान्य मतदाता सूची होती है।<b><br/> 5. </b>कोई भी व्यक्ति धर्म<b>, </b>मूलवंश<b>, </b>जाति<b>, </b>लिंग या इनमें से किसी भी आधार पर मतदाता सूची में शामिल होने के लिए अपात्र नहीं है।<b><br/> 6. </b>भारत का कोई भी नागरिक<b>, </b>जिसकी आयु कम से कम <b>18 </b>वर्ष हो<b>, </b>अपना वोट डाल सकता है<b>, </b>जब तक कि उसे किसी उपयुक्त विधानमंडल के कानून के तहत अयोग्य घोषित न कर दिया जाए।<b><br/> </b>नीचे दिए गए कूट का प्रयोग कर सही उत्तर चुनिए<b>:</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 1, 2 and 3 / 1,2 और 3</p>",
+    "option3": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> There is one general electoral roll for every territorial constituency. No person is ineligible for inclusion in the electoral roll-on grounds of religion, race, caste, sex, or any of them. A citizen of India, not less than 18 years of age, can cast his/her vote unless disqualified under a law of an appropriate legislature.</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Which of the following statements about the Inter-State Council is/are correct?<br/> 1. It can inquire into disputes between States.<br/> 2. It cannot investigate subjects involving the Union.<br/> Select the correct answer using the code given below.<br/> </b>अंतर<b>-</b>राज्यीय परिषद के बारे में निम्नलिखित में से कौन सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?<br/> 3. </b>यह राज्यों के बीच विवादों की जाँच कर सकती है।<b><br/> 4. </b>यह संघ से संबंधित विषयों की जाँच नहीं कर सकती।<b><br/> </b>नीचे दिए गए कूट का प्रयोग कर सही उत्तर चुनिए।</p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 न ही 2</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Inter-State Council is empowered to \"investigate and discuss subjects in which some or all of the States, or the Union and one or more of the States, have a common interest\". Therefore, it can investigate subjects involving the Union.</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Which of the following statements about the National Commission for Women are correct ?<br/> 1. It is a statutory body.<br/> 2. It has the mandate to review the constitutional and legal safeguards for women.<br/> 3. It has the mandate to advise the Government on all policy matters affecting women.<br/> </b>राष्ट्रीय महिला आयोग के बारे में निम्नलिखित में से कौन से कथन सही हैं<b>?<br/> 4. </b>यह एक वैधानिक निकाय है।<b><br/> 5. </b>इसे महिलाओं के लिए संवैधानिक और कानूनी सुरक्षा उपायों की समीक्षा करने का अधिदेश प्राप्त है।<b><br/> 6. </b>इसे महिलाओं को प्रभावित करने वाले सभी नीतिगत मामलों पर सरकार को सलाह देने का अधिदेश प्राप्त है।<b><br/> Select the answer using the code given below:</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The National Commission for Women (NCW) is an important institution in India aimed at protecting and promoting women's rights.</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Which of the following statements with regard to recommendations of the 15th Finance Commission of India are correct?<br/> 1. It has recommended grants of ₹4,800 crores from the year 2022–23 to the year 2025–26 for incentivizing States to enhance educational outcomes.<br/> 2. 45% of the net proceeds of Union taxes are to be shared with States.<br/> 3. ₹45,000 crores are to be kept as performance-based incentive for all States for carrying out agricultural reforms.<br/> 4. It reintroduced tax effort criteria to reward fiscal performance.<br/> </b>भारत के <b>15</b>वें वित्त आयोग की सिफ़ारिशों के संबंध में निम्नलिखित में से कौन से कथन सही हैं<b>?<br/> 5. </b>शिक्षण परिणामों में सुधार के लिए राज्यों को प्रोत्साहित करने हेतु <b>2022–23 </b>से <b>2025–26 </b>तक ₹<b>4,800 </b>करोड़ के अनुदान की सिफारिश की गई है।<b><br/> 6. </b>केंद्र के शुद्ध कर राजस्व का <b>45% </b>राज्यों के साथ साझा किया जाना है।<b><br/> 7. </b>कृषि सुधारों को लागू करने के लिए सभी राज्यों हेतु प्रदर्शन<b>-</b>आधारित प्रोत्साहन के रूप में ₹<b>45,000 </b>करोड़ रखे जाने हैं।<b><br/> 8. </b>वित्तीय प्रदर्शन को पुरस्कृत करने के लिए कर<b>-</b>प्रयास <b>(</b>टैक्स एफर्ट<b>) </b>मानदंड को पुनः लागू किया गया।<b><br/> Select the correct answer using the code given below.<br/> </b>नीचे दिए गए कोड का उपयोग करके सही उत्तर चुनें।</p>",
+    "option1": "<p> I, II and III / I, II और III</p>",
+    "option2": "<p> I, II and IV / I, II और IV</p>",
+    "option3": "<p> I, III and IV / I, III और IV</p>",
+    "option4": "<p> II, III and IV / II, III और IV</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The 15th FC recommended that the States' share in the Union taxes be 41% (a 1% reduction from the 14th FC's 42% to accommodate the newly formed Union Territories of J&amp;K and Ladakh).<br/> 15वें वित्त आयोग ने सिफारिश की थी कि संघीय करों में राज्यों का हिस्सा 41% होना चाहिए (नवगठित केंद्र शासित प्रदेशों जम्मू-कश्मीर और लद्दाख को समायोजित करने के लिए 14वें वित्त आयोग के 42% से 1% की कटौती)।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Consider the following statements about Central Vigilance Commission (CVC):<br/> 1. Central Vigilance Commissioner is appointed by the President of India.<br/> 2. The Committee to recommend the appointment of Central Vigilance Commissioner has the Minister of Home Affairs as one of the members.<br/> 3. In certain circumstances the Leader of the single largest group in opposition in Lok Sabha can be on the Committee to recommend the appointment of Central Vigilance Commissioner.<br/> How many of the above statements is/are correct?<br/> </b>केंद्रीय सतर्कता आयोग <b>(CVC) </b>के बारे में निम्नलिखित कथनों पर विचार कीजिए<b>:<br/> 4. </b>केंद्रीय सतर्कता आयुक्त की नियुक्ति भारत के राष्ट्रपति द्वारा की जाती है।<b><br/> 5. </b>केंद्रीय सतर्कता आयुक्त की नियुक्ति की सिफारिश करने वाली समिति में गृह मंत्री एक सदस्य होते हैं।<b><br/> 6. </b>कुछ परिस्थितियों में<b>, </b>लोकसभा में विपक्ष के सबसे बड़े समूह का नेता केंद्रीय सतर्कता आयुक्त की नियुक्ति की सिफारिश करने वाली समिति में शामिल हो सकता है।<b><br/> </b>उपरोक्त कथनों में से कितने सही हैं<b>?</b></p>",
+    "option1": "<p> Nil / कोई भी नहीं</p>",
+    "option2": "<p> 1</p>",
+    "option3": "<p> 2</p>",
+    "option4": "<p> 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> <br/> </p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Match the following Finance Commissions (FC) with their respective Chairmen:<br/> </b>निम्नलिखित वित्त आयोगों <b>(FC) </b>को उनके संबंधित अध्यक्षों से सुमेलित करें<b>:<br/> | Finance Commission / </b>वित्त आयोग <b>| Chairman / </b>अध्यक्ष <b>|<br/> | I. 1st FC / 1</b>वाँ वित्त आयोग <b>| 1. Y. V. Reddy / </b>वाई<b>. </b>वी<b>. </b>रेड्डी <b>|<br/> | II. 14th FC / 14</b>वाँ वित्त आयोग <b>| 2. K. C. Neogy / </b>के<b>. </b>सी<b>. </b>नियोगी <b>|<br/> | III. 16th FC / 16</b>वाँ वित्त आयोग <b>| 3. N. K. Singh / </b>एन<b>. </b>के<b>. </b>सिंह <b>|<br/> | IV. 15th FC / 15</b>वाँ वित्त आयोग <b>| 4. Arvind Panagariya / </b>अरविंद पनगढ़िया <b>|<br/> Select the correct code:<br/> </b>सही कूट का चयन करें<b>:</b></p>",
+    "option1": "<p> I-2, II-1, III-4, IV-3</p>",
+    "option2": "<p> I-4, II-3, III-2, IV-1</p>",
+    "option3": "<p> I-2, II-3, III-1, IV-4</p>",
+    "option4": "<p> I-1, II-2, III-4, IV-3</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The 1st FC (1951) was headed by K. C. Neogy. The 14th FC was headed by Y. V. Reddy. The 15th FC was headed by N. K. Singh. The currently constituted 16th FC is headed by Arvind Panagariya. / पहला वित्त आयोग (1951) के. सी. नियोगी की अध्यक्षता में था। 14वें वित्त आयोग के अध्यक्ष वाई. वी. रेड्डी थे। 15वें वित्त आयोग के अध्यक्ष एन. के. सिंह थे। वर्तमान में गठित 16वें वित्त आयोग के अध्यक्ष अरविंद पनगढ़िया हैं।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Consider the following statements about the powers and duties of the Comptroller and Auditor General of India:<br/> 1. He audits and reports on all expenditures from the Consolidated Fund of India.<br/> 2. He controls the issue and receipt of money from the Consolidated Fund of India.<br/> 3. He audits and reports on the expenditure of all bodies substantially financed from the Union or State revenues.<br/> Which of the statements given above are correct?<br/> </b>भारत के नियंत्रक एवं महालेखा परीक्षक की शक्तियों और कर्तव्यों के बारे में निम्नलिखित कथनों पर विचार कीजिए<b>:<br/> 4. </b>वह भारत की संचित निधि से सभी व्ययों का लेखा<b>-</b>परीक्षण करता है और उन पर रिपोर्ट प्रस्तुत करता है।<b><br/> 5. </b>वह भारत की संचित निधि से धन के निर्गमन और प्राप्ति को नियंत्रित करता है।<b><br/> 6. </b>वह संघ या राज्य के राजस्व से पर्याप्त रूप से वित्तपोषित सभी निकायों के व्यय का लेखा<b>-</b>परीक्षण करता है और उन पर रिपोर्ट प्रस्तुत करता है।<b><br/> </b>ऊपर दिए गए कथनों में से कौन से सही हैं<b>?</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The CAG in India acts as an Auditor General only, not a Comptroller (unlike the UK). The executive is responsible for the issue and receipt of money, and the CAG's audit function is post-facto (after the expenditure has been incurred).<br/> नियंत्रक एवं महालेखा परीक्षक (</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Consider the following statements: </b>निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. The Special Officer for Linguistic Minorities was conferred a Constitutional status by the 7th CAA, 1956, and a new Article 350B was inserted. / </b>भाषाई अल्पसंख्यकों के लिए विशेष अधिकारी को <b>7</b>वें संवैधानिक संशोधन अधिनियम<b>, 1956 </b>द्वारा संवैधानिक दर्जा प्रदान किया गया और एक नया अनुच्छेद <b>350B </b>जोड़ा गया।<b><br/> 2. The Advocate General of the State can be removed by the Governor at any time, as his term is not fixed by the Constitution. / </b>राज्य के महाधिवक्ता को राज्यपाल द्वारा किसी भी समय हटाया जा सकता है<b>, </b>क्योंकि उनका कार्यकाल संविधान द्वारा निश्चित नहीं है।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Both statements are correct. The 7th CAA, 1956, inserted Article 350B, giving constitutional status to the Special Officer for Linguistic Minorities (Statement 1). The Advocate General (Art 165) holds office during the pleasure of the Governor and can be removed by the Governor at any time (Statement 2). / दोनों कथन सही हैं। 7वें संवैधानिक संशोधन अधिनियम, 1956 ने अनुच्छेद 350B डाला, जिससे भाषाई अल्पसंख्यकों के लिए विशेष अधिकारी को संवैधानिक दर्जा मिला (कथन 1)। महाधिवक्ता (अनुच्छेद 165) राज्यपाल के प्रसादपर्यंत पद धारण करता है और राज्यपाल द्वारा किसी भी समय हटाया जा सकता है (कथन 2)।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>The National Human Rights Commission was established under the statute of:<br/> </b>राष्ट्रीय मानवाधिकार आयोग की स्थापना निम्नलिखित क़ानून के तहत की गई थी<b>:</b></p>",
+    "option1": "<p> The Protection of Human Rights Act, 1993 / मानव अधिकार संरक्षण अधिनियम, 1993</p>",
+    "option2": "<p> The Protection and Implementation of Human Rights Act, 1993 / मानव अधिकार संरक्षण एवं कार्यान्वयन अधिनियम, 1993</p>",
+    "option3": "<p> The Human Rights Act, 1993 / मानवाधिकार अधिनियम, 1993</p>",
+    "option4": "<p> The Human Rights Commission Act, 1993 / मानवाधिकार आयोग अधिनियम, 1993</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statutory Body: The NHRC isn't a constitutional body but a statutory one, meaning it derives its authority from a law passed by Parliament.<br/> 5. Established Date: It was established on October 12, 1993, under this Act.<br/> 6. Purpose: Its mandate includes inquiring into violations, recommending actions, and ensuring India's commitment to human rights protection<br/> 7.<br/> 8.<br/> 9.</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - General Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">General Quiz - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

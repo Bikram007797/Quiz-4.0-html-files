@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>General Quiz -  - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>General Quiz - </h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>The Constitutional provision for 'National Emergency' is contained in which Article of the Indian Constitution?<br/> ‘</b>राष्ट्रीय आपातकाल<b>' </b>के लिए संवैधानिक प्रावधान भारतीय संविधान के किस अनुच्छेद में निहित है<b>?</b></p>",
+    "option1": "<p> Article 356 / अनुच्छेद 356</p>",
+    "option2": "<p> Article 352 / अनुच्छेद 352</p>",
+    "option3": "<p> Article 360 / अनुच्छेद 360</p>",
+    "option4": "<p> Article 365 / अनुच्छेद 365</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Article 352 of the Indian Constitution empowers the President to proclaim a National Emergency on the grounds of war, external aggression, or armed rebellion. This is distinct from President's Rule (Art 356) and Financial Emergency (Art 360). / भारतीय संविधान का अनुच्छेद 352 राष्ट्रपति को युद्ध, बाहरी आक्रमण, या सशस्त्र विद्रोह के आधार पर राष्ट्रीय आपातकाल की घोषणा करने का अधिकार देता है। यह राष्ट्रपति शासन (अनुच्छेद 356) और वित्तीय आपातकाल (अनुच्छेद 360) से अलग है।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>Which term replaced 'Internal Disturbances' as a ground for National Emergency by the 44th Constitutional Amendment Act?<br/> 44</b>वें संवैधानिक संशोधन अधिनियम द्वारा राष्ट्रीय आपातकाल के आधार के रूप में <b>'</b>आंतरिक अशांति<b>' </b>को किस शब्द से प्रतिस्थापित किया गया था<b>?</b></p>",
+    "option1": "<p> Threat to Sovereignty / संप्रभुता के लिए खतरा</p>",
+    "option2": "<p> Constitutional Breakdown / संवैधानिक विफलता</p>",
+    "option3": "<p> Armed Rebellion / सशस्त्र विद्रोह</p>",
+    "option4": "<p> Financial Instability / वित्तीय अस्थिरता</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The 44th Constitutional Amendment Act of 1978 replaced the ambiguous term 'Internal Disturbances' with the more specific term 'Armed Rebellion' to prevent the misuse of the National Emergency provision. / 44वें संवैधानिक संशोधन अधिनियम, 1978 ने राष्ट्रीय आपातकाल के प्रावधान के दुरुपयोग को रोकने के लिए अस्पष्ट शब्द 'आंतरिक अशांति' को अधिक विशिष्ट शब्द 'सशस्त्र विद्रोह' से प्रतिस्थापित किया।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>The proclamation of a National Emergency must be approved by both Houses of Parliament within what time frame?<br/> </b>राष्ट्रीय आपातकाल की उद्घोषणा को संसद के दोनों सदनों द्वारा कितनी समयावधि के भीतर अनुमोदित किया जाना चाहिए<b>?</b></p>",
+    "option1": "<p> 6 months / 6 महीने</p>",
+    "option2": "<p> 2 months / 2 महीने</p>",
+    "option3": "<p> 1 month / 1 महीना</p>",
+    "option4": "<p> 1 year / 1 वर्ष</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> A proclamation of National Emergency, once issued, must be approved by a Special Majority in both Houses of Parliament within one month of its issue. If approved, it initially continues for six months. / राष्ट्रीय आपातकाल की उद्घोषणा, एक बार जारी होने पर, जारी होने की तारीख से एक महीने के भीतर संसद के दोनों सदनों द्वारा विशेष बहुमत से अनुमोदित होनी चाहिए। यदि अनुमोदित हो जाती है, तो यह शुरू में छह महीने तक जारी रहती है।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>Which state in India has undergone the maximum number of times of President's Rule imposition?<br/> </b>भारत के किस राज्य में अधिकतम बार राष्ट्रपति शासन लगाया गया है<b>?</b></p>",
+    "option1": "<p> Uttar Pradesh / उत्तर प्रदेश</p>",
+    "option2": "<p> Punjab / पंजाब</p>",
+    "option3": "<p> Bihar / बिहार</p>",
+    "option4": "<p> Manipur / मणिपुर</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> According to constitutional data, the state of Manipur has undergone the maximum number of times of President's Rule. The provision for President's Rule is outlined in Article 356 of the Constitution. / संवैधानिक आंकड़ों के अनुसार, मणिपुर राज्य में अधिकतम बार राष्ट्रपति शासन लगाया गया है। राष्ट्रपति शासन का प्रावधान संविधान के अनुच्छेद 356 में उल्लिखित है।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>As per Article 368 of the Constitution of India, the Parliament may amend any provision of the Constitution by way of:<br/> 1. Addition<br/> 2. Variation<br/> 3. Repeal<br/> Select the answer using the code given below:<br/> </b>भारतीय संविधान के अनुच्छेद <b>368 </b>के अनुसार<b>, </b>संसद संविधान के किसी भी प्रावधान में निम्नलिखित तरीकों से संशोधन कर सकती है<b>:<br/> 4. </b>जोड़<b><br/> 5. </b>परिवर्तन<b><br/> 6. </b>निरस्तीकरण<b><br/> </b>नीचे दिए गए कूट का प्रयोग कर उत्तर चुनिए<b>:</b></p>",
+    "option1": "<p> 1 and 2 Only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 Only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 Only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Addition: Parliament can insert new articles or clauses, like adding Fundamental Duties or making provisions for new social rights.<br/> 11. Variation: Existing articles can be altered, modified, or their scope changed, as seen with GST provisions.<br/> 12. Repeal: Provisions can be removed, such as the abolition of privy purses for former rulers<br/> 13. जोड़: संसद नए अनुच्छेद या खंड जोड़ सकती है, जैसे मौलिक कर्तव्यों को जोड़ना या नए सामाजिक अधिकारों के लिए प्रावधान करना।<br/> 14. परिवर्तन: मौजूदा अनुच्छेदों को बदला, संशोधित किया जा सकता है या उनका दायरा बदला जा सकता है, जैसा कि जीएसटी प्रावधानों के मामले में देखा गया है।<br/> 15. निरस्तीकरण : प्रावधानों को हटाया जा सकता है, जैसे पूर्व शासकों के लिए प्रिवी पर्स का उन्मूलन।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>Which of the following principles was added by the 42nd Constitutional Amendment in the Indian Constitution?<br/> </b>भारतीय संविधान में <b>42</b>वें संविधान संशोधन द्वारा निम्नलिखित में से कौन सा सिद्धांत जोड़ा गया था<b>?</b></p>",
+    "option1": "<p> The State shall provide free and compulsory education / राज्य निःशुल्क एवं अनिवार्य शिक्षा प्रदान करेगा</p>",
+    "option2": "<p> To organise agriculture and animal husbandry on modern and scientific lines / कृषि और पशुपालन को आधुनिक और वैज्ञानिक तरीके से व्यवस्थित करना।</p>",
+    "option3": "<p> To protect and improve the environment and to safeguard forests and wildlife / पर्यावरण की रक्षा और सुधार करना तथा वनों और वन्यजीवों की सुरक्षा करना।</p>",
+    "option4": "<p> Reservation of SC's and ST's in services / सेवाओं में अनुसूचित जाति और अनुसूचित जनजाति का आरक्षण।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 5. The State shall provide free and compulsory education: This principle was added by the 86th Constitutional Amendment Act in 2002.<br/> 6. To organise agriculture and animal husbandry on modern and scientific lines: This is part of the original Constitution under Article 48 and was not added by the 42nd Amendment.<br/> 7. Reservation of SC's and ST's in services: Provisions for reservation were part of the original Constitution in various articles and were not introduced by the 42nd Amendment.<br/> 8. राज्य निःशुल्क और अनिवार्य शिक्षा प्रदान करेगा: यह सिद्धांत 86वें संविधान संशोधन अधिनियम, 2002 द्वारा जोड़ा गया था।<br/> 9. कृषि और पशुपालन को आधुनिक और वैज्ञानिक तरीके से व्यवस्थित करना: यह अनुच्छेद 48 के अंतर्गत मूल संविधान का हिस्सा है और इसे 42वें संशोधन द्वारा नहीं जोड़ा गया था।<br/> 10. ​​सेवाओं में अनुसूचित जातियों और अनुसूचित जनजातियों के लिए आरक्षण: आरक्षण के प्रावधान मूल संविधान के विभिन्न अनुच्छेदों में शामिल थे और इन्हें 42वें संशोधन द्वारा शामिल नहीं किया गया था।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Which Article of the Indian Constitution empowers the President to proclaim a Financial Emergency?<br/> </b>भारतीय संविधान का कौन सा अनुच्छेद राष्ट्रपति को वित्तीय आपातकाल की घोषणा करने का अधिकार देता है<b>?</b></p>",
+    "option1": "<p> Article 352 / अनुच्छेद 352</p>",
+    "option2": "<p> Article 356 / अनुच्छेद 356</p>",
+    "option3": "<p> Article 360 / अनुच्छेद 360</p>",
+    "option4": "<p> Article 368 / अनुच्छेद 368</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Article 360 empowers the President of India to proclaim a Financial Emergency if he is satisfied that the financial stability or credit of India or any of its part is threatened. No Financial Emergency has been imposed till now. / अनुच्छेद 360 भारत के राष्ट्रपति को वित्तीय आपातकाल की घोषणा करने का अधिकार देता है यदि वह संतुष्ट हैं कि भारत या उसके किसी भाग की वित्तीय स्थिरता या साख खतरे में है। अब तक कोई वित्तीय आपातकाल लागू नहीं किया गया है।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>The 101st Constitutional Amendment Act is related to which of the following?<br/> 101</b>वां संवैधानिक संशोधन अधिनियम निम्नलिखित में से किससे संबंधित है<b>?</b></p>",
+    "option1": "<p> National Commission for Backward Classes (NCBC) / राष्ट्रीय पिछड़ा वर्ग आयोग (NCBC)</p>",
+    "option2": "<p> Goods and Services Tax (GST) / वस्तु एवं सेवा कर (GST)</p>",
+    "option3": "<p> Economically Weaker Section (EWS) reservation / आर्थिक रूप से कमजोर वर्ग (EWS) आरक्षण</p>",
+    "option4": "<p> India-Bangladesh land boundary agreement / भारत-बांग्लादेश भूमि सीमा समझौता</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The 101st Constitutional Amendment Act introduced the Goods and Services Tax (GST) in India, which is a unified indirect tax that replaced multiple cascading taxes levied by the central and state governments. / 101वां संवैधानिक संशोधन अधिनियम ने भारत में वस्तु एवं सेवा कर (GST) की शुरुआत की, जो एक एकीकृत अप्रत्यक्ष कर है जिसने केंद्र और राज्य सरकारों द्वारा लगाए गए कई प्रपाती करों को प्रतिस्थापित कर दिया।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>The concept of the 'Suspension of Fundamental Rights during National Emergency' was taken from the Constitution of which country?<br/> '</b>राष्ट्रीय आपातकाल के दौरान मौलिक अधिकारों के निलंबन<b>' </b>की अवधारणा किस देश के संविधान से ली गई थी<b>?</b></p>",
+    "option1": "<p> Government of India Act, 1935 / भारत शासन अधिनियम, 1935</p>",
+    "option2": "<p> Weimar Constitution of Germany / जर्मनी का वाइमर संविधान</p>",
+    "option3": "<p> Constitution of USA / यूएसए का संविधान</p>",
+    "option4": "<p> Constitution of South Africa / दक्षिण अफ्रीका का संविधान</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The provision for the suspension of Fundamental Rights, except Article 20 and 21, during a National Emergency has been adapted from the Weimar Constitution of Germany. / राष्ट्रीय आपातकाल के दौरान मौलिक अधिकारों, (अनुच्छेद 20 और 21 को छोड़कर) के निलंबन का प्रावधान जर्मनी के वाइमर संविधान से लिया गया है।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>Which two Fundamental Rights can never be suspended during a National Emergency?<br/> </b>राष्ट्रीय आपातकाल के दौरान कौन से दो मौलिक अधिकार कभी भी निलंबित नहीं किए जा सकते हैं<b>?</b></p>",
+    "option1": "<p> Article 19 and Article 20 / अनुच्छेद 19 और अनुच्छेद 20</p>",
+    "option2": "<p> Article 20 and Article 21 / अनुच्छेद 20 और अनुच्छेद 21</p>",
+    "option3": "<p> Article 19 and Article 21 / अनुच्छेद 19 और अनुच्छेद 21</p>",
+    "option4": "<p> Article 14 and Article 22 / अनुच्छेद 14 और अनुच्छेद 22</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> According to the constitutional provisions, the rights under Article 20 (Protection in respect of conviction for offences) and Article 21 (Protection of life and personal liberty) remain in force and can never be suspended during a National Emergency. / संवैधानिक प्रावधानों के अनुसार, अनुच्छेद 20 (अपराधों के लिए दोषसिद्धि के संबंध में संरक्षण) और अनुच्छेद 21 (जीवन और व्यक्तिगत स्वतंत्रता का संरक्षण) के तहत अधिकार लागू रहते हैं और राष्ट्रीय आपातकाल के दौरान उन्हें कभी भी निलंबित नहीं किया जा सकता है।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Consider the following statements regarding the suspension of Fundamental Rights during a National Emergency:<br/> 1. Article 19 is suspended automatically only when the National Emergency is imposed on the ground of 'War or External Aggression'.<br/> 2. Rights under Article 19 are suspended even when the emergency is proclaimed on the grounds of 'Armed Rebellion'.<br/> Which of the statements given above is/are correct?<br/> </b>राष्ट्रीय आपातकाल के दौरान मौलिक अधिकारों के निलंबन के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 3. </b>अनुच्छेद <b>19 </b>केवल तभी स्वचालित रूप से निलंबित होता है जब राष्ट्रीय आपातकाल <b>'</b>युद्ध या बाहरी आक्रमण<b>' </b>के आधार पर लगाया जाता है।<b><br/> 4. '</b>सशस्त्र विद्रोह<b>' </b>के आधार पर आपातकाल घोषित होने पर भी अनुच्छेद <b>19 </b>के तहत अधिकार निलंबित हो जाते हैं।<b><br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Article 19 is automatically suspended only in cases of National Emergency declared on the grounds of 'War or External Aggression' (Art 358). If the emergency is imposed on the grounds of 'Armed Rebellion', the rights under Article 19 cannot be suspended. / अनुच्छेद 19 केवल 'युद्ध या बाहरी आक्रमण' के आधार पर घोषित राष्ट्रीय आपातकाल के मामलों में ही स्वचालित रूप से निलंबित होता है (अनुच्छेद 358)। यदि आपातकाल 'सशस्त्र विद्रोह' के आधार पर लगाया जाता है, तो अनुच्छेद 19 के तहत अधिकारों को निलंबित नहीं किया जा सकता है ।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Which one of the following is not mentioned as a form of Emergency in the Constitution of India?<br/> </b>निम्नलिखित में से किसका उल्लेख भारत के संविधान में आपातकाल के रूप में नहीं किया गया है<b>?</b></p>",
+    "option1": "<p> National Emergency / राष्ट्रीय आपातकाल</p>",
+    "option2": "<p> State Emergency in terms of Proclamation of President’s Rule in a State / किसी राज्य में राष्ट्रपति शासन की घोषणा के संदर्भ में राज्य आपातकाल</p>",
+    "option3": "<p> Financial Emergency / वित्तीय आपातकाल</p>",
+    "option4": "<p> Health Emergency / स्वास्थ्य आपातकाल</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 5. National Emergency (Article 352): For war, external aggression, or armed rebellion.<br/> 6. State Emergency / President's Rule (Article 356): When constitutional machinery fails in a state.<br/> 7. Financial Emergency (Article 360): If financial stability is threatened<br/> 8. राष्ट्रीय आपातकाल (अनुच्छेद 352): युद्ध, बाह्य आक्रमण या सशस्त्र विद्रोह के लिए।<br/> 9. राज्य आपातकाल/राष्ट्रपति शासन (अनुच्छेद 356): जब किसी राज्य में संवैधानिक व्यवस्था विफल हो जाती है।<br/> 10. वित्तीय आपातकाल (अनुच्छेद 360): यदि वित्तीय स्थिरता को खतरा हो।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Which one of the following statements about a Bill for Amendment of the Constitution of India is not correct?<br/> </b>भारत के संविधान में संशोधन के लिए विधेयक के बारे में निम्नलिखित में से कौन सा कथन सही नहीं है<b>?</b></p>",
+    "option1": "<p> It is governed by Article 368(2) of the Constitution of India. / यह भारत के संविधान के अनुच्छेद 368(2) द्वारा शासित है।</p>",
+    "option2": "<p> Joint sitting can be resorted to for passing a Bill amending the Constitution of India. / भारत के संविधान में संशोधन करने वाले विधेयक को पारित करने के लिए संयुक्त बैठक का सहारा लिया जा सकता है।</p>",
+    "option3": "<p> The State Legislatures cannot initiate any Bill or proposal for amendment of the Constitution of India / राज्य विधानमंडल भारत के संविधान में संशोधन के लिए कोई विधेयक या प्रस्ताव पेश नहीं कर सकते।</p>",
+    "option4": "<p> The prior sanction of the President of India is not required for introducing any Bill in the Parliament for amendment of the Constitution of India. / भारत के संविधान में संशोधन के लिए संसद में कोई विधेयक प्रस्तुत करने के लिए भारत के राष्ट्रपति की पूर्व स्वीकृति की आवश्यकता नहीं है।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 5. Article 368(2) outlines the procedure for most constitutional amendments, requiring a Bill to be passed by a special majority in each House of Parliament separately.<br/> 6. The State Legislatures cannot initiate a Bill or proposal for amendment of the Constitution of India; this power lies exclusively with the Parliament.<br/> 7. अनुच्छेद 368(2) अधिकांश संवैधानिक संशोधनों की प्रक्रिया को रेखांकित करता है, जिसके अनुसार किसी विधेयक को संसद के प्रत्येक सदन में अलग-अलग विशेष बहुमत से पारित किया जाना आवश्यक है।<br/> 8. राज्य विधानमंडल भारत के संविधान में संशोधन के लिए कोई विधेयक या प्रस्ताव प्रस्तुत नहीं कर सकते; यह शक्ति केवल संसद के पास है।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Which of the following statements about a State under the President’s rule is/are correct?<br/> 1. The budget of a State under the President’s rule is approved by the Governor of the State.<br/> 2. The procedure to pass the budget of a State under the President’s rule is same as that of the budget of the Union Government.<br/> Select the correct answer using the code given below.<br/> </b>राष्ट्रपति शासन के अधीन किसी राज्य के बारे में निम्नलिखित में से कौन सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?<br/> 3. </b>राष्ट्रपति शासन के अधीन किसी राज्य का बजट राज्य के राज्यपाल द्वारा अनुमोदित किया जाता है।<b><br/> 4. </b>राष्ट्रपति शासन के अधीन किसी राज्य के बजट को पारित करने की प्रक्रिया केंद्र सरकार के बजट के समान ही होती है।<b><br/> </b>नीचे दिए गए कूट का प्रयोग कर सही उत्तर चुनिए।</p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The statement that \"The budget of a State under the President’s rule is approved by the Governor of the State\" is incorrect. While the Governor administers the state on behalf of the President, the budget approval authority lies with the Parliament. The President only authorizes expenditure from the State's Consolidated Fund pending parliamentary sanction when the Lok Sabha is not in session.<br/> यह कथन कि \"राष्ट्रपति शासन के अधीन किसी राज्य का बजट उस राज्य के राज्यपाल द्वारा अनुमोदित किया जाता है\" गलत है। हालाँकि राज्यपाल राष्ट्रपति की ओर से राज्य का प्रशासन संचालित करते हैं, लेकिन बजट अनुमोदन का अधिकार संसद के पास होता है। राष्ट्रपति राज्य की संचित निधि से व्यय को केवल तभी अधिकृत करते हैं जब संसदीय अनुमोदन लंबित हो, जब लोकसभा का सत्र न चल रहा हो।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Which of the following statements are correct regarding the Supreme Court judgement on validity of 103rd Constitutional Amendment Act?<br/> 1. The Supreme Court of India's Constitutional Bench for this case consisted of 5 judges.<br/> 2. The Constitutional Bench upholds the 10% of EWS reservation with 3-2 majority<br/> 3. As per the Supreme Court judgement, the 103rd Constitutional Amendment is valid although it is violating the Basic Structure of the Indian Constitution.<br/> 103</b>वें संविधान संशोधन अधिनियम की वैधता पर सर्वोच्च न्यायालय के निर्णय के संबंध में निम्नलिखित में से कौन से कथन सही हैं<b>?<br/> 4. </b>इस मामले में भारत के सर्वोच्च न्यायालय की संवैधानिक पीठ में <b>5 </b>न्यायाधीश थे।<b><br/> 5. </b>संवैधानिक पीठ ने <b>3-2 </b>बहुमत से आर्थिक रूप से पिछड़े वर्गों के लिए <b>10% </b>आरक्षण को बरकरार रखा।<b><br/> 6. </b>सर्वोच्च न्यायालय के निर्णय के अनुसार<b>, 103</b>वाँ संविधान संशोधन वैध है<b>, </b>हालाँकि यह भारतीय संविधान के मूल ढांचे का उल्लंघन करता है।</p>",
+    "option1": "<p> A, B and C / A, B और C</p>",
+    "option2": "<p> A and C only / A और C</p>",
+    "option3": "<p> B and C only / B और C</p>",
+    "option4": "<p> A and B only / A और B</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The statement C is incorrect. The core of the majority's reasoning was that the amendment was valid because it did not violate the basic structure of the Constitution. The majority judges found that reservation based solely on economic criteria does not damage the basic structure. The minority opinion, however, argued that excluding the SC/ST/OBC categories from the EWS quota and breaching the 50% reservation limit did violate the basic structure. / कथन C गलत है। बहुमत के तर्क का मूल यह था कि संशोधन वैध था क्योंकि यह संविधान के मूल ढांचे का उल्लंघन नहीं करता था। बहुमत वाले न्यायाधीशों ने पाया कि केवल आर्थिक मानदंडों के आधार पर आरक्षण मूल ढांचे को नुकसान नहीं पहुँचाता। हालाँकि, अल्पमत की राय में तर्क दिया गया कि अनुसूचित जाति/अनुसूचित जनजाति/अन्य पिछड़ा वर्ग को आर्थिक रूप से पिछड़े वर्ग (ईडब्ल्यूएस) कोटे से बाहर रखना और 50% आरक्षण सीमा का उल्लंघन करना मूल ढांचे का उल्लंघन है।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Which of the following subjects requires only a Simple Majority of Parliament for amendment, falling outside the ambit of Article 368?<br/> </b>निम्नलिखित में से किस विषय के संशोधन के लिए केवल संसद के साधारण बहुमत की आवश्यकता होती है<b>, </b>जो अनुच्छेद <b>368 </b>के दायरे से बाहर आता है<b>?</b></p>",
+    "option1": "<p> Election of the President and its manner. / राष्ट्रपति का निर्वाचन और उसका तरीका।</p>",
+    "option2": "<p> Abolition or creation of legislative councils in states. / राज्यों में विधायी परिषदों का उन्मूलन या निर्माण।</p>",
+    "option3": "<p> The Directive Principles of State Policy (DPSP). / राज्य के नीति निदेशक तत्व (DPSP)।</p>",
+    "option4": "<p> Representation of states in the Parliament. / संसद में राज्यों का प्रतिनिधित्व।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The abolition or creation of Legislative Councils in states is one of the administrative matters that Parliament can amend by a Simple Majority, and this procedure is not considered an amendment under Article 368. / राज्यों में विधान परिषदों का उन्मूलन या निर्माण उन प्रशासनिक मामलों में से एक है जिसे संसद साधारण बहुमत से संशोधित कर सकती है, और इस प्रक्रिया को अनुच्छेद 368 के तहत संशोधन नहीं माना जाता है।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>How can the Lok Sabha revoke a proclamation of National Emergency?<br/> </b>लोक सभा राष्ट्रीय आपातकाल की उद्घोषणा को कैसे रद्द कर सकती है<b>?</b></p>",
+    "option1": "<p> By passing a resolution with a Special Majority of the total membership. / कुल सदस्यों के विशेष बहुमत से प्रस्ताव पारित करके।</p>",
+    "option2": "<p> By a Simple Majority of the total membership of the House. / सदन के कुल सदस्यों के साधारण बहुमत से।</p>",
+    "option3": "<p> By passing a resolution through Simple Majority. / साधारण बहुमत से प्रस्ताव पारित करके।</p>",
+    "option4": "<p> Revocation power rests only with the President, with no need for Parliamentary approval. / रद्द करने की शक्ति केवल राष्ट्रपति के पास है, जिसके लिए संसदीय मंज़ूरी की कोई आवश्यकता नहीं है।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The 44th Constitutional Amendment Act empowered the Lok Sabha to revoke a National Emergency by passing a resolution with a Simple Majority of members present and voting. The President must revoke the proclamation if the Lok Sabha passes such a resolution. / 44वें संवैधानिक संशोधन अधिनियम ने लोक सभा को उपस्थित और मतदान करने वाले सदस्यों के साधारण बहुमत से एक प्रस्ताव पारित करके राष्ट्रीय आपातकाल को रद्द करने का अधिकार दिया। यदि लोक सभा ऐसा प्रस्ताव पारित करती है तो राष्ट्रपति को उद्घोषणा रद्द करनी होगी।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Who automatically serves as the Chairman of the Committee on Private Members Bill?<br/> </b>निजी सदस्यों के विधेयक पर समिति के अध्यक्ष के रूप में स्वतः कौन कार्य करता है<b>?</b></p>",
+    "option1": "<p> The Speaker of the Lok Sabha. / लोकसभा अध्यक्ष</p>",
+    "option2": "<p> The Deputy Speaker of the Lok Sabha. / लोकसभा के उपाध्यक्ष।</p>",
+    "option3": "<p> The Deputy Chairman of the Rajya Sabha. / राज्यसभा के उपसभापति।</p>",
+    "option4": "<p> The Minister of Parliamentary Affairs. / संसदीय मामलों के मंत्री।</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Deputy Speaker of the Lok Sabha is the ex-officio Chairman of the Committee on Private Members Bill. The rule is that the Deputy Speaker automatically becomes the Chairman of any committee of which he/she is appointed as a member. / लोक सभा के उपाध्यक्ष निजी सदस्यों के विधेयक पर समिति के पदेन अध्यक्ष होते हैं। नियम यह है कि उपाध्यक्ष स्वचालित रूप से उस समिति के अध्यक्ष बन जाते हैं जिसके वे सदस्य के रूप में नियुक्त होते हैं।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Consider the following statements regarding the approval of a Financial Emergency (Article 360):<br/> </b>वित्तीय आपातकाल <b>(</b>अनुच्छेद <b>360) </b>के अनुमोदन के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. It must be approved by the Parliament with a Simple Majority. / </b>इसे संसद द्वारा साधारण बहुमत से अनुमोदित किया जाना चाहिए।<b><br/> 2. The period for approval is 1 month from the date of its issue. / </b>इसके जारी होने की तारीख से अनुमोदन की अवधि <b>1 </b>माह है।<b><br/> Which of the statements given above is/are correct? / </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> I only / केवल I</p>",
+    "option2": "<p> II only / केवल II</p>",
+    "option3": "<p> Both I and II / I और II दोनों</p>",
+    "option4": "<p> Neither I nor II / न तो I और न ही II</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Statement I is correct: Financial Emergency (Art 360) is approved by a Simple Majority. Statement II is incorrect: the period for approval is 2 months (same as President's Rule), not 1 month (which is for National Emergency). / कथन I सही है: वित्तीय आपातकाल (अनुच्छेद 360) को साधारण बहुमत से अनुमोदित किया जाता है। कथन II गलत है: अनुमोदन की अवधि 2 माह है (राष्ट्रपति शासन के समान), न कि 1 माह (जो राष्ट्रीय आपातकाल के लिए है)।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>The Constitution Review Commission chaired by______recommended some initiatives to be taken by the government for successful implementation of Fundamental Duties.<br/> ______</b>की अध्यक्षता में संविधान समीक्षा आयोग ने मौलिक कर्तव्यों के सफल कार्यान्वयन के लिए सरकार द्वारा की जाने वाली कुछ पहलों की सिफारिश की।</p>",
+    "option1": "<p> PK Joshi</p>",
+    "option2": "<p> MN Venkatachaliah</p>",
+    "option3": "<p> UC Banerjee</p>",
+    "option4": "<p> Michael G Aguinaldo</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The commission was established in 2000 and submitted its report in 2002. It recommended several initiatives to make Fundamental Duties more effective, including the implementation of the Justice Verma Committee's recommendations on the widespread dissemination of knowledge about these duties to the public.<br/> आयोग की स्थापना 2000 में हुई थी और इसने 2002 में अपनी रिपोर्ट प्रस्तुत की। इसने मौलिक कर्तव्यों को और अधिक प्रभावी बनाने के लिए कई पहलों की सिफारिश की, जिसमें जनता में इन कर्तव्यों के बारे में व्यापक ज्ञान के प्रसार पर न्यायमूर्ति वर्मा समिति की सिफारिशों का कार्यान्वयन भी शामिल था।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>With reference to India, consider the following:<br/> 1. The Inter-State Council<br/> 2. The National Security Council<br/> 3. Zonal Councils<br/> How many of the above were established as per the provisions of the Constitution of India?<br/> </b>भारत के संदर्भ में<b>, </b>निम्नलिखित पर विचार कीजिए<b>:<br/> 4. </b>अंतर<b>-</b>राज्यीय परिषद<b><br/> 5. </b>राष्ट्रीय सुरक्षा परिषद<b><br/> 6. </b>क्षेत्रीय परिषदें<b><br/> </b>उपर्युक्त में से कितनी परिषदें भारत के संविधान के प्रावधानों के अनुसार स्थापित की गई थीं<b>?</b></p>",
+    "option1": "<p> Only one / केवल एक</p>",
+    "option2": "<p> Only two / केवल दो</p>",
+    "option3": "<p> All the three / तीनों</p>",
+    "option4": "<p> None / कोई नहीं</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Only the Inter-State Council is constitutional.<br/> 11. The National Security Council: This is an executive body, established in 1998 by a resolution (an executive decision) of the Union Cabinet. It is not mentioned in the Constitution.<br/> 12. Zonal Councils: These are statutory bodies, established under the States Reorganisation Act of 1956, which is an Act passed by the Parliament, not a direct provision of the Constitution itself.<br/> 13. केवल अंतरराज्यीय परिषद ही संवैधानिक है।<br/> 14. राष्ट्रीय सुरक्षा परिषद: यह एक कार्यकारी निकाय है, जिसकी स्थापना 1998 में केंद्रीय मंत्रिमंडल के एक प्रस्ताव (कार्यकारी निर्णय) द्वारा की गई थी। संविधान में इसका उल्लेख नहीं है।<br/> 15. क्षेत्रीय परिषदें: ये वैधानिक निकाय हैं, जिनकी स्थापना राज्य पुनर्गठन अधिनियम, 1956 के तहत की गई थी। यह संसद द्वारा पारित एक अधिनियम है, न कि संविधान का प्रत्यक्ष प्रावधान।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Which of the following Constitution Amendment Acts introduced GST (Goods and Services Tax) in the course of inter-state trade or commerce?<br/> </b>निम्नलिखित में से किस संविधान संशोधन अधिनियम ने अंतर<b>-</b>राज्यीय व्यापार या वाणिज्य के दौरान जीएसटी <b>(</b>वस्तु और सेवा कर<b>) </b>की शुरुआत की<b>?</b></p>",
+    "option1": "<p> Constitution (101st Amendment) Act / संविधान (101वां संशोधन) अधिनियम</p>",
+    "option2": "<p> Constitution (102nd Amendment) Act / संविधान (102वां संशोधन) अधिनियम</p>",
+    "option3": "<p> Constitution (104th Amendment) Act / संविधान (104वां संशोधन) अधिनियम</p>",
+    "option4": "<p> Constitution (106th Amendment) Act / संविधान (106वां संशोधन) अधिनियम</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Goods and Services Tax (GST) was introduced in India by the Constitution (One Hundred and First Amendment) Act, 2016.<br/> This Amendment Act conferred simultaneous power upon Parliament and the State Legislatures to make laws governing GST.<br/> Specifically, for the supply of goods or services (or both) that takes place in the course of inter-State trade or commerce, the Act gives exclusive power to Parliament to make laws with respect to GST. This inter-state tax is known as the Integrated Goods and Services Tax (IGST).<br/> The key articles inserted by this amendment are Article 246A (power to impose GST) and Article 269A (levy and collection of GSTS in the course of inter-State trade or commerce).<br/> भारत में वस्तु एवं सेवा कर (जीएसटी) संविधान (101वां संशोधन) अधिनियम, 2016 द्वारा लागू किया गया था।<br/> इस संशोधन अधिनियम ने संसद और राज्य विधानसभाओं को जीएसटी से संबंधित कानून बनाने की एक साथ शक्ति प्रदान की।<br/> विशेष रूप से, अंतर-राज्यीय व्यापार या वाणिज्य के दौरान होने वाली वस्तुओं या सेवाओं (या दोनों) की आपूर्ति के लिए, इस अधिनियम ने संसद को जीएसटी के संबंध में कानून बनाने की विशेष शक्ति प्रदान की। इस अंतर-राज्यीय कर को एकीकृत वस्तु एवं सेवा कर (आईजीएसटी) के रूप में जाना जाता है।<br/> इस संशोधन द्वारा जोड़े गए प्रमुख अनुच्छेद अनुच्छेद 246A (जीएसटी लगाने की शक्ति) और अनुच्छेद 269A (अंतर-राज्यीय व्यापार या वाणिज्य के दौरान जीएसटी का आरोपण और संग्रहण) हैं।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>The Constitution (Seventy-third Amendment) Act provides for<br/> </b>संविधान <b>(</b>तिहत्तरवां संशोधन<b>) </b>अधिनियम में प्रावधान है<b>-</b></p>",
+    "option1": "<p> an elaborate system of establishing municipal self-government / नगरपालिका स्वशासन स्थापित करने की एक विस्तृत प्रणाली</p>",
+    "option2": "<p> an elaborate system of establishing panchayats as units of self-government / पंचायतों को स्वशासन की इकाइयों के रूप में स्थापित करने की एक विस्तृत प्रणाली</p>",
+    "option3": "<p> establishing a Commission for Linguistic Minorities / भाषाई अल्पसंख्यकों के लिए एक आयोग की स्थापना</p>",
+    "option4": "<p> the creation of the Jharkhand State / झारखंड राज्य का निर्माण</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Constitution (Seventy-third Amendment) Act, 1992, is a landmark amendment in India that is historically and constitutionally associated with the establishment of Panchayati Raj Institutions (PRIs).<br/> It gave constitutional status to the Panchayats (rural local self-government) .<br/> It inserted a new Part IX (The Panchayats) and the Eleventh Schedule (listing 29 functional items) into the Constitution of India.<br/> The Act mandates a three-tier system of Panchayats (Village, Intermediate, and District levels) and provides for their regular elections, reservations for Scheduled Castes, Scheduled Tribes, and women, and the constitution of a State Election Commission and a State Finance Commission.<br/> संविधान (तिहत्तरवाँ संशोधन) अधिनियम, 1992, भारत में एक ऐतिहासिक संशोधन है जो ऐतिहासिक और संवैधानिक रूप से पंचायती राज संस्थाओं (पीआरआई) की स्थापना से जुड़ा है।<br/> इसने पंचायतों (ग्रामीण स्थानीय स्वशासन) को संवैधानिक दर्जा दिया।<br/> इसने भारत के संविधान में एक नया भाग IX (पंचायतें) और ग्यारहवीं अनुसूची (29 कार्यात्मक विषयों की सूची) जोड़ी।<br/> यह अधिनियम पंचायतों (ग्राम, मध्यवर्ती और जिला स्तर) की त्रि-स्तरीय प्रणाली को अनिवार्य बनाता है और उनके नियमित चुनाव, अनुसूचित जातियों, अनुसूचित जनजातियों और महिलाओं के लिए आरक्षण, और एक राज्य चुनाव आयोग और एक राज्य वित्त आयोग के गठन का प्रावधान करता है।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Which of the following statements about National Emergency is/are correct?<br/> 1. A Proclamation of Emergency may be made by the President only when the security of India or any part thereof is threatened by war or external aggression or armed rebellion.<br/> 2. The Government of India acquires power to give directions to a State on any matter.<br/> 3. The Proclamation of Emergency does not suspend the State legislature.<br/> 4. The Proclamation of Emergency can continue for a maximum period of six months at a time only if approved by resolutions of both the Houses of Parliament.<br/> Select the correct answer using the code given below:<br/> </b>राष्ट्रीय आपातकाल के बारे में निम्नलिखित में से कौन सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?<br/> 5. </b>राष्ट्रपति द्वारा आपातकाल की घोषणा तभी की जा सकती है जब भारत या उसके किसी भाग की सुरक्षा युद्ध<b>, </b>बाह्य आक्रमण या सशस्त्र विद्रोह से खतरे में हो।<b><br/> 6. </b>भारत सरकार को किसी भी मामले में राज्य को निर्देश देने की शक्ति प्राप्त है।<b><br/> 7. </b>आपातकाल की घोषणा राज्य विधानमंडल को निलंबित नहीं करती है।<b><br/> 8. </b>आपातकाल की घोषणा एक बार में अधिकतम छह महीने की अवधि के लिए तभी जारी रह सकती है जब संसद के दोनों सदनों के प्रस्तावों द्वारा इसे अनुमोदित किया जाए।<b><br/> </b>नीचे दिए गए कूट का प्रयोग कर सही उत्तर चुनिए<b>:</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p> 1, 2 and 3 only / केवल 1, 2 और 3</p>",
+    "option4": "<p> 1, 2, 3 and 4 / 1, 2, 3 और 4</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> All four statements regarding the national emergency are correct because, according to Article 352, the President can declare an emergency only in case of war, external aggression, or armed rebellion; upon the declaration of an emergency, the central government acquires the power under Article 353(a) to give directions to the states on any subject, including those in the State List; a national emergency neither suspends nor dissolves the state legislature, therefore the assemblies continue to function; and according to the 44th Constitutional Amendment, the emergency can be extended for a maximum period of six months at a time after the initial approval, and this requires approval by both Houses of Parliament every six months.<br/> राष्ट्रीय आपातकाल से संबंधित चारों कथन सही हैं क्योंकि अनुच्छेद 352 के अनुसार राष्ट्रपति युद्ध, बाह्य आक्रमण या सशस्त्र विद्रोह के खतरे पर ही आपातकाल घोषित कर सकते हैं; आपातकाल घोषित होने पर अनुच्छेद 353(a) के तहत केंद्र सरकार को राज्य सूची सहित किसी भी विषय पर राज्यों को निर्देश देने की शक्ति मिल जाती है; राष्ट्रीय आपातकाल राज्य विधानमंडल को न तो निलंबित करता है और न ही भंग, इसलिए विधानसभाएँ कार्य करती रहती हैं; तथा 44वें संविधान संशोधन के अनुसार आपातकाल पहली मंजूरी के बाद अधिकतम छह-छह महीने की अवधि के लिए ही आगे जारी रह सकता है और इसके लिए प्रत्येक छह महीने पर संसद के दोनों सदनों द्वारा अनुमोदन अनिवार्य है।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>What is the primary function of the Inter-State Council?<br/> </b>अंतर<b>-</b>राज्यीय परिषद का प्राथमिक कार्य क्या है<b>?</b></p>",
+    "option1": "<p> Resolve disputes between states / राज्यों के बीच विवादों का समाधान</p>",
+    "option2": "<p> Control inter-state trade / अंतर-राज्यीय व्यापार को नियंत्रित करना</p>",
+    "option3": "<p> Allocate central funds / केंद्रीय निधि आवंटित करना</p>",
+    "option4": "<p> Elect the President / राष्ट्रपति का चुनाव करना</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Control inter-state trade: This is primarily governed by Articles 301 to 307 of the Constitution and regulated by Parliament and the states, not the ISC.<br/> Allocate central funds: This is the primary function of the Finance Commission (a constitutional body under Article 280).<br/> Elect the President: This is done by an Electoral College consisting of elected members of both Houses of Parliament and the elected members of the Legislative Assemblies of the States (Article 54).<br/> अंतर-राज्यीय व्यापार को नियंत्रित करना: यह मुख्य रूप से संविधान के अनुच्छेद 301 से 307 द्वारा शासित होता है और संसद तथा राज्यों द्वारा विनियमित होता है, न कि अंतर्राष्ट्रीय व्यापार आयोग द्वारा।<br/> केंद्रीय निधियों का आवंटन: यह वित्त आयोग (अनुच्छेद 280 के तहत एक संवैधानिक निकाय) का प्राथमिक कार्य है।<br/> राष्ट्रपति का चुनाव: यह संसद के दोनों सदनों के निर्वाचित सदस्यों और राज्यों की विधानसभाओं के निर्वाचित सदस्यों (अनुच्छेद 54) से मिलकर बने एक निर्वाचक मंडल द्वारा किया जाता है।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - General Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">General Quiz - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>
