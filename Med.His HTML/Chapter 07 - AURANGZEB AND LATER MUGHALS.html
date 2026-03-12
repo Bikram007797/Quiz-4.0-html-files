@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>General Quiz -  - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>General Quiz - </h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>Who was the founder of the Mughal Empire in India?<br/> </b>भारत में मुगल साम्राज्य का संस्थापक कौन था<b>?</b></p>",
+    "option1": "<p> Akbar / अकबर</p>",
+    "option2": "<p> Humayun / हुमायूँ</p>",
+    "option3": "<p> Babur / बाबर</p>",
+    "option4": "<p> Shah Jahan / शाहजहाँ</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Babur founded the Mughal Empire in 1526 after defeating Ibrahim Lodi in the First Battle of Panipat. He was a descendant of Timur and Genghis Khan. / बाबर ने 1526 में पानीपत के पहले युद्ध में इब्राहिम लोदी को हराकर मुगल साम्राज्य की स्थापना की थी। वह तैमूर और चंगेज खान का वंशज था।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>Which Mughal Emperor built the Moti Masjid in the Red Fort of Delhi?<br/> </b>दिल्ली के लाल किले में मोती मस्जिद का निर्माण किस मुगल सम्राट ने करवाया था<b>?</b></p>",
+    "option1": "<p> Akbar / अकबर</p>",
+    "option2": "<p> Aurangzeb / औरंगजेब</p>",
+    "option3": "<p> Shah Jahan / शाहजहाँ</p>",
+    "option4": "<p> Bahadur Shah Zafar / बहादुर शाह जफर</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> While Shah Jahan built the Red Fort, the Moti Masjid (Pearl Mosque) inside it was built by Aurangzeb for his personal use. It is made of white marble. / जहाँ शाहजहाँ ने लाल किले का निर्माण कराया था, वहीं इसके अंदर मोती मस्जिद का निर्माण औरंगजेब ने अपने व्यक्तिगत उपयोग के लिए करवाया था। यह सफेद संगमरमर से बनी है।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>The Battle of Khanwa (1527) was fought between Babur and which Rajput ruler? / </b>खानवा का युद्ध <b>(1527) </b>बाबर और किस राजपूत शासक के बीच लड़ा गया था<b>?</b></p>",
+    "option1": "<p> Maharana Pratap / महाराणा प्रताप</p>",
+    "option2": "<p> Rana Sanga / राणा सांगा</p>",
+    "option3": "<p> Raja Man Singh / राजा मान सिंह</p>",
+    "option4": "<p> Hemu / हेमू</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Battle of Khanwa was fought in 1527 where Babur defeated Rana Sanga of Mewar. This victory consolidated Babur's rule in Northern India. / खानवा का युद्ध 1527 में लड़ा गया था जहाँ बाबर ने मेवाड़ के राणा सांगा को हराया था। इस जीत ने उत्तर भारत में बाबर के शासन को मजबूत किया।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>Which Mughal ruler is known as 'Zinda Pir' (Living Saint)?<br/> </b>किस मुगल शासक को <b>'</b>जिंदा पीर<b>' </b>के नाम से जाना जाता है<b>?</b></p>",
+    "option1": "<p> Babur / बाबर</p>",
+    "option2": "<p> Akbar / अकबर</p>",
+    "option3": "<p> Aurangzeb / औरंगजेब</p>",
+    "option4": "<p> Jahangir / जहाँगीर</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Aurangzeb was called 'Zinda Pir' due to his simple lifestyle and strict adherence to Islamic laws. / औरंगजेब को उसकी सादा जीवनशैली और इस्लामी कानूनों के सख्त पालन के कारण 'जिंदा पीर' कहा जाता था।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>Humayun-nama was written by whom?<br/> </b>हुमायूँनामा किसके द्वारा लिखा गया था<b>?</b></p>",
+    "option1": "<p> Humayun / हुमायूँ</p>",
+    "option2": "<p> Akbar / अकबर</p>",
+    "option3": "<p> Gulbadan Begum / गुलबदन बेगम</p>",
+    "option4": "<p> Abul Fazl / अबुल फजल</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Gulbadan Begum was the sister of Humayun. She wrote the biography of her brother at the request of her nephew, Emperor Akbar. / गुलबदन बेगम हुमायूँ की बहन थी। उन्होंने<br/> अपने भतीजे, सम्राट अकबर के अनुरोध पर अपने भाई की जीवनी लिखी थी।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>Which Mughal Emperor abolished the Jizya tax for the first time?<br/> </b>किस मुगल सम्राट ने पहली बार जजिया कर को समाप्त किया था<b>?</b></p>",
+    "option1": "<p> Babur / बाबर</p>",
+    "option2": "<p> Akbar / अकबर</p>",
+    "option3": "<p> Jahangir / जहाँगीर</p>",
+    "option4": "<p> Aurangzeb / औरंगजेब</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Akbar abolished Jizya, a tax on non-Muslim subjects, in 1564 to promote religious harmony. However, it was later re-introduced by Aurangzeb in 1679. / अकबर ने धार्मिक सद्भाव को बढ़ावा देने के लिए 1564 में गैर-मुस्लिम प्रजा पर लगने वाले जजिया कर को समाप्त कर दिया था। हालाँकि, बाद में 1679 में औरंगजेब द्वारा इसे फिर से लागू किया गया था।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>The famous 'Peacock Throne' was commissioned by which Mughal Emperor?<br/> </b>प्रसिद्ध <b>'</b>मयूर सिंहासन<b>' (</b>तख्त<b>-</b>ए<b>-</b>ताऊस<b>) </b>का निर्माण किस मुगल सम्राट ने करवाया था<b>?</b></p>",
+    "option1": "<p> Akbar / अकबर</p>",
+    "option2": "<p> Jahangir / जहाँगीर</p>",
+    "option3": "<p> Shah Jahan / शाहजहाँ</p>",
+    "option4": "<p> Aurangzeb / औरंगजेब</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Shah Jahan commissioned the Peacock Throne, which was later looted by Nadir Shah in 1739. It was kept in the Diwan-i-Khas of the Red Fort. / शाहजहाँ ने मयूर सिंहासन का निर्माण करवाया था, जिसे बाद में 1739 में नादिर शाह ने लूट लिया था। इसे लाल किले के दीवान-ए-खास में रखा गया था।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>Who was the last powerful Mughal Emperor?<br/> </b>अंतिम शक्तिशाली मुगल सम्राट कौन था<b>?</b></p>",
+    "option1": "<p> Bahadur Shah Zafar / बहादुर शाह जफर</p>",
+    "option2": "<p> Aurangzeb / औरंगजेब</p>",
+    "option3": "<p> Muhammad Shah / मुहम्मद शाह</p>",
+    "option4": "<p> Farrukhsiyar / फर्रुखसियर</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Aurangzeb is considered the last of the \"Great Mughals.\" After his death in 1707, the empire began to decline rapidly under the Later Mughals. / औरंगजेब को \"महान मुगलों\" में अंतिम माना जाता है। 1707 में उसकी मृत्यु के बाद, उत्तरवर्ती मुगलों के शासन में साम्राज्य का तेजी से पतन होने लगा।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Buland Darwaza at Fatehpur Sikri was built to commemorate the victory of which state? /<br/> </b>फतेहपुर सीकरी में बुलंद दरवाजा किस राज्य की विजय की स्मृति में बनाया गया था<b>?</b></p>",
+    "option1": "<p> Bengal / बंगाल</p>",
+    "option2": "<p> Gujarat / गुजरात</p>",
+    "option3": "<p> Mewar / मेवाड़</p>",
+    "option4": "<p> Deccan / दक्कन</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Akbar built the Buland Darwaza in 1601 to commemorate his victory over Gujarat. It is the highest gateway in the world. / अकबर ने 1601 में गुजरात पर अपनी विजय की स्मृति में बुलंद दरवाजा बनवाया था। यह दुनिया का सबसे ऊँचा प्रवेश द्वार है।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>Who was the Mughal Emperor when the East India Company was established?<br/> </b>ईस्ट इंडिया कंपनी की स्थापना के समय मुगल सम्राट कौन था<b>?</b></p>",
+    "option1": "<p> Jahangir / जहाँगीर</p>",
+    "option2": "<p> Akbar / अकबर</p>",
+    "option3": "<p> Shah Jahan / शाहजहाँ</p>",
+    "option4": "<p> Aurangzeb / औरंगजेब</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The English East India Company was established in 1600 during the reign of Akbar. However, British envoys visited the court of Jahangir later. / अंग्रेजी ईस्ट इंडिया कंपनी की स्थापना 1600 में अकबर के शासनकाल के दौरान हुई थी। हालाँकि, ब्रिटिश दूतों ने बाद में जहाँगीर के दरबार का दौरा किया था।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>The Mansabdari system was introduced by Akbar. What does the term 'Zat' signify in this system?<br/> </b>मनसबदारी प्रणाली अकबर द्वारा शुरू की गई थी। इस प्रणाली में <b>'</b>जात<b>' </b>शब्द का क्या अर्थ है<b>?</b></p>",
+    "option1": "<p> Number of cavalrymen / घुड़सवारों की संख्या</p>",
+    "option2": "<p> Personal status and salary / व्यक्तिगत स्थिति और वेतन</p>",
+    "option3": "<p> Type of land / भूमि का प्रकार</p>",
+    "option4": "<p> Military rank only / केवल सैन्य पद</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> In the Mansabdari system, 'Zat' determined the personal rank and salary of the officer, while 'Sawar' indicated the number of cavalrymen he had to maintain. / मनसबदारी प्रणाली में, 'जात' अधिकारी के व्यक्तिगत पद और वेतन को निर्धारित करता था, जबकि 'सवार' उस घुड़सवारों की संख्या को दर्शाता था जिसे उसे बनाए रखना होता था।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Which Later Mughal ruler was known as 'Shah-i-Bekhabar'?<br/> </b>किस उत्तरवर्ती मुगल शासक को <b>'</b>शाह<b>-</b>ए<b>-</b>बेखबर<b>' </b>के नाम से जाना जाता था<b>?</b></p>",
+    "option1": "<p> Jahandar Shah / जहांदार शाह</p>",
+    "option2": "<p> Bahadur Shah I / बहादुर शाह प्रथम</p>",
+    "option3": "<p> Farrukhsiyar / फर्रुखसियर</p>",
+    "option4": "<p> Muhammad Shah / मुहम्मद शाह</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Bahadur Shah I was called 'Shah-i-Bekhabar' (the Heedless King) by Khafi Khan because of his lack of attention to state administration. He was the son of Aurangzeb. / खफी खान द्वारा बहादुर शाह प्रथम को राज्य प्रशासन पर ध्यान न देने के कारण 'शाह-ए-बेखबर' कहा गया था। वह औरंगजेब का पुत्र था।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>The Mughal administration's head of the military department was known as:<br/> </b>मुगल प्रशासन के सैन्य विभाग के प्रमुख को किस नाम से जाना जाता था<b>?</b></p>",
+    "option1": "<p> Mir Bakshi / मीर बख्शी</p>",
+    "option2": "<p> Diwan / दीवान</p>",
+    "option3": "<p> Khan-i-Saman / खान-ए-सामां</p>",
+    "option4": "<p> Qazi-ul-Quzat / काजी-उल-कुजात</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Mir Bakshi was responsible for the military department, intelligence, and the recommendation of mansabdars to the emperor. / मीर बख्शी सैन्य विभाग, खुफिया जानकारी और सम्राट को मनसबदारों की सिफारिश करने के लिए जिम्मेदार था।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Battle of Karnal (1739) was fought between Nadir Shah and which Mughal Emperor? /<br/> </b>करनाल का युद्ध <b>(1739) </b>नादिर शाह और किस मुगल सम्राट के बीच लड़ा गया था<b>?</b></p>",
+    "option1": "<p> Ahmad Shah / अहमद शाह</p>",
+    "option2": "<p> Muhammad Shah 'Rangeela' / मुहम्मद शाह 'रंगीला'</p>",
+    "option3": "<p> Shah Alam II / शाह आलम द्वितीय</p>",
+    "option4": "<p> Alamgir II / आलमगीर द्वितीय</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Nadir Shah defeated Muhammad Shah at Karnal in 1739. This led to the massacre of Delhi and the looting of the Peacock Throne and Kohinoor diamond. / नादिर शाह ने 1739 में करनाल में मुहम्मद शाह को हराया था। इसके परिणामस्वरूप दिल्ली में कत्लेआम हुआ और मयूर सिंहासन और कोहिनूर हीरा लूट लिया गया।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Who was the architect of the Taj Mahal?<br/> </b>ताजमहल का वास्तुकार कौन था<b>?</b></p>",
+    "option1": "<p> Ustad Ahmad Lahori / उस्ताद अहमद लाहौरी</p>",
+    "option2": "<p> Mirak Mirza Ghiyas / मिराक मिर्जा गियास</p>",
+    "option3": "<p> Bebadal Khan / बेबादल खान</p>",
+    "option4": "<p> Amanat Khan Shirazi / अमानत खान शिराजी</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Ustad Ahmad Lahori is credited as the chief architect of the Taj Mahal, representing the pinnacle of Mughal architecture. It was built between 1632 and 1653. / उस्ताद अहमद लाहौरी को ताजमहल के मुख्य वास्तुकार के रूप में श्रेय दिया जाता है, जो मुगल वास्तुकला के शिखर का प्रतिनिधित्व करता है। इसका निर्माण 1632 और 1653 के बीच हुआ था।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Assertion (A): The Mughal Mansabdari system was not hereditary in nature.<br/> </b>अभिकथन <b>(A): </b>मुगल मनसबदारी प्रणाली प्रकृति में वंशानुगत नहीं थी।<b><br/> Reason (R): Upon the death of a Mansabdar, his property was confiscated by the state under the Law of Escheat.<br/> </b>कारण <b>(R): </b>एक मनसबदार की मृत्यु पर<b>, </b>उसकी संपत्ति को <b>'</b>एस्चीट के नियम<b>' (</b>संपत्ति ज़ब्ती का कानून<b>) </b>के तहत राज्य द्वारा जब्त कर लिया जाता था।</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A / A और R दोनों सत्य हैं और R, A की सही व्याख्या है</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A / A और R दोनों सत्य हैं लेकिन R, A की सही व्याख्या नहीं है</p>",
+    "option3": "<p> A is true but R is false / A सत्य है लेकिन R गलत है</p>",
+    "option4": "<p> A is false but R is true / A गलत है लेकिन R सत्य है</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Mansabdars did not have hereditary rights over their rank or Jagir. The Law of Escheat ensured that the wealth accumulated by officials returned to the emperor after their death to prevent a landed aristocracy. / मनसबदारों के पास अपने पद या जागीर पर वंशानुगत अधिकार नहीं थे। संपत्ति ज़ब्ती के नियम ने यह सुनिश्चित किया कि अधिकारियों द्वारा जमा की गई संपत्ति उनकी मृत्यु के बाद सम्राट के पास वापस आ जाए ताकि एक शक्तिशाली सामंती वर्ग न बन सके।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Which of the following statements regarding the Mughal Land Revenue system is/are INCORRECT?<br/> </b>मुगल भू<b>-</b>राजस्व प्रणाली के संबंध में निम्नलिखित में से कौन सा<b>/</b>से कथन गलत है<b>/</b>हैं<b>?<br/> 1. 'Polaj' was land that was never left fallow. / '</b>पोलाज<b>' </b>वह भूमि थी जिसे कभी खाली नहीं छोड़ा जाता था।<b><br/> 2. 'Chachar' was land that remained uncultivated for five or more years. / '</b>चाचर<b>' </b>वह भूमि थी जो पाँच या अधिक वर्षों तक बिना खेती के रहती थी।</p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Polaj was the best quality land cultivated annually. However, Chachar was land left fallow for 3 to 4 years to regain fertility; land left for 5 years or more was called 'Banjar'. / पोलाज सबसे अच्छी गुणवत्ता वाली भूमि थी जिस पर प्रतिवर्ष खेती होती थी। हालाँकि, चाचर वह भूमि थी जिसे उर्वरता वापस पाने के लिए 3 से 4 वर्षों के लिए खाली छोड़ दिया जाता था; 5 या अधिक वर्षों के लिए छोड़ी गई भूमि को 'बंजर' कहा जाता था।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Match the following administrative terms with their correct definitions:<br/> </b>निम्नलिखित प्रशासनिक शब्दों को उनकी सही परिभाषाओं के साथ सुमेलित करें<b>:<br/> List I (Terms) / </b>सूची <b>I (</b>शब्द<b>) List II (Definition) / </b>सूची <b>II (</b>परिभाषा<b>)<br/> 1. Amalguzar / </b>अमालगुज़ार <b>A. Village Headman / </b>गाँव का प्रमुख<b><br/> 2. Bitikchi / </b>बिटिकची <b>B. Revenue Collector at Sarkar level / </b>सरकार स्तर पर राजस्व संग्रहकर्ता<b><br/> 3. Muqaddam / </b>मुक़द्दम <b>C. Village Accountant / </b>गाँव का लेखाकार<b><br/> 4. Patwari / </b>पटवारी <b>D. Clerk/Record Keeper / </b>लिपिक<b>/</b>रिकॉर्ड रखवाला</p>",
+    "option1": "<p> 1-B, 2-D, 3-A, 4-C</p>",
+    "option2": "<p> 1-A, 2-C, 3-D, 4-B</p>",
+    "option3": "<p> 1-B, 2-A, 3-D, 4-C</p>",
+    "option4": "<p> 1-D, 2-B, 3-C, 4-A</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Amalguzar was the head of revenue in a 'Sarkar' (District). Bitikchi served as the clerk for records. Muqaddam was the village head, and Patwari managed village-level land records. / अमालगुज़ार एक 'सरकार' (जिले) में राजस्व का प्रमुख होता था। बिटिकची रिकॉर्ड के लिए लिपिक के रूप में कार्य करता था। मुकद्दम गाँव का मुखिया था, और पटवारी गाँव स्तर के भूमि रिकॉर्ड का प्रबंधन करता था।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Consider the following statements about Mughal Architecture: / </b>मुगल वास्तुकला के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. Jahangir’s reign saw a shift from red sandstone to white marble with extensive use of 'Pietra Dura'. / </b>जहाँगीर के शासनकाल में लाल बलुआ पत्थर से सफेद संगमरमर की ओर बदलाव देखा गया जिसमें <b>'</b>पिएत्रा ड्यूरा<b>' </b>का व्यापक उपयोग हुआ।<b><br/> 2. The 'Moti Masjid' inside the Agra Fort was built by Aurangzeb. / </b>आगरा किले के अंदर <b>'</b>मोती मस्जिद<b>' </b>औरंगजेब द्वारा बनवाई गई थी।</p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Statement 1 is correct (Example: Tomb of Itmad-ud-Daula). Statement 2 is incorrect because Moti Masjid in Agra Fort was built by Shah Jahan; the Moti Masjid in Delhi's Red Fort was built by Aurangzeb. / कथन 1 सही है (उदाहरण: इतमाद-उद-दौला का मकबरा)। कथन 2 गलत है क्योंकि आगरा किले की मोती मस्जिद शाहजहाँ ने बनवाई थी; दिल्ली के लाल किले की मोती मस्जिद औरंगजेब ने बनवाई थी।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>In the context of Aurangzeb’s Deccan Policy, which of the following sequences of annexation is correct?<br/> </b>औरंगजेब की दक्कन नीति के संदर्भ में<b>, </b>विलय का निम्नलिखित में से कौन सा क्रम सही है<b>?</b></p>",
+    "option1": "<p> Bijapur (1686), Golconda (1687) / बीजापुर (1686), गोलकुंडा (1687)</p>",
+    "option2": "<p> Golconda (1686), Bijapur (1687) / गोलकुंडा (1686), बीजापुर (1687)</p>",
+    "option3": "<p> Bijapur (1681), Ahmadnagar (1686) / बीजापुर (1681), अहमदनगर (1686)</p>",
+    "option4": "<p> Ahmadnagar (1680), Golconda (1688) / अहमदनगर (1680), गोलकुंडा (1688)</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Aurangzeb spent the latter half of his reign in the Deccan. He finally annexed the Adil Shahi kingdom of Bijapur in 1686 and the Qutb Shahi kingdom of Golconda in 1687. / औरंगजेब ने अपने शासनकाल का उत्तरार्ध दक्कन में बिताया। उन्होंने अंततः 1686 में बीजापुर के आदिल शाही साम्राज्य और 1687 में गोलकुंडा के कुतुब शाही साम्राज्य का विलय किया।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>The 'Du-aspa Sih-aspa' system, a modification in the Mansabdari system, was introduced by:<br/> </b>मनसबदारी प्रणाली में एक संशोधन <b>'</b>दु<b>-</b>अस्पा सिह<b>-</b>अस्पा<b>' </b>प्रणाली किसके द्वारा शुरू की गई थी<b>?</b></p>",
+    "option1": "<p> Akbar / अकबर</p>",
+    "option2": "<p> Jahangir / जहाँगीर</p>",
+    "option3": "<p> Shah Jahan / शाहजहाँ</p>",
+    "option4": "<p> Aurangzeb / औरंगजेब</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> This system allowed Jahangir to increase the number of sawars (cavalry) of a Mansabdar without increasing his 'Zat' rank. 'Du-aspa' meant 2 horses per sawar, and 'Sih-aspa' meant 3 horses. / इस प्रणाली ने जहाँगीर को मनसबदार के 'जात' रैंक को बढ़ाए बिना उसके सवारों (घुड़सवारों) की संख्या बढ़ाने की अनुमति दी। 'दु-अस्पा' का अर्थ प्रति सवार 2 घोड़े और 'सिह-अस्पा' का अर्थ 3 घोड़े थे।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Which of the following pair of authors and books is INCORRECTLY matched?<br/> </b>लेखकों और पुस्तकों का निम्नलिखित में से कौन सा युग्म गलत सुमेलित है<b>?</b></p>",
+    "option1": "<p> Mutamad Khan - Iqbalnama-i-Jahangiri / मुतमद खान - इक़बालनामा-ए-जहाँगीरी</p>",
+    "option2": "<p> Abdul Hamid Lahori - Padshahnama / अब्दुल हमीद लाहौरी - बादशाहनामा</p>",
+    "option3": "<p> Khafi Khan - Muntakhab-ul-Lubab / ख़ाफी खान - मुन्तख़ब-उल-लुबाब</p>",
+    "option4": "<p> Inayat Khan - Humayun-nama / इनायत खान - हुमायूँ-नामा</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Humayun-nama was written by Gulbadan Begum (Humayun's sister). Inayat Khan wrote 'Shahjahan-nama'. Other pairs are correct contemporary sources for Jahangir, Shah Jahan, and Aurangzeb. / हुमायूँ-नामा गुलबदन बेगम (हुमायूँ की बहन) द्वारा लिखा गया था। इनायत खान ने 'शाहजहाँ-नामा' लिखा था। अन्य जोड़े जहाँगीर, शाहजहाँ और औरंगजेब के सही समकालीन स्रोत हैं।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Assertion (A): The Jagirdari Crisis is considered a major reason for the fall of the Mughal Empire.<br/> </b>अभिकथन <b>(A): </b>जागीरदारी संकट को मुगल साम्राज्य के पतन का एक प्रमुख कारण माना जाता है।<b><br/> Reason (R): There was a shortage of good 'Paibaqi' (land waiting to be assigned) while the number of Mansabdars increased rapidly.<br/> </b>कारण <b>(R): </b>अच्छी <b>'</b>पायबाकी<b>' (</b>आवंटित होने वाली भूमि<b>) </b>की कमी थी जबकि मनसबदारों की संख्या तेजी से बढ़ी।</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A / A और R दोनों सत्य हैं और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A / A और R दोनों सत्य हैं लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true but R is false / A सत्य है लेकिन R गलत है।</p>",
+    "option4": "<p> A is false but R is true / A गलत है लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> During Aurangzeb's later years, the disproportionate increase in Mansabdars compared to available land (Be-jagiri) led to competition and corruption, weakening the empire's central authority. / औरंगजेब के अंतिम वर्षों के दौरान, उपलब्ध भूमि (बे-जागीरी) की तुलना में मनसबदारों में अत्यधिक वृद्धि से प्रतिस्पर्धा और भ्रष्टाचार बढ़ गया, जिसने साम्राज्य के केंद्रीय अधिकार को कमजोर कर दिया।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Which Mughal ruler granted the 'Farman' to the East India Company in 1717, known as the 'Magna Carta' of the Company?<br/> </b>किस मुगल शासक ने <b>1717 </b>में ईस्ट इंडिया कंपनी को <b>'</b>फरमान<b>' </b>दिया था<b>, </b>जिसे कंपनी का <b>'</b>मैग्ना कार्टा<b>' </b>कहा जाता है<b>?</b></p>",
+    "option1": "<p> Bahadur Shah I / बहादुर शाह प्रथम</p>",
+    "option2": "<p> Farrukhsiyar / फर्रुखसियर</p>",
+    "option3": "<p> Muhammad Shah / मुहम्मद शाह</p>",
+    "option4": "<p> Jahandar Shah / जहाँदार शाह</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Farrukhsiyar issued a Farman in 1717 granting the British significant trade concessions in Bengal, Bombay, and Madras, including the right to trade duty-free in exchange for an annual payment. / फर्रुखसियर ने 1717 में एक फरमान जारी किया जिसमें अंग्रेजों को बंगाल, बॉम्बे और मद्रास में महत्वपूर्ण व्यापार रियायतें दी गईं, जिसमें वार्षिक भुगतान के बदले शुल्क मुक्त व्यापार का अधिकार शामिल था।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>Statement 1: The 'Dastur-ul-Amal' were administrative manuals used during the Mughal period.<br/> </b>कथन <b>1: '</b>दस्तूर<b>-</b>उल<b>-</b>अमल<b>' </b>मुगल काल के दौरान उपयोग किए जाने वाले प्रशासनिक मार्गदर्शक थे।<b><br/> Statement 2: The 'Madad-i-Maash' grants were hereditary land grants given to religious and learned people.<br/> </b>कथन <b>2: '</b>मदद<b>-</b>ए<b>-</b>माश<b>' </b>अनुदान धार्मिक और विद्वान लोगों को दिए जाने वाले वंशानुगत भूमि अनुदान थे।</p>",
+    "option1": "<p> Only Statement 1 is true / केवल कथन 1 सत्य है।</p>",
+    "option2": "<p> Only Statement 2 is true / केवल कथन 2 सत्य है।</p>",
+    "option3": "<p> Both statements are true / दोनों कथन सत्य हैं।</p>",
+    "option4": "<p> Both statements are false / दोनों कथन गलत हैं।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Dastur-ul-Amal provided detailed rules for administration. Madad-i-Maash (also called Suyurghal) were tax-free land grants for life or hereditarily given to scholars and saints. / दस्तूर-उल-अमल ने प्रशासन के लिए विस्तृत नियम प्रदान किए। मदद-ए-माश (जिसे सुयूरगल भी कहा जाता है) विद्वानों और संतों को जीवन भर के लिए या वंशानुगत रूप से दिए गए कर-मुक्त भूमि अनुदान थे।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - General Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">General Quiz - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

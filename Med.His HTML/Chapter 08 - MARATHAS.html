@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>General Quiz -  - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>General Quiz - </h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>In which year was Chhatrapati Shivaji Maharaj born at Shivneri Fort?<br/> </b>छत्रपति शिवाजी महाराज का जन्म शिवनेरी किले में किस वर्ष हुआ था<b>?</b></p>",
+    "option1": "<p> 1627 / 1627</p>",
+    "option2": "<p> 1630 / 1630</p>",
+    "option3": "<p> 1645 / 1645</p>",
+    "option4": "<p> 1674 / 1674</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Shivaji Maharaj was born in 1630 at Shivneri Fort to Shahji Bhonsle and Jija Bai. He laid the foundation of the Maratha Empire. / शिवाजी महाराज का जन्म 1630 में शिवनेरी किले में शाहजी भोंसले और जीजा बाई के घर हुआ था। उन्होंने मराठा साम्राज्य की नींव रखी थी।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>Who was the religious teacher (Guru) of Chhatrapati Shivaji Maharaj?<br/> </b>छत्रपति शिवाजी महाराज के धार्मिक गुरु कौन थे<b>?</b></p>",
+    "option1": "<p> Samarth Ramdas / समर्थ रामदास</p>",
+    "option2": "<p> Tukaram / तुकाराम</p>",
+    "option3": "<p> Namdev / नामदेव</p>",
+    "option4": "<p> Eknath / एकनाथ</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Samarth Ramdas was the spiritual and religious teacher of Shivaji Maharaj who influenced his thoughts on Dharma. / समर्थ रामदास शिवाजी महाराज के आध्यात्मिक और धार्मिक गुरु थे जिन्होंने धर्म पर उनके विचारों को प्रभावित किया।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>The Battle of Pratapgarh (1659) was fought between Shivaji Maharaj and whom?<br/> </b>प्रतापगढ़ की लड़ाई <b>(1659) </b>शिवाजी महाराज और किसके बीच लड़ी गई थी<b>?</b></p>",
+    "option1": "<p> Shaista Khan / शाइस्ता खान</p>",
+    "option2": "<p> Afzal Khan / अफजल खान</p>",
+    "option3": "<p> Jai Singh / जय सिंह</p>",
+    "option4": "<p> Aurangzeb / औरंगजेब</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Shivaji Maharaj killed the Bijapur General Afzal Khan using 'Wagh Nakh' (tiger claws) during this battle. / शिवाजी महाराज ने इस युद्ध के दौरान 'वाघ नख' (बाघ के पंजे) का उपयोग करके बीजापुर के सेनापति अफजल खान को मार डाला था।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>The Treaty of Purandar (1665) was signed between Shivaji Maharaj and ________.<br/> </b>पुरंदर की संधि <b>(1665) </b>शिवाजी महाराज और <b>________ </b>के बीच हस्ताक्षरित की गई थी।</p>",
+    "option1": "<p> Raja Jai Singh / राजा जय सिंह</p>",
+    "option2": "<p> Shaista Khan / शाइस्ता खान</p>",
+    "option3": "<p> Afzal Khan / अफजल खान</p>",
+    "option4": "<p> Prince Akbar / राजकुमार अकबर</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Following the siege of Purandar, Shivaji had to surrender 23 of his forts to the Mughals under this treaty. / पुरंदर की घेराबंदी के बाद, शिवाजी को इस संधि के तहत अपने 23 किले मुगलों को सौंपने पड़े थे।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>In which year was Shivaji Maharaj coronated at Raigarh and took the title of 'Chhatrapati'?<br/> </b>रायगढ़ में शिवाजी महाराज का राज्याभिषेक किस वर्ष हुआ था और उन्होंने <b>'</b>छत्रपति<b>' </b>की उपाधि धारण की थी<b>?</b></p>",
+    "option1": "<p> 1665 / 1665</p>",
+    "option2": "<p> 1670 / 1670</p>",
+    "option3": "<p> 1674 / 1674</p>",
+    "option4": "<p> 1680 / 1680</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> He was coronated at Raigarh in 1674 and assumed the title of Chhatrapati and Haindava Dharmodharak. / 1674 में रायगढ़ में उनका राज्याभिषेक हुआ और उन्होंने छत्रपति और हैंदव धर्मोद्धारक की उपाधि धारण की।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>What was the council of eight ministers that helped Shivaji Maharaj in administration called?<br/> </b>शिवाजी महाराज को प्रशासन में मदद करने वाले आठ मंत्रियों की परिषद को क्या कहा जाता था<b>?</b></p>",
+    "option1": "<p> Ashtadiggaja / अष्टदिग्गज</p>",
+    "option2": "<p> Navratna / नवरत्न</p>",
+    "option3": "<p> Ashtapradhan / अष्टप्रधान</p>",
+    "option4": "<p> Pratinidhi / प्रतिनिधि</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Ashtapradhan was a council of eight ministers where each minister was directly responsible to the King. / अष्टप्रधान आठ मंत्रियों की एक परिषद थी जहाँ प्रत्येक मंत्री सीधे राजा के प्रति उत्तरदायी होता था।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Which tax was collected by the Marathas as 1/4th of the land revenue?<br/> </b>मराठों द्वारा भू<b>-</b>राजस्व के <b>1/4 </b>भाग के रूप में कौन सा कर वसूला जाता था<b>?</b></p>",
+    "option1": "<p> Sardeshmukhi / सरदेशमुखी</p>",
+    "option2": "<p> Chauth / चौथ</p>",
+    "option3": "<p> Zakat / जकात</p>",
+    "option4": "<p> Jizya / जजिया</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Chauth was 25% of land revenue paid to Marathas to avoid raids and ensure protection. / चौथ मराठों को दिए जाने वाले भू-राजस्व का 25% हिस्सा था ताकि हमलों से बचा जा सके और सुरक्षा सुनिश्चित हो सके।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>Who was the first Peshwa of the Maratha Empire?<br/> </b>मराठा साम्राज्य का प्रथम पेशवा कौन था<b>?</b></p>",
+    "option1": "<p> Baji Rao I / बाजीराव प्रथम</p>",
+    "option2": "<p> Balaji Baji Rao / बालाजी बाजीराव</p>",
+    "option3": "<p> Balaji Vishwanath / बालाजी विश्वनाथ</p>",
+    "option4": "<p> Madhav Rao / माधवराव</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Balaji Vishwanath became the first powerful Peshwa in 1713 and made the post hereditary. / बालाजी विश्वनाथ 1713 में पहले शक्तिशाली पेशवा बने और उन्होंने इस पद को वंशानुगत बना दिया।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>The Third Battle of Panipat (1761) was fought during the tenure of which Peshwa?<br/> </b>पानीपत की तीसरी लड़ाई <b>(1761) </b>किस पेशवा के कार्यकाल के दौरान लड़ी गई थी<b>?</b></p>",
+    "option1": "<p> Baji Rao I / बाजीराव प्रथम</p>",
+    "option2": "<p> Balaji Baji Rao / बालाजी बाजीराव</p>",
+    "option3": "<p> Madhav Rao / माधवराव</p>",
+    "option4": "<p> Balaji Vishwanath / बालाजी विश्वनाथ</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Third Battle of Panipat was fought between Ahmad Shah Abdali and the Marathas in 1761. Balaji Bajirao (Nana Saheb) was the Peshwa of the Maratha Empire at the time. This battle proved decisive and devastating for the Marathas. / पानीपत की तीसरी लड़ाई 1761 ई. में अहमद शाह अब्दाली और मराठों के बीच लड़ी गई थी। उस समय मराठा साम्राज्य के पेशवा बालाजी बाजीराव (नाना साहेब) थे। यह युद्ध मराठों के लिए अत्यंत निर्णायक और विनाशकारी सिद्ध हुआ।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>Who was the founder of the Scindia dynasty of Gwalior?<br/> </b>ग्वालियर के सिंधिया वंश का संस्थापक कौन था<b>?</b></p>",
+    "option1": "<p> Ranoji Scindia / रणोजी सिंधिया</p>",
+    "option2": "<p> Mahadji Scindia / महादजी सिंधिया</p>",
+    "option3": "<p> Daulat Rao Scindia / दौलतराव सिंधिया</p>",
+    "option4": "<p> Malhar Rao Holkar / मल्हार राव होल्कर</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Ranoji Scindia established the Scindia house as part of the Maratha Confederacy. / रणोजी सिंधिया ने मराठा परिसंघ के हिस्से के रूप में सिंधिया घराने की स्थापना की थी।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Which Maratha ruler provided protection to Mirza Akbar, the rebellious son of Aurangzeb?<br/> </b>किस मराठा शासक ने औरंगजेब के विद्रोही पुत्र मिर्जा अकबर को सुरक्षा प्रदान की थी<b>?</b></p>",
+    "option1": "<p> Rajaram / राजाराम</p>",
+    "option2": "<p> Sambhaji / संभाजी</p>",
+    "option3": "<p> Shahu / शाहू</p>",
+    "option4": "<p> Tarabai / ताराबाई</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Sambhaji, the elder son of Shivaji, protected Mirza Akbar, which led to Aurangzeb's invasion and Sambhaji's execution. / शिवाजी के बड़े पुत्र संभाजी ने मिर्जा अकबर को संरक्षण दिया, जिसके कारण औरंगजेब ने आक्रमण किया और संभाजी को मृत्युदंड दिया।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>The Battle of Khed (1707) was fought between whom?<br/> </b>खेड़ का युद्ध <b>(1707) </b>किसके बीच लड़ा गया था<b>?</b></p>",
+    "option1": "<p> Shahu and Tarabai / शाहू और ताराबाई</p>",
+    "option2": "<p> Shivaji II and Sambhaji / शिवाजी द्वितीय और संभाजी</p>",
+    "option3": "<p> Peshwa and Nizam / पेशवा और निजाम</p>",
+    "option4": "<p> British and Marathas / अंग्रेज और मराठा</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Shahu defeated Tarabai in this battle after being released from Mughal captivity, securing his right to the throne. / मुगल कैद से छूटने के बाद शाहू ने इस युद्ध में ताराबाई को हराया और सिंहासन पर अपना अधिकार सुरक्षित किया।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>The Treaty of Bassein (1802) was signed by which Maratha Peshwa with the British?<br/> </b>बसीन की संधि <b>(1802) </b>पर किस मराठा पेशवा ने अंग्रेजों के साथ हस्ताक्षर किए थे<b>?</b></p>",
+    "option1": "<p> Madhav Rao II / माधवराव द्वितीय</p>",
+    "option2": "<p> Baji Rao II / बाजीराव द्वितीय</p>",
+    "option3": "<p> Raghunath Rao / रघुनाथ राव</p>",
+    "option4": "<p> Balaji Baji Rao / बालाजी बाजीराव</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Baji Rao II signed the Subsidiary Alliance under the Treaty of Bassein, which led to the 2nd Anglo-Maratha War. / बाजीराव द्वितीय ने बसीन की संधि के तहत सहायक संधि पर हस्ताक्षर किए, जिससे द्वितीय आंग्ल-मराठा युद्ध हुआ।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Who was known as the 'Machiavelli of Marathas'?<br/> </b>किसे <b>'</b>मराठों का मैकियावेली<b>' </b>कहा जाता था<b>?</b></p>",
+    "option1": "<p> Baji Rao I / बाजीराव प्रथम</p>",
+    "option2": "<p> Nana Fadnavis / नाना फड़नवीस</p>",
+    "option3": "<p> Mahadji Scindia / महादजी सिंधिया</p>",
+    "option4": "<p> Balaji Vishwanath / बालाजी विश्वनाथ</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Nana Fadnavis was a brilliant administrator and diplomat who managed Maratha affairs during the First Anglo-Maratha War. / नाना फड़नवीस एक कुशल प्रशासक और राजनयिक थे जिन्होंने प्रथम आंग्ल-मराठा युद्ध के दौरान मराठा मामलों का प्रबंधन किया था।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>The 'Pindari War' is another name for which conflict? '<br/> </b>पिंडारी युद्ध<b>' </b>किस संघर्ष का दूसरा नाम है<b>?</b></p>",
+    "option1": "<p> 1st Anglo-Maratha War / प्रथम आंग्ल-मराठा युद्ध</p>",
+    "option2": "<p> 2nd Anglo-Maratha War / द्वितीय आंग्ल-मराठा युद्ध</p>",
+    "option3": "<p> 3rd Anglo-Maratha War / तृतीय आंग्ल-मराठा युद्ध</p>",
+    "option4": "<p> Battle of Panipat / पानीपत की लड़ाई</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Third Anglo-Maratha War (1817-1818) is often called the Pindari War as it began with British actions against the Pindaris. / तृतीय आंग्ल-मराठा युद्ध (1817-1818) को अक्सर पिंडारी युद्ध कहा जाता है क्योंकि यह पिंडारियों के खिलाफ ब्रिटिश कार्रवाई के साथ शुरू हुआ था।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Consider the following statements regarding 'Sardeshmukhi' tax:<br/> '</b>सरदेशमुखी<b>' </b>कर के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. It was an additional levy of 10% on land revenue. </b>यह भूमि राजस्व पर <b>10% </b>का अतिरिक्त कर था<b><br/> 2. It was claimed on lands where Marathas asserted hereditary rights. </b>यह उन ज़मीनों पर दावा किया गया था जहाँ मराठों ने वंशानुगत अधिकार जताए थे।</p>",
+    "option1": "<p> Only 1 / केवल 1</p>",
+    "option2": "<p> Only 2 / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Sardeshmukhi was a 10% additional tax claimed by Shivaji as the hereditary head (Sardeshmukh) of the region. / सरदेशमुखी एक 10% अतिरिक्त कर था जिसे शिवाजी ने इलाके के खानदानी मुखिया (सरदेशमुख) के तौर पर मांगा था।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Assertion (A): The Third Battle of Panipat was a decisive blow to Maratha expansion.<br/> Reason (R): The Marathas lost their most able leaders and thousands of soldiers in this battle.<br/> </b>कथन <b>(A): </b>पानीपत की तीसरी लड़ाई मराठा विस्तार के लिए एक निर्णायक झटका थी।<b><br/> </b>कारण <b>(R): </b>मराठों ने इस युद्ध में अपने सबसे सक्षम नेताओं और हजारों सैनिकों को खो दिया था।</p>",
+    "option1": "<p> Both A and R are true and R is correct explanation of A / A और R दोनों सही हैं और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true but R is not the correct explanation of A / A और R दोनों सही हैं लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true but R is false / A सही है लेकिन R गलत है।</p>",
+    "option4": "<p> A is false but R is true / A गलत है लेकिन R सही है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The heavy loss of manpower and leadership in 1761 halted the Maratha dream of ruling the entire Indian subcontinent. / 1761 में जनशक्ति और नेतृत्व की भारी हानि ने पूरे भारतीय उपमहाद्वीप पर शासन करने के मराठा सपने को रोक दिया।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Match the Maratha families with their seats of power:<br/> </b>मराठा परिवारों को उनके शक्ति केंद्रों से सुमेलित करें<b>:<br/> 1. Gaikwad - A. Indore / </b>गायकवाड़ <b>- </b>इंदौर<b><br/> 2. Holkar - B. Baroda / </b>होल्कर <b>- </b>बड़ौदा<b><br/> 3. Scindia - C. Nagpur / </b>सिंधिया <b>- </b>नागपुर<b><br/> 4. Bhonsle - D. Gwalior / </b>भोंसले <b>- </b>ग्वालियर</p>",
+    "option1": "<p> 1-B, 2-A, 3-D, 4-C</p>",
+    "option2": "<p> 1-A, 2-B, 3-C, 4-D</p>",
+    "option3": "<p> 1-B, 2-D, 3-A, 4-C</p>",
+    "option4": "<p> 1-C, 2-A, 3-D, 4-B</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Gaikwads ruled Baroda, Holkars in Indore, Scindias in Gwalior, and Bhonsles in Nagpur as part of the Confederacy. / गायकवाड़ ने बड़ौदा, होल्कर ने इंदौर, सिंधिया ने ग्वालियर और भोंसले ने नागपुर में परिसंघ के हिस्से के रूप में शासन किया।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Statement I: Shivaji Maharaj is considered a pioneer of Guerilla warfare in India.<br/> Statement II: He developed a strong navy to protect the Konkan coast.<br/> </b>कथन <b>I: </b>शिवाजी महाराज को भारत में गुरिल्ला युद्ध का अग्रदूत माना जाता है।<b><br/> </b>कथन <b>II: </b>उन्होंने कोंकण तट की रक्षा के लिए एक मजबूत नौसेना विकसित की थी।</p>",
+    "option1": "<p> Statement I is correct / कथन I सही है।</p>",
+    "option2": "<p> Statement II is correct / कथन II सही है।</p>",
+    "option3": "<p> Both are correct / दोनों सही हैं।</p>",
+    "option4": "<p> Neither is correct / कोई भी सही नहीं है।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Shivaji used the terrain of Sahyadri for Guerilla tactics and is also called the 'Father of Indian Navy'. / शिवाजी ने गुरिल्ला रणनीति के लिए सह्याद्रि के इलाके का इस्तेमाल किया और उन्हें 'भारतीय नौसेना का जनक' भी कहा जाता है।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Assertion (A): The post of Peshwa became hereditary after Balaji Vishwanath.<br/> </b>कथन <b>(A): </b>बालाजी विश्वनाथ के बाद पेशवा का पद वंशानुगत हो गया।<b><br/> Reason (R): Shahu was a weak ruler and surrendered all powers to the Peshwa.<br/> </b>कारण <b>(R): </b>शाहू एक कमजोर शासक थे और उन्होंने सारी शक्तियाँ पेशवा को सौंप दी थीं।</p>",
+    "option1": "<p> A is true, R is false / A सही है, R गलत है।</p>",
+    "option2": "<p> A is false, R is true / A गलत है, R सही है।</p>",
+    "option3": "<p> Both A and R are true but R is not the explanation / दोनों सही हैं लेकिन R व्याख्या नहीं है।</p>",
+    "option4": "<p> Both A and R are true and R is the explanation / दोनों सही हैं और R व्याख्या है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> While the post became hereditary, Shahu was not \"weak\" but relied on the Peshwa's administrative brilliance to expand the empire. / हालाँकि पद वंशानुगत हो गया था, शाहू \"कमजोर\" नहीं थे, बल्कि साम्राज्य के विस्तार के लिए पेशवा की प्रशासनिक कुशलता पर निर्भर थे।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Which treaty ended the First Anglo-Maratha War in 1782?<br/> 1782 </b>में किस संधि ने प्रथम आंग्ल<b>-</b>मराठा युद्ध को समाप्त किया था<b>?</b></p>",
+    "option1": "<p> Treaty of Purandar / पुरंदर की संधि</p>",
+    "option2": "<p> Treaty of Salbai / सालबाई की संधि</p>",
+    "option3": "<p> Treaty of Wadgaon / वडगाँव की संधि</p>",
+    "option4": "<p> Treaty of Mandsaur / मंदसौर की संधि</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Treaty of Salbai ensured peace between the British and Marathas for the next 20 years. / सालबाई की संधि ने अगले 20 वर्षों के लिए अंग्रेजों और मराठों के बीच शांति सुनिश्चित की थी।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Statement I: Rajaram succeeded the throne after the death of Sambhaji.<br/> </b>कथन <b>I: </b>संभाजी की मृत्यु के बाद राजाराम सिंहासन पर बैठे।<b><br/> Statement II: He created a new post called 'Pratinidhi' in the council.<br/> </b>कथन <b>II: </b>उन्होंने परिषद में <b>'</b>प्रतिनिधि<b>' </b>नामक एक नया पद बनाया।</p>",
+    "option1": "<p> Only I / केवल I</p>",
+    "option2": "<p> Only II / केवल II</p>",
+    "option3": "<p> Both I and II / I और II दोनों</p>",
+    "option4": "<p> None / कोई नहीं</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Rajaram took over during a crisis and added 'Pratinidhi' to the Ashtapradhan, making it a council of nine. / राजाराम ने संकट के दौरान कमान संभाली और अष्टप्रधान में 'प्रतिनिधि' को जोड़ा, जिससे यह नौ सदस्यों की परिषद बन गई।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>The Treaty of Mandsaur (1818) was signed between British and which Maratha chief?<br/> </b>मंदसौर की संधि <b>(1818) </b>अंग्रेजों और किस मराठा प्रमुख के बीच हस्ताक्षरित की गई थी<b>?</b></p>",
+    "option1": "<p> Holkar Chief / होल्कर प्रमुख</p>",
+    "option2": "<p> Scindia Chief / सिंधिया प्रमुख</p>",
+    "option3": "<p> Bhonsle Chief / भोंसले प्रमुख</p>",
+    "option4": "<p> Peshwa / पेशवा</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Following the Third Anglo-Maratha War, the Holkars signed the Treaty of Mandsaur in 1818. / तृतीय आंग्ल-मराठा युद्ध के बाद, होल्करों ने 1818 में मंदसौर की संधि पर हस्ताक्षर किए थे।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Assertion (A): Baji Rao I is remembered as one of the greatest Maratha generals.<br/> </b>कथन <b>(A): </b>बाजीराव प्रथम को सबसे महान मराठा सेनापतियों में से एक के रूप में याद किया जाता है।<b><br/> Reason (R): He never lost a battle in his career and captured Bassein from the Portuguese.<br/> </b>कारण <b>(R): </b>उन्होंने अपने जीवन में कभी कोई युद्ध नहीं हारा और पुर्तगालियों से बसीन छीन लिया था।</p>",
+    "option1": "<p> Both A and R are true and R explains A / A और R दोनों सही हैं और R, A की व्याख्या करता है।</p>",
+    "option2": "<p> Both A and R are true but R doesn't explain A / A और R दोनों सही हैं लेकिन R, A की व्याख्या नहीं करता है।</p>",
+    "option3": "<p> A is true, R is false / A सही है, R गलत है।</p>",
+    "option4": "<p> A is false, R is true / A गलत है, R सही है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Baji Rao I was a brilliant military strategist known for his rapid cavalry movements and undefeated record. / बाजीराव प्रथम एक शानदार सैन्य रणनीतिकार थे जो अपनी तीव्र घुड़सवार सेना और अजेय रिकॉर्ड के लिए जाने जाते थे।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>In 1818, the office of Peshwa was abolished and Baji Rao II was sent to which place?<br/> 1818 </b>में पेशवा के पद को समाप्त कर दिया गया और बाजीराव द्वितीय को किस स्थान पर भेज दिया गया<b>?</b></p>",
+    "option1": "<p> Satara / सतारा</p>",
+    "option2": "<p> Bithoor / बिठूर</p>",
+    "option3": "<p> Pune / पुणे</p>",
+    "option4": "<p> Gwalior / ग्वालियर</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> After the 3rd Anglo-Maratha War, the British abolished the Peshwaship and pensioned off Baji Rao II to Bithoor near Kanpur. / तीसरे आंग्ल-मराठा युद्ध के बाद, अंग्रेजों ने पेशवा पद को समाप्त कर दिया और बाजीराव द्वितीय को कानपुर के पास बिठूर में पेंशन पर भेज दिया।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - General Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">General Quiz - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>
