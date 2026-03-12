@@ -1,0 +1,2324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>General Quiz -  - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>General Quiz - </h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>Who was the founder of the Gupta Dynasty?<br/> </b>गुप्त राजवंश का संस्थापक कौन था<b>?</b></p>",
+    "option1": "<p> Chandragupta I / चंद्रगुप्त प्रथम</p>",
+    "option2": "<p> Sri Gupta / श्री गुप्त</p>",
+    "option3": "<p> Samudragupta / समुद्रगुप्त</p>",
+    "option4": "<p> Ghatotkacha / घटोत्कच</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Sri Gupta founded the Gupta Empire around 240-280 AD. He was succeeded by his son Ghatotkacha before the empire rose to prominence under Chandragupta I. / श्री गुप्त ने लगभग 240-280 ईस्वी में गुप्त साम्राज्य की स्थापना की थी। उनके बाद उनके पुत्र घटोत्कच उत्तराधिकारी बने, जिसके बाद चंद्रगुप्त प्रथम के नेतृत्व में साम्राज्य का विस्तार हुआ।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>What is ‘Udranga’ under the Gupta administration?<br/> </b>गुप्त प्रशासन के अंतर्गत ‘उद्रंगा’ क्या था<b>?</b></p>",
+    "option1": "<p> Name of a king / एक राजा का नाम</p>",
+    "option2": "<p> Title of a king / एक राजा की उपाधि</p>",
+    "option3": "<p> A tax / एक कर</p>",
+    "option4": "<p> A type of army / एक प्रकार की सेना</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> It is generally understood as a land-related or agricultural tax, mentioned in Gupta inscriptions. The Guptas had a well-organized revenue system with various taxes such as Bhaga, Bhoga, Kara, and Udranga. इसे सामान्यतः भूमि या कृषि संबंधी कर के रूप में समझा जाता है, जिसका उल्लेख गुप्त शिलालेखों में मिलता है। गुप्तों के पास भागा, भोग, करा और उद्रंगा जैसे विभिन्न करों के साथ एक सुव्यवस्थित राजस्व प्रणाली थी।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>Who wrote the book 'Pancha Siddhantika' during the Gupta period?<br/> </b>गुप्त काल में <b>'</b>पंच सिद्धांतिका<b>' </b>नामक पुस्तक किसने लिखी थी<b>?</b></p>",
+    "option1": "<p> Amarasimha / अमरसिम्हा</p>",
+    "option2": "<p> Kshapanaka / क्षपणक</p>",
+    "option3": "<p> Varahamihira / वराहमिहिर</p>",
+    "option4": "<p> Vararuchi / वररुचि</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Pancha Siddhantika is a famous astronomical treatise written by Varahamihira, one of the greatest scholars of the Gupta period. The work compiles and analyzes five astronomical schools (Siddhantas), reflecting advanced scientific knowledge in ancient India. पंच सिद्धांतिका गुप्त काल के महानतम विद्वानों में से एक वराहमिहिर द्वारा रचित एक प्रसिद्ध खगोलीय ग्रंथ है। यह कृति पाँच खगोलीय संप्रदायों (सिद्धांतों) का संकलन और विश्लेषण करती है, जो प्राचीन भारत में उन्नत वैज्ञानिक ज्ञान को दर्शाती है।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>Which military division had become rare in warfare during the Gupta period despite being part of the army in texts?<br/> </b>गुप्त काल के दौरान कौन सी सैन्य टुकड़ी युद्ध में दुर्लभ हो गई थी<b>, </b>जबकि ग्रंथों में उसका उल्लेख सेना के हिस्से के रूप में मिलता है<b>?</b></p>",
+    "option1": "<p> Cavalry / घुड़सवार सेना</p>",
+    "option2": "<p> Elephant / हाथी</p>",
+    "option3": "<p> Chariot / रथ</p>",
+    "option4": "<p> Infantry / पैदल सेना</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Classical Indian texts continued to mention the fourfold army (Chaturanga):<br/> 5. Infantry (Padati)<br/> 6. Cavalry (Ashva)<br/> 7. Elephants (Gaja)<br/> 8. Chariots (Ratha)<br/> शास्त्रीय भारतीय ग्रंथों में चतुरंग सेना का उल्लेख लगातार मिलता रहा है:<br/> 9. पैदल सेना (पदाति)<br/> 10. घुड़सवार सेना (अश्व)<br/> 11. हाथी (गज)<br/> 12. रथ</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>Which Chinese traveler visited India during the reign of Chandragupta II?<br/> </b>चंद्रगुप्त द्वितीय के शासनकाल के दौरान कौन सा चीनी यात्री भारत आया था<b>?</b></p>",
+    "option1": "<p> Xuanzang / ह्वेनसांग</p>",
+    "option2": "<p> Fa-Hien / फाह्यान</p>",
+    "option3": "<p> I-tsing / इत्सिंग</p>",
+    "option4": "<p> Al-Biruni / अल-बरूनी</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Fa-Hien was the first Chinese traveler to visit India (399-414 AD) specifically to collect Buddhist texts during the reign of Chandragupta Vikramaditya. / फाह्यान चंद्रगुप्त विक्रमादित्य के शासनकाल के दौरान बौद्ध ग्रंथों को एकत्र करने के लिए भारत (399-414 ईस्वी) आने वाला पहला चीनी यात्री था।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>Which of the following statements about succession in the Gupta dynasty is true?<br/> </b>गुप्त वंश में उत्तराधिकार के संबंध में निम्नलिखित में से कौन सा कथन सत्य है<b>?</b></p>",
+    "option1": "<p> Only the eldest son could become king / केवल सबसे बड़ा पुत्र ही राजा बन सकता था।</p>",
+    "option2": "<p> The eldest son was always crowned Yuvraj at priority / सबसे बड़े बेटे युवराज को ही प्राथमिकता दी जाती थी।</p>",
+    "option3": "<p> The ruler always declared himself divine to get the throne / शासक हमेशा सिंहासन पाने के लिए खुद को दैवीय घोषित करता था।</p>",
+    "option4": "<p> Sons had to prove their eligibility before an assembly / पुत्रों को सभा के समक्ष अपनी पात्रता साबित करनी पड़ती थी।</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Gupta system of succession was not strictly based on primogeniture (eldest-son rule). Inscriptions and historical evidence suggest that royal sons had to establish their capability and acceptance, often before an assembly of nobles and ministers. / गुप्त काल में उत्तराधिकार प्रणाली पूर्णतया ज्येष्ठाधिकार (बड़े पुत्र का शासन) पर आधारित नहीं थी। शिलालेखों और ऐतिहासिक साक्ष्यों से पता चलता है कि शाही पुत्रों को अक्सर सामंतों और मंत्रियों की सभा के समक्ष अपनी योग्यता और स्वीकार्यता साबित करनी पड़ती थी।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>Which Gupta king is credited with defeating the Hunas (Huns)?<br/> </b>किस गुप्त राजा को हूणों को पराजित करने का श्रेय दिया जाता है<b>?</b></p>",
+    "option1": "<p> Skandagupta / स्कंदगुप्त</p>",
+    "option2": "<p> Chandragupta I / चंद्रगुप्त प्रथम</p>",
+    "option3": "<p> Budhagupta / बुधगुप्त</p>",
+    "option4": "<p> Purugupta / पुरुगुप्त</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Skandagupta successfully resisted the invasion of the Hunas, a fierce tribe from Central Asia. This feat is mentioned in the Bhitari Pillar Inscription. / स्कंदगुप्त ने मध्य एशिया की एक क्रूर जनजाति हूणों के आक्रमण का सफलतापूर्वक प्रतिरोध किया था। इस उपलब्धि का उल्लेख भीतरी स्तंभ शिलालेख में मिलता है।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>The Iron Pillar located at Mehrauli, Delhi is associated with which ruler?<br/> </b>दिल्ली के महरौली में स्थित लौह स्तंभ किस शासक से संबंधित है<b>?</b></p>",
+    "option1": "<p> Samudragupta / समुद्रगुप्त</p>",
+    "option2": "<p> Chandragupta II / चंद्रगुप्त द्वितीय</p>",
+    "option3": "<p> Skandagupta / स्कंदगुप्त</p>",
+    "option4": "<p> Ashoka / अशोक</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Mehrauli Iron Pillar inscription mentions a king named 'Chandra', generally identified as Chandragupta II. It is famous for its rust-resistant composition. / महरौली लौह स्तंभ शिलालेख में 'चंद्र' नामक राजा का उल्लेख है, जिसकी पहचान आमतौर पर चंद्रगुप्त द्वितीय के रूप में की जाती है। यह अपने जंग-रोधी गुणों के लिए प्रसिद्ध है।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Who among the following was a famous physician during the Gupta period?<br/> </b>गुप्त काल के दौरान निम्नलिखित में से कौन एक प्रसिद्ध चिकित्सक था<b>?</b></p>",
+    "option1": "<p> Amarsimha / अमरसिंह</p>",
+    "option2": "<p> Varahamihira / वराहमिहिर</p>",
+    "option3": "<p> Dhanvantri / धन्वंतरि</p>",
+    "option4": "<p> Kalidasa / कालिदास</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Dhanvantri was one of the 'Navratnas' in the court of Chandragupta II and was a renowned expert in Ayurveda and medicine. / धन्वंतरि चंद्रगुप्त द्वितीय के दरबार के 'नवरत्नों' में से एक थे और आयुर्वेद एवं चिकित्सा के प्रसिद्ध विशेषज्ञ थे।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>The first inscriptional evidence of the practice of 'Sati' is found in:<br/> '</b>सती<b>' </b>प्रथा का पहला अभिलेखीय साक्ष्य कहाँ मिलता है<b>?</b></p>",
+    "option1": "<p> Prayag Prasasti / प्रयाग प्रशस्ति</p>",
+    "option2": "<p> Mehrauli Pillar / महरौली स्तंभ</p>",
+    "option3": "<p> Eran Pillar Inscription / एरण स्तंभ शिलालेख</p>",
+    "option4": "<p> Bhitari Pillar / भीतरी स्तंभ</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Dating back to 510 AD during the reign of Bhanugupta, the Eran inscription in Madhya Pradesh provides the first historical evidence of Sati. / भानुगुप्त के शासनकाल के दौरान 510 ईस्वी का मध्य प्रदेश में एरण शिलालेख सती प्रथा का पहला ऐतिहासिक साक्ष्य प्रदान करता है।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Consider the following statements regarding the Gupta administration:<br/> 1. The administration was highly centralized unlike the Mauryan empire.<br/> 2. 'Bhuktis' were provinces headed by an officer called 'Uparika'.<br/> Select the correct statement(s):<br/> </b>गुप्त प्रशासन के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 3. </b>मौर्य साम्राज्य के विपरीत प्रशासन अत्यधिक केंद्रीकृत था।<b><br/> 4. '</b>भुक्ति<b>' </b>प्रांत थे जिनका प्रमुख <b>'</b>उपरिक<b>' </b>नामक अधिकारी होता था।<b><br/> </b>सही कथन का चयन करें<b>:</b></p>",
+    "option1": "<p> Only 1 / केवल 1</p>",
+    "option2": "<p> Only 2 / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Gupta administration was actually decentralized compared to the Mauryas. The empire was divided into Bhuktis (provinces) governed by Uparikas, which were further divided into Vishayas. / मौर्यों की तुलना में गुप्त प्रशासन वास्तव में विकेंद्रीकृत था। साम्राज्य को उपरिकों द्वारा शासित भुक्तियों (प्रांतों) में विभाजित किया गया था, जिन्हें आगे विषयों में विभाजित किया गया था।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Assertion (A): The Gupta period is known as the 'Golden Age' of Indian history.<br/> Reason (R): There was immense development in the fields of art, literature, science, and technology during this era.<br/> </b>अभिकथन <b>(A): </b>गुप्त काल को भारतीय इतिहास का <b>'</b>स्वर्ण युग<b>' </b>कहा जाता है।<b><br/> </b>कारण <b>(R): </b>इस युग के दौरान कला<b>, </b>साहित्य<b>, </b>विज्ञान और प्रौद्योगिकी के क्षेत्रों में अत्यधिक विकास हुआ था।</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A. / A और R दोनों सत्य हैं और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true but R is NOT the correct explanation of A. / A और R दोनों सत्य हैं लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true but R is false. / A सत्य है लेकिन R गलत है।</p>",
+    "option4": "<p> A is false but R is true. / A गलत है लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The era saw geniuses like Kalidasa and Aryabhata, the construction of temples like Deogarh, and political stability, justifying the title 'Golden Age'. / इस युग में कालिदास और आर्यभट्ट जैसे विद्वान हुए, देवगढ़ जैसे मंदिरों का निर्माण हुआ और राजनीतिक स्थिरता रही, जो 'स्वर्ण युग' के नाम को सही ठहराती है।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Match the following Gupta taxes with their descriptions:<br/> 1. Bhaga - i. Tax on water<br/> 2. Vishti - ii. 1/6th of produce paid by cultivators<br/> 3. Udakabhaga - iii. Forced labour<br/> </b>गुप्त कालीन करों का उनके विवरण से मिलान करें<b>:<br/> 4. </b>भाग <b>- i. </b>जल पर कर<b><br/> 5. </b>विष्टि <b>- ii. </b>किसानों द्वारा भुगतान किया गया उपज का <b>1/6 </b>हिस्सा<b><br/> 6. </b>उदकभाग <b>- iii. </b>जबरन श्रम</p>",
+    "option1": "<p> 1-ii, 2-iii, 3-i</p>",
+    "option2": "<p> 1-i, 2-ii, 3-iii</p>",
+    "option3": "<p> 1-iii, 2-i, 3-ii</p>",
+    "option4": "<p> 1-ii, 2-i, 3-iii</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Bhaga was the main land tax (1/6th), Vishti was forced labor for the state, and Udakabhaga was a specific tax levied on water usage. / भाग मुख्य भूमि कर (1/6) था, विष्टि राज्य के लिए किया गया जबरन श्रम था, और उदकभाग जल उपयोग पर लगाया जाने वाला विशिष्ट कर था।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Which of the following statements about the Vakataka Dynasty is INCORRECT?<br/> </b>वाकाटक राजवंश के बारे में निम्नलिखित में से कौन सा कथन गलत है<b>?</b></p>",
+    "option1": "<p> They were contemporaries of the Guptas. / वे गुप्तों के समकालीन थे।</p>",
+    "option2": "<p> Vindhyashakti was the founder of this dynasty. / विंध्यशक्ति इस राजवंश के संस्थापक थे।</p>",
+    "option3": "<p> They completely opposed Buddhism and only followed Brahmanism. / उन्होंने बौद्ध धर्म का पूरी तरह से विरोध किया और केवल ब्राह्मणवाद का पालन किया।</p>",
+    "option4": "<p> Chandragupta II married his daughter Prabhavati Gupta into the Vakataka family. / चंद्रगुप्त द्वितीय ने अपनी पुत्री प्रभावती गुप्त का विवाह वाकाटक परिवार में किया था।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Although they followed Brahmanism, they also patronized Buddhism. For instance, caves at Ajanta were built under the patronage of Vakataka king Harishena. / हालाँकि वे ब्राह्मणवाद के अनुयायी थे, लेकिन उन्होंने बौद्ध धर्म को भी संरक्षण दिया। उदाहरण के लिए, अजंता की गुफाएँ वाकाटक राजा हरिषेण के संरक्षण में बनाई गई थीं।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Assertion (A): Samudragupta is depicted playing the Veena on some of his gold coins.<br/> Reason (R): He was a great patron of music and was given the title 'Kaviraja'.<br/> </b>अभिकथन <b>(A): </b>समुद्रगुप्त को उनके कुछ सोने के सिक्कों पर वीणा बजाते हुए दिखाया गया है।<b><br/> </b>कारण <b>(R): </b>वह संगीत के महान संरक्षक थे और उन्हें <b>'</b>कविराज<b>' </b>की उपाधि दी गई थी।</p>",
+    "option1": "<p> Both A and R are true and R is the correct explanation of A. / A और R दोनों सत्य हैं और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true but R is NOT the correct explanation of A. / A और R दोनों सत्य हैं लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true but R is false. / A सत्य है लेकिन R गलत है।</p>",
+    "option4": "<p> A is false but R is true. / A गलत है लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Samudragupta's 'Lyrist' type coins show his love for music. His titles like Kaviraja (King of Poets) reflect his intellectual and artistic interests. / समुद्रगुप्त के 'वीणा वादक' प्रकार के सिक्के उनके संगीत प्रेम को दर्शाते हैं। उनकी 'कविराज' जैसी उपाधियाँ उनके बौद्धिक और कलात्मक हितों को प्रतिबिंबित करती हैं।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Which of the following pairs are correctly matched?<br/> Prayag Prashasti by Harishena: 4th century CE / </b>हरिषेण द्वारा प्रयाग प्रशस्ति<b>: </b><b>4</b>वीं शताब्दी ईस्वी</p><p><b>Chinese traveller Fa Xian’s Account: 6th century CE / </b>चीनी यात्री फाहियान का विवरण<b>: </b><b>6</b>वीं शताब्दी ईस्वी</p><p><b>Mudrarakshasa of Vishakhadatta: 5th century CE / </b>विशाखदत्त का मुद्राराक्षस<b>: </b><b>5</b>वीं शताब्दी ईस्वी</p><p><b>Harshacharita of Banabhatta: 6th century CE / </b>बाणभट्ट का हर्षचरित<b>: </b><b>6</b>वीं शताब्दी ईस्वी</p><p><b>Aihole Prashasti of Ravikirti: 7th century CE / </b>रविकीर्ति की ऐहोल प्रशस्ति<b>: </b><b>7</b>वीं शताब्दी ईस्वी</p><p><b>Kavirajamarga of Amoghavarsha: 8th century CE / </b>अमोघवर्ष का कविराजमार्ग<b>: </b><b>8</b>वीं शताब्दी ईस्वी</p><p><b>Select the correct answer using the code given below / </b><b>नीचे दिए गए कूट का प्रयोग कर सही उत्तर चुनिए</b><b>:</b></p>",
+    "option1": "<p> 1, 2 and 3 only / केवल 1, 2 और 3</p>",
+    "option2": "<p> 2, 3 and 4 only / केवल 2, 3 और 4</p>",
+    "option3": "<p> 4, 5 and 6 only / केवल 4, 5 और 6</p>",
+    "option4": "<p> 1, 3 and 5 only / केवल 1, 3 और 5</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Prayag Prashasti (4th century) and Mudrarakshasa (5th century) belong to the Gupta era. Aihole Prashasti was composed in 634 CE (7th century). Fa Xian visited in the 5th century (not 6th), Harshacharita is from the 7th century, and Kavirajamarga is from the 9th century.</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Which among the following was NOT a member of the Adhishthana Adhikarana of Kotivarsha in the Gupta period?</b></p>",
+    "option1": "<p> Sarthavaha / सार्थवाह</p>",
+    "option2": "<p> Mahattara / महत्तर</p>",
+    "option3": "<p> Prathama-kayastha / प्रथम-कायस्थ</p><p><br/> </p>",
+    "option4": "<p> Prathama-kulika / प्रथम-कुलिक</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The district administration (Adhishthana Adhikarana) usually included the Nagarasreshthi, Sarthavaha, Prathama-kulika, and Prathama-kayastha. Mahattara referred to village elders.</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Who among the following kings is described in an inscription as the Supreme Being, the cause of the prosperity of the good and the destruction of the bad?</b></p>",
+    "option1": "<p> Gautamiputra Shatakarni / गौतमीपुत्र शातकर्णी</p>",
+    "option2": "<p> Kanishka / कनिष्क</p>",
+    "option3": "<p> Samudragupta / समुद्रगुप्त</p>",
+    "option4": "<p> Harshavardhana / हर्षवर्धन</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Allahabad Pillar Inscription (Prayag Prashasti) describes Samudragupta in divine terms, comparing him to gods and as a protector of the righteous.</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Which one of the following was composed by Harishena?</b></p>",
+    "option1": "<p> Nashik Inscription of Gautami Balashri / गौतमी बलश्री का नासिक अभिलेख</p>",
+    "option2": "<p> Prayaga Prashasti of Samudragupta / समुद्रगुप्त की प्रयाग प्रशस्ति</p>",
+    "option3": "<p> Deopara Prashasti of Vijayasena / विजयसेन की देवपाड़ा प्रशस्ति</p>",
+    "option4": "<p> Hathigumpha Inscription of Kharavela / खारवेल का हाथीगुम्फा अभिलेख</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Harishena was the court poet of Samudragupta who composed the famous Prayaga Prashasti (Allahabad Pillar Inscription) in Sanskrit.</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Arrange the following in chronological order, beginning from the earliest:<br/> 1. Shudraka / </b>शूद्रक</p><p><b>2. Varahamihira / </b>वराहमिहिर</p><p><b>3. Panini / </b>पाणिनि</p><p><b>4 Patanjali the Grammarian / </b>व्याकरणाचार्य पतंजलि</p><p><br/> </p>",
+    "option1": "<p> 4-1-2-3</p>",
+    "option2": "<p> 3-4-1-2</p>",
+    "option3": "<p> 2-3-4-1</p>",
+    "option4": "<p> 3-1-2-4</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Panini (6th-4th BCE), Patanjali (2nd BCE), Shudraka (3rd CE), and Varahamihira (6th CE).<br/> 5. Kirtivarman<br/> 6. Kharavela<br/> 7. Samudragupta<br/> 8. Harsha<br/> Ravikirti's Aihole inscription speaks in detail Pulakesin's achievements, particularly how he fought and achieved victory over Harshavardhana. Harshavaradhana was defeated by Pulakesin II, the king of the Chalukya dynasty. रविकीर्ति के ऐहोल शिलालेख में पुलकेसिन की उपलब्धियों का विस्तृत वर्णन है, विशेष रूप से हर्षवर्धन से उनके युद्ध और विजय का। चालुक्य वंश के राजा पुलकेसिन द्वितीय ने हर्षवर्धन को पराजित किया था।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Which of the following statements is/are correct in the context of the religious development during the Gupta Empire?</b></p><p>I. Nalanda University was founded by Kumargupta I of the Gupta dynasty in the 5th century CE. / नालंदा विश्वविद्यालय की स्थापना 5वीं शताब्दी ईस्वी में गुप्त वंश के कुमारगुप्त प्रथम द्वारा की गई थी।</p><p>II. Narasimhagupta Baladitya was influenced by Mahayana Buddhism. / नरसिंहगुप्त बालादित्य महायान बौद्ध धर्म से प्रभावित थे।</p><p><br/> </p>",
+    "option1": "<p> Only I / केवल I</p>",
+    "option2": "<p> Only II / केवल II</p>",
+    "option3": "<p> Both I and II / I और II दोनों</p>",
+    "option4": "<p> Neither I nor II / न तो I और न ही II</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Kumargupta I founded Nalanda in the 5th century, and later Gupta kings like Narasimhagupta Baladitya were known patrons of Buddhism.</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Which Gupta ruler was the first to issue silver coins, and after which event were they introduced?</b></p><p><b>चांदी के सिक्के जारी करने वाला पहला गुप्त शासक कौन था और उन्हें किस घटना के बाद पेश किया गया था</b><b>?</b></p>",
+    "option1": "<p> Samudragupta; after the conquest of South India / समुद्रगुप्त; दक्षिण भारत की विजय के बाद</p>",
+    "option2": "<p> Chandragupta II; after victory over the Sakas / चंद्रगुप्त द्वितीय; शकों पर विजय के बाद</p>",
+    "option3": "<p> Kumaragupta I; after performing Ashwamedha / कुमारगुप्त प्रथम; अश्वमेध करने के बाद</p>",
+    "option4": "<p> Skandagupta; after defeating the Hunas / स्कंदगुप्त; हूणों को हराने के बाद</p><p><br/> </p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> <br/> </p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Match the following 'Navratnas' of Chandragupta II with their respective fields:</b></p><p>1. Vararuchi / वररुचि — i. Architecture (वास्तुकला)</p><p>2. Sanku / शंकु — ii. Astrology (ज्योतिष)</p><p>3. Kahapanaka / क्षपणक — iii. Grammar (व्याकरण)</p>",
+    "option1": "<p> 1-iii, 2-i, 3-ii</p>",
+    "option2": "<p> 1-ii, 2-iii, 3-i</p>",
+    "option3": "<p> 1-i, 2-ii, 3-iii</p>",
+    "option4": "<p> 1-iii, 2-ii, 3-i</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> <br/> </p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Consider the following statements regarding Gupta art and architecture:<br/> 1. The Bhitargaon Temple in Kanpur is one of the oldest surviving brick temples dedicated to Lord Krishna.<br/> 2. The Dashavatara Temple at Deogarh is a significant example of Gupta stone architecture.<br/> Select the correct statement(s):</b></p><p><b>गुप्त कला और वास्तुकला के संबंध में निम्नलिखित कथनों पर विचार करें</b><b>:</b></p><p>कानपुर का भीतरगाँव मंदिर भगवान कृष्ण को समर्पित सबसे पुराने जीवित ईंट मंदिरों में से एक है।</p><p>देवगढ़ का दशावतार मंदिर गुप्तकालीन पाषाण वास्तुकला का एक महत्वपूर्ण उदाहरण है।</p><p><b>सही कथन का चयन करें</b><b>:</b></p><p><br/> </p>",
+    "option1": "<p> Only 1 / केवल 1</p>",
+    "option2": "<p> Only 2 / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p><p><br/> </p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> <br/> </p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - General Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">General Quiz - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

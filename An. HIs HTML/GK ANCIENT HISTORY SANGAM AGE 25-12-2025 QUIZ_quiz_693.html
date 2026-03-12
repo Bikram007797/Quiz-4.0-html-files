@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>General Quiz -  - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>General Quiz - </h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p>What was the primary time period of the Sangam Age in South Indian history?<br/>दक्षिण भारतीय इतिहास में संगम युग की प्राथमिक समयावधि क्या थी?</p>",
+    "option1": "<p>6th Century BC - 1st Century AD / छठी शताब्दी ईसा पूर्व - पहली शताब्दी ईस्वी</p>",
+    "option2": "<p>3rd Century BC - 3rd Century AD / तीसरी शताब्दी ईसा पूर्व - तीसरी शताब्दी ईस्वी</p>",
+    "option3": "<p>1st Century AD - 6th Century AD / पहली शताब्दी ईस्वी - छठी शताब्दी ईस्वी</p>",
+    "option4": "<p>1000 BC - 500 BC / 1000 ईसा पूर्व - 500 ईसा पूर्व</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>The Sangam period is traditionally dated between the 3rd century BC and the 3rd century AD. It marks the earliest period of South Indian history characterized by the compilation of Tamil literature. This era saw the rise of the Chera, Chola, and Pandya dynasties. / संगम काल पारंपरिक रूप से तीसरी शताब्दी ईसा पूर्व और तीसरी शताब्दी ईस्वी के बीच का माना जाता है। यह दक्षिण भारतीय इतिहास के उस सबसे प्रारंभिक काल को दर्शाता है जिसकी पहचान तमिल साहित्य के संकलन से होती है। इस युग में चेर, चोल और पांड्य राजवंशों का उत्कर्ष हुआ।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p>Which of the following symbols was the royal emblem of the Chola dynasty during the Sangam period?<br/>संगम काल के दौरान निम्नलिखित में से कौन सा प्रतीक चोल राजवंश का राजकीय प्रतीक था?</p>",
+    "option1": "<p>Bow and arrow / धनुष और बाण</p>",
+    "option2": "<p>Fish / मछली</p>",
+    "option3": "<p>Tiger / बाघ</p>",
+    "option4": "<p>Elephant / हाथी</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>The early Chola dynasty used the 'Tiger' as their royal emblem to signify power and strength. Their territory, known as Cholamandalam, was located between the Pennar and Vellar rivers. The emblem appeared on their flags and coins during this period. / प्रारंभिक चोल राजवंश ने शक्ति और सामर्थ्य के प्रतीक के रूप में 'बाघ' को अपने राजकीय प्रतीक के रूप में इस्तेमाल किया। उनका क्षेत्र, जिसे चोलमंडलम कहा जाता था, पेन्नार और वेल्लार नदियों के बीच स्थित था। यह प्रतीक इस अवधि के दौरान उनके झंडों और सिक्कों पर दिखाई देता था।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p>The 'Pattini cult', related to the worship of Kannagi as the Goddess of Chastity, was established by which Chera ruler?<br/>कन्नगी को पवित्रता की देवी के रूप में पूजने से संबंधित 'पत्तनी पंथ' की स्थापना किस चेर शासक ने की थी?</p>",
+    "option1": "<p>Elara / एलारा</p>",
+    "option2": "<p>Senguttuvan / शेंगट्टुवन</p>",
+    "option3": "<p>Karikala / करिकाल</p>",
+    "option4": "<p>Uthiyan Cheralathan / उथियान चेरलथन</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Senguttuvan, also known as the 'Red Chera', was the greatest ruler of the Chera dynasty. He introduced the Pattini cult and built a temple dedicated to Kannagi, the heroine of the epic Silappadikaram. This established him as a significant cultural figure in South Indian history. / शेंगट्टुवन, जिसे 'लाल चेर' के नाम से भी जाना जाता है, चेर राजवंश का सबसे महान शासक था। उसने पत्तनी पंथ की शुरुआत की और महाकाव्य 'शिल्पादिकारम' की नायिका कन्नगी को समर्पित एक मंदिर बनवाया। इसने उन्हें दक्षिण भारतीय इतिहास में एक महत्वपूर्ण सांस्कृतिक व्यक्तित्व के रूप में स्थापित किया।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p>According to Sangam geography, which 'Thinai' (land type) was specifically associated with agriculture?<br/>संगम भूगोल के अनुसार, कौन सा 'तिनई' (भूमि प्रकार) विशेष रूप से कृषि से जुड़ा था?</p>",
+    "option1": "<p>Kurinci / कुरिंजी</p>",
+    "option2": "<p>Mullai / मुल्लई</p>",
+    "option3": "<p>Marutam / मरुदम</p>",
+    "option4": "<p>Neytal / नेयतल</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Marutam referred to the fertile riverine plains ideal for agricultural activities. The people of this region were primarily involved in farming, especially paddy cultivation. This was one of the five geographical divisions (Thinais) mentioned in Sangam literature. / मरुदम उपजाऊ नदी के मैदानी क्षेत्रों को संदर्भित करता था जो कृषि गतिविधियों के लिए आदर्श थे। इस क्षेत्र के लोग मुख्य रूप से खेती, विशेष रूप से धान की खेती में शामिल थे। यह संगम साहित्य में वर्णित पांच भौगोलिक विभाजनों (तिनई) में से एक था।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p>The port city of Puhar (also known as Kaveripattinam) served as the alternative capital for which dynasty?<br/>पुहार बंदरगाह शहर (जिसे कावेरीपट्टनम के रूप में भी जाना जाता है) किस राजवंश की वैकल्पिक राजधानी के रूप में कार्य करता था?</p>",
+    "option1": "<p>Pandyas / पांड्य</p>",
+    "option2": "<p>Cheras / चेर</p>",
+    "option3": "<p>Cholas / चोल</p>",
+    "option4": "<p>Pallavas / पल्लव</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Puhar or Kaveripattinam was a major port city and the alternative capital of the early Cholas. It was a flourishing center for maritime trade, especially for cotton and exotic goods. The city was strategically located at the mouth of the Kaveri River. / पुहार या कावेरीपट्टनम एक प्रमुख बंदरगाह शहर और प्रारंभिक चोलों की वैकल्पिक राजधानी थी। यह समुद्री व्यापार, विशेष रूप से कपास और विदेशी वस्तुओं के लिए एक समृद्ध केंद्र था। यह शहर रणनीतिक रूप से कावेरी नदी के मुहाने पर स्थित था।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p>Which specific social class in the Sangam society represented the 'rich landlords'?<br/>संगम समाज में कौन सा विशिष्ट सामाजिक वर्ग 'धनी जमींदारों' का प्रतिनिधित्व करता था?</p>",
+    "option1": "<p>Arasar / अरसर</p>",
+    "option2": "<p>Vellalar / वेल्लार</p>",
+    "option3": "<p>Vaishiyar / वैश्यार</p>",
+    "option4": "<p>Kadaisiyar / कदैसियर</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>In Sangam society, the Vellalar were the wealthy land-owning class who held significant economic power. The society was divided into classes like Arasar (rulers), Vaishiyar (traders), and Kadaisiyar (lower class/laborers). The Vellalars played a crucial role in supporting the local administration and agriculture. / संगम समाज में, वेल्लार धनी भूमि-स्वामी वर्ग थे जिनके पास महत्वपूर्ण आर्थिक शक्ति थी। समाज अरसर (शासक), वैश्यार (व्यापारी) और कदैसियर (निम्न वर्ग/श्रमिक) जैसे वर्गों में विभाजित था। स्थानीय प्रशासन और कृषि को समर्थन देने में वेल्लारों ने महत्वपूर्ण भूमिका निभाई।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p>The Battle of Venni, fought along the Kaveri River, was a significant victory for which ruler?<br/>कावेरी नदी के तट पर लड़ी गई वेन्नी की लड़ाई किस शासक के लिए एक महत्वपूर्ण जीत थी?</p>",
+    "option1": "<p>Senguttuvan / शेंगट्टुवन</p>",
+    "option2": "<p>Karikala Chola / करिकाल चोल</p>",
+    "option3": "<p>Nedunjeliyan / नेदुनजेलियन</p>",
+    "option4": "<p>Elara / एलारा</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Karikala Chola defeated the combined forces of the Cheras, Pandyas, and eleven minor chieftains at the Battle of Venni. This victory established Chola supremacy over the other contemporary powers of the time. Karikala is also credited with the construction of the Kallanai dam. / करिकाल चोल ने वेन्नी के युद्ध में चेर, पांड्य और ग्यारह छोटे सरदारों की संयुक्त सेनाओं को हराया था। इस जीत ने उस समय की अन्य समकालीन शक्तियों पर चोलों का वर्चस्व स्थापित कर दिया। करिकाल को कल्लानाई बांध के निर्माण का श्रेय भी दिया जाता है।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p>Who among the following was a famous ruler of the Pandya dynasty of South India?<br/>निम्नलिखित में से कौन दक्षिण भारत के पांड्य राजवंश का एक प्रसिद्ध शासक था?</p>",
+    "option1": "<p>Nedunjeliyan II / नेदुंजेलियन द्वितीय</p>",
+    "option2": "<p>Karikala / करिकाल</p>",
+    "option3": "<p>Ashoka / अशोक</p>",
+    "option4": "<p>Nizam Shah / निजाम शाह</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Nedunjeliyan II was a well-known ruler of the Pandya dynasty, frequently mentioned in Sangam literature.नेदुंजेलियन द्वितीय पांड्य वंश का एक प्रसिद्ध शासक था, जिसका उल्लेख संगम साहित्य में अक्सर मिलता है।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p>The early Pandyas were specifically famous for trading which of the following items with the Roman Empire?<br/>प्रारंभिक पांड्य रोमन साम्राज्य के साथ निम्नलिखित में से किस वस्तु के व्यापार के लिए विशेष रूप से प्रसिद्ध थे?</p>",
+    "option1": "<p>Spices / मसाले</p>",
+    "option2": "<p>Pearls / मोती</p>",
+    "option3": "<p>Silk / रेशम</p>",
+    "option4": "<p>Iron tools / लोहे के औजार</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>The Pandyas were renowned for their high-quality pearls collected from the Gulf of Mannar. They maintained strong trade links with the Roman Empire, and their port, Korkai, was a major center for pearl fishery. Roman historians have frequently mentioned the wealth of the Pandya kingdom. / पांड्य मन्नार की खाड़ी से एकत्र किए गए अपने उच्च गुणवत्ता वाले मोतियों के लिए प्रसिद्ध थे। उन्होंने रोमन साम्राज्य के साथ मजबूत व्यापारिक संबंध बनाए रखे और उनका बंदरगाह, कोरकई, मोती मछली पालन का एक प्रमुख केंद्र था। रोमन इतिहासकारों ने पांड्य साम्राज्य की संपत्ति का अक्सर उल्लेख किया है।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p>During the Megalithic age in South India, which type of pottery was most commonly used?<br/>दक्षिण भारत में महापाषाण युग (Megalithic age) के दौरान किस प्रकार के मिट्टी के बर्तनों का सबसे अधिक उपयोग किया जाता था?</p>",
+    "option1": "<p>Painted Grey Ware / चित्रित धूसर मृदभांड</p>",
+    "option2": "<p>Northern Black Polished Ware / उत्तरी काले पॉलिश वाले मृदभांड</p>",
+    "option3": "<p>Black and Red Ware / काले और लाल मृदभांड</p>",
+    "option4": "<p>Ochre Coloured Pottery / गेरुए रंग के मृदभांड</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>The Megalithic culture in South India is characterized by the use of Black and Red ware pottery found around grave sites. This period (approx. 1500-600 BC) preceded the Sangam Age and saw the use of iron. Huge stone structures like Dolmens and Menhirs were also common during this time. / दक्षिण भारत में महापाषाण संस्कृति की विशेषता कब्रों के पास पाए जाने वाले काले और लाल रंग के मिट्टी के बर्तन हैं। यह काल (लगभग 1500-600 ईसा पूर्व) संगम युग से पहले का था और इसमें लोहे का उपयोग देखा गया था। इस दौरान डोलमेन और मेनहिर जैसी विशाल पत्थर की संरचनाएं भी आम थीं।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p>Match the following 'Thinais' with their respective occupations:<br/>निम्नलिखित 'तिनई' को उनके संबंधित व्यवसायों के साथ सुमेलित करें:<br/>1. Kurinci / कुरिंजी — A. Animal Husbandry / पशुपालन<br/>2. Mullai / मुल्लई — B. Hunting/Gathering / शिकार/संग्रह<br/>3. Neytal / नेयतल — C. Cattle lifting/Plundering / मवेशी चोरी/लूटपाट<br/>4. Palai / पलै— D. Fishing/Salt collection / मछली पकड़ना/नमक इकट्ठा करना</p>",
+    "option1": "<p>1-B, 2-A, 3-D, 4-C</p>",
+    "option2": "<p>1-A, 2-B, 3-C, 4-D</p>",
+    "option3": "<p>1-C, 2-D, 3-B, 4-A</p>",
+    "option4": "<p>1-B, 2-C, 3-D, 4-A</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Kurinci (hilly region) was for hunting; Mullai (pastoral) was for animal husbandry; Neytal (coastal) was for fishing and salt collection; and Palai (arid) was associated with plundering. This classification shows how occupation was strictly tied to the landscape in Sangam culture. / कुरिंजी (पहाड़ी क्षेत्र) शिकार के लिए था; मुल्लई (चरागाह) पशुपालन के लिए था; नेयतल (तटीय) मछली पकड़ने और नमक संग्रह के लिए था; और पलै (शुष्क) लूटपाट से जुड़ा था। यह वर्गीकरण दिखाता है कि संगम संस्कृति में व्यवसाय किस तरह से परिदृश्य से सख्ती से जुड़ा हुआ था।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p>Assertion (A): The Sangam assemblies were patronized exclusively by the Pandya kings.<br/>अभिकथन (A): संगम सभाओं को विशेष रूप से पांड्य राजाओं द्वारा संरक्षण दिया गया था।<br/>Reason (R): These assemblies were held to compile literature that primarily praised the military achievements of the Kalabhra dynasty.<br/>कारण (R): ये सभाएं उस साहित्य को संकलित करने के लिए आयोजित की गई थीं जो मुख्य रूप से कलाभ्र राजवंश की सैन्य उपलब्धियों की प्रशंसा करता था।</p>",
+    "option1": "<p>Both A and R are true and R is the correct explanation of A. / A और R दोनों सत्य हैं और R, A की सही व्याख्या है।</p>",
+    "option2": "<p>Both A and R are true but R is NOT the correct explanation of A. / A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p>A is true but R is false. / A सत्य है लेकिन R असत्य है।</p>",
+    "option4": "<p>A is false but R is true. / A असत्य है लेकिन R सत्य है।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>While it is true that all three Sangams (assemblies) were patronized by the Pandyas in Madurai, the literature compiled (Akam and Puram) focused on the Cheras, Cholas, and Pandyas, not the Kalabhras. The Kalabhras actually occupied the Tamil country after the Sangam period (300-600 AD). / हालांकि यह सच है कि तीनों संगमों (सभाओं) को मदुरै में पांड्यों द्वारा संरक्षण दिया गया था, लेकिन संकलित साहित्य (अकम और पुरम) चेर, चोल और पांड्यों पर केंद्रित था, न कि कलाभ्रों पर। कलाभ्रों ने वास्तव में संगम काल के बाद (300-600 ईस्वी) तमिल देश पर कब्जा कर लिया था।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p>Consider the following statements regarding the Chera dynasty:<br/>चेर राजवंश के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>1. Their capital was located at Vanchi or Karur. / उनकी राजधानी वंची या करूर में स्थित थी।<br/>2. They had a significant trade connection with the Romans, evidenced by the Augustus Temple. / रोमनों के साथ उनका महत्वपूर्ण व्यापारिक संबंध था, जिसका प्रमाण ऑगस्टस मंदिर है।<br/>3. Their royal emblem was the Fish. / उनका राजकीय प्रतीक मछली थी।<br/>Which of the statements given above are correct?<br/>ऊपर दिए गए कथनों में से कौन सा सही है?</p>",
+    "option1": "<p>I and III only / केवल I और III</p>",
+    "option2": "<p>I and II only / केवल I और II</p>",
+    "option3": "<p>II and III only / केवल II और III</p>",
+    "option4": "<p>I, II, and III / I, II और III</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Statements I and II are correct as the Cheras ruled parts of Kerala and Tamil Nadu with Vanchi as their capital and had Roman trade links. However, statement III is incorrect because the Chera emblem was the 'Bow and Arrow', whereas the 'Fish' was the emblem of the Pandyas. / कथन I और II सही हैं क्योंकि चेरों ने केरल और तमिलनाडु के कुछ हिस्सों पर वंची को अपनी राजधानी बनाकर शासन किया और उनके रोमन व्यापारिक संबंध थे। हालांकि, कथन III गलत है क्योंकि चेर का प्रतीक 'धनुष और बाण' था, जबकि 'मछली' पांड्यों का प्रतीक था।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p>Assertion (A): The Silappadikaram is considered one of the greatest epics of the Sangam Age.<br/>अभिकथन (A): सिलप्पदिकारम को संगम युग के सबसे महान महाकाव्यों में से एक माना जाता है।<br/>Reason (R): It provides detailed information about the love story of Kovalan, Kannagi, and the dancer Madhavi.<br/>कारण (R): यह कोवलन, कन्नगी और नर्तकी माधवी की प्रेम कहानी के बारे में विस्तृत जानकारी प्रदान करता है।</p>",
+    "option1": "<p>Both A and R are true and R is the correct explanation of A. / A और R दोनों सत्य हैं और R, A की सही व्याख्या है।</p>",
+    "option2": "<p>Both A and R are true but R is NOT the correct explanation of A. / A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p>A is true but R is false. / A सत्य है लेकिन R असत्य है।</p>",
+    "option4": "<p>A is false but R is true. / A असत्य है लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Silappadikaram is a cornerstone of Tamil literature precisely because it narrates the tragic story of Kovalan and Kannagi. This epic reflects the social values, judicial system, and cultural practices of the early Tamil dynasties. It remains a vital source for understanding the lifestyle of that era. / सिलप्पदिकारम तमिल साहित्य का एक आधार स्तंभ है क्योंकि यह कोवलन और कन्नगी की दुखद कहानी बयां करता है। यह महाकाव्य प्रारंभिक तमिल राजवंशों के सामाजिक मूल्यों, न्यायिक प्रणाली और सांस्कृतिक प्रथाओं को दर्शाता है। यह उस युग की जीवनशैली को समझने के लिए एक महत्वपूर्ण स्रोत बना हुआ है।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p>Which of the following statements is INCORRECT regarding the Chola dynasty of the Sangam period?<br/>संगम काल के चोल राजवंश के संबंध में निम्नलिखित में से कौन सा कथन गलत है?</p>",
+    "option1": "<p>They maintained an efficient navy. / उन्होंने एक कुशल नौसेना बनाए रखी।</p>",
+    "option2": "<p>Their earliest known ruler was Elara. / उनके सबसे पहले ज्ञात शासक एलारा थे।</p>",
+    "option3": "<p>Their primary trade item was silk from the Roman Empire. / उनकी प्राथमिक व्यापारिक वस्तु रोमन साम्राज्य का रेशम थी।</p>",
+    "option4": "<p>Uraiyur was famous for its cotton trade under the Cholas. / उरैयूर चोलों के अधीन कपास के व्यापार के लिए प्रसिद्ध था।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>While the Cholas traded with many regions, they were specifically famous for exporting fine cotton cloth from Uraiyur, not for importing silk as a primary trade identity. They were known for their naval power and rulers like Karikala, who consolidated their influence over the Kaveri delta. / हालांकि चोलों ने कई क्षेत्रों के साथ व्यापार किया, लेकिन वे विशेष रूप से उरैयूर से महीन सूती कपड़े के निर्यात के लिए प्रसिद्ध थे, न कि रेशम के आयात के लिए। वे अपनी नौसैनिक शक्ति और करिकाल जैसे शासकों के लिए जाने जाते थे, जिन्होंने कावेरी डेल्टा पर अपना प्रभाव मजबूत किया था।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p>During the early literary phase of Tamil history, what does the word ‘Sangam’ signify?<br/>तमिल इतिहास के प्रारंभिक साहित्यिक काल में, 'संगम' शब्द का क्या अर्थ है?</p>",
+    "option1": "<p>a ceremonial celebration organised by rulers / शासकों द्वारा आयोजित एक औपचारिक उत्सव</p>",
+    "option2": "<p>a strategic council of warriors / योद्धाओं की एक रणनीतिक परिषद</p>",
+    "option3": "<p>an association of merchants involved in trade / व्यापार में संलग्न व्यापारियों का एक संघ</p>",
+    "option4": "<p>a congregation or collective assembly of Tamil scholars and poets / तमिल विद्वानों और कवियों की सभा या सामूहिक सम्मेलन</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>In early Tamil history, ‘Sangam’ literally means an assembly or association. It refers to the assemblies of Tamil poets and scholars where literary works were composed, compiled, and reviewed. These Sangams laid the foundation of Sangam literature, which is a primary source for understanding the social, economic, and political life of ancient South India. प्रारंभिक तमिल इतिहास में, 'संगम' का शाब्दिक अर्थ सभा या संघ होता है। यह तमिल कवियों और विद्वानों की उन सभाओं को संदर्भित करता है जहाँ साहित्यिक कृतियों की रचना, संकलन और समीक्षा की जाती थी। इन संगमों ने संगम साहित्य की नींव रखी, जो प्राचीन दक्षिण भारत के सामाजिक, आर्थिक और राजनीतिक जीवन को समझने का एक प्राथमिक स्रोत है।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p>Which of the following was the port-city of the Pandyan Kingdom?<br/>निम्नलिखित में से कौन सा पांड्य साम्राज्य का बंदरगाह शहर था?</p>",
+    "option1": "<p>Dindigul / डिंडीगुल</p>",
+    "option2": "<p>Korkai / कोरकाई</p>",
+    "option3": "<p>Tenkasi / तेनकासी</p>",
+    "option4": "<p>Virudhunagar / विरुधुनगर</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>It was famous for pearl fisheries, which were a major source of wealth for the Pandyas. Sangam literature and foreign accounts (like Periplus of the Erythraean Sea) mention Korkai as an important maritime trade centre. यह मोती पालन के लिए प्रसिद्ध था, जो पांड्यों के लिए धन का एक प्रमुख स्रोत था। संगम साहित्य और विदेशी वृत्तांतों (जैसे पेरिप्लस ऑफ द एरिथ्रियन सी) में कोरकाई को एक महत्वपूर्ण समुद्री व्यापार केंद्र के रूप में उल्लेख किया गया है।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p>Assertion (A): The Chera king Senguttuvan, also known as Red Chera, introduced the Pattini cult.<br/>कथन (A): चेर राजा सेंगट्टुवन, जिसे लाल चेर के नाम से भी जाना जाता है, ने 'पत्तिनी संप्रदाय' (Pattini cult) की शुरुआत की थी।<br/>Reason (R): He was a contemporary of the Roman Emperor Augustus and built a temple for him at Musiri.<br/>कारण (R): वह रोमन सम्राट ऑगस्टस के समकालीन थे और उन्होंने मुसिरी में उनके लिए एक मंदिर बनवाया था।</p>",
+    "option1": "<p>Both (A) and (R) are true and (R) is the correct explanation of (A). /(A) और (R) दोनों सत्य हैं और (R) (A) का सही स्पष्टीकरण है।</p>",
+    "option2": "<p>Both (A) and (R) are true but (R) is NOT the correct explanation of (A). / (A) और (R) दोनों सत्य हैं, लेकिन (R) (A) की सही स्पष्टीकरण नहीं है।</p>",
+    "option3": "<p>(A) is true but (R) is false. / (A) सत्य है लेकिन (R) असत्य है।</p>",
+    "option4": "<p>(A) is false but (R) is true. / (A) असत्य है लेकिन (R) सत्य है।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>(A) is true as Senguttuvan is known as the Red Chera and worshipped Kannagi (Pattini cult). (R) is false because while a temple for Augustus was built by the Romans at Musiri, the text does not state Senguttuvan built it himself. (A) सत्य है क्योंकि सेंगट्टुवन को लाल चेर के रूप में जाना जाता है और उन्होंने कन्नगी (पत्तिनी संप्रदाय) की पूजा की थी । (R) गलत है क्योंकि हालांकि मुसिरी में रोमनों द्वारा ऑगस्टस का मंदिर बनाया गया था, पाठ यह नहीं बताता है कि सेंगट्टुवन ने इसे स्वयं बनाया था।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p>Statement I: The five 'Thinais' or geographical divisions were ruled by chiefs known as Muvendar.<br/>कथन I: पांच 'तिनई’ (Thinais) या भौगोलिक विभाजनों पर 'मुवेंदर' नामक प्रमुखों द्वारा शासन किया जाता था।<br/>Statement II: The 'Palai Thinai' was associated with cattle lifting and plundering activities.<br/>कथन II: 'पलै तिनई’ (Palai Thinai) मवेशियों की चोरी और लूटपाट की गतिविधियों से जुड़ा था।</p>",
+    "option1": "<p>Only Statement I is correct. / केवल कथन 1 सही है।</p>",
+    "option2": "<p>Only Statement II is correct. / केवल कथन II सही है।</p>",
+    "option3": "<p>Both Statement I and II are correct. / कथन I और II दोनों सही हैं।</p>",
+    "option4": "<p>Neither Statement I nor II is correct. / न तो कथन I और न ही कथन II सही है।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Both statements are correct. Each Thinai had a chief called Muvendar , and Palai was indeed the region of cattle lifters and plundering. दोनों कथन सही हैं। प्रत्येक थिनई (Thinai) में मुवेंदर नामक एक प्रमुख होता था , और पलै वास्तव में मवेशी चोरों और लूटपाट का क्षेत्र था ।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p>Assertion (A): The Sangam age in South India is characterized as the Iron Age/Megalithic Age rather than the Bronze Age.<br/>कथन (A): दक्षिण भारत में संगम युग को कांस्य युग के बजाय लौह युग/महापाषाण काल (Megalithic Age) के रूप में जाना जाता है।<br/>Reason (R): Megalithic structures like Dolmens and Menhirs were found around graves during this period (1500-600 BC).<br/>कारण (R): इस अवधि (1500-600 ईसा पूर्व) के दौरान कब्रों के चारों ओर डोलमेन और मेनहिर जैसी महापाषाण संरचनाएं पाई गई थीं।</p>",
+    "option1": "<p>Both (A) and (R) are true and (R) is the correct explanation of (A). / (A) और (R) दोनों सत्य हैं और (R) (A) की सही व्याख्या है।</p>",
+    "option2": "<p>Both (A) and (R) are true but (R) is NOT the correct explanation of (A). / (A) और (R) दोनों सत्य हैं, लेकिन (R) (A) की सही व्याख्या नहीं है।</p>",
+    "option3": "<p>(A) is true but (R) is false. / (A) सत्य है लेकिन (R) असत्य है।</p>",
+    "option4": "<p>(A) is false but (R) is true. / (A) असत्य है लेकिन (R) सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>Both are true. The lack of a Bronze Age and the presence of Iron/Megalithic culture is a defining start for South Indian history. The presence of specific burial structures like Dolmens and Menhirs defines the Megalithic character of that age. दोनों सत्य हैं। कांस्य युग का अभाव और लौह/महापाषाण संस्कृति की उपस्थिति दक्षिण भारतीय इतिहास की एक परिभाषित शुरुआत है । डोलमेन और मेनहिर जैसी विशिष्ट दफन संरचनाओं की उपस्थिति उस युग के महापाषाण चरित्र को परिभाषित करती है ।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p>Consider the following statements about Madurai, the capital city of the Pandya kingdom:<br/>1. It has been described in Maduraikkanchi as a large grand city, enclosed by walls on three sides and the Vaigai river on the fourth side.<br/>2. The Arthashastra mentions it as a centre of fine cotton textiles.<br/>3. Other literary sources describe it as a major craft centre.<br/>पांड्य साम्राज्य की राजधानी मदुरै के संबंध में, निम्नलिखित कथनों पर विचार कीजिए:<br/>4. इसे मदुरैकांचि में एक बड़े भव्य नगर के रूप में वर्णित किया गया है, जो तीनों ओर दीवारों से घिरा है और चौथी ओर वैगई नदी है।<br/>5. अर्थशास्त्र में इसका उल्लेख उत्तम सूती वस्त्रों के केन्द्र के रूप में किया गया है।<br/>6. अन्य साहित्यिक स्रोतों में इसे एक प्रमुख शिल्प केन्द्र के रूप में वर्णित किया गया है।<br/>Which of the statements given above is/are correct?<br/>उपर्युक्त कथनों में से कौन-सा/कौन-से सही है/हैं?</p>",
+    "option1": "<p>1 only / केवल 1</p>",
+    "option2": "<p>1 and 2 only / केवल 1 और 2</p>",
+    "option3": "<p>2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p>1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>All three statements are historically accurate regarding Madurai. It was a major commercial and cultural hub of the Pandyas, noted for its textiles in the Arthashastra and its urban layout in Sangam literature. तीनों कथन मदुरै के संबंध में ऐतिहासिक रूप से सटीक हैं। यह पांड्यों का एक प्रमुख व्यावसायिक और सांस्कृतिक केंद्र था, जिसे अर्थशास्त्र में इसके वस्त्रों के लिए और संगम साहित्य में इसके शहरी विन्यास के लिए जाना जाता था।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p>Which one of the following explains the practice of ‘Vattakirutal’ as mentioned in Sangam poems?<br/>निम्नलिखित में से कौन-सा एक, संगम कविताओं में यथावर्णित 'वटकिरुतल' की प्रथा को स्पष्ट करता है?</p>",
+    "option1": "<p>Kings employing women bodyguards / राजाओं द्वारा महिला अंगरक्षिकाओं को नियुक्त करना</p>",
+    "option2": "<p>Learned persons assembling in royal courts to discuss religious and philosophical matters / राजदरबारों में विद्वानों का, धर्म और दर्शन से जुड़े विषयों पर विचार-विमर्श करने हेतु, एकत्र होना</p>",
+    "option3": "<p>Young girls keeping watch over agricultural fields and driving away birds and animals / किशोरियों द्वारा कृषि-क्षेत्रों की निगरानी करना और चिड़ियों तथा पशुओं को भगाना</p>",
+    "option4": "<p>A king defeated in a battle committing ritual suicide by starving himself to death / युद्ध में पराजित राजा का आमरण अनशन कर आनुष्ठानिक मृत्युवरण करना</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>'Vattakirutal' was a Tamil ritual of fasting to death practiced by defeated kings to reclaim honor after losing a battle. 'वटकिरुतल' पराजित राजाओं द्वारा युद्ध हारने के बाद सम्मान पुनः प्राप्त करने के लिए मृत्यु तक उपवास करने की एक तमिल प्रथा थी।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p>Arrange the following in correct chronological order:<br/>निम्नलिखित को सही कालानुक्रम में व्यवस्थित कीजिए:<br/>1. Charak Samhita / चरक संहिता<br/>2. Bharat’s Natyashastra / भरत का नाट्यशास्त्र<br/>3. Sangam Literature / संगम साहित्य<br/>4. Ashtadhyayi / अष्टाध्यायी<br/>Select the correct answer using the code given below:<br/>नीचे दिए गए कूट का प्रयोग कर सही उत्तर चुनिए:</p>",
+    "option1": "<p>1 – 3 – 4 – 2</p>",
+    "option2": "<p>2 – 4 – 1 – 3</p>",
+    "option3": "<p>4 – 3 – 1 – 2</p>",
+    "option4": "<p>3 – 1 – 2 – 4</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>The chronological order is Panini’s Ashtadhyayi (c. 4th Century BCE), followed by Sangam Literature (c. 3rd BCE - 3rd CE), Charak Samhita (c. 1st-2nd Century CE), and Natyashastra (c. 2nd Century CE onwards). कालानुक्रमिक क्रम है पाणिनी की अष्टाध्यायी (लगभग चौथी शताब्दी ईसा पूर्व), उसके बाद संगम साहित्य (लगभग तीसरी ईसा पूर्व - तीसरी ईस्वी), चरक संहिता (लगभग पहली-दूसरी शताब्दी ईस्वी), और नाट्यशास्त्र (लगभग दूसरी शताब्दी ईस्वी के बाद)।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p>With reference to ancient South India, Korkai, Poompuhar and Muchiri were well known as:<br/>प्राचीन दक्षिण भारत के संदर्भ में, कोरकई, पूमपुहार और मुचीरि किस रूप में सुविख्यात थे?</p>",
+    "option1": "<p>capital cities / राजधानी नगर</p>",
+    "option2": "<p>ports / पत्तन</p>",
+    "option3": "<p>centres of iron-and-steel making / लोह और इस्पात निर्माण के केन्द्र</p>",
+    "option4": "<p>shrines of Jain Tirthankaras / जैन तीर्थंकरों के चैत्य</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>These were major ancient port cities that played a crucial role in the maritime trade between South India and the Roman Empire.<br/>ये प्रमुख प्राचीन बंदरगाह शहर थे जिन्होंने दक्षिण भारत और रोमन साम्राज्य के बीच समुद्री व्यापार में महत्वपूर्ण भूमिका निभाई थी।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p>Read the below statements marked as Assertion (A) and Reason (R):<br/>Assertion (A): The murals in Tirumalaipuram and Sittanavasal caves are important surviving examples of Pandya art.<br/>Reason (R): These murals are mainly found on the outer walls of temples and depict mythological war scenes.<br/>नीचे दिए गए कथनों को अभिकथन (A) और कारण (R) के रूप में पढ़ें:<br/>अभिकथन (A): तिरुमलैपुरम और सित्तनवासल गुफाओं के भित्ति चित्र पांड्य कला के महत्वपूर्ण जीवित उदाहरण हैं।<br/>कारण (R): ये भित्ति चित्र मुख्य रूप से मंदिरों की बाहरी दीवारों पर पाए जाते हैं और पौराणिक युद्ध दृश्यों को दर्शाते हैं।</p>",
+    "option1": "<p>Both A and R are true, and R is the correct explanation of A / A और R दोनों सही हैं, और R, A की सही व्याख्या है।</p>",
+    "option2": "<p>Both A and R are true, but R is not the correct explanation of A / A और R दोनों सही हैं, लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p>A is true, but R is false / A सही है, लेकिन R गलत है।</p>",
+    "option4": "<p>Both A and R are false / A और R दोनों गलत हैं।</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p>While (A) is correct as these caves represent Pandya painting styles, (R) is incorrect because cave murals are located inside the caves (ceilings/pillars) and typically depict themes like lotus ponds and dancers, not just mythological war scenes on outer walls. जबकि (A) सही है क्योंकि ये गुफाएं पांड्य चित्रकला शैलियों का प्रतिनिधित्व करती हैं, (R) गलत है क्योंकि गुफाओं के भित्ति चित्र गुफाओं के भीतर (छत/खंभों) स्थित हैं और आमतौर पर कमल के तालाबों और नर्तकियों जैसे विषयों को चित्रित करते हैं, न कि केवल बाहरी दीवारों पर पौराणिक युद्ध दृश्यों को।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - General Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">General Quiz - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

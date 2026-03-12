@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>General Quiz -  - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>General Quiz - </h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>Who is considered the 'Real Founder' (Propounder) of the Jain religion? </b>जैन धर्म के <b>'</b>वास्तविक संस्थापक<b>' (</b>प्रवर्तक<b>) </b>के रूप में किसे माना जाता है<b>?</b></p>",
+    "option1": "<p> Rishabh Dev / ऋषभ देव</p>",
+    "option2": "<p> Parshavnath / पार्श्वनाथ</p>",
+    "option3": "<p> Vardhaman Mahavir / वर्धमान महावीर</p>",
+    "option4": "<p> Aristanemi / अरिष्टनेमि</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Although Rishabh Dev was the first Tirthankar and founder of Jainism, Vardhaman Mahavir (the 24th Tirthankar) is considered the real founder and propounder due to his role in popularizing and organizing the religion. He systematized the philosophy and teachings that became the core tenets of Jainism.<br/> यद्यपि ऋषभ देव प्रथम तीर्थंकर और जैन धर्म के संस्थापक थे, लेकिन वर्धमान महावीर (24वें तीर्थंकर) को धर्म को लोकप्रिय बनाने और व्यवस्थित करने में उनकी भूमिका के कारण वास्तविक संस्थापक और प्रवर्तक माना जाता है। उन्होंने दर्शन और शिक्षाओं को व्यवस्थित किया जो जैन धर्म के मूल सिद्धांत बन गए।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>Gautam Buddha belonged to which clan? </b>गौतम बुद्ध किस कुल से संबंधित थे<b>?</b></p>",
+    "option1": "<p> Koliya Clan / कोलिय कुल</p>",
+    "option2": "<p> Lichchhavi Clan / लिच्छवी कुल</p>",
+    "option3": "<p> Janathrika Clan / जनत्रिका कुल</p>",
+    "option4": "<p> Shakya Clan / शाक्य कुल</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Gautam Buddha's father, Suddhodhana, was the chief of the Shakya clan, which is why Buddha is also known as Shakyamuni (Sage of the Shakyas). He was born in Lumbini, Nepal, into this clan.<br/> गौतम बुद्ध के पिता, शुद्धोधन, शाक्य कुल के मुखिया थे, यही कारण है कि बुद्ध को शाक्यमुनि (शाक्यों के ऋषि) के रूप में भी जाना जाता है। उनका जन्म नेपाल के लुंबिनी में इसी कुल में हुआ था।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>Where did Vardhaman Mahavir attain Enlightenment (Kaivalya)?<br/> </b>वर्धमान महावीर को ज्ञान <b>(</b>कैवल्य<b>) </b>की प्राप्ति कहाँ हुई थी<b>?</b></p>",
+    "option1": "<p> Kundagrama / कुण्डग्राम</p>",
+    "option2": "<p> Pavapuri / पावापुरी</p>",
+    "option3": "<p> Pava / पावा</p>",
+    "option4": "<p> Jambhikagrama / जृंभिकग्राम</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Mahavir attained 'Kaivalya' (perfect knowledge) at the age of 42 under a Sal tree at Jambhikagrama, near the Rijupalika river. Kaivalya signifies liberation and the end of the cycle of rebirth in Jainism.<br/> महावीर को 42 वर्ष की आयु में जृंभिकग्राम में साल वृक्ष के नीचे, ऋजुपालिका नदी के पास 'कैवल्य' (पूर्ण ज्ञान) की प्राप्ति हुई। कैवल्य जैन धर्म में मुक्ति और पुनर्जन्म के चक्र के अंत को दर्शाता है।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>The Buddhist concept of 'Dhamma' in the Triratnas refers to:<br/> </b>त्रिरत्नों में बौद्ध अवधारणा <b>'</b>धम्म<b>' </b>किसे संदर्भित करती है<b>?</b></p>",
+    "option1": "<p> Buddha / बुद्ध</p>",
+    "option2": "<p> Religion or Teachings / धर्म या शिक्षाएँ</p>",
+    "option3": "<p> Community of Monks / भिक्षुओं का समुदाय</p>",
+    "option4": "<p> The Eightfold path / अष्टांगिक मार्ग</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Triratnas (Three Jewels) of Buddhism are Buddha (The Enlightened One), Dhamma (the teachings, or religion), and Sangha (the monastic community). These three form the refuge for Buddhists.<br/> बौद्ध धर्म के त्रिरत्न (तीन रत्न) बुद्ध (ज्ञान प्राप्त व्यक्ति), धम्म (शिक्षाएँ, या धर्म), और संघ (भिक्षुओं का समुदाय) हैं। ये तीनों बौद्धों के लिए शरण का निर्माण करते हैं।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>The First Buddhist Council was held at which place?<br/> </b>प्रथम बौद्ध संगीति किस स्थान पर आयोजित की गई थी<b>?</b></p>",
+    "option1": "<p> Vaishali / वैशाली</p>",
+    "option2": "<p> Rajgriha / राजगृह</p>",
+    "option3": "<p> Patliputra / पाटलिपुत्र</p>",
+    "option4": "<p> Kashmir / कश्मीर</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The First Buddhist Council was held at Rajgriha (or Rajagriha) around 483 BC immediately after the death of the Buddha. It was patronized by King Ajatshatru and presided over by Mahakashyapa.<br/> प्रथम बौद्ध संगीति का आयोजन बुद्ध के निधन के तुरंत बाद लगभग 483 ईसा पूर्व में राजगृह में हुआ था। इसे राजा अजातशत्रु द्वारा संरक्षण दिया गया था और इसकी अध्यक्षता महाकाश्यप ने की थी।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>Which one of the following is NOT a Jain vow (Anuvrata)?<br/> </b>निम्नलिखित में से कौन सा एक जैन व्रत <b>(</b>अणुव्रत<b>) </b>नहीं है<b>?</b></p>",
+    "option1": "<p> Ahimsa / अहिंसा</p>",
+    "option2": "<p> Asteya / अस्तेय</p>",
+    "option3": "<p> Dharma / धर्म</p>",
+    "option4": "<p> Aparigraha / अपरिग्रह</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The five main vows (Anuvratas) of Jainism are Ahimsa (non-violence), Satya (truth), Asteya (non-stealing), Brahmacharya (celibacy/monogamy), and Aparigraha (non-possession). Dharma is a broader term, not one of the five specific vows.<br/> जैन धर्म के पाँच मुख्य व्रत (अणुव्रत) अहिंसा, सत्य, अस्तेय (चोरी न करना), ब्रह्मचर्य (एकविवाह), और अपरिग्रह हैं। धर्म एक व्यापक शब्द है, न कि पाँच विशिष्ट व्रतों में से एक।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>What does the Buddhist symbol 'Wheel' represent?<br/> </b>बौद्ध प्रतीक <b>'</b>चक्र<b>' </b>किसे दर्शाता है<b>?</b></p>",
+    "option1": "<p> Birth (Janma) / जन्म</p>",
+    "option2": "<p> Renunciation (Mahabhinishkramana) / गृह त्याग (महाभिनिष्क्रमण)</p>",
+    "option3": "<p> First Sermon (Dharmachakrapravartana) / प्रथम उपदेश (धर्मचक्रपरिवर्तन)</p>",
+    "option4": "<p> Death (Mahaparinirvana) / मृत्यु (महापरिनिर्वाण)</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Wheel, or Dharmachakrapravartana (Turning the Wheel of Law), symbolizes the Buddha's First Sermon given at Sarnath. The eight spokes of the wheel represent the Eightfold Path.<br/> चक्र, या धर्मचक्रप्रवर्तन (धर्म के चक्र का प्रवर्तन), सारनाथ में दिए गए बुद्ध के प्रथम उपदेश का प्रतीक है। चक्र की आठ तीलियाँ अष्टांगिक मार्ग का प्रतिनिधित्व करती हैं।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>The Jain practice of 'Sallekhana' is associated with:<br/> </b>जैनों की <b>'</b>सल्लेखना<b>' </b>प्रथा किससे संबंधित है<b>?</b></p>",
+    "option1": "<p> Strict meditation / कठोर ध्यान</p>",
+    "option2": "<p> Death by fasting / उपवास द्वारा मृत्यु</p>",
+    "option3": "<p> Giving up material possessions / भौतिक संपत्ति का त्याग</p>",
+    "option4": "<p> Right Knowledge / सम्यक ज्ञान</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Sallekhana (or Santhara) is a Jain practice where a person voluntarily fasts to death. Chandragupta Maurya is said to have observed Sallekhana at Shravanabelagola in Karnataka during a famine in Magadh.<br/> सल्लेखना (या संथारा) जैनों की एक प्रथा है जहाँ एक व्यक्ति स्वेच्छा से उपवास करके मृत्यु को प्राप्त करता है। कहा जाता है कि चंद्रगुप्त मौर्य ने मगध में अकाल के दौरान कर्नाटक के श्रवणबेलगोला में सल्लेखना किया था।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Who among the following has written the biography of Buddha, Buddhacharita ? </b>निम्नलिखित में से किसने बुद्ध की जीवनी<b>, </b>बुद्धचरित लिखी है<b>?</b></p>",
+    "option1": "<p> Ashvaghosha / अश्वघोषा</p>",
+    "option2": "<p> Nagarjuna / नागार्जुन</p>",
+    "option3": "<p> Vasumitra / वसुमित्र</p>",
+    "option4": "<p> Charaka / चरक</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Other writers and books: Nagarjuna Mulamadhyamakakarika. Vasumitra Mahavibhasa. Charaka- Samhita. अन्य लेखक और पुस्तकें: नागार्जुन मूलमध्यमककारिका। वसुमित्र महाविभासा। चरक-संहिता.</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>Who was the first Bhikkhuni (female monk) in the history of Buddhism?<br/> </b>बौद्ध धर्म के इतिहास में प्रथम भिक्षुणी <b>(</b>महिला भिक्षु<b>) </b>कौन थी<b>?</b></p>",
+    "option1": "<p> Yashodhara / यशोधरा</p>",
+    "option2": "<p> Mahamaya / महामाया</p>",
+    "option3": "<p> Amrapali / आम्रपाली</p>",
+    "option4": "<p> Mahaprajapati Goutami / महाप्रजापति गौतमी</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Mahaprajapati Goutami was Gautam Buddha's stepmother (and maternal aunt). After Buddha's mother, Mahamaya, passed away, Goutami raised him and later became the first woman to be ordained as a Bhikkhuni (female monk).<br/> महाप्रजापति गौतमी गौतम बुद्ध की सौतेली माँ (और मौसी) थीं। बुद्ध की माता महामाया के निधन के बाद, गौतमी ने उनका पालन-पोषण किया और बाद में भिक्षुणी (महिला भिक्षु) के रूप में दीक्षा लेने वाली पहली महिला बनीं।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Consider the following statements regarding the division among Jains:<br/> </b>जैनों के बीच विभाजन के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. The division into Digambara and Shvetambara occurred after the Second Jain Council. / </b>दिगंबर और श्वेतांबर में विभाजन द्वितीय जैन संगीति के बाद हुआ।<b><br/> 2. The Digambaras were led by Bhadrabahu, who went to South India during the Magadh famine. / </b>दिगंबरों का नेतृत्व भद्रबाहु ने किया था<b>, </b>जो मगध के अकाल के दौरान दक्षिण भारत गए थे।<b><br/> 3. The Shvetambaras were led by Sthulbhadra and wore white clothes. / </b>श्वेतांबरों का नेतृत्व स्थूलभद्र ने किया और उन्होंने श्वेत वस्त्र धारण किए।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The major division occurred following the famine in Magadh, when the group led by Bhadrabahu (Digambaras) went south, and the group led by Sthulbhadra (Shvetambaras) stayed. The division formalized around the time of the First Jain Council (298 BC), not the second.<br/> प्रमुख विभाजन मगध में अकाल के बाद हुआ, जब भद्रबाहु के नेतृत्व वाला समूह (दिगंबर) दक्षिण चला गया, और स्थूलभद्र के नेतृत्व वाला समूह (श्वेतांबर) वहीं रुका रहा। विभाजन प्रथम जैन संगीति (298 ईसा पूर्व) के समय औपचारिक रूप दिया गया, न कि दूसरी संगीति के बाद।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Match the following Buddhist Councils with their respective Patrons:<br/> </b>निम्नलिखित बौद्ध संगीतियों को उनके संबंधित संरक्षकों से सुमेलित करें<b>:<br/> Council (</b>संगीति<b>):<br/> P. 1st Buddhist Council / </b>प्रथम बौद्ध संगीति<b><br/> Q. 2nd Buddhist Council / </b>द्वितीय बौद्ध संगीति<b><br/> R. 3rd Buddhist Council / </b>तृतीय बौद्ध संगीति<b><br/> S. 4th Buddhist Council / </b>चतुर्थ बौद्ध संगीति<b><br/> Patron (</b>संरक्षक<b>):<br/> 1. Ashoka / </b>अशोक<b><br/> 2. Ajatshatru / </b>अजातशत्रु<b><br/> 3. Kalashoka / </b>कालाशोक<b><br/> 4. Kanishka / </b>कनिष्क<b><br/> Select the correct match from the options below (P-Q-R-S):<br/> </b>नीचे दिए गए विकल्पों में से सही मिलान का चयन करें <b>(P-Q-R-S):</b></p>",
+    "option1": "<p> 2-3-1-4</p>",
+    "option2": "<p> 3-2-4-1</p>",
+    "option3": "<p> 4-1-3-2</p>",
+    "option4": "<p> 1-4-2-3</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The correct sequence of patrons for the four Buddhist Councils is Ajatshatru (1st Council, Rajgriha), Kalashoka (2nd Council, Vaishali), Ashoka (3rd Council, Patliputra), and Kanishka (4th Council, Kashmir). The Fourth Council led to the division of Buddhism into Mahayana and Hinayana sects.<br/> चार बौद्ध संगीतियों के संरक्षकों का सही क्रम अजातशत्रु (प्रथम संगीति, राजगृह), कालाशोक (द्वितीय संगीति, वैशाली), अशोक (तृतीय संगीति, पाटलिपुत्र), और कनिष्क (चतुर्थ संगीति, कश्मीर) है। चौथी संगीति के परिणामस्वरूप बौद्ध धर्म महायान और हीनयान संप्रदायों में विभाजित हो गया।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Assertion (A): Both Jainism and Buddhism are considered 'heterodox' in the context of Indian Philosophy.<br/> </b>तर्क <b>(A): </b>भारतीय दर्शन के संदर्भ में जैन धर्म और बौद्ध धर्म दोनों को <b>'</b>नास्तिक<b>' (Heterodox) </b>माना जाता है।<b><br/> Reason (R): Both the religions rejected the authority of the Vedas, unlike the orthodox Hindu traditions.<br/> </b>कारण <b>(R): </b>दोनों धर्मों ने रूढ़िवादी हिंदू परंपराओं के विपरीत<b>, </b>वेदों के अधिकार को अस्वीकार कर दिया।</p>",
+    "option1": "<p> Both (A) and (R) are true and (R) is the correct explanation of (A). / (A) और (R) दोनों सत्य हैं और (R), (A) का सही स्पष्टीकरण है।</p>",
+    "option2": "<p> Both (A) and (R) are true but (R) is not the correct explanation of (A). / (A) और (R) दोनों सत्य हैं लेकिन (R), (A) का सही स्पष्टीकरण नहीं है।</p>",
+    "option3": "<p> (A) is true, but (R) is false. / (A) सत्य है, लेकिन (R) असत्य है।</p>",
+    "option4": "<p> (A) is false, but (R) is true. / (A) असत्य है, लेकिन (R) सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> In Indian philosophy, heterodox (Nastika) schools are those that do not accept the authority of the Vedas, while orthodox (Astika) schools do. Since both Jainism and Buddhism rejected the ritualistic Brahminical domination and the Vedas' authority, they are correctly classified as heterodox. भारतीय दर्शन में, नास्तिक वे मत हैं जो वेदों के अधिकार को स्वीकार नहीं करते हैं, जबकि आस्तिक मत ऐसा करते हैं। चूंकि जैन धर्म और बौद्ध धर्म दोनों ने कर्मकांडीय ब्राह्मणवादी प्रभुत्व और वेदों के अधिकार को अस्वीकार कर दिया, इसलिए उन्हें सही ढंग से नास्तिक के रूप में वर्गीकृत किया गया है।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>The Buddhist Mudra known as 'Bhumisparsha Mudra' represents which event in the life of Buddha?<br/> '</b>भूमिस्पर्श मुद्रा<b>' </b>के नाम से जानी जाने वाली बौद्ध मुद्रा<b>, </b>बुद्ध के जीवन की किस घटना का प्रतिनिधित्व करती है<b>?</b></p>",
+    "option1": "<p> Protection and overcoming fear / सुरक्षा और भय पर काबू पाना</p>",
+    "option2": "<p> The first sermon or teachings / प्रथम उपदेश या शिक्षाएँ</p>",
+    "option3": "<p> Enlightenment / ज्ञान प्राप्ति</p>",
+    "option4": "<p> Meditation and inner peace / ध्यान और आंतरिक शांति</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Bhumisparsha Mudra, or 'Touching the Earth' gesture, represents the moment of Buddha's Enlightenment (Nirvana) at Bodh Gaya, when he called upon the Earth to witness his realization. The other mudras symbolize other aspects like Abhaya (fearlessness) and Dhyana (meditation).<br/> भूमिस्पर्श मुद्रा, या 'पृथ्वी को छूने' का इशारा, बोधगया में बुद्ध के ज्ञान (निर्वाण) प्राप्ति के क्षण का प्रतिनिधित्व करता है, जब उन्होंने अपनी अनुभूति का गवाह बनने के लिए पृथ्वी को आह्वान किया था। अन्य मुद्राएँ अन्य पहलुओं जैसे अभय (निर्भीकता) और ध्यान का प्रतीक हैं।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Consider the following statements about early Jainism and Buddhism:<br/> </b>प्रारंभिक जैन धर्म और बौद्ध धर्म के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. Both religions generally did not attach importance to the existing Varna system. / </b>दोनों धर्मों ने आम तौर पर मौजूदा वर्ण व्यवस्था को महत्व नहीं दिया।<b><br/> 2. Both Mahavir and Buddha belonged to the Kshatriya varna. / </b>महावीर और बुद्ध दोनों क्षत्रिय वर्ण से संबंधित थे।<b><br/> 3. Jainism believed in a divine figure, whereas Buddhism did not. / </b>जैन धर्म एक दिव्य सत्ता में विश्वास करता था<b>, </b>जबकि बौद्ध धर्म ऐसा नहीं करता था।<b><br/> Which of the statements given above is/are correct?<br/> </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Statement 1: Both religions generally did not give importance to the existing caste system. This statement is correct.<br/> 8. Early Jainism and Buddhism did not give special importance to the caste system. Both emphasized equality and the universal availability of liberation (moksha).<br/> Statement 2: Both Mahavira and Buddha belonged to the Kshatriya caste. This statement is correct.<br/> 9. Mahavira was born into the Kshatriya clan of Vaishali, and Buddha was born into the Shakya Kshatriya clan.<br/> Statement 3: Jainism believed in a divine being, while Buddhism did not. This statement is incorrect.<br/> 10. Jainism did not believe in a creator God or a divine being. It is based on the purification of the soul and the principle of karma. Buddhism is also non-theistic and focuses on Nirvana.<br/> कथन 1: दोनों धर्मों ने आम तौर पर मौजूदा वर्ण व्यवस्था को महत्व नहीं दिया। यह कथन सही है।<br/> 11. प्रारंभिक जैन धर्म और बौद्ध धर्म ने वर्ण-व्यवस्था को विशेष महत्व नहीं दिया। दोनों ने समानता और मोक्ष की सार्वभौमिक उपलब्धता पर बल दिया।<br/> कथन 2: महावीर और बुद्ध दोनों क्षत्रिय वर्ण से संबंधित थे। यह कथन सही है।<br/> 12. महावीर का जन्म वैशाली के क्षत्रिय गण में हुआ था और बुद्ध का जन्म शाक्य क्षत्रिय कुल में हुआ था।<br/> कथन 3: जैन धर्म एक दिव्य सत्ता में विश्वास करता था, जबकि बौद्ध धर्म ऐसा नहीं करता था। यह कथन गलत है।<br/> 13. जैन धर्म किसी सृष्टिकर्ता ईश्वर या दिव्य सत्ता में विश्वास नहीं करता था। यह आत्मा की शुद्धि और कर्म सिद्धांत पर आधारित है। बौद्ध धर्म भी ईश्वर-निरपेक्ष है और निर्वाण पर केंद्रित है।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>Which one of the following statements about the Buddhist Goddess Hariti is correct?<br/> 1. She was converted by the Buddha from a blood-thirsty yakshi to a benevolent maternal figure.<br/> 2. She is the feminine personification of wisdom.<br/> 3. She protects people from eight great fears.<br/> 4. She is a warrior goddess associated with the dawn.<br/> </b>बौद्ध देवी हरिति के बारे में निम्नलिखित में से कौन सा कथन सही है<b>?</b></p>",
+    "option1": "<p> उन्हें बुद्ध द्वारा रक्तपिपासु यक्षी से एक करुणामयी मातृस्वरूप देवी में परिवर्तित किया गया।</p>",
+    "option2": "<p> वह प्रज्ञा (ज्ञान) की स्त्री रूपात्मक प्रतीक है।</p>",
+    "option3": "<p> वह लोगों को आठ महान भय से संरक्षण देती है।</p>",
+    "option4": "<p> वह उषा (प्रभात) से संबद्ध एक योद्धा देवी है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> According to Buddhist tradition, Hariti was initially a cruel and bloodthirsty yakshini who harmed children. Lord Buddha converted her through his teachings, after which she became a compassionate, motherly goddess and came to be regarded as a protector of children and a symbol of motherhood. Therefore, the first statement is correct.<br/> 9. The second statement relates to the goddess of wisdom, which applies to Prajnaparamita, not Hariti.<br/> 10. The third statement relates to the goddess Tara, who protects against the eight great fears.<br/> 11. The fourth statement is associated with the goddess Usha/a warrior goddess and has no connection to Hariti.<br/> बौद्ध परंपरा के अनुसार हरिति प्रारंभ में एक क्रूर और रक्तपिपासु यक्षी थीं, जो बच्चों को नुकसान पहुँचाती थीं। भगवान बुद्ध ने उन्हें उपदेश देकर परिवर्तित किया, जिसके बाद वे करुणामयी मातृस्वरूप देवी बन गईं और आगे चलकर बच्चों की रक्षक तथा मातृत्व की प्रतीक मानी जाने लगीं। इसलिए पहला कथन सही है।<br/> 12. दूसरा कथन प्रज्ञा (ज्ञान) की देवी से संबंधित है, जो प्रज्ञापारमिता पर लागू होता है, हरिति पर नहीं।<br/> 13. तीसरा कथन तारा देवी से संबंधित है, जो आठ महान भय से रक्षा करती हैं।<br/> 14. चौथा कथन उषा/योद्धा देवी से जुड़ा है और हरिति से इसका कोई संबंध नहीं है।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Which of the following statements is correct?<br/> 1. Gautama Buddha belonged to a small gana known as the Sakya gana and was a Kshatriya.<br/> 2. Gautama Buddha passed away at Kusinara.<br/> </b>निम्नलिखित में से कौन सा कथन सही है<b>?<br/> 3. </b>गौतम बुद्ध शाक्य गण नामक एक छोटे गण से संबंधित थे और क्षत्रिय थे।<b><br/> 4. </b>गौतम बुद्ध का निधन कुशीनार में हुआ था।</p>",
+    "option1": "<p> Only I / केवल I</p>",
+    "option2": "<p> Neither I nor II / न तो I और न ही II</p>",
+    "option3": "<p> Only II / केवल II</p>",
+    "option4": "<p> Both I and II / I और II दोनों</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Important places related to the life of Buddha are- Birth (Lumbini); Enlightenment (Bodh Gaya at Bihar); His first Sermon also known as Dharma-Chakra-Pravartana (Sarnath); His death or Mahaparinirvana in Kushinagara (Pali: Kusinārā), Uttar Pradesh. बुद्ध के जीवन से संबंधित महत्वपूर्ण स्थान हैं- जन्म (लुंबिनी); ज्ञानोदय (बिहार में बोधगया); उनके पहले उपदेश को धर्म-चक्र-प्रवर्तन (सारनाथ) के नाम से भी जाना जाता है; उनकी मृत्यु या महापरिनिर्वाण कुशीनगर (पाली: कुशीनारा), उत्तर प्रदेश में हुआ।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Who among the following were referred to as the 'Theris' in ancient India?<br/> </b>प्राचीन भारत में निम्नलिखित में से किन्हें <b>'</b>थेरी<b>' </b>के रूप में जाना जाता था<b>?</b></p>",
+    "option1": "<p> Respected women / श्रद्धेय महिलाएँ</p>",
+    "option2": "<p> Elder nuns in Buddhism / बौद्ध धर्म में वरिष्ठ साध्वी</p>",
+    "option3": "<p> Women denied the Bhikkhuni status / भिक्षुणी पद से वंचित महिलाएँ</p>",
+    "option4": "<p> Women expelled from the Buddhist Sangha / बौद्ध संघ से निष्कासित महिलाएँ</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> In Buddhism, 'Theri' (Sanskrit: Sthavira) literally means 'elder'. It is a title given to the senior or elder nuns (Bhikkhunis) who had attained a high level of spiritual realization. The collection of poems written by them is known as Therigatha.<br/> बौद्ध धर्म में, 'थेरी' (संस्कृत: स्थविरा) का शाब्दिक अर्थ 'वरिष्ठ' होता है । यह एक उपाधि है जो उन वरिष्ठ साध्वियों (भिक्खुनी) को दी जाती थी जिन्होंने उच्च स्तर की आध्यात्मिक अनुभूति प्राप्त कर ली थी । उनके द्वारा लिखी गई कविताओं का संग्रह थेरीगाथा के नाम से जाना जाता है ।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Which of the following statements about sculptures at Sanchi is/are correct?<br/> 1. In some sculptures there is representation of Shalabhanjika.<br/> 2. The figure of Shalabhanjika is represented by a woman surrounded by lotuses and elephants.<br/> 3. The Shalabhanjika motif was not directly inspired by Buddhist ideas.<br/> </b>साँची स्थित मूर्तिशिल्पों के बारे में निम्नलिखित में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?<br/> 4. </b>कुछ मूर्तिशिल्पों में शालभंजिका का प्रतिरूपण है।<b><br/> 5. </b>शालभंजिका की आकृति कमल<b>-</b>पुष्पों और हाथियों से घिरी एक स्त्री द्वारा प्रतिरूपित की गई है।<b><br/> 6. </b>शालभंजिका का रूपांकन बौद्ध विचारों से प्रत्यक्षतः प्रेरित नहीं था।<b><br/> Select the correct answer using the code given below:<br/> </b>नीचे दिए गए कूट का प्रयोग कर सही उत्तर चुनिए<b>:</b></p>",
+    "option1": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 2 only / केवल 2</p>",
+    "option4": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Statement 1: This statement is correct.<br/> 11. Reason: Figures of Shalabhanjika are prominently carved on the toranas (gateways) of the Great Stupa at Sanchi. Shalabhanjika is a female figure often depicted holding or touching the branch of a tree (such as a Sal or Ashoka tree), symbolizing fertility and auspiciousness.<br/> Statement 2: This statement is incorrect.<br/> 12. Reason: The female figure standing on lotus blossoms and being anointed with water by elephants on either side is that of Gajalakshmi, not Shalabhanjika. Shalabhanjika is identified by her association with a tree branch or her stance beneath a tree.<br/> Statement 3: This statement is correct.<br/> 13. Reason: The Shalabhanjika motif was originally derived from pre-Buddhist folk traditions (specifically the traditions of Yakshi or nature worship). It symbolizes fertility, auspiciousness, and vitality. Buddhist art adopted it as a decorative and auspicious element, not as a direct representation of any core Buddhist philosophical principle.<br/> कथन 1: यह कथन सही है।<br/> 14. कारण: साँची के महा स्तूप के तोरणों (प्रवेशद्वारों) पर शालभंजिका की आकृतियाँ बहुत प्रमुखता से उत्कीर्ण हैं। शालभंजिका वह स्त्री आकृति होती है जो अक्सर किसी पेड़ (जैसे शाल या अशोक) की शाखा को पकड़ती हुई या उसे छूती हुई दिखाई जाती है, जो प्रजनन क्षमता और शुभता का प्रतीक है।<br/> कथन 2: यह कथन गलत है।<br/> 15. कारण: कमल-पुष्पों पर खड़ी और दोनों ओर से हाथियों द्वारा जल से अभिषेक की जाने वाली स्त्री की आकृति गजलक्ष्मी की होती है, न कि शालभंजिका की। शालभंजिका की पहचान उसके पेड़ की शाखा को पकड़ने या पेड़ के नीचे खड़े होने से होती है।<br/> कथन 3: यह कथन सही है।<br/> 16. कारण: शालभंजिका का रूपांकन मूल रूप से बौद्ध धर्म से पहले की लोक परंपराओं (विशेष रूप से यक्षी या प्रकृति पूजा की परंपराओं) से लिया गया था। यह प्रजनन क्षमता, शुभता (मांगलिकता) और जीवन शक्ति का प्रतीक है। बौद्ध कला ने इसे सजावटी और शुभ तत्व के रूप में अपनाया, न कि किसी मुख्य बौद्ध दार्शनिक सिद्धांत के सीधे प्रतिनिधित्व के रूप में।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>Which one of the following statements with regard to the historical importance of Kushinagar, is correct?<br/> </b>कुशीनगर के ऐतिहासिक महत्व के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+    "option1": "<p> Siddhartha Gautama's 'great departure' took place here and he became an ascetic, a Sramana. / सिद्धार्थ गौतम ने इसी स्थान से 'महाप्रस्थान' किया था और वे तपस्वी, श्रमण बन गए।</p>",
+    "option2": "<p> Siddhartha Gautama obtained his enlightenment here and he became Buddha. / सिद्धार्थ गौतम को इसी स्थान पर ज्ञान की प्राप्ति हुई थी और वे बुद्ध बन गए।</p>",
+    "option3": "<p> Buddha gave his first sermon known as Dharmachakra-parivartana sutra. / बुद्ध ने इसी जगह पर पहला उपदेश दिया था जिसे धर्मचक्र-परिवर्तन सूत्र के रूप में जाना जाता है।</p>",
+    "option4": "<p> Buddha passed away here, which is known as Mahaparinirvana. / बुद्ध ने यहाँ देह-त्याग किया था जिसे महापरिनिर्वाण के रूप में जाना जाता है।</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Kushinagar (or Kushinara) is one of the four most sacred Buddhist pilgrimage sites. It is the place where Gautam Buddha attained Mahaparinirvana (passing away or final release) in 483 BCE.<br/> 5. (a) 'Great Departure' (Mahabhinishkramana) took place in Kapilavastu.<br/> 6. (b) Enlightenment (Nirvana/Sambodhi) was attained in Bodh Gaya.<br/> 7. (c) First sermon (Dharmachakra-parivartana) was given in Sarnath.<br/> कुशीनगर (या कुशीनारा) चार सबसे पवित्र बौद्ध तीर्थ स्थलों में से एक है । यह वह स्थान है जहाँ गौतम बुद्ध ने 483 ईसा पूर्व में महापरिनिर्वाण (देह-त्याग या अंतिम मुक्ति) प्राप्त किया था ।<br/> 8. (a) 'महाप्रस्थान' (महाभिनिष्क्रमण) कपिलवस्तु में हुआ था।<br/> 9. (b) ज्ञानोदय (निर्वाण/सम्बोधि) बोधगया में प्राप्त हुआ था।<br/> 10. (c) पहला उपदेश (धर्मचक्र-परिवर्तन) सारनाथ में दिया गया था ।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Early Buddhist sculptors did not show Buddha in human form. Through which of the following symbols was Buddha's presence shown by the early sculptors?<br/> </b>प्रारंभिक बौद्ध मूर्तिकारों ने बुद्ध को मानव रूप में नहीं दर्शाया। निम्नलिखित में से किन प्रतीकों के माध्यम से प्रारंभिक मूर्तिकारों ने बुद्ध की उपस्थिति को दर्शाया था<b>?</b></p>",
+    "option1": "<p> Empty Seat and Stupa only / केवल रिक्त आसन और स्तूप</p>",
+    "option2": "<p> Wheel and Tree only / केवल चक्र और वृक्ष</p>",
+    "option3": "<p> Wheel, Tree and Stupa only / केवल चक्र, वृक्ष और स्तूप</p>",
+    "option4": "<p> Empty Seat, Wheel, Tree and Stupa / रिक्त आसन, चक्र, वृक्ष और स्तूप</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The aniconic phase of early Buddhist art (2nd century BCE to 1st century CE) avoided depicting the Buddha in human form. Instead, significant events of his life and his presence were represented by symbols:<br/> 5. Empty Seat: Symbolizes the Meditation and Enlightenment (Nirvana).<br/> 6. Wheel (Dharma Chakra): Symbolizes the First Sermon.<br/> 7. Bodhi Tree: Symbolizes the Enlightenment.<br/> 8. Stupa: Symbolizes the Mahaparinirvana (passing away).<br/> 9. Lotus and Bull/Elephant: Symbolize the Birth.<br/> प्रारंभिक बौद्ध कला का अनाकृतिक चरण (द्वितीय शताब्दी ईसा पूर्व से प्रथम शताब्दी ईस्वी) बुद्ध को मानव रूप में चित्रित करने से बचता था। इसके स्थान पर उनके जीवन की महत्वपूर्ण घटनाओं और उनकी उपस्थिति को प्रतीकों के माध्यम से दर्शाया गया:<br/> 10. रिक्त आसन: ध्यान और ज्ञानोदय (निर्वाण) का प्रतीक है ।<br/> 11. चक्र (धर्म चक्र): प्रथम उपदेश का प्रतीक है ।<br/> 12. बोधि वृक्ष: ज्ञानोदय का प्रतीक है ।<br/> 13. स्तूप: महापरिनिर्वाण (देह-त्याग) का प्रतीक है ।<br/> 14. कमल और बैल/हाथी: जन्म का प्रतीक हैं ।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Consider the following statements with reference to Jainism:<br/> 1. Vardhamana Mahavira attained Kaivalyajnana outside the town of Jrimbhikagrama, on the banks of river Rijupalika and in the field of a householder named Samaga.<br/> 2. The state when the Karma particles actually begin to flow towards the Jiva to bind it is known as Asrava.<br/> </b>जैन धर्म के संदर्भ में निम्नलिखित कथनों पर विचार कीजिए<b>:<br/> 3. </b>वर्धमान महावीर ने जृम्भिकाग्राम नगर के बाहर<b>, </b>ऋजुपालिका नदी के तट पर तथा सामग नामक एक गृहस्थ के खेत में कैवल्यज्ञान प्राप्त किया।<b><br/> 4. </b>जिस अवस्था में कर्म कण वास्तव में जीव से बंधने के लिए उसकी ओर प्रवाहित होने लगते हैं<b>, </b>उसे आस्रव कहा जाता है।<b><br/> Which of the statements given above is/are correct?<br/> </b>उपर्युक्त कथनों में से कौन<b>-</b>सा<b>/</b>कौन<b>-</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1, न ही 2</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 9. Statement 1 is correct. According to Jain tradition, after 12 years of penance, Vardhamana Mahavira attained Kaivalyajnana (perfect knowledge) on the tenth day of the bright half of Vaisakha, under a Sal tree, outside Jrimbhikagrama, on the bank of the river Rijupalika.<br/> 10. Statement 2 is correct. In Jain philosophy, Asrava (inflow) is the process by which karma particles are attracted towards the Jiva (soul) and begin to bind it. This is caused by the activity of the mind, speech, and body.<br/> 11. कथन 1 सही है। जैन परंपरा के अनुसार, 12 वर्षों की तपस्या के बाद, वर्धमान महावीर ने वैशाख के शुक्ल पक्ष के दसवें दिन, जृम्भिकाग्राम के बाहर, ऋजुपालिका नदी के तट पर, एक शाल वृक्ष के नीचे कैवल्यज्ञान (पूर्ण ज्ञान) प्राप्त किया था ।<br/> 12. कथन 2 सही है। जैन दर्शन में, आस्रव (प्रवाह) वह प्रक्रिया है जिसके द्वारा कर्म कण जीव (आत्मा) की ओर आकर्षित होते हैं और उसे बांधना शुरू कर देते हैं । यह मन, वाणी और शरीर की गतिविधि के कारण होता है ।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>In Jainism, which one of the following does not form part of tri-ratna?<br/> </b>जैन धर्म में<b>, </b>निम्नलिखित में से कौन सा त्रि<b>-</b>रत्न का भाग नहीं है<b>?</b></p>",
+    "option1": "<p> Samyak panch-mahavrata / सम्यक् पंच-महाव्रत</p>",
+    "option2": "<p> Samyak jnana / सम्यक् ज्ञान</p>",
+    "option3": "<p> Samyak charitra / सम्यक् चरित्र</p>",
+    "option4": "<p> Samyak darshana / सम्यक् दर्शन</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Tri-ratna (Three Jewels) of Jainism, which are essential for attaining liberation, are:<br/> 5. Samyak Darshana (Right Faith/Perception).<br/> 6. Samyak Jnana (Right Knowledge).<br/> 7. Samyak Charitra (Right Conduct).<br/> The Panch-Mahavrata (Five Great Vows) are the components of Samyak Charitra (Right Conduct), which are taken by the monks, but the vows themselves are not considered one of the three primary jewels.<br/> जैन धर्म के त्रि-रत्न (तीन रत्न), जो मोक्ष प्राप्त करने के लिए आवश्यक हैं, वे हैं:<br/> 8. सम्यक् दर्शन (सही आस्था/प्रत्यक्षीकरण) ।<br/> 9. सम्यक् ज्ञान (सही ज्ञान) ।<br/> 10. सम्यक् चरित्र (सही आचरण) ।<br/> पंच-महाव्रत (पाँच महाव्रत) सम्यक् चरित्र (सम्यक् आचरण) के घटक हैं, जिन्हें भिक्षुओं द्वारा लिया जाता है, लेकिन स्वयं व्रत तीन प्राथमिक रत्नों में से एक नहीं माने जाते हैं ।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p><b>“Souls are not only the property of animal and plant life, but also of rocks, running water and many other natural objects not looked on as living by other religious sects.”<br/> \"</b>आत्मा केवल जंतु और पादप जीवन की संपदा नहीं है<b>, </b>बल्कि शिलाओं<b>, </b>प्रवाहित जलधाराओं और अन्य अनेक प्राकृतिक वस्तुओं की भी है<b>, </b>जिन्हें अन्य धार्मिक संप्रदाय जीवित नहीं मानते।<b>\"<br/> The above statement reflects one of the core beliefs of which one of the following religious sects of ancient India?<br/> </b>उपर्युक्त कथन प्राचीन भारत के निम्नलिखित में से किस एक धार्मिक संप्रदाय के एक मूलभूत विश्वास को प्रतिबिंबित करता है<b>?</b></p>",
+    "option1": "<p> Buddhism / बौद्ध परंपरा</p>",
+    "option2": "<p> Jainism / जैन परंपरा</p>",
+    "option3": "<p> Shaivism / शैव परंपरा</p>",
+    "option4": "<p> Vaishnavism / वैष्णव परंपरा</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The core principle of Jainism is Ahimsa (non-violence). This is based on the belief that everything in the universe, including plants, animals, water, fire, rocks, and the earth, possesses a soul (Jiva). Therefore, non-injury extends to all these forms of life, reflecting a profound respect for all existence.<br/> जैन धर्म का मूल सिद्धांत अहिंसा (अहिंसा) है । यह इस विश्वास पर आधारित है कि ब्रह्मांड की हर चीज़, जिसमें पौधे, जानवर, पानी, अग्नि, चट्टानें और पृथ्वी शामिल हैं, में आत्मा (जीव) होती है । इसलिए, अहिंसा इन सभी प्रकार के जीवन तक फैली हुई है, जो सभी अस्तित्व के लिए गहन सम्मान को दर्शाती है ।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>Which one of the following statements about the Ajivikas is not correct?<br/> </b>आजीविकों के बारे में निम्नलिखित में से कौन<b>-</b>सा कथन सही नहीं है<b>?</b></p>",
+    "option1": "<p> They did not practise discrimination on the basis of caste or class. / उन्होंने जाति या वर्ग के आधार पर भेदभावपूर्ण व्यवहार नहीं किया।</p>",
+    "option2": "<p> They had a corporate organisation and canonical texts. / उनके पास निगमित संगठन और धर्म-वैधानिक ग्रंथ थे।</p>",
+    "option3": "<p> They practised severe asceticism, often eating very little food. / वे प्रायः बहुत कम भोजन करके, कठोर तपस्या करते थे।</p>",
+    "option4": "<p> They formed an alliance with Jainas against Buddhists. / उन्होंने बौद्धों के विरुद्ध जैनियों के साथ संगठन बनाया।</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> 5. The Ajivika sect was based on fatalism (belief in destiny), and they did not discriminate on the basis of caste or class, therefore the first statement is correct.<br/> 6. They had an organized (corporate) structure and their own religious texts/traditions (although their texts are not available today), so the second statement is also correct.<br/> 7. The Ajivikas believed in rigorous asceticism and often consumed very little food, so the third statement is also correct.<br/> 8. However, there is no concrete historical evidence of any organized alliance between the Ajivikas and the Jains against the Buddhists, therefore the fourth statement is incorrect.<br/> 9. आजीविक संप्रदाय नियतिवाद (नियति में विश्वास) पर आधारित था और उन्होंने जाति या वर्ग के आधार पर भेदभाव नहीं किया, इसलिए पहला कथन सही है।<br/> 10. उनका संगठित (कॉरपोरेट) ढाँचा था और उनके अपने धर्म-वैधानिक ग्रंथ/परंपराएँ थीं (हालाँकि उनके ग्रंथ आज उपलब्ध नहीं हैं), अतः दूसरा कथन सही है।<br/> 11. आजीविक कठोर तपस्या में विश्वास करते थे और अक्सर अत्यंत अल्प भोजन करते थे, इसलिए तीसरा कथन भी सही है।<br/> 12. लेकिन आजीविकों द्वारा बौद्धों के विरुद्ध जैनियों के साथ किसी संगठित गठबंधन का कोई ठोस ऐतिहासिक प्रमाण नहीं मिलता, इसलिए चौथा कथन सही नहीं है।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - General Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">General Quiz - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

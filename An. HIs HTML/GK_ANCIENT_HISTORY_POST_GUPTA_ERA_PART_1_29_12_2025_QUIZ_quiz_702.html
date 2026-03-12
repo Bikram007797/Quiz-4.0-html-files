@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>General Quiz -  - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>General Quiz - </h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>Who was the founder of the Sunga Dynasty?<br/> </b>शुंग राजवंश का संस्थापक कौन था<b>?</b></p>",
+    "option1": "<p> Agnimitra / अग्निमित्र</p>",
+    "option2": "<p> Pushyamitra Sunga / पुष्यमित्र शुंग</p>",
+    "option3": "<p> Devbhuti / देवभूति</p>",
+    "option4": "<p> Vasudev / वासुदेव</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Pushyamitra Sunga founded the dynasty in 185 BC after killing the last Mauryan ruler, Brihadratha. He was a commander-in-chief under the Mauryas. / पुष्यमित्र शुंग ने 185 ईसा पूर्व में अंतिम मौर्य शासक बृहद्रथ की हत्या करके इस वंश की स्थापना की थी। वह मौर्यों के अधीन सेनापति था।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>Which ruler is known as the \"Greatest Ruler\" of the Satavahana Dynasty and took the title 'Eka Brahmana'?<br/> </b>किस शासक को सातवाहन वंश का <b>\"</b>सबसे महान शासक<b>\" </b>माना जाता है और उसने <b>'</b>एक ब्राह्मण<b>' </b>की उपाधि धारण की थी<b>?</b></p>",
+    "option1": "<p> Simuka / सिमुक</p>",
+    "option2": "<p> Vashishtaputra Pulumayi / वशिष्ठपुत्र पुलुमावि</p>",
+    "option3": "<p> Gautamiputra Satkarni / गौतमीपुत्र शातकर्णी</p>",
+    "option4": "<p> Kanha / कान्हा</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Ruling from 106-130 AD, Gautamiputra Satkarni defeated the Saka ruler Nahapana and is described in the Nasik Inscription. He claimed to have established the four-fold Varna system. / 106-130 ईस्वी तक शासन करते हुए, गौतमीपुत्र शातकर्णी ने शक शासक नहपान को हराया और नासिक शिलालेख में उनका वर्णन है। उन्होंने चार वर्णों वाली व्यवस्था स्थापित करने का दावा किया।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>The Hathigumpha Inscription in Odisha provides information about which king?<br/> </b>ओडिशा का हाथीगुम्फा शिलालेख किस राजा के बारे में जानकारी प्रदान करता है<b>?</b></p>",
+    "option1": "<p> Kharavela / खारवेल</p>",
+    "option2": "<p> Rudradaman I / रुद्रदामन प्रथम</p>",
+    "option3": "<p> Kanishka / कनिष्क</p>",
+    "option4": "<p> Menander / मिनांडर</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> King Kharavela was the greatest ruler of the Chedi Dynasty of Kalinga and was a follower of Jainism. The inscription is located near Bhubaneswar. / राजा खारवेल कलिंग के चेदि वंश के सबसे महान शासक थे और जैन धर्म के अनुयायी थे। यह शिलालेख भुवनेश्वर के पास स्थित है।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>Which foreign dynasty was the first to introduce gold coins in India?<br/> </b>भारत में सोने के सिक्के चलाने वाला पहला विदेशी राजवंश कौन सा था<b>?</b></p>",
+    "option1": "<p> Sakas / शक</p>",
+    "option2": "<p> Kushans / कुषाण</p>",
+    "option3": "<p> Indo-Greeks / हिंद-यूनानी</p>",
+    "option4": "<p> Gupta Era / गुप्त संवत</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Indo-Greeks were the first to issue gold coins in India which could be attributed to specific kings. They also introduced Hellenistic art. / हिंद-यूनानियों ने भारत में सोने के सिक्के जारी करने वाले पहले शासक थे जिन्हें विशिष्ट राजाओं से जोड़ा जा सकता था। उन्होंने हेलेनिस्टिक कला की भी शुरुआत की।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>Kanishka, the famous Kushan ruler, started which era that is currently followed by the Government of India?<br/> </b>प्रसिद्ध कुषाण शासक कनिष्क ने किस युग <b>(</b>संवत<b>) </b>की शुरुआत की थी जिसे वर्तमान में भारत सरकार द्वारा अपनाया जाता है<b>?</b></p>",
+    "option1": "<p> Vikram Samvat / विक्रम संवत</p>",
+    "option2": "<p> Saka Era / शक संवत</p>",
+    "option3": "<p> Gupta Era / गुप्त संवत</p>",
+    "option4": "<p> Harsha Era / हर्ष संवत</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Kanishka started the Saka Era in 78 AD to commemorate his accession. He is also known as the \"Second Ashoka\" for patronizing Buddhism. / कनिष्क ने अपने राज्याभिषेक के उपलक्ष्य में 78 ईस्वी में शक संवत शुरू किया था। बौद्ध धर्म को संरक्षण देने के कारण उन्हें \"द्वितीय अशोक\" भी कहा जाता है।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>Who authored the famous Sanskrit book 'Mahabhasya' during the Sunga period?<br/> </b>शुंग काल के दौरान प्रसिद्ध संस्कृत पुस्तक <b>'</b>महाभाष्य<b>' </b>की रचना किसने की थी<b>?</b></p>",
+    "option1": "<p> Kalidasa / कालिदास</p>",
+    "option2": "<p> Patanjali / पतंजलि</p>",
+    "option3": "<p> Ashvaghosha / अश्वघोष</p>",
+    "option4": "<p> Charak / चरक</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Patanjali was the priest of Pushyamitra Sunga and performed two Ashwamegha Yagyas for him. 'Mahabhasya' is a commentary on Panini's grammar. / पतंजलि पुष्यमित्र शुंग के पुरोहित थे और उन्होंने उनके लिए दो अश्वमेध यज्ञ किए थे। 'महाभाष्य' पाणिनी के व्याकरण पर एक टीका है।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>The Fourth Buddhist Council was patronized by which ruler?<br/> </b>चतुर्थ बौद्ध संगीति को किस शासक ने संरक्षण प्रदान किया था<b>?</b></p>",
+    "option1": "<p> Ashoka / अशोक</p>",
+    "option2": "<p> Kanishka / कनिष्क</p>",
+    "option3": "<p> Menander / मिनांडर</p>",
+    "option4": "<p> Rudradaman I / रुद्रदामन प्रथम</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Held in Kashmir, this council was presided over by Vasumitra and Ashvaghosha. It led to the division of Buddhism into Hinayana and Mahayana sectors. / कश्मीर में आयोजित इस संगीति की अध्यक्षता वसुमित्र और अश्वघोष ने की थी। इसके कारण बौद्ध धर्म हीनयान और महायान संप्रदायों में विभाजित हो गया।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>Which Saka ruler is credited with the repair of the Sudarshan Lake in Gujarat?<br/> </b>गुजरात की सुदर्शन झील की मरम्मत कराने का श्रेय किस शक शासक को दिया जाता है<b>?</b></p>",
+    "option1": "<p> Maues / मोस</p>",
+    "option2": "<p> Gondaphernes / गोंडोफर्नीस</p>",
+    "option3": "<p> Rudradaman I / रुद्रदामन प्रथम</p>",
+    "option4": "<p> Nahapana / नह्पान</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Rudradaman I repaired the lake without charging taxes from the people, as mentioned in the Junagadh (Girnar) Rock Inscription. The lake was originally built during the Mauryan period. / रुद्रदामन प्रथम ने जनता से कर लिए बिना झील की मरम्मत करवाई, जैसा कि जूनागढ़ (गिरनार) शिलालेख में वर्णित है। यह झील मूल रूप से मौर्य काल के दौरान बनाई गई थी।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>The famous book 'Buddhacharitra' was written by which scholar in the court of Kanishka?<br/> </b>कनिष्क के दरबार में किस विद्वान द्वारा प्रसिद्ध पुस्तक <b>'</b>बुद्धचरित<b>' </b>लिखी गई थी<b>?</b></p>",
+    "option1": "<p> Vasumitra / वसुमित्र</p>",
+    "option2": "<p> Ashvaghosha / अश्वघोष</p>",
+    "option3": "<p> Nagarjuna / नागार्जुन</p>",
+    "option4": "<p> Charak / चरक</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Ashvaghosha was a philosopher and poet who wrote 'Buddhacharitra' (biography of Buddha) in Sanskrit. He was the vice-president of the 4th Buddhist Council. / अश्वघोष एक दार्शनिक और कवि थे जिन्होंने संस्कृत में 'बुद्धचरित' (बुद्ध की जीवनी) लिखी थी। वह चौथी बौद्ध संगीति के उपाध्यक्ष थे।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>The practice of donating land to Brahmins and Buddhist monks was first started by which dynasty?<br/> </b>ब्राह्मणों और बौद्ध भिक्षुओं को भूमि दान करने की प्रथा सबसे पहले किस राजवंश द्वारा शुरू की गई थी<b>?</b></p>",
+    "option1": "<p> Maurya Dynasty / मौर्य वंश</p>",
+    "option2": "<p> Sunga Dynasty / शुंग वंश</p>",
+    "option3": "<p> Satavahana Dynasty / सातवाहन वंश</p>",
+    "option4": "<p> Kushan Dynasty / कुषाण वंश</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Satavahanas were the first to grant tax-free lands to religious leaders, which later led to the development of feudalism in India. / सातवाहन धार्मिक नेताओं को कर-मुक्त भूमि प्रदान करने वाले पहले शासक थे, जिसके कारण बाद में भारत में सामंतवाद का विकास हुआ।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Consider the following statements regarding the Satavahana Dynasty:<br/> 1. Their society was primarily matrilineal in nature.<br/> 2. They were the first to issue lead coins in India.<br/> Select the correct option:<br/> </b>सातवाहन राजवंश के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. </b>उनका समाज मुख्य रूप से मातृसत्तात्मक प्रकृति का था।<b><br/> 2. </b>वे भारत में सीसे के सिक्के जारी करने वाले पहले शासक थे।<b><br/> </b>सही विकल्प चुनें<b>:</b></p>",
+    "option1": "<p> Only 1 / केवल 1</p>",
+    "option2": "<p> Only 2 / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Satavahana rulers often used their mothers' names (e.g., Gautamiputra). They issued coins made of lead, copper, bronze, and potin. / सातवाहन शासक अक्सर अपनी माताओं के नाम का उपयोग करते थे (जैसे गौतमीपुत्र)। उन्होंने सीसे, तांबे, कांसे और पोटीन के सिक्के जारी किए थे।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Assertion (A): Kanishka is often referred to as the 'Second Ashoka'.<br/> Reason (R): Kanishka patronized the 4th Buddhist Council and actively promoted Buddhism like Ashoka.<br/> </b>अभिकथन <b>(A): </b>कनिष्क को अक्सर <b>'</b>द्वितीय अशोक<b>' </b>कहा जाता है।<b><br/> </b>कारण <b>(R): </b>कनिष्क ने चौथी बौद्ध संगीति को संरक्षण दिया और अशोक की तरह सक्रिय रूप से बौद्ध धर्म को बढ़ावा दिया।</p>",
+    "option1": "<p> Both A and R are true, and R is the correct explanation of A. / A और R दोनों सत्य हैं, और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true, but R is not the correct explanation of A. / A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true but R is false. / A सत्य है लेकिन R गलत है।</p>",
+    "option4": "<p> A is false but R is true. / A गलत है लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Kanishka's efforts in spreading Mahayana Buddhism across Central Asia and China mirror Ashoka's earlier efforts, earning him this title. / कनिष्क द्वारा मध्य एशिया और चीन में महायान बौद्ध धर्म फैलाने के प्रयासों ने उन्हें यह उपाधि दिलाई, जो अशोक के पूर्व प्रयासों के समान थे।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>Which of the following statements is/are NOT correct about the Indo-Greeks?<br/> 1. Menander was their most famous ruler who converted to Buddhism.<br/> 2. They were the first to cross the Hindu Kush mountains to enter India.<br/> 3. They introduced the Satrap system of government in India.<br/> </b>इंडो<b>-</b>ग्रीक <b>(</b>हिंद<b>-</b>यवन<b>) </b>के बारे में निम्नलिखित में से कौन सा<b>/</b>से कथन सही नहीं है<b>/</b>हैं<b>?<br/> 1. </b>मिनांडर उनका सबसे प्रसिद्ध शासक था जिसने बौद्ध धर्म अपना लिया था।<b><br/> 2. </b>वे भारत में प्रवेश करने के लिए हिंदूकुश पहाड़ों को पार करने वाले पहले व्यक्ति थे।<b><br/> 3. </b>उन्होंने भारत में शासन की क्षत्रप प्रणाली शुरू की थी।</p>",
+    "option1": "<p> Only 1 / केवल 1</p>",
+    "option2": "<p> Only 3 / केवल 3</p>",
+    "option3": "<p> 1 and 2 / 1 और 2</p>",
+    "option4": "<p> 2 and 3 / 2 और 3</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> The Satrap system (Military Governorship) was primarily introduced and popularized by the Sakas and Kushans, not the Indo-Greeks. / क्षत्रप प्रणाली (सैन्य शासन) मुख्य रूप से शकों और कुषाणों द्वारा शुरू और लोकप्रिय की गई थी, न कि हिंद-यवन द्वारा।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Match the following pairs:<br/> 1. Buddhacharitra - Ashvaghosha<br/> 2. Charaksamhita - Charak<br/> 3. Malavikagnimitra - Kalidasa<br/> Which of the pairs given above are correctly matched?<br/> </b>निम्नलिखित युग्मों का मिलान करें<b>:<br/> 1. </b>बुद्धचरित <b>- </b>अश्वघोष<b><br/> 2. </b>चरकसंहिता <b>- </b>चरक<b><br/> 3. </b>मालविकाग्निमित्र <b>- </b>कालिदास<b><br/> </b>ऊपर दिए गए युग्मों में से कौन सा<b>/</b>से सही सुमेलित है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 and 2 only / केवल 1 और 2</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 1, 2, and 3 / 1, 2, और 3</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Ashvaghosha wrote Buddha's biography; Charak (father of medicine) wrote about medicines; Kalidasa's play tells the love story of Sunga king Agnimitra. / अश्वघोष ने बुद्ध की जीवनी लिखी; चरक (चिकित्सा के जनक) ने औषधियों के बारे में लिखा; कालिदास का नाटक शुंग राजा अग्निमित्र की प्रेम कहानी बताता है।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Assertion (A): The post-Mauryan period saw a significant impact of Central Asian tribes on Indian society.<br/> Reason (R): They introduced the use of turbans, sherwanis, and horseman techniques in India.<br/> </b>अभिकथन <b>(A): </b>मौर्योत्तर काल में भारतीय समाज पर मध्य एशियाई जनजातियों का महत्वपूर्ण प्रभाव देखा गया।<b><br/> </b>कारण <b>(R): </b>उन्होंने भारत में पगड़ी<b>, </b>शेरवानी और घुड़सवारी की तकनीकों के उपयोग की शुरुआत की।</p>",
+    "option1": "<p> Both A and R are true, and R is the correct explanation of A. / A और R दोनों सत्य हैं, और R, A की सही व्याख्या है।</p>",
+    "option2": "<p> Both A and R are true, but R is not the correct explanation of A. / A और R दोनों सत्य हैं, लेकिन R, A की सही व्याख्या नहीं है।</p>",
+    "option3": "<p> A is true but R is false. / A सत्य है लेकिन R गलत है।</p>",
+    "option4": "<p> A is false but R is true. / A गलत है लेकिन R सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Central Asian invaders like Sakas and Kushans deeply influenced Indian clothing (Turban, Sherwani) and military tactics (Horseman technique). / शकों और कुषाणों जैसे मध्य एशियाई आक्रमणकारियों ने भारतीय पहनावे (पगड़ी, शेरवानी) और सैन्य रणनीति (घुड़सवारी तकनीक) को गहराई से प्रभावित किया।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>The Chinese traveller Yuan Chwang (Hiuen Tsang) who visited India recorded the general conditions and culture of India at that time. In this context, which of the following statements is/are correct?<br/> </b>भारत यात्रा करने वाले चीनी यात्री युआन च्वांग <b>(</b>ह्वेन त्सांग<b>) </b>ने उस समय की भारत की सामान्य परिस्थितियों और संस्कृति का वर्णन किया। इस संदर्भ में<b>, </b>निम्नलिखित में से कौन सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?<br/> 1. The roads and river routes were completely immune from robbery. / </b>सड़कें और नदी मार्ग लूटपाट से पूरी तरह सुरक्षित थे।<b><br/> 2. As regards punishment for offences, ordeals by fire, water, and poison were the instruments for determining the innocence or guilt of a person. / </b>अपराधों के लिए सजा के संबंध में<b>, </b>अग्नि<b>, </b>जल और विष से परीक्षाएँ किसी व्यक्ति की निर्दोषता या अपराध का निर्धारण करने के साधन थे।<b><br/> 3. The tradesmen had to pay duties at ferries and barrier stations. / </b>व्यापारियों को नौकाओं और अवरोधक स्टेशनों पर शुल्क देना पड़ता था।<b><br/> Select the correct answer using the code given below:<br/> </b>नीचे दिए गए कोड का उपयोग करके सही उत्तर चुनें<b>:</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option3": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option4": "<p> 2 Only / केवल 2</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Yuan Chwang mentions that trial by ordeals like fire, water, and poison was used to determine guilt or innocence, and traders were required to pay duties at ferries and barrier stations. However, he does not state that roads and river routes were completely free from robbery, making statement 1 incorrect. ह्वेन-त्सांग ने उल्लेख किया है कि अग्नि, जल और विष जैसी अग्निपरीक्षाओं द्वारा दोष सिद्ध किया जाता था, और व्यापारियों को नौकाओं और बंदरगाहों पर शुल्क देना पड़ता था। हालाँकि, उन्होंने यह नहीं कहा है कि सड़कें और नदी मार्ग लूटपाट से पूरी तरह मुक्त थे, जिससे कथन 1 गलत हो जाता है।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>Which of the following phrases defines the nature of the ‘Hundi’ generally referred to in the sources of the post-Harsha period?<br/> </b>निम्नलिखित में से कौन सा वाक्यांश हर्ष<b>-</b>पश्चात काल के स्रोतों में सामान्यतः संदर्भित <b>'</b>हुंडी<b>' </b>की प्रकृति को परिभाषित करता है<b>?</b></p>",
+    "option1": "<p> An advisory issued by the king to his subordinates / राजा द्वारा अपने अधीनस्थों को जारी की गई एक सलाह</p>",
+    "option2": "<p> A diary to be maintained for daily accounts / दैनिक हिसाब-किताब रखने के लिए एक डायरी।</p>",
+    "option3": "<p> A bill of exchange / विनिमय का बिल</p>",
+    "option4": "<p> An order from the feudal lord to his subordinates / सामंती स्वामी द्वारा अपने अधीनस्थों को दिया गया आदेश</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> In the post-Harsha period, a Hundi referred to a financial instrument used in trade and banking, functioning as a bill of exchange for transferring money and settling commercial transactions, rather than an administrative or feudal order. हर्ष काल के बाद के समय में, हुंडी एक वित्तीय साधन को संदर्भित करता था जिसका उपयोग व्यापार और बैंकिंग में किया जाता था, जो प्रशासनिक या सामंती व्यवस्था के बजाय धन हस्तांतरित करने और वाणिज्यिक लेनदेन को निपटाने के लिए विनिमय बिल के रूप में कार्य करता था।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>From the decline of Guptas until the rise of Harshavardhana in the early seventh century, which of the following kingdoms were holding power in Northern India?<br/> 1. The Guptas of Magadha<br/> 2. The Paramaras of Malwa<br/> 3. The Pushyabhutis of Thanesar<br/> 4. The Maukharis of Kanauj<br/> 5. The Yadavas of Devagiri<br/> 6. The Maitrakas of Valabhi<br/> Select the correct answer using the code given below.<br/> </b>गुप्त वंश के पतन से लेकर सातवीं शताब्दी के आरंभिक वर्षों में हर्षवर्धन के उदय तक<b>, </b>उत्तरी भारत में निम्नलिखित में से कौन से राज्य सत्ता में थे<b>?<br/> 1. </b>मगध के गुप्त<b><br/> 2. </b>मालवा के परमार<b><br/> 3. </b>थानेसर के पुष्यभूति<b><br/> 4. </b>कन्नौज के मौखरी<b><br/> 5. </b>देवगिरि के यादव<b><br/> 6. </b>वलभी के मैत्रक<b><br/> </b>नीचे दिए गए कोड का उपयोग करके सही उत्तर चुनें।</p>",
+    "option1": "<p> 1, 2 and 5 only / केवल 1, 2 और 5</p>",
+    "option2": "<p> 1, 3, 4 and 6 only / केवल 1, 3, 4 और 6</p>",
+    "option3": "<p> 2, 3 and 4 only / केवल 2, 3 और 4</p>",
+    "option4": "<p> 5 and 6 only / केवल 5 और 6</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statement 2: The Paramara dynasty governed the western and central regions of India, particularly Malwa, from the 9th to the 14th century AD until they were conquered by the rulers of the Delhi Sultanate. Therefore, statement 2 is incorrect. कथन 2: परमार वंश ने भारत के पश्चिमी और मध्य क्षेत्रों, विशेष रूप से मालवा पर, 9वीं से 14वीं शताब्दी ईस्वी तक शासन किया, जब तक कि दिल्ली सल्तनत के शासकों ने उन पर विजय प्राप्त नहीं कर ली। अतः, कथन 2 गलत है।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Consider the following dynasties:<br/> </b>निम्नलिखित राजवंशों पर विचार करें<b>:<br/> 1. Hoysala / </b>होयसल<b><br/> 2. Gahadavala / </b>गहड़वाल<b><br/> 3. Kakatiya / </b>काकतीय<b><br/> 4. Yadava / </b>यादव<b><br/> How many of the above dynasties established their kingdoms in the early eighth century AD?<br/> </b>उपरोक्त में से कितनों ने आठवीं शताब्दी ईस्वी के आरंभ में अपने राज्य स्थापित किए थे<b>?</b></p>",
+    "option1": "<p> Only One / केवल एक</p>",
+    "option2": "<p> Only Two / केवल दो</p>",
+    "option3": "<p> Only Three / केवल तीन</p>",
+    "option4": "<p> None / कोई नहीं</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Hoysala: The Hoysala dynasty ruled in parts of present-day Karnataka from the 10th to the 14th century. Their kingdom was established in the 10th century, which is later than the early eighth century.<br/> ● Gahadavala: The Gahadavala dynasty was a medieval Indian dynasty that ruled parts of present-day Uttar Pradesh and Bihar. They rose to prominence in the 11th century and their kingdom was established around that time, not in the early eighth century.<br/> ● Kakatiya: The Kakatiya dynasty was a medieval dynasty that ruled over Telangana and parts of Andhra Pradesh from the 12th to the 14th century. The Kakatiya kingdom was established in the 12th century, making it later than the early eighth century.<br/> ● Yadava: The Yadava dynasty, also known as the Seuna dynasty, ruled in present-day Maharashtra from the 12th to the 14th century. Their kingdom was established in the 12th century, similar to the Kakatiya dynasty, and not in the early eighth century<br/> ● होयसल: होयसला वंश ने वर्तमान कर्नाटक के कुछ हिस्सों पर 10वीं से 14वीं शताब्दी तक शासन किया। उनके राज्य की स्थापना 10वीं शताब्दी में हुई थी, जो कि आठवीं शताब्दी के आरंभ से बाद का समय है।<br/> ● गहड़वाल: गहड़वाला वंश एक मध्यकालीन भारतीय वंश था जिसने वर्तमान उत्तर प्रदेश और बिहार के कुछ हिस्सों पर शासन किया। वे 11वीं शताब्दी में प्रमुखता में आए और उनके राज्य की स्थापना लगभग उसी समय हुई थी, न कि आठवीं शताब्दी के आरंभ में।<br/> ● काकतीय: काकतीय वंश एक मध्यकालीन वंश था जिसने 12वीं से 14वीं शताब्दी तक तेलंगाना और आंध्र प्रदेश के कुछ हिस्सों पर शासन किया। काकतीय राज्य की स्थापना 12वीं शताब्दी में हुई थी, जो कि आठवीं शताब्दी के आरंभ से बाद का समय है।<br/> ● यादव: यादव वंश, जिसे सेउना वंश के नाम से भी जाना जाता है, ने वर्तमान महाराष्ट्र पर 12वीं से 14वीं शताब्दी तक शासन किया। काकतीय राजवंश की तरह ही उनके राज्य की स्थापना 12वीं शताब्दी में हुई थी, न कि आठवीं शताब्दी के आरंभ में।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>With reference to the ancient architectural development in the hills of North Indian States, consider the following statements:<br/> </b>उत्तर भारतीय राज्यों की पहाड़ियों में प्राचीन स्थापत्य विकास के संदर्भ में<b>, </b>निम्नलिखित कथनों पर विचार कीजिए<b>:<br/> 1. The temple ‘Garbhagriha’ and ‘Shikhara’ were made in a Rekha-prasada or Latina style. / </b>मंदिर के <b>'</b>गर्भगृह<b>' </b>और <b>'</b>शिखर<b>' </b>रेखा<b>-</b>प्रसाद या लैटिना शैली में बनाए गए थे।<b><br/> 2. The Pandrethan Temple in Kashmir is built on a plinth in the middle of a tank. / </b>कश्मीर का पांद्रेथान मंदिर एक तालाब के बीच में एक चबूतरे <b>(</b>प्लिंथ<b>) </b>पर बना है।<b><br/> 3. The Jageshwar Temple is located in Garhwal region. / </b>जागेश्वर मंदिर गढ़वाल क्षेत्र में स्थित है।<b><br/> 4. The Lakshana Devi Mandir shows the influence of the post-Gupta tradition. / </b>लक्षणा देवी मंदिर उत्तर<b>-</b>गुप्त परंपरा का प्रभाव दर्शाता है।<b><br/> How many statements given above are correct? / </b>उपर्युक्त में से कितने कथन सही हैं<b>?</b></p>",
+    "option1": "<p> 1</p>",
+    "option2": "<p> 2</p>",
+    "option3": "<p> 3</p>",
+    "option4": "<p> 4</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statement 1 is correct: Hill temples often combined local wooden traditions with the Nagara style, using the Rekha-prasada (Latina) form for the sanctum and spire. / कथन 1 सही है: पहाड़ी मंदिरों में अक्सर स्थानीय लकड़ी की परंपराओं को नागर शैली के साथ जोड़ा जाता था, जिसमें गर्भगृह और शिखर के लिए रेखा-प्रसाद (लैटिना) रूप का उपयोग किया जाता था।<br/> ● Statement 2 is correct: The 8th-century Pandrethan Temple in Kashmir is uniquely situated on a plinth in the middle of a water tank. / कथन 2 सही है: कश्मीर में 8वीं शताब्दी का पांद्रेथान मंदिर विशिष्ट रूप से पानी के टैंक के बीच में एक चबूतरे पर स्थित है।<br/> ● Statement 3 is incorrect: The Jageshwar Temple cluster is actually located in the Kumaon region (Almora, Uttarakhand), not the Garhwal region. / कथन 3 गलत है: जागेश्वर मंदिर समूह वास्तव में कुमाऊं क्षेत्र (अल्मोड़ा, उत्तराखंड) में स्थित है, न कि गढ़वाल क्षेत्र में।<br/> ● Statement 4 is correct: The Lakshana Devi Temple in Bharmour (Himachal Pradesh) is a primary example of hill architecture showing strong post-Gupta aesthetic influences. / कथन 4 सही है: भरमौर (हिमाचल प्रदेश) में लक्षणा देवी मंदिर पहाड़ी वास्तुकला का एक प्रमुख उदाहरण है जो उत्तर-गुप्त सौंदर्य प्रभाव को दर्शाता है।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>According to Kautilya’s Arthashastra, why did post-Gupta rulers form alliances (mitra) with neighbouring kingdoms?<br/> </b>कौटिल्य के अर्थशास्त्र के अनुसार<b>, </b>गुप्त काल के बाद के शासकों ने पड़ोसी राज्यों के साथ मित्रता क्यों स्थापित किए<b>?</b></p>",
+    "option1": "<p> To control maritime trade / समुद्री व्यापार को नियंत्रित करने के लिए</p>",
+    "option2": "<p> To reduce taxation on peasants / किसानों पर कर कम करने के लिए</p>",
+    "option3": "<p> To promote cultural exchange / सांस्कृतिक आदान-प्रदान को बढ़ावा देने के लिए</p>",
+    "option4": "<p> To gain military aid and maintain political balance / सैन्य सहायता प्राप्त करने और राजनीतिक संतुलन बनाए रखने के लिए</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Under the Saptanga theory of Kautilya's Arthashastra, the 'Mitra' (Ally) is a vital element. Rulers formed these alliances to ensure military support during conflicts and to maintain a balance of power against potential enemies (Ari).<br/> कौटिल्य के अर्थशास्त्र के सप्तांग सिद्धांत के तहत, 'मित्र' एक महत्वपूर्ण तत्व है। शासकों ने संघर्षों के दौरान सैन्य सहायता सुनिश्चित करने और संभावित दुश्मनों (अरि) के खिलाफ शक्ति संतुलन बनाए रखने के लिए ये गठबंधन बनाए थे।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>Consider the following statements regarding South Indian dynasties in the 12th and 13th centuries:<br/> 12</b>वीं और <b>13</b>वीं शताब्दी के दक्षिण भारतीय राजवंशों के संबंध में निम्नलिखित कथनों पर विचार कीजिए<b>:<br/> Statement I: The Kakatiyas, ruling from Manyakheta, were the primary successors to the Later Chalukyas in the western Deccan. </b>कथन <b>I: </b>मान्यखेत से शासन करने वाले काकतीय<b>, </b>पश्चिमी दक्कन में परवर्ती चालुक्यों के प्राथमिक उत्तराधिकारी थे।<b><br/> Statement II: The Hoysalas, based in Devagiri, were the sole dynasty responsible for the complete overthrow of the Later Chalukyas across all their territories. </b>कथन <b>II: </b>देवगिरि में स्थित होयसल<b>, </b>अपने सभी क्षेत्रों में परवर्ती चालुक्यों के पूर्ण पतन के लिए जिम्मेदार एकमात्र राजवंश थे।<b><br/> Which of the statements given above is/are correct?<br/> </b>उपर्युक्त कथनों में से कौन<b>-</b>सा<b>/</b>कौन<b>-</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> Only 1 / केवल 1</p>",
+    "option2": "<p> Only 2 / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Both statements are historically inaccurate. The Kakatiyas ruled from Warangal (Orugallu), not Manyakheta. The Hoysalas were based in Dorasamudra, while the Seunas (Yadavas) were based in Devagiri. Furthermore, multiple dynasties like the Yadavas, Hoysalas, and Kakatiyas collectively contributed to the decline of the Later Chalukyas. दोनों कथन ऐतिहासिक रूप से गलत हैं। काकतीय लोगों ने मन्यखेत से नहीं, बल्कि वारंगल (ओरुगल्लू) से शासन किया था। होयसल डोरसमुद्र में स्थित थे, जबकि सेउना (यादव) देवगिरि में स्थित थे। इसके अलावा, यादव, होयसल और काकतीय जैसे कई राजवंशों ने सामूहिक रूप से परवर्ती चालुक्यों के पतन में योगदान दिया था।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Match the following ancient Indian places with their present states:<br/> </b>प्राचीन भारतीय स्थानों को उनके वर्तमान राज्यों के साथ सुमेलित कीजिए<b>:<br/> a) Karnasuvarna / </b>कर्णसुवर्ण — <b>1. West Bengal / </b>पश्चिम बंगाल<b><br/> b) Pragjyotish / </b>प्राग्ज्योतिष — <b>2. Assam / </b>असम<b><br/> c) Girnar / </b>गिरनार — <b>3. Gujarat / </b>गुजरात<b><br/> d) Pratishthan / </b>प्रतिष्ठान — <b>4. Maharashtra / </b>महाराष्ट्र<b><br/> Choose the correct answer from the options given below:<br/> </b>नीचे दिए गए विकल्पों में से सही उत्तर चुनिए<b>:</b></p>",
+    "option1": "<p> a-2, b-4, c-3, d-1</p>",
+    "option2": "<p> a-1, b-2, c-3, d-4</p>",
+    "option3": "<p> a-3, b-2, c-4, d-1</p>",
+    "option4": "<p> a-4, b-1, c-3, d-2</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Karnasuvarna was the capital of King Shashanka of the Gauda Kingdom, located in Murshidabad, West Bengal.<br/> ● Pragjyotish (or Pragjyotishpura) is the ancient name for the region and city of Guwahati in Assam.<br/> ● Girnar is a sacred hill in the Junagadh district of Gujarat, famous for Ashokan edicts.<br/> ● Pratishthan (modern-day Paithan) was the capital of the Satavahana dynasty in Maharashtra.<br/> ● कर्णसुवर्ण गौड़ साम्राज्य के राजा शशांक की राजधानी थी, जो मुर्शिदाबाद, पश्चिम बंगाल में स्थित है।<br/> ● प्राग्ज्योतिष (या प्राग्ज्योतिषपुर) असम के गुवाहाटी क्षेत्र और शहर का प्राचीन नाम है।<br/> ● गिरनार गुजरात के जूनागढ़ जिले में एक पवित्र पहाड़ी है, जो अशोक के शिलालेखों के लिए प्रसिद्ध है।<br/> ● प्रतिष्ठान (आधुनिक पैठन) महाराष्ट्र में सातवाहन राजवंश की राजधानी थी।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Which of the following statements is/are correct regarding the post-Gupta period?<br/> </b>गुप्तोत्तर काल के संबंध में निम्नलिखित में से कौन सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?<br/> 1. The Huna invasions significantly weakened the Gupta Empire and accelerated its decline./ </b>हूण आक्रमणों ने गुप्त साम्राज्य को गंभीर रूप से कमजोर किया और उसके पतन की प्रक्रिया को तेज कर दिया।<b><br/> 2. Harshavardhana established his capital at Kannauj and patronized Buddhism. / </b>हर्षवर्धन ने कन्नौज में अपनी राजधानी स्थापित की और बौद्ध धर्म को संरक्षण दिया।<b><br/> 3. The Pallavas emerged as a dominant power in Eastern India during the post-Gupta period. / </b>गुप्तोत्तर काल के दौरान पूर्वी भारत में पल्लव एक प्रमुख शक्ति के रूप में उभरे।</p>",
+    "option1": "<p> Only 1 / केवल 1</p>",
+    "option2": "<p> Only 1 and 2 / केवल 1 और 2</p>",
+    "option3": "<p> Only 1 and 3 / केवल 1 और 3</p>",
+    "option4": "<p> Only 2 and 3 / केवल 2 और 3</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Statement 1 is correct as Huna attacks under leaders like Toramana and Mihirakula drained Gupta resources. Statement 2 is correct as Harsha moved the capital from Thanesar to Kannauj and was a great patron of Mahayana Buddhism. Statement 3 is incorrect because the Pallavas were a dominant power in Southern India (Kanchipuram), not Eastern India.<br/> कथन 1 सही है क्योंकि तोरमाण और मिहिरकुल जैसे शासकों के नेतृत्व में हूणों के हमलों ने गुप्त संसाधनों को खत्म कर दिया था। कथन 2 सही है क्योंकि हर्ष ने राजधानी को थानेसर से कन्नौज स्थानांतरित कर दिया था और वह महायान बौद्ध धर्म का महान संरक्षक था। कथन 3 गलत है क्योंकि पल्लव दक्षिण भारत (कांचीपुरम) में एक प्रमुख शक्ति थे, न कि पूर्वी भारत में।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>What was the capital of Hoysala’s Kingdom?<br/> </b>होयसाल साम्राज्य की राजधानी क्या थी<b>?</b></p>",
+    "option1": "<p> Dwarasamudra / द्वारसमुद्र</p>",
+    "option2": "<p> Kalyani / कल्याणी</p>",
+    "option3": "<p> Mysore / मैसूर</p>",
+    "option4": "<p> Devagiri / देवगिरी</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "2",
+    "solution_text": "<p> Mysore - capital of Wodeyar Dynasty founded by king Yaduraya Wodeyar. Devagiri - capital of Yadav Dynasty founded by king Bhillama. / मैसूर - राजा यदुरया वोडेयार द्वारा स्थापित वोडेयार वंश की राजधानी। देवगिरी - राजा भिल्लमा द्वारा स्थापित यादव वंश की राजधानी।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - General Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">General Quiz - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

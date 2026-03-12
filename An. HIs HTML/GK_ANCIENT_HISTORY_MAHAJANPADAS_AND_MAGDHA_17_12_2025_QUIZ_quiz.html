@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>General Quiz -  - Fixed Navigation</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+.solution-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.solution-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.solution-content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+/* FIXED NAVIGATION - KEY UPDATE */
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>General Quiz - </h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<!-- FIXED NAVIGATION BAR -->
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">
+    Clear
+  </button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">
+    Submit Quiz
+  </button>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette (P)">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color);"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color);"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color);"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color);"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    "sr_no": 1,
+    "question": "<p> <b>Which Buddhist text is the primary source that mentions the list of the sixteen Mahajanapadas?<br/> </b>सोलह महाजनपदों की सूची का उल्लेख करने वाला प्राथमिक बौद्ध ग्रंथ कौन सा है<b>?</b></p>",
+    "option1": "<p> Digha Nikaya / दीघ निकाय</p>",
+    "option2": "<p> Anguttara Nikaya / अंगुत्तरा निकाय</p>",
+    "option3": "<p> Sutta Pitaka / सुत्त पिटक</p>",
+    "option4": "<p> Vinaya Pitaka / विनय पिटक</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Buddhist text Anguttara Nikaya explicitly enumerates the list of the total sixteen Mahajanapadas, the great kingdoms that flourished in ancient India around the 6th century B.C. The Digha Nikaya mentions only twelve of them, making the Anguttara Nikaya the comprehensive source. Jaina texts like the Bhagavathi Sutra also mention the sixteen Mahajanapadas. सोलह महाजनपदों, जो ईसा पूर्व छठी शताब्दी के आसपास प्राचीन भारत में फले-फूले, की सूची का स्पष्ट रूप से उल्लेख बौद्ध ग्रंथ अंगुत्तर निकाय में किया गया है। दीघ निकाय में केवल बारह का उल्लेख है, इसलिए अंगुत्तर निकाय व्यापक स्रोत है। भगवती सूत्र जैसे जैन ग्रंथों में भी सोलह महाजनपदों का उल्लेख है।</p>"
+  },
+  {
+    "sr_no": 2,
+    "question": "<p> <b>The city of Pataliputra, which was made the capital of Magadha by Udayin, is situated at the confluence of which two rivers?<br/> </b>पाटलिपुत्र शहर<b>, </b>जिसे उदायिन ने मगध की राजधानी बनाया था<b>, </b>किन दो नदियों के संगम पर स्थित है<b>?</b></p>",
+    "option1": "<p> Ganga and Yamuna / गंगा और यमुना</p>",
+    "option2": "<p> Ganga and Son / गंगा और सोन</p>",
+    "option3": "<p> Gandak and Son / गंडक और सोन</p>",
+    "option4": "<p> Ganga and Kosi / गंगा और कोसी</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Pataliputra (modern-day Patna) was strategically located at the confluence of the Ganga and Son rivers, providing it with natural defenses (a jala-durga or water-fort) and access to river trade routes. King Udayin of the Haryanka dynasty is credited with shifting the capital from Rajagriha to Pataliputra. This advantageous position was a key factor in the rise of the Magadhan Empire. पाटलिपुत्र (आधुनिक पटना) रणनीतिक रूप से गंगा और सोन नदियों के संगम पर स्थित था, जिससे इसे प्राकृतिक सुरक्षा (जल-दुर्ग) और नदी व्यापार मार्गों तक पहुंच मिलती थी। हर्यंक वंश के राजा उदायिन को राजधानी को राजगृह से पाटलिपुत्र स्थानांतरित करने का श्रेय दिया जाता है। यह लाभप्रद स्थिति मगध साम्राज्य के उदय का एक प्रमुख कारक थी।</p>"
+  },
+  {
+    "sr_no": 3,
+    "question": "<p> <b>Which of the following Mahajanapadas was the only one situated south of the Vindhya Range, on the bank of the Godavari River?<br/> </b>निम्नलिखित में से कौन सा महाजनपद एकमात्र महाजनपद था जो विंध्य पर्वत श्रृंखला के दक्षिण में<b>, </b>गोदावरी नदी के तट पर स्थित था<b>?</b></p>",
+    "option1": "<p> Avanti / अवंति</p>",
+    "option2": "<p> Vatsa / वत्स</p>",
+    "option3": "<p> Assaka (Asmaka) / अस्सक (अश्मक)</p>",
+    "option4": "<p> Matsya / मत्स्य</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Mahajanapada of Assaka (also known as Asmaka) was the only one of the sixteen Mahajanapadas located entirely in the South of India, on the banks of the Godavari River. Its capital was Pratisthan or Potana. All the other Mahajanapadas were located in the Indo-Gangetic plains or North-Western India. अस्सक (जिसे अश्मक भी कहा जाता है) महाजनपद सोलह महाजनपदों में से एकमात्र ऐसा था जो पूरी तरह से दक्षिण भारत में, गोदावरी नदी के तट पर स्थित था। इसकी राजधानी प्रतिष्ठान या पोतना थी। अन्य सभी महाजनपद सिंधु-गंगा के मैदानों या उत्तर-पश्चिमी भारत में स्थित थे।</p>"
+  },
+  {
+    "sr_no": 4,
+    "question": "<p> <b>What title was adopted by Bimbisara, the founder of the Haryanka Dynasty in Magadha, to signify his strong and large standing army?<br/> </b>मगध में हर्यंक वंश के संस्थापक बिम्बिसार ने अपनी मजबूत और बड़ी स्थायी सेना को दर्शाने के लिए कौन सी उपाधि धारण की थी<b>?</b></p>",
+    "option1": "<p> Ekarat / एकराट</p>",
+    "option2": "<p> Sarva-Kshatrantaka / सर्व-क्षत्रान्तक</p>",
+    "option3": "<p> Seniya / सेनीय</p>",
+    "option4": "<p> Ugrasena / उग्रसेन</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Bimbisara was the first Magadhan king to have a large and permanent standing army, a significant military innovation for the time. For this reason, he was given the title Seniya, which literally means 'having an army'. The title Ekarat (sole sovereign) was later adopted by Mahapadmananda. बिम्बिसार मगध का पहला राजा था जिसके पास एक बड़ी और स्थायी सेना थी, जो उस समय के लिए एक महत्वपूर्ण सैन्य नवाचार था। इसी कारण से, उन्हें 'सेनीय' की उपाधि दी गई, जिसका शाब्दिक अर्थ है 'सेना वाला'। 'एकराट' (एकमात्र संप्रभु) की उपाधि बाद में महापद्मनंद ने धारण की थी।</p>"
+  },
+  {
+    "sr_no": 5,
+    "question": "<p> <b>Which Nanda ruler was the reigning king of Magadha when Alexander the Great invaded North-Western India in 326 BC?<br/> 326 </b>ईसा पूर्व में जब सिकंदर महान ने उत्तर<b>-</b>पश्चिमी भारत पर आक्रमण किया था<b>, </b>तब मगध का शासक नंद राजा कौन था<b>?</b></p>",
+    "option1": "<p> Mahapadmananda / महापद्मनंद</p>",
+    "option2": "<p> Ugrasena Nanda / उग्रसेन नंद</p>",
+    "option3": "<p> Dhanananda / धनानंद</p>",
+    "option4": "<p> Panduka Nanda / पांडुक नंद</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Dhanananda was the last king of the Nanda Dynasty and was ruling Magadha when Alexander's forces invaded. Although Alexander defeated many kingdoms, his army ultimately refused to advance further eastward towards the powerful Magadhan Empire ruled by Dhanananda. This refusal led to Alexander's eventual retreat. धनानंद नंद वंश का अंतिम राजा था और जब सिकंदर की सेना ने आक्रमण किया तब वह मगध पर शासन कर रहा था। हालाँकि सिकंदर ने कई राज्यों को हराया, लेकिन उसकी सेना ने धनानंद द्वारा शासित शक्तिशाली मगध साम्राज्य की ओर आगे बढ़ने से मना कर दिया। इस इनकार के कारण अंततः सिकंदर को पीछे हटना पड़ा।</p>"
+  },
+  {
+    "sr_no": 6,
+    "question": "<p> <b>The capital of the Kuru Mahajanapada was located at which of the following cities, mentioned in Mahabhatat ?<br/> </b>कुरु महाजनपद की राजधानी निम्नलिखित में से किस शहर में स्थित थी<b>, </b>जिसका उल्लेख महाभारत में है<b>?</b></p>",
+    "option1": "<p> Taxila / तक्षशिला</p>",
+    "option2": "<p> Kampilya / काम्पिल्य</p>",
+    "option3": "<p> Indraprastha / इंद्रप्रस्थ</p>",
+    "option4": "<p> Ahichchatra / अहिच्छत्र</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Kuru Mahajanapada was centered around modern-day Meerut and South-East Haryana. Its capital was Indraprastha, a city prominently featured in the epic Mahabharata. The other city associated with Kuru was Hastinapura. Kampilya and Ahichchatra were the capitals of the Panchala Mahajanapada. कुरु महाजनपद आधुनिक मेरठ और दक्षिण-पूर्वी हरियाणा के आसपास केंद्रित था। इसकी राजधानी इंद्रप्रस्थ थी, जो महाकाव्य महाभारत में प्रमुखता से चित्रित है। कुरु से जुड़ा दूसरा शहर हस्तिनापुर था। काम्पिल्य और अहिच्छत्र पंचाल महाजनपद की राजधानियाँ थीं।</p>"
+  },
+  {
+    "sr_no": 7,
+    "question": "<p> <b>The king of Anga, who was defeated by Bimbisara and whose kingdom was then annexed to Magadha, had his capital at which of the following places?<br/> </b>अंग के राजा<b>, </b>जिसे बिम्बिसार ने हराया था और जिसका राज्य बाद में मगध में मिला लिया गया था<b>, </b>उसकी राजधानी निम्नलिखित में से किस स्थान पर थी<b>?</b></p>",
+    "option1": "<p> Rajagriha / राजगृह</p>",
+    "option2": "<p> Vaishali / वैशाली</p>",
+    "option3": "<p> Varanasi / वाराणसी</p>",
+    "option4": "<p> Champa / चम्पा</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Mahajanapada of Anga had its capital at Champa, located near modern-day Munger and Bhagalpur in Bihar. Bimbisara of Magadha led a military campaign against Anga, defeated its king, and annexed the territory. The acquisition of Anga was significant as it gave Magadha control over the rich river trade. अंग महाजनपद की राजधानी चम्पा थी, जो आधुनिक मुंगेर और भागलपुर (बिहार) के पास स्थित थी। मगध के बिम्बिसार ने अंग के विरुद्ध एक सैन्य अभियान चलाया, उसके राजा को हराया और उस क्षेत्र पर कब्ज़ा कर लिया। अंग का अधिग्रहण महत्वपूर्ण था क्योंकि इसने मगध को समृद्ध नदी व्यापार पर नियंत्रण प्रदान किया।</p>"
+  },
+  {
+    "sr_no": 8,
+    "question": "<p> <b>The 'Northern Black Polished Ware' (NBPW) pottery is characteristic of which major historical period in ancient India?<br/> '</b>उत्तरी काले पॉलिशदार मृद्भांड<b>' (NBPW) </b>मिट्टी के बर्तन प्राचीन भारत के किस प्रमुख ऐतिहासिक काल की विशेषता है<b>?</b></p>",
+    "option1": "<p> Harappan Civilization / हड़प्पा सभ्यता</p>",
+    "option2": "<p> Early Vedic Period / प्रारंभिक वैदिक काल</p>",
+    "option3": "<p> Mahajanapada and Magadha Period / महाजनपद और मगध काल</p>",
+    "option4": "<p> Gupta Empire / गुप्त साम्राज्य</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Northern Black Polished Ware (NBPW) is a distinct type of glossy, fine pottery associated with the period of the Mahajanapadas and the rise of the Magadha Empire (c. 700–200 BCE). Its widespread use is an archaeological marker of the Second Urbanisation in the Indian subcontinent. It often featured a high-quality, lustrous black surface. उत्तरी काले पॉलिशदार मृद्भांड (NBPW) एक विशिष्ट प्रकार के चमकदार, महीन मिट्टी के बर्तन हैं जो महाजनपदों के काल और मगध साम्राज्य के उदय (लगभग 700-200 ईसा पूर्व) से जुड़े हैं। इसका व्यापक उपयोग भारतीय उपमहाद्वीप में द्वितीय नगरीकरण का एक पुरातात्विक सूचक है। इसमें अक्सर एक उच्च गुणवत्ता वाली, चमकदार काली सतह होती थी।</p>"
+  },
+  {
+    "sr_no": 9,
+    "question": "<p> <b>Which Mahajanapada had its capital at Varanasi (Varuna + Assi rivers), and its modern location corresponds to Gonda and Bharai districts?<br/> </b>किस महाजनपद की राजधानी वाराणसी <b>(</b>वरुणा <b>+ </b>अस्सी नदियाँ<b>) </b>थी<b>, </b>और इसका आधुनिक स्थान गोंडा और भरई जिलों से मेल खाता है<b>?</b></p>",
+    "option1": "<p> Kasi / काशी</p>",
+    "option2": "<p> Kosala / कोसल</p>",
+    "option3": "<p> Vatsa / वत्स</p>",
+    "option4": "<p> Surasena / शूरसेन</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Kasi Mahajanapada had its capital at Varanasi, deriving its name from the rivers Varuna and Assi. Its modern location covers the region of Gonda and Bharai in Uttar Pradesh. Kasi was initially a powerful kingdom, but was later annexed by its neighboring and emerging power, Kosala. काशी महाजनपद की राजधानी वाराणसी थी, जिसका नाम वरुणा और अस्सी नदियों से लिया गया था। इसका आधुनिक स्थान उत्तर प्रदेश में गोंडा और भरई के क्षेत्र को कवर करता है। काशी शुरू में एक शक्तिशाली राज्य था, लेकिन बाद में अपने पड़ोसी और उभरते हुए शक्ति, कोसल द्वारा इसे मिला लिया गया।</p>"
+  },
+  {
+    "sr_no": 10,
+    "question": "<p> <b>The system of multiple decision-makers or a Gana/Sangha (Republic) was characteristic of which group of Mahajanapadas?<br/> </b>एकाधिक निर्णय लेने वालों की प्रणाली या गण<b>/</b>संघ <b>(</b>गणतंत्र<b>) </b>महाजनपदों के किस समूह की विशेषता थी<b>?</b></p>",
+    "option1": "<p> Magadha and Kosala / मगध और कोसल</p>",
+    "option2": "<p> Avanti and Kuru / अवंति और कुरु</p>",
+    "option3": "<p> Vajji and Malla / वज्जि और मल्ल</p>",
+    "option4": "<p> Anga and Vatsa / अंग और वत्स</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Mahajanapadas were either Monarchial (single decision-makers, like Magadha) or Republican (multiple decision-makers, Gana/Sangha). Vajji (a confederacy of 8 clans including Lichchavi) and Malla were the prominent republican states. These republics were often in conflict with the neighboring powerful monarchial states. महाजनपद या तो राजतंत्रात्मक (मगध जैसे एकल निर्णय लेने वाले) या गणतांत्रिक (एकाधिक निर्णय लेने वाले, गण/संघ) थे। वज्जि (लिच्छवी सहित 8 कुलों का एक संघ) और मल्ल प्रमुख गणतांत्रिक राज्य थे। ये गणराज्य अक्सर पड़ोसी शक्तिशाली राजतंत्रात्मक राज्यों के साथ संघर्ष में रहते थे।</p>"
+  },
+  {
+    "sr_no": 11,
+    "question": "<p> <b>Consider the following statements regarding the rise of Magadha:<br/> </b>मगध के उदय के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> Assertion (A): Magadha became the most powerful Mahajanapada largely due to its control over essential mineral resources.<br/> </b>अभिकथन <b>(A): </b>मगध आवश्यक खनिज संसाधनों पर अपने नियंत्रण के कारण बड़े पैमाने पर सबसे शक्तिशाली महाजनपद बन गया।<b><br/> Reason (R): Iron was widely available in the region of modern Jharkhand, and its local name was Krishna Ayas or Shyam Ayas.<br/> </b>कारण <b>(R): </b>आधुनिक झारखंड के क्षेत्र में लौह व्यापक रूप से उपलब्ध था<b>, </b>और इसका स्थानीय नाम कृष्ण अयस या श्याम अयस था।</p>",
+    "option1": "<p> Both (A) and (R) are true, and (R) is the correct explanation of (A). / (A) और (R) दोनों सत्य हैं, और (R), (A) का सही स्पष्टीकरण है।</p>",
+    "option2": "<p> Both (A) and (R) are true, but (R) is not the correct explanation of (A). / (A) और (R) दोनों सत्य हैं, लेकिन (R), (A) का सही स्पष्टीकरण नहीं है।</p>",
+    "option3": "<p> (A) is true, but (R) is false. / (A) सत्य है, लेकिन (R) असत्य है।</p>",
+    "option4": "<p> (A) is false, but (R) is true. / (A) असत्य है, लेकिन (R) सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The availability of iron ore in the adjacent Jharkhand region (then a part of Magadha's reach) was a primary reason for Magadha's military and agricultural superiority, as it allowed for better tools and weapons. Iron ore was indeed referred to in ancient texts as Krishna Ayas or Shyam Ayas (black metal). Thus, the reason correctly explains the assertion of Magadha's power based on resources. आस-पास के झारखंड क्षेत्र (तब मगध की पहुंच का एक हिस्सा) में लौह अयस्क की उपलब्धता मगध की सैन्य और कृषि श्रेष्ठता का प्राथमिक कारण थी, क्योंकि इसने बेहतर औजारों और हथियारों को संभव बनाया। लौह अयस्क को वास्तव में प्राचीन ग्रंथों में कृष्ण अयस या श्याम अयस (काला धातु) कहा गया था। इस प्रकार, कारण, संसाधनों के आधार पर मगध की शक्ति के अभिकथन की सही व्याख्या करता है।</p>"
+  },
+  {
+    "sr_no": 12,
+    "question": "<p> <b>Consider the following statements regarding King Bimbisara of Magadha: </b>मगध के राजा बिम्बिसार के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. He strengthened his position not only through military campaigns like the conquest of Anga but also through strategic marriage alliances. / </b>उसने न केवल अंग के विजय जैसे सैन्य अभियानों के माध्यम से<b>, </b>बल्कि रणनीतिक वैवाहिक गठबंधनों के द्वारा भी अपनी स्थिति को सुदृढ़ किया।<b><br/> 2. He sent his royal physician, Jivaka, to Ujjain to treat King Pradyota, who was suffering from jaundice. / </b>उसने अपने राजवैद्य जीवक को उज्जैन भेजा ताकि वे पीलिया से पीड़ित राजा प्रद्योत का उपचार कर सकें।<b><br/> Which of the statements given above is/are correct?<br/> </b>उपरोक्त दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Bimbisara was a master diplomat; he married the sister of the King of Kosala, a princess of the Lichchavi clan, and a princess of the Madra clan, thereby securing alliances with three powerful kingdoms. Additionally, he maintained friendly relations with his contemporary Avanti by sending his physician Jivaka to treat King Pradyota. बिम्बिसार एक कुशल कूटनीतिज्ञ थे; उन्होंने कोसल के राजा की बहन, लिच्छवी कुल की राजकुमारी और मद्र कुल की एक राजकुमारी से विवाह किया, जिससे तीन शक्तिशाली राज्यों के साथ गठबंधन सुरक्षित हुआ। इसके अतिरिक्त, उन्होंने अपने समकालीन अवंति के साथ अपने चिकित्सक जीवक को राजा प्रद्योत का इलाज करने के लिए भेजकर मैत्रीपूर्ण संबंध बनाए रखे।</p>"
+  },
+  {
+    "sr_no": 13,
+    "question": "<p> <b>With reference to the taxation system during the Mahajanapada period, consider the following statements:<br/> </b>महाजनपद काल के दौरान कराधान प्रणाली के संदर्भ में<b>, </b>निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. Peasants were generally required to pay a tax equal to one-sixth (1/6th) of their total produce. / </b>किसानों से सामान्यतः उनकी कुल उपज का एक<b>-</b>छठा <b>(1/6) </b>कर के रूप में लिया जाता था।<b><br/> 2. The tax known as 'Bali' was a compulsory revenue collected from all sections of the society by the officers called 'Shaulkika'. / ‘</b>बलि’ नामक कर समाज के सभी वर्गों से ‘शौल्किक’ कहलाने वाले अधिकारियों द्वारा अनिवार्य रूप से वसूला जाता था।<b><br/> Which of the statements given above is/are correct?<br/> </b>उपरोक्त दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The rate of land tax, or bhaga, was fixed at 1/6th of the produce, which was the primary source of revenue for the state. However, Bali was originally a voluntary offering given to the king, not a compulsory tax. The Shaulkika (or Shulkadhyaksha) was an officer responsible for collecting the Toll Tax or Shulka, not the general Bali or land tax. भू-राजस्व, या भाग, की दर उपज के 1/6वें भाग पर निर्धारित की गई थी, जो राज्य के लिए राजस्व का प्राथमिक स्रोत था। हालाँकि, बलि मूल रूप से राजा को दिया जाने वाला एक स्वैच्छिक भेंट था, न कि अनिवार्य कर। शौल्किक (या शुल्काध्यक्ष) वह अधिकारी था जो टोल टैक्स या शुल्क एकत्र करने के लिए जिम्मेदार था, न कि सामान्य बलि या भू-राजस्व के लिए।</p>"
+  },
+  {
+    "sr_no": 14,
+    "question": "<p> <b>Match the Mahajanapadas with their respective Capitals. Select the correct combination from the options below:<br/> </b>महाजनपदों को उनकी संबंधित राजधानियों से सुमेलित करें। नीचे दिए गए विकल्पों में से सही संयोजन का चयन करें<b>:<br/> 1. Vatsa / </b>वत्स<b><br/> 2. Anga / </b>अंग<b><br/> 3. Avanti / </b>अवंति<b><br/> 4. Chedi / </b>चेदि<b><br/> Capitals:<br/> 5. Champa / </b>चम्पा<b>,<br/> 6. Kaushambi / </b>कौशाम्बी<b>,<br/> 7. Sothivati / </b>सोथिवती<b>,<br/> 8. Ujjain / </b>उज्जैन</p>",
+    "option1": "<p> 1-B, 2-A, 3-D, 4-C</p>",
+    "option2": "<p> 1-A, 2-B, 3-C, 4-D</p>",
+    "option3": "<p> 1-D, 2-C, 3-B, 4-A</p>",
+    "option4": "<p> 1-C, 2-D, 3-A, 4-B</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The Vatsa Mahajanapada had its capital at Kaushambi , located near modern-day Allahabad (Prayagraj). Anga’s capital was Champa. Avanti, located in the Madhya Pradesh &amp; Malwa region , had two capitals: Ujjain (North Avanti) and Mahishmati (South Avanti). The Chedi or Chetiya Mahajanapada, corresponding to the Bundelkhand region , had its capital at Sothivati/Banda. वत्स महाजनपद की राजधानी कौशाम्बी थी, जो आधुनिक इलाहाबाद (प्रयागराज) के पास स्थित थी । अंग की राजधानी चम्पा थी। मालवा क्षेत्र में स्थित अवंति की दो राजधानियाँ थीं: उज्जैन (उत्तरी अवंति) और महिष्मति (दक्षिणी अवंति)। बुंदेलखंड क्षेत्र के अनुरूप चेदि या चेतिया महाजनपद की राजधानी सोथिवती/बांदा थी।</p>"
+  },
+  {
+    "sr_no": 15,
+    "question": "<p> <b>Consider the following statements about Ajatshatru, the Magadhan ruler:<br/> </b>मगध के शासक अजातशत्रु के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. He is credited with patronising the First Buddhist Council, which was held at Rajagriha shortly after the death of the Buddha. / </b>उन्हें बुद्ध के महापरिनिर्वाण के तुरंत बाद राजगृह में आयोजित प्रथम बौद्ध संगीति का संरक्षण देने का श्रेय दिया जाता है।<b><br/> 2. He successfully conquered the Vajji confederacy, particularly Vaishali, by using two new military engines: Rathamusala and Mahasilakantaka. / </b>उन्होंने रथमुसल और महासिलाकंटक नामक दो नए युद्ध यंत्रों का उपयोग करके वज्जि संघ<b>, </b>विशेषकर वैशाली<b>, </b>को सफलतापूर्वक जीत लिया।<b><br/> Which of the statements given above is/are correct?<br/> </b>उपरोक्त दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 2 only / केवल 2</p>",
+    "option3": "<p> Both 1 and 2 / 1 और 2 दोनों</p>",
+    "option4": "<p> Neither 1 nor 2 / न तो 1 और न ही 2</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Ajatshatru, son of Bimbisara, was a key figure in the spread of Buddhism and sponsored the First Buddhist Council. He waged a long and successful war against the Vajji Mahajanapada and captured its capital, Vaishali, using advanced war engines (catapults) like Rathamusala (a chariot with a swinging mace) and Mahasilakantaka (a large stone-throwing machine). बिम्बिसार के पुत्र अजातशत्रु बौद्ध धर्म के प्रसार में एक प्रमुख व्यक्ति थे और उन्होंने प्रथम बौद्ध संगीति को प्रायोजित किया था। उन्होंने वज्जि महाजनपद के खिलाफ एक लंबा और सफल युद्ध लड़ा और उन्नत युद्ध इंजनों (गुलेल) जैसे रथमुसला (झूलते हुए गदा वाला रथ) और महासिलाकंटक (एक बड़ी पत्थर फेंकने वाली मशीन) का उपयोग करके इसकी राजधानी वैशाली पर कब्जा कर लिया।</p>"
+  },
+  {
+    "sr_no": 16,
+    "question": "<p> <b>The ancient Sanskrit text Ashtadhyayi, which mentions forty Janapadas, was written by which scholar?<br/> </b>प्राचीन संस्कृत ग्रंथ अष्टाध्यायी<b>, </b>जिसमें चालीस जनपदों का उल्लेख है<b>, </b>किस विद्वान द्वारा लिखा गया था<b>?</b></p>",
+    "option1": "<p> Kalidasa / कालिदास</p>",
+    "option2": "<p> Chanakya / चाणक्य</p>",
+    "option3": "<p> Panini / पाणिनि</p>",
+    "option4": "<p> Patanjali / पतंजलि</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Ashtadhyayi, a text on Sanskrit grammar, was authored by Panini between the 6th and 4th centuries BC. It is considered the oldest known work on the subject. The text is important historically as it mentions the existence of approximately forty regional states or Janapadas, thereby providing a literary source for the period preceding the Mahajanapadas. अष्टाध्यायी, संस्कृत व्याकरण पर आधारित एक ग्रंथ, पाणिनि द्वारा छठी ईसा पूर्व और चौथी शताब्दी के बीच लिखा गया था। इसे इस विषय पर ज्ञात सबसे पुराना कार्य माना जाता है। यह ग्रंथ ऐतिहासिक रूप से महत्वपूर्ण है क्योंकि इसमें लगभग चालीस क्षेत्रीय राज्यों या जनपदों के अस्तित्व का उल्लेख है, जिससे महाजनपद काल से पहले की अवधि के लिए एक साहित्यिक स्रोत मिलता है।</p>"
+  },
+  {
+    "sr_no": 17,
+    "question": "<p> <b>During the Mahajanapada period, what was the title generally given to the headman of a village who was responsible for collecting revenue and maintaining order?<br/> </b>महाजनपद काल के दौरान<b>, </b>गाँव के मुखिया को आमतौर पर क्या उपाधि दी जाती थी जो राजस्व एकत्र करने और व्यवस्था बनाए रखने के लिए जिम्मेदार था<b>?</b></p>",
+    "option1": "<p> Brahamani / ब्राह्मणी</p>",
+    "option2": "<p> Bhojaka / भोजक</p>",
+    "option3": "<p> Senapati / सेनापति</p>",
+    "option4": "<p> Mahamatra / महामात्र</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The headman of the village during the Mahajanapada period was referred to as the Bhojaka or Gramabhojaka. He was a powerful figure, often hereditary, who collected the taxes from the peasants on behalf of the king and served as a local magistrate. The Gramani was an earlier Vedic term for the village head. महाजनपद काल के दौरान गाँव के मुखिया को भोजक या ग्रामभोजक कहा जाता था। वह एक शक्तिशाली व्यक्ति था, जिसका पद अक्सर वंशानुगत होता था, जो राजा की ओर से किसानों से कर एकत्र करता था और स्थानीय मजिस्ट्रेट के रूप में कार्य करता था। ग्रामणी ग्राम प्रमुख के लिए एक पहले का वैदिक शब्द था।</p>"
+  },
+  {
+    "sr_no": 18,
+    "question": "<p> <b>Which Nanda ruler was the first Magadhan king to adopt the title Ekrat, signifying his absolute authority and the eradication of other Kshatriya dynasties?<br/> </b>कौन सा नंद शासक एकराट की उपाधि धारण करने वाला पहला मगध राजा था<b>, </b>जो उसके पूर्ण अधिकार और अन्य क्षत्रिय राजवंशों के उन्मूलन को दर्शाता है<b>?</b></p>",
+    "option1": "<p> Dhanananda / धनानंद</p>",
+    "option2": "<p> Shishunaga / शिशुनाग</p>",
+    "option3": "<p> Mahapadmananda / महापद्मनंद</p>",
+    "option4": "<p> Kalashoka / कालाशोक</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Mahapadmananda, the founder of the Nanda Dynasty, was a king of immense power and military might who is credited with overthrowing many contemporary dynasties. The title Ekrat literally means 'Sole Sovereign' or 'One King', which he adopted to proclaim his status as the undisputed ruler of the entire region, having rooted out other Kshatriya rulers. नंद वंश के संस्थापक महापद्मनंद, अपार शक्ति और सैन्य बल के राजा थे जिन्हें कई समकालीन राजवंशों को उखाड़ फेंकने का श्रेय दिया जाता है। एकराट उपाधि का शाब्दिक अर्थ 'एकमात्र संप्रभु' या 'एक राजा' है, जिसे उन्होंने अन्य क्षत्रिय शासकों का उन्मूलन करके पूरे क्षेत्र के निर्विवाद शासक के रूप में अपनी स्थिति घोषित करने के लिए अपनाया था।</p>"
+  },
+  {
+    "sr_no": 19,
+    "question": "<p> <b>Consider the following statements regarding Alexander’s invasion and Magadha:<br/> </b>सिकंदर के आक्रमण और मगध के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> Assertion (A): Alexander the Great's army refused to advance further eastward after the Battle of Hydaspes, eventually leading to his retreat.<br/> </b>अभिकथन <b>(A): </b>सिकंदर महान की सेना ने हाइडेस्पेस के युद्ध के बाद और पूर्व की ओर आगे बढ़ने से इनकार कर दिया<b>, </b>जिससे अंततः उसे पीछे हटना पड़ा।<b><br/> Reason (R): The Greek soldiers were exhausted and feared the massive army of the powerful Magadhan ruler, Dhanananda, which possessed a large number of war elephants.<br/> </b>कारण <b>(R): </b>यूनानी सैनिक थक चुके थे और शक्तिशाली मगध शासक धनानंद की विशाल सेना से डरते थे<b>, </b>जिसके पास बड़ी संख्या में युद्ध हाथी थे।</p>",
+    "option1": "<p> Both (A) and (R) are true, and (R) is the correct explanation of (A). / (A) और (R) दोनों सत्य हैं, और (R), (A) का सही स्पष्टीकरण है।</p>",
+    "option2": "<p> Both (A) and (R) are true, but (R) is not the correct explanation of (A). / (A) और (R) दोनों सत्य हैं, लेकिन (R), (A) का सही स्पष्टीकरण नहीं है।</p>",
+    "option3": "<p> (A) is true, but (R) is false. / (A) सत्य है, लेकिन (R) असत्य है।</p>",
+    "option4": "<p> (A) is false, but (R) is true. / (A) असत्य है, लेकिन (R) सत्य है।</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> The assertion is true; Alexander's troops, worn out by years of campaigning and recent fierce battles like Hydaspes (against Porus), refused to cross the Beas river. The reason is the correct explanation; they had heard terrifying accounts of the formidable strength of the Nanda army under Dhanananda, which was said to have 200,000 infantry, 20,000 cavalry, and thousands of war elephants. अभिकथन सत्य है; सिकंदर के सैनिक, वर्षों के अभियान और हाइडेस्पेस (पोरस के खिलाफ) जैसे हाल के भयंकर युद्धों से थक चुके थे, उन्होंने ब्यास नदी को पार करने से इनकार कर दिया। कारण सही स्पष्टीकरण है; उन्होंने धनानंद के नेतृत्व में नंद सेना की दुर्जेय शक्ति के बारे में भयानक किस्से सुने थे, जिसमें 200,000 पैदल सेना, 20,000 घुड़सवार और हजारों युद्ध हाथी थे।</p>"
+  },
+  {
+    "sr_no": 20,
+    "question": "<p> <b>With reference to the economic life during the Mahajanapada period, which of the following statements is/are correct?<br/> </b>महाजनपद काल के दौरान आर्थिक जीवन के संदर्भ में<b>, </b>निम्नलिखित में से कौन सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?<br/> 1. The organizations of artisans and merchants were known as Shrenis or Guilds. / </b>शिल्पकारों और व्यापारियों के संगठन श्रेणियाँ या गिल्ड कहलाते थे।<b><br/> 2. The earliest form of currency widely used in this period were gold coins known as Nishka. / </b>इस काल में व्यापक रूप से प्रयुक्त मुद्रा का सबसे प्रारंभिक रूप निश्क नामक स्वर्ण सिक्के थे।<b><br/> 3. The use of iron ploughshares contributed to the agricultural surplus, enabling the Second Urbanisation. / </b>लोहे के हल<b>-</b>फालों के उपयोग से कृषि अधिशेष में वृद्धि हुई<b>, </b>जिससे द्वितीय नगरीकरण संभव हो सका।</p>",
+    "option1": "<p> 1 only / केवल 1</p>",
+    "option2": "<p> 1 and 3 only / केवल 1 और 3</p>",
+    "option3": "<p> 2 and 3 only / केवल 2 और 3</p>",
+    "option4": "<p> 1, 2 and 3 / 1, 2 और 3</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Statement 1 is correct; guilds (Shrenis) were vital organizations for merchants and artisans, regulating trade and crafts. Statement 3 is correct; the efficiency of iron ploughshares in the fertile Gangetic plain led to massive agricultural surplus, supporting the growth of towns (Second Urbanisation). Statement 2 is incorrect; while Nishka was a valuable commodity, the primary and earliest form of coinage for trade were the Punch-Marked Silver Coins (Puranas/Karshapanas). कथन 1 सही है; गिल्ड (श्रेणियाँ) व्यापारियों और कारीगरों के लिए महत्वपूर्ण संगठन थे, जो व्यापार और शिल्पों को विनियमित करते थे। कथन 3 सही है; उपजाऊ गंगा के मैदान में लोहे के हल के फालों की दक्षता ने बड़े पैमाने पर कृषि अधिशेष को जन्म दिया, जिससे कस्बों का विकास हुआ (द्वितीय नगरीकरण)। कथन 2 गलत है; जबकि निष्क एक मूल्यवान वस्तु थी, व्यापार के लिए सिक्कों का प्राथमिक और शुरुआती रूप पंच-चिह्नित चांदी के सिक्के (पुराण/कर्षपण) थे।</p>"
+  },
+  {
+    "sr_no": 21,
+    "question": "<p> <b>Which of the following is regarded as the major political accomplishment of King Shishunaga of Magadha?<br/> </b>निम्नलिखित में से किसे मगध के राजा शिशुनाग की प्रमुख राजनीतिक उपलब्धि माना जाता है<b>?</b></p>",
+    "option1": "<p> Subjugation of Kalinga / कलिंग पर विजय</p>",
+    "option2": "<p> Construction of the fortifications at Pataliputra / पाटलिपुत्र में किलेबंदी का निर्माण</p>",
+    "option3": "<p> Convening the First Buddhist Council / प्रथम बौद्ध परिषद का आयोजन</p>",
+    "option4": "<p> Defeat of Avanti (Malwa) and its incorporation into Magadha / अवंती (मालवा) की पराजय और उसका मगध में विलय</p>",
+    "answer": "4",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> King Shishunaga's most significant achievement was the military conquest and absorption of the kingdom of Avanti (Ujjain) into the Magadhan empire. This victory ended the century-long rivalry between the two major powers of that time and secured the western frontier of Magadha. राजा शिशुनाग की सबसे महत्वपूर्ण उपलब्धि अवंती (उज्जैन) राज्य पर सैन्य विजय और उसे मगध साम्राज्य में मिलाना था। इस जीत ने उस समय की दो प्रमुख शक्तियों के बीच सदियों पुरानी प्रतिद्वंद्विता को समाप्त कर दिया और मगध की पश्चिमी सीमा को सुरक्षित कर दिया।</p>"
+  },
+  {
+    "sr_no": 22,
+    "question": "<p> <b>As part of his diplomatic strategy of marriage alliances, King Bimbisara of Magadha entered into a matrimonial alliance with the royal family of Kosala. The bride was the sister of which Kosalan ruler?<br/> </b>अपनी कूटनीतिक रणनीति के तहत<b>, </b>मगध के राजा बिम्बिसार ने कोसल के शाही परिवार के साथ वैवाहिक संबंध स्थापित किया। दुल्हन किस कोसल शासक की बहन थी<b>?</b></p>",
+    "option1": "<p> Prasenjit / प्रसेनजीत</p>",
+    "option2": "<p> Ajatashatru / अजातशत्रु</p>",
+    "option3": "<p> Udayin / उदयिन</p>",
+    "option4": "<p> Ashoka / अशोक</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> King Bimbisara married Kosaladevi, the sister of King Prasenjit of Kosala. This marriage alliance provided Magadha with the territory of Kashi as a dowry and significantly strengthened Bimbisara's political position. राजा बिम्बिसार ने कोसल के राजा प्रसेनजीत की बहन कोसलदेवी से विवाह किया था। इस वैवाहिक गठबंधन ने मगध को दहेज के रूप में काशी का क्षेत्र प्रदान किया और बिम्बिसार की राजनीतिक स्थिति को महत्वपूर्ण रूप से मजबूत किया।</p>"
+  },
+  {
+    "sr_no": 23,
+    "question": "<p> <b>Who were the Voharikas in the judicial structure of the Magadha period?<br/> </b>मगध काल की न्यायिक संरचना में वोहारिक कौन थे<b>?</b></p>",
+    "option1": "<p> Lawyer-Judges / वकील-न्यायाधीश</p>",
+    "option2": "<p> Military generals / सैन्य सेनापति</p>",
+    "option3": "<p> Judges in village assemblies / ग्राम सभाओं के न्यायाधीश</p>",
+    "option4": "<p> Local tax collectors / स्थानीय कर संग्रहकर्ता</p>",
+    "answer": "1",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> In the judicial system of the Magadha period, particularly mentioned in the Mauryan administration (which succeeded the early Magadhan period), 'Voharikas' (or 'Vyavaharika') were high-ranking judicial officials who performed the duties of judges. मगध काल की न्यायिक संरचना में, विशेष रूप से मौर्य प्रशासन (जो प्रारंभिक मगध काल के बाद आया) में, 'वोहारिक' (या 'व्यवहारिका') उच्च श्रेणी के न्यायिक अधिकारी थे जो न्यायाधीशों के कर्तव्यों का पालन करते थे।</p>"
+  },
+  {
+    "sr_no": 24,
+    "question": "<p> <b>Tax, known as bhaga, was levied on which of the following during Mahajanapada period of Ancient India?<br/> </b>प्राचीन भारत के महाजनपद काल के दौरान निम्नलिखित में से किस पर भाग नामक कर लगाया जाता था<b>?</b></p>",
+    "option1": "<p> Tax on cattle breeders / पशुपालकों पर कर</p>",
+    "option2": "<p> Tax on artisans / कारीगरों पर कर</p>",
+    "option3": "<p> Tax on cultivators / कृषकों पर कर</p>",
+    "option4": "<p> Tax on merchants / व्यापारियों पर कर</p>",
+    "answer": "3",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> During the Mahajanapada period, bhaga was the primary and most important tax, typically amounting to one-sixth (1/6th) of the produce, which the cultivators (farmers) had to pay to the state. महाजनपद काल के दौरान, भाग प्राथमिक और सबसे महत्वपूर्ण कर था, जो आम तौर पर उपज का छठा हिस्सा (1/6) होता था, जिसे कृषकों (किसानों) को राज्य को भुगतान करना पड़ता था।</p>"
+  },
+  {
+    "sr_no": 25,
+    "question": "<p> <b>Consider the following statements about the emergence of urban centres in India from circa 6th Century BCE:<br/> 1. All of them developed away from the capitals of mahajanapadas.<br/> 2. Major towns were located along routes of communication.<br/> 3. Many were bustling centres of commercial, cultural and political activity.<br/> How many of the above statements is/are correct?<br/> </b>भारत में लगभग छठी शताब्दी ईसा पूर्व से शहरी केंद्रों के उद्भव के बारे में निम्नलिखित कथनों पर विचार कीजिए<b>:<br/> 4. </b>उन सभी का विकास महाजनपदों की राजधानियों से दूर हुआ।<b><br/> 5. </b>प्रमुख नगर आवागमन मार्गों पर स्थित थे।<b><br/> 6. </b>इनमें से अनेक वाणिज्यिक<b>, </b>सांस्कृतिक और राजनीतिक गतिविधियों के बड़े केंद्र थे।<b><br/> </b>उपर्युक्त में से कितना<b>/</b>कितने कथन सही है<b>/</b>हैं<b>?</b></p>",
+    "option1": "<p> one / एक</p>",
+    "option2": "<p> two / दो</p>",
+    "option3": "<p> three / तीन</p>",
+    "option4": "<p> None / कोई नहीं</p>",
+    "answer": "2",
+    "negative_marking": "0",
+    "positive_marking": "1",
+    "solution_text": "<p> Statement 1 is incorrect because many urban centers, such as Pataliputra and Rajagriha, were themselves the capitals of Mahajanapadas. Statement 2 is correct as towns developed along major trade routes like the Uttarapatha. Statement 3 is also correct, as the new urban centers were hubs for all types of major activities (trade, religion, and administration). Thus, two statements (2 and 3) are correct. कथन 1 गलत है क्योंकि पाटलिपुत्र और राजगृह जैसे कई शहरी केंद्र स्वयं महाजनपदों की राजधानियाँ थे। कथन 2 सही है क्योंकि नगरों का विकास उत्तरापथ जैसे प्रमुख व्यापार मार्गों पर हुआ था। कथन 3 भी सही है, क्योंकि नए शहरी केंद्र सभी प्रकार की प्रमुख गतिविधियों (व्यापार, धर्म और प्रशासन) के केंद्र थे। इस प्रकार, दो कथन (2 और 3) सही हैं।</p>"
+  }
+];
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = 0;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+// Use a namespaced storage key so different quizzes/pages don't collide
+const STORAGE_KEY = 'quizState_' + (document.title || 'default');
+
+function isImageURL(str) {
+  return str && (str.startsWith('http://') || str.startsWith('https://'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = '✕<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = '📋<span class="badge" id="answeredBadge">' + Object.keys(answers).length + '</span>';
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape' && isPaletteOpen) {
+      closePalette();
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimer();
+    if (timerSeconds > 600) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    // Render question as image if it's a URL, otherwise as text
+    questionText.innerHTML = '';
+    if (isImageURL(q.question)) {
+      const img = document.createElement('img');
+      img.src = q.question;
+      img.className = 'question-image';
+      img.alt = 'Question image';
+      img.loading = 'lazy';
+      img.onerror = function() {
+        this.style.display = 'none';
+        questionText.innerHTML = q.question;
+      };
+      questionText.appendChild(img);
+    } else {
+      questionText.innerHTML = q.question;
+    }
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+// UPDATED: Progress bar now shows current question number
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message += `\n\nYou have ${unattempted} unanswered question(s).`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const questionHeader = isImageURL(q.question)
+      ? `<h4>Q${q.sr_no}:</h4><img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`
+      : `<h4>Q${q.sr_no}: ${q.question}</h4>`;
+    html += `<div class="question-review">${questionHeader}`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution_text && q.solution_text.trim() !== '') {
+      const solutionContent = isImageURL(q.solution_text)
+        ? `<img src="${q.solution_text}" class="solution-image" alt="Solution">`
+        : q.solution_text;
+      html += `<div class="solution-section">
+        <div class="solution-label">📝 Solution:</div>
+        <div class="solution-content">${solutionContent}</div>
+      </div>`;
+    }
+    
+    html += `</div>`; // Close question-review div
+});
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = 0;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results - General Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">General Quiz - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const state = JSON.parse(saved);
+      const hasProgress = (state && (
+        (state.currentQuestion && state.currentQuestion > 0) ||
+        (state.answers && Object.keys(state.answers).length > 0) ||
+        (state.timerSeconds && state.timerSeconds > 0)
+      ));
+      if (hasProgress && (Date.now() - state.timestamp < 24 * 60 * 60 * 1000)) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || 0;
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>
