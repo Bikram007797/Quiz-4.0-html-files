@@ -1,0 +1,2555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ECONOMICS - TEST - 1</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.question-image, .option-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: block;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎯 ECONOMICS - TEST - 1</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color)"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color)"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color)"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color)"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">Clear</button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">Submit Quiz</button>
+</div>
+
+<script>
+// MODIFIED: Quiz data structure with time_minutes
+const quizData = {
+  "time_minutes": 30,
+  "questions": [
+    {
+      "sr_no": 1,
+      "question": "<p>Consider the following statements regarding the types of Economy: <br/>अर्थव्यवस्था के प्रकारों के संबंध में निम्नलिखित कथनों पर विचार करें: <br/>(a) In a Capitalist Economy, the means of production are owned by the state. / पूंजीवादी अर्थव्यवस्था में उत्पादन के साधनों पर राज्य का स्वामित्व होता है। <br/>(b) A Mixed Economy involves the coexistence of both private and public sectors. / एक मिश्रित अर्थव्यवस्था में निजी और सार्वजनिक दोनों क्षेत्रों का सह-अस्तित्व होता है। <br/>(c) India is an example of a Socialist Economy. / भारत एक समाजवादी अर्थव्यवस्था का उदाहरण है।<br/>Which of the above statements is/are correct? <br/>उपरोक्त में से कौन-सा/से कथन सही है/हैं?</p>",
+      "option1": "<p>a only / केवल a</p>",
+      "option2": "<p>b only / केवल b</p>",
+      "option3": "<p>a and b / a और b</p>",
+      "option4": "<p>b and c / b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>A Mixed Economy (like India) has both private and public sectors, while in a Capitalist economy, private individuals own the means of production.<br/>मिश्रित अर्थव्यवस्था (जैसे भारत) में निजी और सार्वजनिक दोनों क्षेत्र होते हैं, जबकि पूंजीवादी अर्थव्यवस्था में निजी व्यक्तियों का उत्पादन के साधनों पर स्वामित्व होता है।</p>"
+    },
+    {
+      "sr_no": 2,
+      "question": "<p>Which of the following statements about 'Opportunity Cost' is correct? <br/>'अवसर लागत' (Opportunity Cost) के संबंध में निम्नलिखित में से कौन-सा कथन सही है?</p>",
+      "option1": "<p>It is the cost incurred on the current production. / यह वर्तमान उत्पादन पर होने वाली लागत है।</p>",
+      "option2": "<p>It is the value of the next best alternative foregone. / यह त्यागे गए अगले सर्वोत्तम विकल्प का मूल्य है।</p>",
+      "option3": "<p>It refers to the cost of raw materials. / यह कच्चे माल की लागत को संदर्भित करता है।</p>",
+      "option4": "<p>It is synonymous with accounting cost. / यह लेखांकन लागत का पर्याय है।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Opportunity cost represents the potential benefits an individual or business misses out on when choosing one alternative over another.<br/>अवसर लागत उन संभावित लाभों का प्रतिनिधित्व करती है जिन्हें एक व्यक्ति या व्यवसाय एक विकल्प को दूसरे के ऊपर चुनते समय छोड़ देता है।</p>"
+    },
+    {
+      "sr_no": 3,
+      "question": "<p>Consider the following statements regarding the Law of Demand: <br/>मांग के नियम के संबंध में निम्नलिखित कथनों पर विचार करें: <br/>(a) It states that there is a direct relationship between price and quantity demanded. / यह बताता है कि कीमत और मांग की गई मात्रा के बीच सीधा संबंध है। <br/>(b) It assumes that other factors remaining constant (Ceteris Paribus). / यह मानता है कि अन्य कारक स्थिर रहते हैं (सेटेरिस पेरिबस)। <br/>(c) Giffen goods are an exception to this law. / गिफन वस्तुएं इस नियम का अपवाद हैं।<br/>Which of the statements given above are correct? <br/>ऊपर दिए गए कथनों में से कौन-से सही हैं?</p>",
+      "option1": "<p>a and b / a और b</p>",
+      "option2": "<p>b and c / b और c</p>",
+      "option3": "<p>a and c / a और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>The Law of Demand states an inverse relationship between price and demand. Giffen goods violate this law as their demand increases with price.<br/>मांग का नियम कीमत और मांग के बीच विपरीत संबंध बताता है। गिफन वस्तुएं इस नियम का उल्लंघन करती हैं क्योंकि उनकी मांग कीमत के साथ बढ़ती है।</p>"
+    },
+    {
+      "sr_no": 4,
+      "question": "<p>In Micro-economics, 'Normal Profit' is a part of which of the following? <br/>व्यष्टि अर्थशास्त्र (Micro-economics) में, 'सामान्य लाभ' निम्नलिखित में से किसका हिस्सा है?</p>",
+      "option1": "<p>Explicit Cost / स्पष्ट लागत</p>",
+      "option2": "<p>Implicit Cost / निहित लागत</p>",
+      "option3": "<p>Fixed Cost / निश्चित लागत</p>",
+      "option4": "<p>Sunk Cost / निमज्जित लागत</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Normal profit is considered an implicit cost because it is the minimum income necessary to keep resources in their current use.<br/>सामान्य लाभ को एक निहित लागत माना जाता है क्योंकि यह संसाधनों को उनके वर्तमान उपयोग में रखने के लिए आवश्यक न्यूनतम आय है।</p>"
+    },
+    {
+      "sr_no": 5,
+      "question": "<p>Consider the following statements about Cost-Push Inflation: <br/>लागत-प्रेरित मुद्रास्फीति (Cost-Push Inflation) के बारे में निम्नलिखित कथनों पर विचार करें: <br/>(a) It is caused by an increase in the cost of production inputs. / यह उत्पादन इनपुट की लागत में वृद्धि के कारण होता है। <br/>(b) It leads to a decrease in the overall supply in the economy. / इससे अर्थव्यवस्था में कुल आपूर्ति में कमी आती है। <br/>(c) An increase in global crude oil prices is a typical cause. / वैश्विक कच्चे तेल की कीमतों में वृद्धि एक विशिष्ट कारण है।<br/>Which of the above statements are correct? <br/>उपरोक्त में से कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b / a और b</p>",
+      "option2": "<p>b and c / b और c</p>",
+      "option3": "<p>a and c / a और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Cost-push inflation occurs when prices rise due to increases in production costs, such as raw materials and wages, reducing aggregate supply.<br/>लागत-प्रेरित मुद्रास्फीति तब होती है जब उत्पादन लागत, जैसे कच्चे माल और मजदूरी में वृद्धि के कारण कीमतें बढ़ती हैं, जिससे कुल आपूर्ति कम हो जाती है।</p>"
+    },
+    {
+      "sr_no": 6,
+      "question": "<p>Which curve shows the inverse relationship between the rate of unemployment and the rate of inflation? <br/>कौन सा वक्र बेरोजगारी की दर और मुद्रास्फीति की दर के बीच विपरीत संबंध को दर्शाता है?</p>",
+      "option1": "<p>Lorenz Curve / लोरेंज़ वक्र</p>",
+      "option2": "<p>Laffer Curve / लाफर वक्र</p>",
+      "option3": "<p>Phillips Curve / फिलिप्स वक्र</p>",
+      "option4": "<p>Kuznets Curve / कुज़नेट वक्र</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>The Phillips curve suggests that with economic growth comes inflation, which in turn should lead to more jobs and less unemployment.<br/>फिलिप्स वक्र बताता है कि आर्थिक विकास के साथ मुद्रास्फीति आती है, जिससे बदले में अधिक रोजगार और कम बेरोजगारी होनी चाहिए।</p>"
+    },
+    {
+      "sr_no": 7,
+      "question": "<p>Consider the following statements regarding 'Structural Unemployment': <br/>'संरचनात्मक बेरोजगारी' के संबंध में निम्नलिखित कथनों पर विचार करें: <br/>(a) It arises from a mismatch between the skills of workers and the requirements of jobs. / यह श्रमिकों के कौशल और नौकरियों की आवश्यकताओं के बीच बेमेल होने से उत्पन्न होता है। <br/>(b) It is purely a short-term phenomenon. / यह पूरी तरह से एक अल्पकालिक घटना है। <br/>(c) Technological changes are a major cause of this unemployment. / तकनीकी परिवर्तन इस बेरोजगारी का एक प्रमुख कारण हैं।<br/>Which of the above statements is/are correct? <br/>उपरोक्त में से कौन-सा/से कथन सही है/हैं?</p>",
+      "option1": "<p>a only / केवल a</p>",
+      "option2": "<p>b and c / b और c</p>",
+      "option3": "<p>a and c / a और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Structural unemployment is long-term and occurs due to changes in the economy (like technology) that make certain skills obsolete.<br/>संरचनात्मक बेरोजगारी दीर्घकालिक होती है और अर्थव्यवस्था में बदलाव (जैसे तकनीक) के कारण होती है जो कुछ कौशलों को अप्रचलित बना देते हैं।</p>"
+    },
+    {
+      "sr_no": 8,
+      "question": "<p>What is 'Stagflation'? <br/>'स्टैगफ्लेशन' (Stagflation) क्या है?</p>",
+      "option1": "<p>High inflation with high economic growth / उच्च आर्थिक विकास के साथ उच्च मुद्रास्फीति</p>",
+      "option2": "<p>Low inflation with high unemployment / उच्च बेरोजगारी के साथ कम मुद्रास्फीति</p>",
+      "option3": "<p>High inflation combined with stagnant economic growth and high unemployment / स्थिर आर्थिक विकास और उच्च बेरोजगारी के साथ उच्च मुद्रास्फीति</p>",
+      "option4": "<p>Negative inflation with low unemployment / कम बेरोजगारी के साथ नकारात्मक मुद्रास्फीति</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Stagflation is a condition of slow economic growth and relatively high unemployment accompanied by rising prices.<br/>स्टैगफ्लेशन धीमी आर्थिक वृद्धि और अपेक्षाकृत उच्च बेरोजगारी की स्थिति है जिसके साथ बढ़ती कीमतें भी जुड़ी होती हैं।</p>"
+    },
+    {
+      "sr_no": 9,
+      "question": "<p>Consider the following statements about the 'Marginal Utility': <br/>'सीमांत उपयोगिता' (Marginal Utility) के बारे में निम्नलिखित कथनों पर विचार करें: <br/>(a) It is the additional satisfaction gained from consuming one more unit of a good. / यह किसी वस्तु की एक और इकाई का उपभोग करने से प्राप्त अतिरिक्त संतुष्टि है। <br/>(b) As consumption increases, marginal utility always increases. / जैसे-जैसे उपभोग बढ़ता है, सीमांत उपयोगिता हमेशा बढ़ती है। <br/>(c) When total utility is maximum, marginal utility is zero. / जब कुल उपयोगिता अधिकतम होती है, तो सीमांत उपयोगिता शून्य होती है।<br/>Which of the statements given above are correct?<br/>ऊपर दिए गए कथनों में से कौन-से सही हैं?</p>",
+      "option1": "<p>a and b / a और b</p>",
+      "option2": "<p>b and c / b और c</p>",
+      "option3": "<p>a and c / a और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>According to the Law of Diminishing Marginal Utility, as consumption increases, MU decreases. At the point of satiety, TU is max and MU is zero.<br/>सीमांत उपयोगिता के ह्रास के नियम के अनुसार, उपभोग बढ़ने पर MU घटती है। तृप्ति के बिंदु पर, TU अधिकतम और MU शून्य होती है।</p>"
+    },
+    {
+      "sr_no": 10,
+      "question": "<p>'Disguised Unemployment' is generally observed in which sector in India? <br/>भारत में 'प्रच्छन्न बेरोजगारी' (Disguised Unemployment) सामान्यतः किस क्षेत्र में देखी जाती है?</p>",
+      "option1": "<p>Industrial Sector / औद्योगिक क्षेत्र</p>",
+      "option2": "<p>Service Sector / सेवा क्षेत्र</p>",
+      "option3": "<p>Agricultural Sector / कृषि क्षेत्र</p>",
+      "option4": "<p>Defense Sector / रक्षा क्षेत्र</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Disguised unemployment occurs when more people are working than required, common in Indian agriculture where marginal productivity is zero.<br/>प्रच्छन्न बेरोजगारी तब होती है जब आवश्यकता से अधिक लोग काम कर रहे होते हैं, जो भारतीय कृषि में आम है जहां सीमांत उत्पादकता शून्य होती है।</p>"
+    },
+    {
+      "sr_no": 11,
+      "question": "<p>Consider the following statements regarding 'Demand-Pull Inflation': <br/>'मांग-प्रेरित मुद्रास्फीति' (Demand-Pull Inflation) के संबंध में निम्नलिखित कथनों पर विचार करें: <br/>(a) It occurs when aggregate demand exceeds aggregate supply. / यह तब होता है जब कुल मांग कुल आपूर्ति से अधिक हो जाती है। <br/>(b) It can be caused by an increase in government spending. / यह सरकारी खर्च में वृद्धि के कारण हो सकता है। <br/>(c) It can be controlled by increasing the money supply in the market. / इसे बाजार में मुद्रा आपूर्ति बढ़ाकर नियंत्रित किया जा सकता है।<br/>Which of the above statements is/are correct? <br/>उपरोक्त में से कौन-सा/से कथन सही है/हैं?</p>",
+      "option1": "<p>a and b / a और b</p>",
+      "option2": "<p>b and c / b और c</p>",
+      "option3": "<p>a and c / a और c</p>",
+      "option4": "<p>a only / केवल a</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Demand-pull inflation happens when \"too much money chases too few goods\". Reducing money supply (not increasing) helps control it.<br/>मांग-प्रेरित मुद्रास्फीति तब होती है जब \"बहुत अधिक पैसा बहुत कम वस्तुओं का पीछा करता है\"। मुद्रा आपूर्ति कम करने से इसे नियंत्रित करने में मदद मिलती है।</p>"
+    },
+    {
+      "sr_no": 12,
+      "question": "<p>The problem of 'Double Counting' in economy refers to: <br/>अर्थव्यवस्था में 'दोहरी गणना' (Double Counting) की समस्या का तात्पर्य है:</p>",
+      "option1": "<p>Counting both exports and imports / निर्यात और आयात दोनों की गणना करना</p>",
+      "option2": "<p>Counting the value of a commodity more than once in GDP / जीडीपी में किसी वस्तु के मूल्य की एक से अधिक बार गणना करना</p>",
+      "option3": "<p>Counting tax as part of income / कर को आय के हिस्से के रूप में गिनना</p>",
+      "option4": "<p>Using both nominal and real GDP / नॉमिनल और रियल जीडीपी दोनों का उपयोग करना</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Double counting occurs when the value of intermediate goods is added to the GDP alongside the value of the final product.<br/>दोहरी गणना तब होती है जब मध्यवर्ती वस्तुओं के मूल्य को अंतिम उत्पाद के मूल्य के साथ जीडीपी में जोड़ा जाता है।</p>"
+    },
+    {
+      "sr_no": 13,
+      "question": "<p>Consider the following statements about 'Frictional Unemployment': <br/>'घर्षण बेरोजगारी' (Frictional Unemployment) के बारे में निम्नलिखित कथनों पर विचार करें: <br/>(a) It is the time period between leaving one job and finding another. / यह एक नौकरी छोड़ने और दूसरी खोजने के बीच की समयावधि है।<br/>(b) It is also known as search unemployment. / इसे खोज बेरोजगारी के रूप में भी जाना जाता है। <br/>(c) It is a sign of a completely collapsed economy. / यह पूरी तरह से ध्वस्त अर्थव्यवस्था का संकेत है।<br/>Which of the statements given above are correct? <br/>ऊपर दिए गए कथनों में से कौन-से सही हैं?</p>",
+      "option1": "<p>a and b / a और b</p>",
+      "option2": "<p>b and c / b और c</p>",
+      "option3": "<p>a and c / a और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Frictional unemployment is natural and healthy for an economy as it shows mobility of labor looking for better opportunities.<br/>घर्षण बेरोजगारी एक अर्थव्यवस्था के लिए स्वाभाविक और स्वस्थ है क्योंकि यह बेहतर अवसरों की तलाश में श्रम की गतिशीलता को दर्शाती है।</p>"
+    },
+    {
+      "sr_no": 14,
+      "question": "<p>Which of the following is NOT an instrument to control inflation in India? <br/>निम्नलिखित में से कौन सा भारत में मुद्रास्फीति को नियंत्रित करने का साधन नहीं है?</p>",
+      "option1": "<p>Increasing Repo Rate / रेपो रेट बढ़ाना</p>",
+      "option2": "<p>Decreasing Cash Reserve Ratio (CRR) / नकद आरक्षित अनुपात (CRR) घटाना</p>",
+      "option3": "<p>Selling Government Securities in Open Market / खुले बाजार में सरकारी प्रतिभूतियों को बेचना</p>",
+      "option4": "<p>Increasing SLR / SLR बढ़ाना</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Decreasing CRR increases liquidity in the market, which can actually increase inflation rather than controlling it.<br/>CRR को कम करने से बाजार में तरलता बढ़ती है, जिससे मुद्रास्फीति नियंत्रित होने के बजाय बढ़ सकती है।</p>"
+    },
+    {
+      "sr_no": 15,
+      "question": "<p>Consider the following statements regarding the 'Substitution Effect' in Micro-economics: <br/>व्यष्टि अर्थशास्त्र में 'प्रतिस्थापन प्रभाव' (Substitution Effect) के संबंध में निम्नलिखित कथनों पर विचार करें: <br/>(a) It occurs when a consumer replaces a cheaper good with a more expensive one. / यह तब होता है जब उपभोक्ता सस्ती वस्तु को अधिक महंगी वस्तु से बदल देता है। <br/>(b) It happens because consumers seek to maximize utility within their budget. / ऐसा इसलिए होता है क्योंकि उपभोक्ता अपने बजट के भीतर उपयोगिता को अधिकतम करना चाहते हैं। <br/>(c) It works along with the Income Effect to change demand. / यह मांग को बदलने के लिए आय प्रभाव के साथ काम करता है।<br/>Which of the above statements are correct? <br/>उपरोक्त में से कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b / a और b</p>",
+      "option2": "<p>b and c / b और c</p>",
+      "option3": "<p>a and c / a और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>The Substitution Effect occurs when consumers switch from a good that has become more expensive to a relatively cheaper substitute.<br/>प्रतिस्थापन प्रभाव तब होता है जब उपभोक्ता उस वस्तु से हट जाते हैं जो महंगी हो गई है और अपेक्षाकृत सस्ते विकल्प की ओर जाते हैं।</p>"
+    },
+    {
+      "sr_no": 16,
+      "question": "<p>Consider the following statements regarding 'Normal Goods' and 'Inferior Goods':<br/>'सामान्य वस्तुओं' (Normal Goods) और 'घटिया वस्तुओं' (Inferior Goods) के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) For normal goods, demand increases as consumer income rises. / सामान्य वस्तुओं के लिए, उपभोक्ता की आय बढ़ने पर मांग बढ़ती है।<br/>(b) For inferior goods, there is an inverse relationship between income and demand. / घटिया वस्तुओं के लिए, आय और मांग के बीच विपरीत संबंध होता है।<br/>(c) Coarse cereals (बाजरा) are often cited as an example of inferior goods. / मोटे अनाज (बाजरा) को अक्सर घटिया वस्तुओं के उदाहरण के रूप में उद्धृत किया जाता है।<br/>Which of the above statements are correct? <br/>उपरोक्त में से कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b / a और b</p>",
+      "option2": "<p>b and c / b और c</p>",
+      "option3": "<p>a and c / a और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Normal goods have a positive income elasticity, while inferior goods have a negative income elasticity. As income grows, people shift from coarse grains to superior grains like rice or wheat.<br/>सामान्य वस्तुओं में सकारात्मक आय लोच होती है, जबकि घटिया वस्तुओं में नकारात्मक आय लोच होती है। जैसे-जैसे आय बढ़ती है, लोग मोटे अनाज से चावल या गेहूं जैसे बेहतर अनाज की ओर बढ़ते हैं।</p>"
+    },
+    {
+      "sr_no": 17,
+      "question": "<p>Which of the following defines 'Deflation' correctly?<br/>निम्नलिखित में से कौन 'अपस्फीति' (Deflation) को सही ढंग से परिभाषित करता है?</p>",
+      "option1": "<p>A decrease in the rate of inflation. / मुद्रास्फीति की दर में कमी।</p>",
+      "option2": "<p>A persistent decrease in the general price level of goods and services. / वस्तुओं और सेवाओं के सामान्य मूल्य स्तर में निरंतर कमी।</p>",
+      "option3": "<p>High inflation followed by a sudden crash in prices. / उच्च मुद्रास्फीति के बाद कीमतों में अचानक गिरावट।</p>",
+      "option4": "<p>An increase in the value of money due to high production. / उच्च उत्पादन के कारण मुद्रा के मूल्य में वृद्धि।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Deflation is the opposite of inflation; it occurs when the inflation rate falls below 0% (negative inflation), leading to a rise in the real value of money.<br/>अपस्फीति मुद्रास्फीति का उल्टा है; यह तब होता है जब मुद्रास्फीति की दर 0% से नीचे गिर जाती है (नकारात्मक मुद्रास्फीति), जिससे मुद्रा के वास्तविक मूल्य में वृद्धि होती है।</p>"
+    },
+    {
+      "sr_no": 18,
+      "question": "<p>Consider the following statements about 'Cyclical Unemployment':<br/>'चक्रीय बेरोजगारी' (Cyclical Unemployment) के बारे में निम्नलिखित कथनों पर विचार करें:<br/>(a) It is associated with the business cycle of an economy. / यह एक अर्थव्यवस्था के व्यापार चक्र (Business Cycle) से जुड़ा है।<br/>(b) It rises during economic recessions and falls during expansions. / यह आर्थिक मंदी के दौरान बढ़ता है और विस्तार के दौरान घटता है।<br/>(c) It is a permanent feature of developing economies like India. / यह भारत जैसी विकासशील अर्थव्यवस्थाओं की एक स्थायी विशेषता है।<br/>Which of the statements given above is/are correct? <br/>ऊपर दिए गए कथनों में से कौन-सा/से सही है/हैं?</p>",
+      "option1": "<p>a and b / a और b</p>",
+      "option2": "<p>b only / केवल b</p>",
+      "option3": "<p>a and c / a और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Cyclical unemployment is temporary and directly related to economic ups and downs. Structural and Disguised unemployment are more prominent permanent features in India.<br/>चक्रीय बेरोजगारी अस्थायी होती है और सीधे आर्थिक उतार-चढ़ाव से संबंधित होती है। भारत में संरचनात्मक और प्रच्छन्न बेरोजगारी अधिक प्रमुख स्थायी विशेषताएं हैं।</p>"
+    },
+    {
+      "sr_no": 19,
+      "question": "<p>In the context of 'Production Possibility Curve' (PPC), which of the following is true?<br/>'उत्पादन संभावना वक्र' (PPC) के संदर्भ में, निम्नलिखित में से कौन सा सत्य है?</p>",
+      "option1": "<p>It is convex to the origin. / यह मूल बिंदु (origin) के प्रति उत्तल होता है।</p>",
+      "option2": "<p>It shows the maximum possible output combinations of two goods. / यह दो वस्तुओं के अधिकतम संभव उत्पादन संयोजनों को दर्शाता है।</p>",
+      "option3": "<p>Any point inside the curve indicates over-utilization of resources. / वक्र के अंदर कोई भी बिंदु संसाधनों के अत्यधिक उपयोग को इंगित करता है।</p>",
+      "option4": "<p>It shifts inward when there is technological advancement. / तकनीकी प्रगति होने पर यह अंदर की ओर खिसकता है।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>PPC is concave to the origin due to increasing marginal opportunity cost. Points inside the curve indicate under-utilization of resources.<br/>बढ़ती सीमांत अवसर लागत के कारण PPC मूल बिंदु के प्रति नतोदर (concave) होता है। वक्र के अंदर के बिंदु संसाधनों के कम उपयोग को दर्शाते हैं।</p>"
+    },
+    {
+      "sr_no": 20,
+      "question": "<p>Consider the following statements regarding 'Headline Inflation':<br/>'हेडलाइन मुद्रास्फीति' (Headline Inflation) के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) It measures the total inflation within an economy. / यह एक अर्थव्यवस्था के भीतर कुल मुद्रास्फीति को मापता है।<br/>(b) It excludes volatile sectors like food and fuel. / इसमें भोजन और ईंधन जैसे अस्थिर क्षेत्रों को शामिल नहीं किया जाता है।<br/>(c) In India, it is currently measured using the Consumer Price Index (Combined). / भारत में, इसे वर्तमान में उपभोक्ता मूल्य सूचकांक (संयुक्त) का उपयोग करके मापा जाता है।<br/>Which of the statements given above are correct? <br/>ऊपर दिए गए कथनों में से कौन-से सही हैं?</p>",
+      "option1": "<p>a and b / a और b</p>",
+      "option2": "<p>b and c / b और c</p>",
+      "option3": "<p>a and c / a और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Headline inflation includes all commodities including food and fuel. Core inflation is the one that excludes these volatile sectors.<br/>हेडलाइन मुद्रास्फीति में भोजन और ईंधन सहित सभी वस्तुएं शामिल होती हैं। 'कोर मुद्रास्फीति' वह है जिसमें इन अस्थिर क्षेत्रों को बाहर रखा जाता है।</p>"
+    },
+    {
+      "sr_no": 21,
+      "question": "<p>'Gresham’s Law' in economics relates to which of the following?<br/>अर्थशास्त्र में 'ग्रेशम का नियम' (Gresham’s Law) निम्नलिखित में से किससे संबंधित है?</p>",
+      "option1": "<p>Consumption and Income / उपभोग और आय</p>",
+      "option2": "<p>Circulation of Currency / मुद्रा का संचलन</p>",
+      "option3": "<p>Supply and Demand / आपूर्ति और मांग</p>",
+      "option4": "<p>Taxation and Revenue / कराधान और राजस्व</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Gresham’s Law states that \"Bad money drives out good money\" from circulation if they have the same face value but different intrinsic values.<br/>ग्रेशम का नियम बताता है कि \"बुरी मुद्रा अच्छी मुद्रा को संचलन से बाहर कर देती है\" यदि उनका अंकित मूल्य समान हो लेकिन आंतरिक मूल्य भिन्न हो।</p>"
+    },
+    {
+      "sr_no": 22,
+      "question": "<p>Consider the following statements about the 'Law of Equi-Marginal Utility':<br/>'सम-सीमांत उपयोगिता के नियम' (Law of Equi-Marginal Utility) के बारे में निम्नलिखित कथनों पर विचार करें:<br/>(a) It is also known as Gossen's Second Law. / इसे गोसेन के दूसरे नियम के रूप में भी जाना जाता है।<br/>(b) A consumer gets maximum satisfaction when the ratio of MU to price is equal for all goods. / एक उपभोक्ता को अधिकतम संतुष्टि तब मिलती है जब सभी वस्तुओं के लिए MU और कीमत का अनुपात बराबर होता है।<br/>(c) It assumes that the consumer is irrational. / यह मानता है कि उपभोक्ता तर्कहीन है।<br/>Which of the above statements is/are correct? <br/>उपरोक्त में से कौन-सा/से कथन सही है/हैं?</p>",
+      "option1": "<p>a and b / a और b</p>",
+      "option2": "<p>b and c / b और c</p>",
+      "option3": "<p>a only / केवल a</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>The law assumes consumers are rational. Maximum satisfaction is achieved when MUx / Px = MUy / Py.<br/>यह नियम मानता है कि उपभोक्ता तर्कसंगत हैं। अधिकतम संतुष्टि तब प्राप्त होती है जब MUx / Px = MUy / Py हो।</p>"
+    },
+    {
+      "sr_no": 23,
+      "question": "<p>Which type of unemployment is characterized by workers being overqualified for their jobs?<br/>किस प्रकार की बेरोजगारी की विशेषता यह है कि श्रमिक अपनी नौकरी के लिए अधिक योग्य (overqualified) होते हैं?</p>",
+      "option1": "<p>Structural Unemployment / संरचनात्मक बेरोजगारी</p>",
+      "option2": "<p>Frictional Unemployment / घर्षण बेरोजगारी</p>",
+      "option3": "<p>Underemployment / अल्प-रोज़गार</p>",
+      "option4": "<p>Voluntary Unemployment / स्वैच्छिक बेरोजगारी</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Underemployment occurs when a person is employed but not in a job that utilizes their full skills or provides full-time hours.<br/>अल्प-रोज़गार तब होता है जब कोई व्यक्ति नियोजित तो होता है लेकिन ऐसी नौकरी में नहीं होता जो उसके पूर्ण कौशल का उपयोग करे या पूर्णकालिक घंटे प्रदान करे।</p>"
+    },
+    {
+      "sr_no": 24,
+      "question": "<p>Consider the following statements regarding 'Base Year' in Inflation calculation:<br/>मुद्रास्फीति की गणना में 'आधार वर्ष' (Base Year) के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) The current base year for WPI in India is 2011-12. / भारत में WPI के लिए वर्तमान आधार वर्ष 2011-12 है।<br/>(b) The price index of the base year is always taken as 100. / आधार वर्ष का मूल्य सूचकांक हमेशा 100 माना जाता है।<br/>(c) Base year should be a year of extreme economic fluctuations. / आधार वर्ष अत्यधिक आर्थिक उतार-चढ़ाव वाला वर्ष होना चाहिए।<br/>Which of the statements given above are correct? <br/>ऊपर दिए गए कथनों में से कौन-से सही हैं?</p>",
+      "option1": "<p>a and b / a और b</p>",
+      "option2": "<p>b and c / b और c</p>",
+      "option3": "<p>a and c / a और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>A base year should be a \"normal year\" without extreme fluctuations like wars or natural disasters to ensure accurate comparison.<br/>सटीक तुलना सुनिश्चित करने के लिए आधार वर्ष युद्ध या प्राकृतिक आपदाओं जैसे अत्यधिक उतार-चढ़ाव के बिना एक \"सामान्य वर्ष\" होना चाहिए।</p>"
+    },
+    {
+      "sr_no": 25,
+      "question": "<p>The concept of 'Invisible Hand' was introduced by:<br/>'अदृश्य हाथ' (Invisible Hand) की अवधारणा किसके द्वारा प्रस्तुत की गई थी?</p>",
+      "option1": "<p>John Maynard Keynes / जॉन मेनार्ड कीन्स</p>",
+      "option2": "<p>Adam Smith / एडम स्मिथ</p>",
+      "option3": "<p>Karl Marx / कार्ल मार्क्स</p>",
+      "option4": "<p>David Ricardo / डेविड रिकार्डो</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Adam Smith used this term in his book 'The Wealth of Nations' (1776) to describe how self-interest in a free market leads to societal benefits.<br/>एडम स्मिथ ने अपनी पुस्तक 'द वेल्थ ऑफ नेशंस' (1776) में इस शब्द का उपयोग यह वर्णन करने के लिए किया था कि कैसे मुक्त बाजार में स्व-हित समाज के लाभ की ओर ले जाता है।</p>"
+    },
+    {
+      "sr_no": 26,
+      "question": "<p>Consider the following statements about 'Producer Equilibrium':<br/>'उत्पादक संतुलन' (Producer Equilibrium) के बारे में निम्नलिखित कथनों पर विचार करें:<br/>(a) It is the state where a producer gets maximum profit. / यह वह स्थिति है जहाँ एक उत्पादक को अधिकतम लाभ प्राप्त होता है।<br/>(b) It occurs where Marginal Revenue (MR) equals Marginal Cost (MC). / यह वहां होता है जहां सीमांत राजस्व (MR), सीमांत लागत (MC) के बराबर होता है।<br/>(c) MC must be falling at the point of equilibrium. / संतुलन के बिंदु पर MC गिरता हुआ होना चाहिए।<br/>Which of the above statements is/are correct? <br/>उपरोक्त में से कौन-सा/से कथन सही है/हैं?</p>",
+      "option1": "<p>a and b / a और b</p>",
+      "option2": "<p>b only / केवल b</p>",
+      "option3": "<p>a and c / a और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>At equilibrium, MR=MC and MC must be rising (not falling) after the point of equilibrium to ensure profit maximization.<br/>संतुलन पर MR=MC होता है और लाभ अधिकतमकरण सुनिश्चित करने के लिए संतुलन के बिंदु के बाद MC बढ़ता हुआ (गिरता हुआ नहीं) होना चाहिए।</p>"
+    },
+    {
+      "sr_no": 27,
+      "question": "<p>'NAIRU' stands for which of the following in Economics?<br/>अर्थशास्त्र में 'NAIRU' का तात्पर्य निम्नलिखित में से किससे है?</p>",
+      "option1": "<p>Non-Accelerating Inflation Rate of Unemployment / बेरोजगारी की गैर-त्वरित मुद्रास्फीति दर</p>",
+      "option2": "<p>National Association of Inflation and Resource Union / मुद्रास्फीति और संसाधन संघ का राष्ट्रीय संघ</p>",
+      "option3": "<p>Net Annual Income and Revenue Unit / शुद्ध वार्षिक आय और राजस्व इकाई</p>",
+      "option4": "<p>Newly Adjusted Inflationary Rate of Utility / उपयोगिता की नई समायोजित मुद्रास्फीति दर</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>NAIRU is the specific level of unemployment that does not cause inflation to rise.<br/>NAIRU बेरोजगारी का वह विशिष्ट स्तर है जिससे मुद्रास्फीति में वृद्धि नहीं होती है।</p>"
+    },
+    {
+      "sr_no": 28,
+      "question": "<p>Consider the following statements regarding 'Micro-economics':<br/>'व्यष्टि अर्थशास्त्र' (Micro-economics) के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) It deals with the behavior of individual economic units like consumers and firms. / यह उपभोक्ताओं और फर्मों जैसी व्यक्तिगत आर्थिक इकाइयों के व्यवहार से संबंधित है।<br/>(b) It is also known as 'Price Theory'. / इसे 'कीमत सिद्धांत' (Price Theory) के रूप में भी जाना जाता है।<br/>(c) It studies aggregate variables like National Income. / यह राष्ट्रीय आय जैसे कुल चरों का अध्ययन करता है।<br/>Which of the statements given above are correct? <br/>ऊपर दिए गए कथनों में से कौन-से सही हैं?</p>",
+      "option1": "<p>a and b / a और b</p>",
+      "option2": "<p>b and c / b और c</p>",
+      "option3": "<p>a and c / a और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>National Income and aggregate variables are the subject matter of Macro-economics, not Micro-economics.<br/>राष्ट्रीय आय और कुल चर समष्टि अर्थशास्त्र (Macro-economics) के विषय हैं, व्यष्टि अर्थशास्त्र के नहीं।</p>"
+    },
+    {
+      "sr_no": 29,
+      "question": "<p>What happens to the 'Purchasing Power of Money' during Inflation?<br/>मुद्रास्फीति के दौरान 'मुद्रा की क्रय शक्ति' का क्या होता है?</p>",
+      "option1": "<p>It increases / यह बढ़ती है</p>",
+      "option2": "<p>It decreases / यह घटती है</p>",
+      "option3": "<p>It remains constant / यह स्थिर रहती है</p>",
+      "option4": "<p>It first increases then decreases / यह पहले बढ़ती है फिर घटती है</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Inflation means prices rise, which means the same amount of money can buy fewer goods than before, reducing its purchasing power.<br/>मुद्रास्फीति का अर्थ है कीमतों का बढ़ना, जिसका अर्थ है कि उतनी ही मात्रा में धन पहले की तुलना में कम वस्तुएं खरीद सकता है, जिससे इसकी क्रय शक्ति कम हो जाती है।</p>"
+    },
+    {
+      "sr_no": 30,
+      "question": "<p>Consider the following statements regarding the 'Labour Force Participation Rate' (LFPR):<br/>'श्रम बल भागीदारी दर' (LFPR) के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) It includes both employed and those actively looking for work. / इसमें नियोजित और सक्रिय रूप से काम की तलाश करने वाले दोनों शामिल हैं।<br/>(b) It includes students and retirees. / इसमें छात्र और सेवानिवृत्त लोग शामिल हैं।<br/>(c) High LFPR is generally a sign of a productive economy. / उच्च LFPR सामान्यतः एक उत्पादक अर्थव्यवस्था का संकेत है।<br/>Which of the above statements is/are correct? <br/>उपरोक्त में से कौन-सा/से कथन सही है/हैं?</p>",
+      "option1": "<p>a only / केवल a</p>",
+      "option2": "<p>a and c / a और c</p>",
+      "option3": "<p>b and c / b और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>LFPR excludes people who are not looking for work, such as full-time students, homemakers, and retirees.<br/>LFPR में उन लोगों को बाहर रखा जाता है जो काम की तलाश नहीं कर रहे हैं, जैसे पूर्णकालिक छात्र, गृहिणी और सेवानिवृत्त लोग।</p>"
+    },
+    {
+      "sr_no": 31,
+      "question": "<p>Consider the following statements regarding 'Elasticity of Demand': <br/>'मांग की लोच' के संबंध में निम्नलिखित कथनों पर विचार करें: <br/>(a) If demand is perfectly inelastic, the demand curve is a vertical straight line. / यदि मांग पूरी तरह से बेलोचदार है, तो मांग वक्र एक ऊर्ध्वाधर सीधी रेखा होती है। <br/>(b) Essential goods like life-saving drugs generally have elastic demand. / जीवन रक्षक दवाओं जैसी आवश्यक वस्तुओं की मांग आमतौर पर लोचदार होती है। <br/>(c) Unitary elastic demand means the percentage change in quantity equals the percentage change in price. / इकाई लोचदार मांग का अर्थ है कि मात्रा में प्रतिशत परिवर्तन कीमत में प्रतिशत परिवर्तन के बराबर है।<br/>Which of the statements given above are correct? <br/>ऊपर दिए गए कथनों में से कौन-से सही हैं?</p>",
+      "option1": "<p>a and b / a और b</p>",
+      "option2": "<p>b and c / b और c</p>",
+      "option3": "<p>a and c / a और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Essential goods have 'Inelastic' demand because people must buy them regardless of price changes.<br/>आवश्यक वस्तुओं की मांग 'बेलोचदार' (Inelastic) होती है क्योंकि कीमत में बदलाव के बावजूद लोगों को उन्हें खरीदना ही पड़ता है।</p>"
+    },
+    {
+      "sr_no": 32,
+      "question": "<p>In the context of Inflation, what does the 'Inflation Tax' refer to? <br/>मुद्रास्फीति के संदर्भ में, 'मुद्रास्फीति कर' (Inflation Tax) का क्या तात्पर्य है?</p>",
+      "option1": "<p>A new tax levied by the government during high inflation. / उच्च मुद्रास्फीति के दौरान सरकार द्वारा लगाया गया एक नया कर।</p>",
+      "option2": "<p>The penalty paid by companies for increasing prices. / कीमतें बढ़ाने के लिए कंपनियों द्वारा भुगतान किया गया दंड।</p>",
+      "option3": "<p>The erosion of the real value of money held by the public. / जनता के पास मौजूद मुद्रा के वास्तविक मूल्य में होने वाली गिरावट।</p>",
+      "option4": "<p>Tax on the luxury goods during inflation. / मुद्रास्फीति के दौरान विलासिता की वस्तुओं पर कर।</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Inflation tax is not a legal tax but a hidden cost where inflation reduces the purchasing power of cash holdings.<br/>मुद्रास्फीति कर कोई कानूनी कर नहीं है बल्कि एक छिपी हुई लागत है जहां मुद्रास्फीति नकद होल्डिंग्स की क्रय शक्ति को कम कर देती है।</p>"
+    },
+    {
+      "sr_no": 33,
+      "question": "<p>Consider the following statements about 'Disinflation': <br/>'विसंस्फीति' (Disinflation) के बारे में निम्नलिखित कथनों पर विचार करें: <br/>(a) It is a decrease in the rate of inflation. / यह मुद्रास्फीति की दर में होने वाली कमी है। <br/>(b) In this situation, prices are still rising but at a slower pace. / इस स्थिति में कीमतें अभी भी बढ़ रही होती हैं, लेकिन धीमी गति से। <br/>(c) It is the same as Deflation. / यह अपस्फीति (Deflation) के समान ही है।<br/>Which of the above statements is/are correct? <br/>उपरोक्त में से कौन-सा/से कथन सही है/हैं?</p>",
+      "option1": "<p>a only / केवल a</p>",
+      "option2": "<p>a and b / a और b</p>",
+      "option3": "<p>b and c / b और c</p>",
+      "option4": "<p>c only / केवल c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Disinflation is a slowing in the rate of price increase (e.g., from 10% to 5%). Deflation is when prices actually drop (negative inflation).<br/>विसंस्फीति मूल्य वृद्धि की दर में गिरावट है (जैसे 10% से 5%)। अपस्फीति तब होती है जब कीमतें वास्तव में गिरती हैं (नकारात्मक मुद्रास्फीति)।</p>"
+    },
+    {
+      "sr_no": 34,
+      "question": "<p>Which of the following is a characteristic of 'Monopolistic Competition'? <br/>निम्नलिखित में से कौन 'एकाधिकृत प्रतियोगिता' (Monopolistic Competition) की विशेषता है?</p>",
+      "option1": "<p>Single seller and large number of buyers / एकल विक्रेता और बड़ी संख्या में खरीदार</p>",
+      "option2": "<p>Homogeneous products / समरूप उत्पाद</p>",
+      "option3": "<p>Product differentiation through branding / ब्रांडिंग के माध्यम से उत्पाद भिन्नता</p>",
+      "option4": "<p>Barriers to entry and exit / प्रवेश और निकास में बाधाएं</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>In Monopolistic competition (like soap or toothpaste markets), many firms sell products that are similar but not identical.<br/>एकाधिकृत प्रतियोगिता में (जैसे साबुन या टूथपेस्ट बाजार), कई फर्में ऐसे उत्पाद बेचती हैं जो समान होते हैं लेकिन एक जैसे (समरूप) नहीं होते।</p>"
+    },
+    {
+      "sr_no": 35,
+      "question": "<p>Consider the following statements regarding the 'Producer Price Index' (PPI): <br/>'उत्पादक मूल्य सूचकांक' (PPI) के संबंध में निम्नलिखित कथनों पर विचार करें: <br/>(a) It measures the average change in prices received by domestic producers. / यह घरेलू उत्पादकों द्वारा प्राप्त कीमतों में औसत परिवर्तन को मापता है। <br/>(b) It includes indirect taxes like GST. / इसमें GST जैसे अप्रत्यक्ष कर शामिल होते हैं। <br/>(c) It is considered a better indicator of future CPI. / इसे भविष्य के CPI का बेहतर संकेतक माना जाता है।<br/>Which of the statements given above are correct? <br/>ऊपर दिए गए कथनों में से कौन-से सही हैं?</p>",
+      "option1": "<p>a and b / a और b</p>",
+      "option2": "<p>a and c / a और c</p>",
+      "option3": "<p>b and c / b और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>PPI excludes indirect taxes because it measures the revenue received by the producer, not what the consumer pays.<br/>PPI में अप्रत्यक्ष कर शामिल नहीं होते क्योंकि यह उत्पादक द्वारा प्राप्त राजस्व को मापता है, न कि वह जो उपभोक्ता भुगतान करता है।</p>"
+    },
+    {
+      "sr_no": 36,
+      "question": "<p>The 'Menu Costs' in economics are associated with: <br/>अर्थशास्त्र में 'मेन्यू लागत' (Menu Costs) किससे संबंधित हैं?</p>",
+      "option1": "<p>The cost of food in restaurants / रेस्तरां में भोजन की लागत</p>",
+      "option2": "<p>The cost to a firm resulting from changing its prices / अपनी कीमतें बदलने के परिणामस्वरूप एक फर्म को होने वाली लागत</p>",
+      "option3": "<p>The cost of printing new currency / नई मुद्रा छापने की लागत</p>",
+      "option4": "<p>The cost of luxury consumption / विलासितापूर्ण उपभोग की लागत</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>During inflation, firms incur costs to update price lists, catalogs, and labels, which are termed as Menu Costs.<br/>मुद्रास्फीति के दौरान, फर्मों को मूल्य सूची, कैटलॉग और लेबल को अपडेट करने के लिए लागत वहन करनी पड़ती है, जिसे मेन्यू लागत कहा जाता है।</p>"
+    },
+    {
+      "sr_no": 37,
+      "question": "<p>Consider the following statements about 'Veblen Goods': <br/>'वेबलेन वस्तुओं' (Veblen Goods) के बारे में निम्नलिखित कथनों पर विचार करें: <br/>(a) Their demand increases as the price increases. / इनकी मांग कीमत बढ़ने पर बढ़ती है। <br/>(b) They are generally luxury goods that serve as status symbols. / ये आम तौर पर विलासिता की वस्तुएं होती हैं जो स्टेटस सिंबल के रूप में काम करती हैं। <br/>(c) They follow the standard Law of Demand. / ये मांग के मानक नियम का पालन करते हैं।<br/>Which of the above statements is/are correct? <br/>उपरोक्त में से कौन-सा/से कथन सही है/हैं?</p>",
+      "option1": "<p>a only / केवल a</p>",
+      "option2": "<p>b only / केवल b</p>",
+      "option3": "<p>a and b / a और b</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Veblen goods (like high-end watches or designer bags) are exceptions to the Law of Demand; higher prices make them more desirable.<br/>वेबलेन वस्तुएं (जैसे महंगी घड़ियाँ या डिजाइनर बैग) मांग के नियम के अपवाद हैं; उच्च कीमतें उन्हें अधिक वांछनीय बनाती हैं।</p>"
+    },
+    {
+      "sr_no": 38,
+      "question": "<p>What is 'Open Unemployment'? <br/>'खुली बेरोजगारी' (Open Unemployment) क्या है?</p>",
+      "option1": "<p>When a person is willing to work but finds no job. / जब कोई व्यक्ति काम करने का इच्छुक हो लेकिन उसे कोई काम न मिले।</p>",
+      "option2": "<p>When a person is working but earning very little. / जब कोई व्यक्ति काम कर रहा हो लेकिन बहुत कम कमा रहा हो।</p>",
+      "option3": "<p>When a person is unemployed due to technology. / जब कोई व्यक्ति तकनीक के कारण बेरोजगार हो।</p>",
+      "option4": "<p>When a person works only for a few months in a year. / जब कोई व्यक्ति वर्ष में केवल कुछ ही महीनों के लिए काम करता है।</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Open unemployment is a situation where workers are able and willing to work at prevailing wage rates but remain without work.<br/>खुली बेरोजगारी वह स्थिति है जहां श्रमिक प्रचलित मजदूरी दरों पर काम करने में सक्षम और इच्छुक होते हैं लेकिन बिना काम के रहते हैं।</p>"
+    },
+    {
+      "sr_no": 39,
+      "question": "<p>Consider the following statements regarding 'Indifference Curves' (IC): <br/>'तटस्थता वक्र' (Indifference Curves) के संबंध में निम्नलिखित कथनों पर विचार करें: <br/>(a) IC is convex to the origin due to diminishing Marginal Rate of Substitution (MRS). / ह्रासमान सीमांत प्रतिस्थापन दर (MRS) के कारण IC मूल बिंदु के प्रति उत्तल होता है। <br/>(b) Two indifference curves can intersect each other. / दो तटस्थता वक्र एक दूसरे को काट सकते हैं। <br/>(c) Higher IC represents a higher level of satisfaction. / उच्च IC संतुष्टि के उच्च स्तर का प्रतिनिधित्व करता है।<br/>Which of the statements given above are correct? <br/>ऊपर दिए गए कथनों में से कौन-से सही हैं?</p>",
+      "option1": "<p>a and b / a और b</p>",
+      "option2": "<p>b and c / b और c</p>",
+      "option3": "<p>a and c / a और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Two ICs can never intersect because each curve represents a distinct and constant level of satisfaction.<br/>दो IC कभी भी एक-दूसरे को नहीं काट सकते क्योंकि प्रत्येक वक्र संतुष्टि के एक अलग और निरंतर स्तर का प्रतिनिधित्व करता है।</p>"
+    },
+    {
+      "sr_no": 40,
+      "question": "<p>Which ministry/organization releases the Periodic Labour Force Survey (PLFS) in India? <br/>भारत में आवधिक श्रम बल सर्वेक्षण (PLFS) कौन सा मंत्रालय/संगठन जारी करता है?</p>",
+      "option1": "<p>Ministry of Labour and Employment / श्रम और रोजगार मंत्रालय</p>",
+      "option2": "<p>NITI Aayog / नीति आयोग</p>",
+      "option3": "<p>National Statistical Office (NSO) / राष्ट्रीय सांख्यिकी कार्यालय (NSO)</p>",
+      "option4": "<p>RBI / भारतीय रिजर्व बैंक</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>The PLFS is released by the National Statistical Office (NSO) under the Ministry of Statistics and Programme Implementation (MoSPI).<br/>PLFS सांख्यिकी और कार्यक्रम कार्यान्वयन मंत्रालय (MoSPI) के तहत राष्ट्रीय सांख्यिकी कार्यालय (NSO) द्वारा जारी किया जाता है।</p>"
+    },
+    {
+      "sr_no": 41,
+      "question": "<p>Consider the following statements about 'Core Inflation': <br/>'कोर मुद्रास्फीति' (Core Inflation) के बारे में निम्नलिखित कथनों पर विचार करें: <br/>(a) It reflects the long-term trend in the price level. / यह मूल्य स्तर में दीर्घकालिक प्रवृत्ति को दर्शाता है। <br/>(b) It is calculated by stripping away volatile components like food and energy. / इसकी गणना भोजन और ऊर्जा जैसे अस्थिर घटकों को हटाकर की जाती है। <br/>(c) It is more stable than Headline Inflation. / यह हेडलाइन मुद्रास्फीति की तुलना में अधिक स्थिर है।<br/>Which of the above statements are correct? / उपरोक्त में से कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b / a और b</p>",
+      "option2": "<p>b and c / b और c</p>",
+      "option3": "<p>a and c / a और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Core inflation provides a clearer picture of the underlying inflation trend by removing temporary price shocks in food and fuel.<br/>कोर मुद्रास्फीति भोजन और ईंधन में अस्थायी मूल्य झटकों को हटाकर अंतर्निहित मुद्रास्फीति प्रवृत्ति की स्पष्ट तस्वीर प्रदान करती है।</p>"
+    },
+    {
+      "sr_no": 42,
+      "question": "<p>'For whom to produce' in an economy is a problem of: <br/>अर्थव्यवस्था में 'किसके लिए उत्पादन करना है' एक समस्या है:</p>",
+      "option1": "<p>Choice of technique / तकनीक का चुनाव</p>",
+      "option2": "<p>Distribution of national income / राष्ट्रीय आय का वितरण</p>",
+      "option3": "<p>Selection of goods / वस्तुओं का चयन</p>",
+      "option4": "<p>Allocation of resources / संसाधनों का आवंटन</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>This central problem relates to how the final goods and services are distributed among the individuals in the society (Distribution of Income).<br/>यह केंद्रीय समस्या इस बात से संबंधित है कि अंतिम वस्तुओं और सेवाओं को समाज के व्यक्तियों के बीच कैसे वितरित किया जाता है (आय का वितरण)।</p>"
+    },
+    {
+      "sr_no": 43,
+      "question": "<p>Consider the following statements regarding 'Seasonal Unemployment': <br/>'मौसमी बेरोजगारी' (Seasonal Unemployment) के संबंध में निम्नलिखित कथनों पर विचार करें: <br/>(a) It occurs when people are unable to find jobs during certain months of the year. / यह तब होता है जब लोग वर्ष के कुछ महीनों के दौरान नौकरी पाने में असमर्थ होते हैं। <br/>(b) It is most prevalent in the tourism and agriculture industries. / यह पर्यटन और कृषि उद्योगों में सबसे अधिक प्रचलित है। <br/>(c) It can be reduced by promoting agro-based industries. / इसे कृषि आधारित उद्योगों को बढ़ावा देकर कम किया जा सकता है। <br/>Which of the statements given above are correct?<br/>ऊपर दिए गए कथनों में से कौन-से सही हैं?</p>",
+      "option1": "<p>a and b / a और b</p>",
+      "option2": "<p>b and c / b और c</p>",
+      "option3": "<p>a and c / a और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Seasonal unemployment is common in sectors where demand varies by season. Diversification and agro-processing can provide year-round work.<br/>मौसमी बेरोजगारी उन क्षेत्रों में आम है जहां मांग मौसम के अनुसार बदलती रहती है। विविधीकरण और कृषि-प्रसंस्करण साल भर काम प्रदान कर सकते हैं।</p>"
+    },
+    {
+      "sr_no": 44,
+      "question": "<p>What is the 'Skimmed Milk Effect' in Micro-economics related to? <br/>व्यष्टि अर्थशास्त्र में 'स्किम्ड मिल्क इफेक्ट' (Skimmed Milk Effect) किससे संबंधित है?</p>",
+      "option1": "<p>Price discrimination in dairy products / डेयरी उत्पादों में मूल्य भेदभाव</p>",
+      "option2": "<p>A situation where a firm serves only the most profitable customers. / ऐसी स्थिति जहां एक फर्म केवल सबसे लाभदायक ग्राहकों को सेवा प्रदान करती है।</p>",
+      "option3": "<p>Decrease in demand for milk during inflation / मुद्रास्फीति के दौरान दूध की मांग में कमी</p>",
+      "option4": "<p>Government subsidy on basic goods / बुनियादी वस्तुओं पर सरकारी सब्सिडी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>In 'Cream Skimming', a company provides service only to high-value customers, leaving less profitable ones to other providers.<br/>'क्रीम स्किमिंग' में, एक कंपनी केवल उच्च-मूल्य वाले ग्राहकों को सेवा प्रदान करती है, जबकि कम लाभदायक ग्राहकों को अन्य प्रदाताओं के लिए छोड़ देती है।</p>"
+    },
+    {
+      "sr_no": 45,
+      "question": "<p>Consider the following statements about 'Hyperinflation': <br/>'हाइपरइन्फ्लेशन' (Hyperinflation) के बारे में निम्नलिखित कथनों पर विचार करें: <br/>(a) It is a situation where prices rise at an extremely rapid pace. / यह एक ऐसी स्थिति है जहां कीमतें बहुत तेजी से बढ़ती हैं। <br/>(b) Germany after World War I is a famous example. / प्रथम विश्व युद्ध के बाद जर्मनी इसका एक प्रसिद्ध उदाहरण है। <br/>(c) It leads to the total loss of confidence in the domestic currency. / इससे घरेलू मुद्रा में विश्वास की कुल हानि होती है।<br/>Which of the above statements is/are correct? <br/>उपरोक्त में से कौन-सा/से कथन सही है/हैं?</p>",
+      "option1": "<p>a only / केवल a</p>",
+      "option2": "<p>b and c / b और c</p>",
+      "option3": "<p>a and c / a और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Hyperinflation often occurs during wars or social unrest when the government prints too much money, making it worthless.<br/>हाइपरइन्फ्लेशन अक्सर युद्धों या सामाजिक अशांति के दौरान होता है जब सरकार बहुत अधिक पैसा छापती है, जिससे वह बेकार हो जाता है।</p>"
+    }
+  ]
+};
+
+// Extract questions and time from new structure
+const questions = quizData.questions;
+const totalTimeMinutes = quizData.time_minutes;
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = totalTimeMinutes * 60;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape') {
+      if (isPaletteOpen) {
+        closePalette();
+      }
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimer();
+    
+    // Auto-submit when time runs out
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      alert('Time is up! Submitting quiz automatically.');
+      submitQuiz();
+      return;
+    }
+    
+    if (timerSeconds <= 120) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    questionText.innerHTML = '';
+    const questionContent = createOptionContent(q.question);
+    questionText.appendChild(questionContent);
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message = `You have ${unattempted} unanswered questions. ${message}`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  const timeTaken = (totalTimeMinutes * 60) - timerSeconds;
+  const minutesTaken = Math.floor(timeTaken / 60);
+  const secondsTaken = timeTaken % 60;
+  const timeTakenText = `${minutesTaken}m ${secondsTaken}s`;
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeTakenText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    let questionDisplay = '';
+    if (isImageURL(q.question)) {
+      questionDisplay = `<img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`;
+    } else {
+      questionDisplay = q.question;
+    }
+    html += `<div class="question-review">
+      <h4>Q${q.sr_no}: ${questionDisplay}</h4>`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution && q.solution.trim() !== '') {
+      let solutionDisplay = '';
+      if (isImageURL(q.solution)) {
+        solutionDisplay = `<img src="${q.solution}" class="solution-image" alt="Solution" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">`;
+      } else {
+        solutionDisplay = q.solution;
+      }
+      
+      html += `<div class="solution-section" style="margin-top: 15px; padding: 15px; background: #f0f8ff; border-left: 4px solid #007bff; border-radius: 8px;">
+        <strong style="color: #007bff;">💡 Solution:</strong>
+        <div style="margin-top: 8px; color: #333;">${solutionDisplay}</div>
+      </div>`;
+    }
+    
+    html += `</div>`;
+  });
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https')) &&
+    (str.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i));
+}
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = totalTimeMinutes * 60;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    updateTimer();
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ECONOMICS - TEST - 1</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">MOTION 3.0 - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem('quizState', JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem('quizState');
+    if (saved) {
+      const state = JSON.parse(saved);
+      if (Date.now() - state.timestamp < 24 * 60 * 60 * 1000) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || (totalTimeMinutes * 60); // MODIFIED
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem('quizState');
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,2915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>FULL ECONOMICS TEST</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.question-image, .option-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: block;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎯 FULL ECONOMICS TEST</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color)"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color)"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color)"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color)"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">Clear</button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">Submit Quiz</button>
+</div>
+
+<script>
+// MODIFIED: Quiz data structure with time_minutes
+const quizData = {
+  "time_minutes": 50,
+  "questions": [
+    {
+      "sr_no": 1,
+      "question": "<p> <b>Consider the following statements regarding the 'Law of Demand': <br/> </b>मांग के नियम <b>(Law of Demand) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It states that there is a direct relationship between price and quantity demanded. / </b>यह बताता है कि कीमत और मांग की मात्रा के बीच सीधा संबंध है। <b><br/> (b) It assumes that 'Ceteris Paribus' (other things remaining constant). / </b>यह <b>'</b>सेटेरिस पैरिबस<b>' (</b>अन्य बातें समान रहने पर<b>) </b>की अवधारणा पर आधारित है। <b><br/> (c) Giffen goods are an exception to this law. / </b>गिफन वस्तुएं इस नियम का अपवाद हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Law of Demand states an inverse relationship between price and demand. Giffen goods show a positive price effect, making them an exception.<br/> मांग का नियम कीमत और मांग के बीच विपरीत संबंध बताता है। गिफन वस्तुओं में धनात्मक मूल्य प्रभाव दिखता है, जो उन्हें अपवाद बनाता है।</p>"
+    },
+    {
+      "sr_no": 2,
+      "question": "<p> <b>Which of the following is correct regarding 'Stagflation'? <br/> '</b>स्टैगफ्लेशन<b>' (Stagflation) </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> High inflation with low unemployment. / कम बेरोजगारी के साथ उच्च मुद्रास्फीति।</p>",
+      "option2": "<p> Low inflation with high economic growth. / उच्च आर्थिक विकास के साथ कम मुद्रास्फीति।</p>",
+      "option3": "<p> High inflation combined with stagnant economic growth and high unemployment. / स्थिर आर्थिक विकास और उच्च बेरोजगारी के साथ उच्च मुद्रास्फीति।</p>",
+      "option4": "<p> Continuous decrease in the general price level. / सामान्य मूल्य स्तर में निरंतर गिरावट।</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Stagflation is a rare economic condition where high inflation occurs simultaneously with stagnant growth and high unemployment.<br/> स्टैगफ्लेशन एक दुर्लभ आर्थिक स्थिति है जहाँ उच्च मुद्रास्फीति, स्थिर विकास और उच्च बेरोजगारी एक साथ होती है।</p>"
+    },
+    {
+      "sr_no": 3,
+      "question": "<p> <b>Consider the following statements about the 'Repo Rate': <br/> '</b>रेपो रेट<b>' (Repo Rate) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is the rate at which RBI lends money to commercial banks for short terms against government securities. / </b>यह वह दर है जिस पर <b>RBI </b>वाणिज्यिक बैंकों को सरकारी प्रतिभूतियों के बदले अल्पकालिक ऋण देता है। <b><br/> (b) An increase in Repo Rate helps in controlling inflation. / </b>रेपो रेट में वृद्धि मुद्रास्फीति को नियंत्रित करने में मदद करती है। <b><br/> (c) It is a part of the qualitative tools of monetary policy. / </b>यह मौद्रिक नीति के गुणात्मक उपकरणों का हिस्सा है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a only / केवल a</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Repo rate is a quantitative (not qualitative) tool of monetary policy used by RBI to control liquidity.<br/> रेपो रेट मौद्रिक नीति का एक मात्रात्मक (गुणात्मक नहीं) उपकरण है जिसका उपयोग RBI तरलता को नियंत्रित करने के लिए करता है।</p>"
+    },
+    {
+      "sr_no": 4,
+      "question": "<p> <b>The 'Lorenz Curve' is used to measure which of the following? <br/> '</b>लोरेंज वक्र<b>' (Lorenz Curve) </b>का उपयोग निम्नलिखित में से किसे मापने के लिए किया जाता है<b>?</b></p>",
+      "option1": "<p> Inflation rate / मुद्रास्फीति की दर</p>",
+      "option2": "<p> Unemployment level / बेरोजगारी का स्तर</p>",
+      "option3": "<p> Income inequality / आय की असमानता</p>",
+      "option4": "<p> Poverty line / गरीबी रेखा</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Lorenz Curve is a graphical representation of the distribution of income or wealth within a population.<br/> लोरेंज वक्र जनसंख्या के भीतर आय या धन के वितरण का एक ग्राफिकल प्रतिनिधित्व है।</p>"
+    },
+    {
+      "sr_no": 5,
+      "question": "<p> <b>Consider the following statements regarding 'Fiscal Deficit': <br/> '</b>राजकोषीय घाटे<b>' (Fiscal Deficit) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is the difference between the government's total expenditure and its total receipts including borrowings. / </b>यह सरकार के कुल व्यय और उधार सहित उसकी कुल प्राप्तियों के बीच का अंतर है। <b><br/> (b) It indicates the total borrowing requirements of the government. / </b>यह सरकार की कुल उधार आवश्यकताओं को इंगित करता है। <b><br/> (c) A high fiscal deficit always leads to high economic growth. / </b>उच्च राजकोषीय घाटा हमेशा उच्च आर्थिक विकास की ओर ले जाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> b only / केवल b</p>",
+      "option3": "<p> a and b / a और b</p>",
+      "option4": "<p> b and c / b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Fiscal deficit excludes borrowings from total receipts. While it can fund growth, a very high deficit may lead to inflation and debt traps.<br/> राजकोषीय घाटे में कुल प्राप्तियों से उधार को बाहर रखा जाता है। हालाँकि यह विकास को वित्तपोषित कर सकता है, लेकिन बहुत अधिक घाटा मुद्रास्फीति और ऋण जाल का कारण बन सकता है।</p>"
+    },
+    {
+      "sr_no": 6,
+      "question": "<p> <b>Which of the following is an example of a 'Capital Receipt' in the Union Budget?<br/> </b>केंद्रीय बजट में निम्नलिखित में से कौन<b>-</b>सा <b>'</b>पूंजीगत प्राप्ति<b>' (Capital Receipt) </b>का उदाहरण है<b>?</b></p>",
+      "option1": "<p> Interest received on loans given to states / राज्यों को दिए गए ऋण पर प्राप्त ब्याज</p>",
+      "option2": "<p> Dividends and profits from PSUs / PSUs से लाभांश और लाभ</p>",
+      "option3": "<p> Recovery of loans / ऋणों की वसूली</p>",
+      "option4": "<p> GST collections / GST संग्रह</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Capital receipts either create a liability or reduce an asset. Recovery of loans reduces the financial assets of the government.<br/> पूंजीगत प्राप्तियां या तो देनदारी पैदा करती हैं या संपत्ति को कम करती हैं। ऋणों की वसूली सरकार की वित्तीय संपत्ति को कम करती है।</p>"
+    },
+    {
+      "sr_no": 7,
+      "question": "<p> <b>Consider the following statements about 'Monetary Policy Committee' (MPC): <br/> '</b>मौद्रिक नीति समिति<b>' (MPC) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is a 6-member committee headed by the Finance Minister. / </b>यह <b>6 </b>सदस्यीय समिति है जिसकी अध्यक्षता वित्त मंत्री करते हैं। <b><br/> (b) It decides the benchmark interest rates (Repo Rate) in India. / </b>यह भारत में बेंचमार्क ब्याज दरों <b>(</b>रेपो रेट<b>) </b>का निर्धारण करती है। <b><br/> (c) The RBI Governor has a casting vote in case of a tie. / </b>बराबरी की स्थिति में <b>RBI </b>गवर्नर के पास निर्णायक वोट होता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> c only / केवल c</p>",
+      "option4": "<p> a and c / a और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The MPC is headed by the RBI Governor, not the Finance Minister. It has 3 members from RBI and 3 nominated by the Govt.<br/> MPC की अध्यक्षता RBI गवर्नर करते हैं, वित्त मंत्री नहीं। इसमें RBI के 3 सदस्य और सरकार द्वारा नामित 3 सदस्य होते हैं।</p>"
+    },
+    {
+      "sr_no": 8,
+      "question": "<p> <b>Which type of unemployment is common in the agricultural sector of India? <br/> </b>भारत के कृषि क्षेत्र में किस प्रकार की बेरोजगारी आम है<b>?</b></p>",
+      "option1": "<p> Structural Unemployment / संरचनात्मक बेरोजगारी</p>",
+      "option2": "<p> Frictional Unemployment / प्रतिरोधात्मक बेरोजगारी</p>",
+      "option3": "<p> Disguised Unemployment / प्रच्छन्न बेरोजगारी</p>",
+      "option4": "<p> Cyclical Unemployment / चक्रीय बेरोजगारी</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Disguised unemployment occurs when more people are working than necessary, and their marginal productivity is zero.<br/> प्रच्छन्न बेरोजगारी तब होती है जब आवश्यकता से अधिक लोग काम कर रहे होते हैं, और उनकी सीमांत उत्पादकता शून्य होती है।</p>"
+    },
+    {
+      "sr_no": 9,
+      "question": "<p> <b>Consider the following statements regarding 'Direct Taxes': <br/> '</b>प्रत्यक्ष कर<b>' (Direct Taxes) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) The burden of the tax cannot be shifted to others. / </b>कर का बोझ दूसरों पर नहीं डाला जा सकता। <b><br/> (b) Corporate tax is an example of an indirect tax. / </b>कॉर्पोरेट टैक्स अप्रत्यक्ष कर का एक उदाहरण है। <b><br/> (c) They are progressive in nature. / </b>ये प्रकृति में प्रगतिशील होते हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and c / a और c</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Corporate tax is a direct tax. Direct taxes are progressive, meaning the tax rate increases as the income increases.<br/> कॉर्पोरेट टैक्स एक प्रत्यक्ष कर है। प्रत्यक्ष कर प्रगतिशील होते हैं, जिसका अर्थ है कि आय बढ़ने के साथ कर की दर बढ़ती है।</p>"
+    },
+    {
+      "sr_no": 10,
+      "question": "<p> <b>In the context of Banking, what does 'SLR' stand for? <br/> </b>बैंकिंग के संदर्भ में<b>, 'SLR' </b>का पूर्ण रूप क्या है<b>?</b></p>",
+      "option1": "<p> Standard Liquid Ratio / स्टैंडर्ड लिक्विड रेशियो</p>",
+      "option2": "<p> Statutory Liquidity Ratio / स्टेट्यूटरी लिक्विडिटी रेशियो</p>",
+      "option3": "<p> Secondary Leverage Rate / सेकेंडरी लेवरेज रेट</p>",
+      "option4": "<p> State Level Rate / स्टेट लेवल रेट</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> SLR is the minimum percentage of deposits that a commercial bank has to maintain in the form of liquid cash, gold or other securities.<br/> SLR जमा का वह न्यूनतम प्रतिशत है जिसे एक वाणिज्यिक बैंक को तरल नकदी, सोने या अन्य प्रतिभूतियों के रूप में बनाए रखना होता है।</p>"
+    },
+    {
+      "sr_no": 11,
+      "question": "<p> <b>Consider the following statements regarding 'GNP' (Gross National Product): <br/> 'GNP' (</b>सकल राष्ट्रीय उत्पाद<b>) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It includes the value of goods and services produced by citizens of a country, regardless of location. / </b>इसमें किसी देश के नागरिकों द्वारा उत्पादित वस्तुओं और सेवाओं का मूल्य शामिल है<b>, </b>चाहे स्थान कुछ भी हो। <b><br/> (b) It excludes the income earned by foreigners within the country. / </b>इसमें देश के भीतर विदेशियों द्वारा अर्जित आय को बाहर रखा जाता है। <b><br/> (c) GNP = GDP + Net Factor Income from Abroad (NFIA). / GNP = GDP + </b>विदेशों से प्राप्त शुद्ध कारक आय <b>(NFIA)</b>।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and c / a और c</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> GNP measures the total output of a country's residents. It is calculated by adding NFIA to GDP.<br/> GNP किसी देश के निवासियों के कुल उत्पादन को मापता है। इसकी गणना GDP में NFIA जोड़कर की जाती है।</p>"
+    },
+    {
+      "sr_no": 12,
+      "question": "<p> <b>The 'Phillips Curve' shows the relationship between: <br/> '</b>फिलिप्स वक्र<b>' (Phillips Curve) </b>किसके बीच संबंध दर्शाता है<b>?</b></p>",
+      "option1": "<p> Inflation and Unemployment / मुद्रास्फीति और बेरोजगारी</p>",
+      "option2": "<p> Tax rates and Tax revenue / कर की दरें और कर राजस्व</p>",
+      "option3": "<p> Inequality and Per capita income / असमानता और प्रति व्यक्ति आय</p>",
+      "option4": "<p> Demand and Supply / मांग और आपूर्ति</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Phillips Curve suggests an inverse relationship between the rate of unemployment and the rate of inflation in an economy.<br/> फिलिप्स वक्र एक अर्थव्यवस्था में बेरोजगारी की दर और मुद्रास्फीति की दर के बीच विपरीत संबंध का सुझाव देता है।</p>"
+    },
+    {
+      "sr_no": 13,
+      "question": "<p> <b>Consider the following statements about 'Invisible Balance' in Balance of Payments (BoP): <br/> </b>भुगतान संतुलन <b>(BoP) </b>में <b>'</b>अदृश्य संतुलन<b>' (Invisible Balance) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It refers to the trade in services. / </b>यह सेवाओं के व्यापार को संदर्भित करता है। <b><br/> (b) It includes transfer payments like remittances. / </b>इसमें प्रेषण <b>(Remittances) </b>जैसे हस्तांतरण भुगतान शामिल हैं। <b><br/> (c) It is a part of the Capital Account. / </b>यह पूंजी खाते का हिस्सा है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Invisible balance is a part of the Current Account, not the Capital Account. It includes services, income, and transfers.<br/> अदृश्य संतुलन चालू खाते (Current Account) का हिस्सा है, पूंजी खाते का नहीं। इसमें सेवाएं, आय और हस्तांतरण शामिल हैं।</p>"
+    },
+    {
+      "sr_no": 14,
+      "question": "<p> <b>Which of the following is correct about 'Open Market Operations' (OMO)? <br/> '</b>ओपन मार्केट ऑपरेशंस<b>' (OMO) </b>के बारे में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> Buying and selling of foreign currency by RBI. / RBI द्वारा विदेशी मुद्रा की खरीद और बिक्री।</p>",
+      "option2": "<p> Buying and selling of government securities by RBI in the open market. / खुले बाजार में RBI द्वारा सरकारी प्रतिभूतियों की खरीद और बिक्री।</p>",
+      "option3": "<p> Issuance of new currency notes by the government. / सरकार द्वारा नए करेंसी नोट जारी करना।</p>",
+      "option4": "<p> Fixing of GST rates by the GST Council. / GST परिषद द्वारा GST दरों का निर्धारण।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> OMO is used by RBI to regulate the liquidity in the economy by buying or selling government securities.<br/> OMO का उपयोग RBI द्वारा सरकारी प्रतिभूतियों को खरीदकर या बेचकर अर्थव्यवस्था में तरलता को नियंत्रित करने के लिए किया जाता है।</p>"
+    },
+    {
+      "sr_no": 15,
+      "question": "<p> <b>Consider the following statements regarding the 'Planning Commission' of India: <br/> </b>भारत के <b>'</b>योजना आयोग<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It was a constitutional body. / </b>यह एक संवैधानिक निकाय था। <b><br/> (b) It was replaced by NITI Aayog on 1st January 2015. / </b>इसे <b>1 </b>जनवरी <b>2015 </b>को नीति आयोग द्वारा प्रतिस्थापित किया गया था। <b><br/> (c) The Prime Minister was the ex-officio Chairman of the Planning Commission. / </b>प्रधानमंत्री योजना आयोग के पदेन अध्यक्ष होते थे।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Planning Commission was a non-constitutional and non-statutory body (Executive body).<br/> योजना आयोग एक गैर-संवैधानिक और गैर-सांविधिक निकाय (कार्यकारी निकाय) था।</p>"
+    },
+    {
+      "sr_no": 16,
+      "question": "<p> <b>Consider the following statements regarding 'Inflation Tax': <br/> '</b>मुद्रास्फीति कर<b>' (Inflation Tax) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is a legal tax levied by the government on luxury goods. / </b>यह विलासिता की वस्तुओं पर सरकार द्वारा लगाया गया एक कानूनी कर है। <b><br/> (b) It is the economic loss suffered by holders of cash due to inflation. / </b>यह मुद्रास्फीति के कारण नकद धारकों द्वारा सहा गया आर्थिक नुकसान है। <b><br/> (c) It results in the redistribution of wealth from creditors to debtors. / </b>इसके परिणामस्वरूप धन का पुनर्वितरण लेनदारों <b>(Creditors) </b>से देनदारों <b>(Debtors) </b>की ओर होता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Inflation tax is not a legal tax but a penalty for holding cash during inflation as its purchasing power declines. Debtors gain because they repay loans with \"cheaper\" money.<br/> मुद्रास्फीति कर कोई कानूनी कर नहीं है, बल्कि मुद्रास्फीति के दौरान नकद रखने पर होने वाला नुकसान है क्योंकि क्रय शक्ति घट जाती है। देनदारों को लाभ होता है क्योंकि वे \"सस्ते\" पैसे से ऋण चुकाते हैं।</p>"
+    },
+    {
+      "sr_no": 17,
+      "question": "<p> <b>Which of the following is correct regarding 'Monopolistic Competition'? <br/> '</b>एकाधिकारात्मक प्रतियोगिता<b>' (Monopolistic Competition) </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> Large number of buyers and sellers with homogeneous products. / समरूप उत्पादों के साथ बड़ी संख्या में खरीदार और विक्रेता।</p>",
+      "option2": "<p> Single seller with no close substitutes. / बिना किसी करीबी विकल्प वाला एकल विक्रेता।</p>",
+      "option3": "<p> Many sellers offering differentiated products. / विभेदित (Differentiated) उत्पाद बेचने वाले कई विक्रेता।</p>",
+      "option4": "<p> A few large firms dominating the market. / बाजार पर हावी होने वाली कुछ बड़ी फर्में।</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Monopolistic competition involves many sellers selling products that are similar but not identical (e.g., different brands of soap).<br/> एकाधिकारात्मक प्रतियोगिता में कई विक्रेता ऐसे उत्पाद बेचते हैं जो समान होते हैं लेकिन एक जैसे नहीं (जैसे साबुन के विभिन्न ब्रांड)।</p>"
+    },
+    {
+      "sr_no": 18,
+      "question": "<p> <b>Consider the following statements about 'Consumer Price Index' (CPI): <br/> '</b>उपभोक्ता मूल्य सूचकांक<b>' (CPI) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It measures the change in prices of goods and services at the retail level. / </b>यह खुदरा स्तर पर वस्तुओं और सेवाओं की कीमतों में बदलाव को मापता है। <b><br/> (b) It is released by the Office of Economic Adviser (OEA). / </b>यह आर्थिक सलाहकार कार्यालय <b>(OEA) </b>द्वारा जारी किया जाता है। <b><br/> (c) It includes the prices of services, unlike WPI. / WPI </b>के विपरीत<b>, </b>इसमें सेवाओं की कीमतें शामिल होती हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> Only a / केवल a</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> CPI is released by the National Statistical Office (NSO). It includes both goods and services, whereas WPI (Wholesale Price Index) only includes goods.<br/> CPI राष्ट्रीय सांख्यिकी कार्यालय (NSO) द्वारा जारी किया जाता है। इसमें वस्तुओं और सेवाओं दोनों को शामिल किया जाता है, जबकि WPI में केवल वस्तुएं शामिल होती हैं।</p>"
+    },
+    {
+      "sr_no": 19,
+      "question": "<p> <b>Which curve represents the relationship between 'Tax Rates' and 'Total Tax Revenue'? <br/> </b>कौन सा वक्र <b>'</b>कर की दरों<b>' </b>और <b>'</b>कुल कर राजस्व<b>' </b>के बीच संबंध को दर्शाता है<b>?</b></p>",
+      "option1": "<p> Engel Curve / एंजेल वक्र</p>",
+      "option2": "<p> Laffer Curve / लैफर वक्र</p>",
+      "option3": "<p> Kuznets Curve / कुजनेट वक्र</p>",
+      "option4": "<p> Lorenz Curve / लोरेंज वक्र</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Laffer Curve shows that there is an optimal tax rate that maximizes total tax revenue.<br/> लैफर वक्र दर्शाता है कि एक इष्टतम कर दर होती है जो कुल कर राजस्व को अधिकतम करती है।</p>"
+    },
+    {
+      "sr_no": 20,
+      "question": "<p> <b>Consider the following statements regarding 'Base Year': <br/> '</b>आधार वर्ष<b>' (Base Year) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is a normal year without any major fluctuations in prices. / </b>यह कीमतों में किसी बड़े उतार<b>-</b>चढ़ाव के बिना एक सामान्य वर्ष होता है। <b><br/> (b) The current base year for GDP calculation in India is 2011-12. / </b>भारत में <b>GDP </b>गणना के लिए वर्तमान आधार वर्ष <b>2011-12 </b>है। <b><br/> (c) The index value of the base year is always taken as 100. / </b>आधार वर्ष का सूचकांक मान हमेशा <b>100 </b>लिया जाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. A base year is used as a benchmark for measuring real economic growth.<br/> सभी कथन सही हैं। वास्तविक आर्थिक विकास को मापने के लिए आधार वर्ष का उपयोग बेंचमार्क के रूप में किया जाता है।</p>"
+    },
+    {
+      "sr_no": 21,
+      "question": "<p> <b>'Gresham’s Law' in economics relates to which of the following? <br/> </b>अर्थशास्त्र में <b>'</b>ग्रेशम का नियम<b>' (Gresham’s Law) </b>निम्नलिखित में से किससे संबंधित है<b>?</b></p>",
+      "option1": "<p> Supply and Demand / आपूर्ति और मांग</p>",
+      "option2": "<p> Circulation of currency / मुद्रा का संचलन</p>",
+      "option3": "<p> Consumption patterns / उपभोग पैटर्न</p>",
+      "option4": "<p> International trade / अंतर्राष्ट्रीय व्यापार</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Gresham’s Law states that \"Bad money drives out good money\" from circulation when both are legal tender.<br/> ग्रेशम का नियम कहता है कि जब दोनों कानूनी मुद्रा हों, तो \"बुरी मुद्रा अच्छी मुद्रा को\" संचलन से बाहर कर देती है।</p>"
+    },
+    {
+      "sr_no": 22,
+      "question": "<p> <b>Consider the following statements about 'NITI Aayog': <br/> '</b>नीति आयोग<b>' (NITI Aayog) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It follows a 'Top-Down' approach to planning. / </b>यह योजना के लिए <b>'</b>टॉप<b>-</b>डाउन<b>' </b>दृष्टिकोण का पालन करता है। <b><br/> (b) It is a policy think tank of the Government of India. / </b>यह भारत सरकार का एक नीतिगत थिंक टैंक है। <b><br/> (c) The Governing Council includes Chief Ministers of all states. / </b>शासी परिषद में सभी राज्यों के मुख्यमंत्री शामिल होते हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> NITI Aayog follows a 'Bottom-Up' approach, unlike the Planning Commission which followed a 'Top-Down' approach.<br/> नीति आयोग 'बॉटम-अप' दृष्टिकोण का पालन करता है, योजना आयोग के विपरीत जो 'टॉप-डाउन' दृष्टिकोण अपनाता था।</p>"
+    },
+    {
+      "sr_no": 23,
+      "question": "<p> <b>Which of the following goods have a 'Positive Income Elasticity of Demand'? <br/> </b>निम्नलिखित में से किन वस्तुओं में <b>'</b>मांग की सकारात्मक आय लोच<b>' (Positive Income Elasticity) </b>होती है<b>?</b></p>",
+      "option1": "<p> Inferior goods / घटिया वस्तुएं</p>",
+      "option2": "<p> Normal goods / सामान्य वस्तुएं</p>",
+      "option3": "<p> Giffen goods / गिफन वस्तुएं</p>",
+      "option4": "<p> Essential goods / आवश्यक वस्तुएं</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> For normal goods, as income increases, the demand also increases, resulting in positive income elasticity.<br/> सामान्य वस्तुओं के लिए, जैसे-जैसे आय बढ़ती है, मांग भी बढ़ती है, जिसके परिणामस्वरूप सकारात्मक आय लोच होती है।</p>"
+    },
+    {
+      "sr_no": 24,
+      "question": "<p> <b>Consider the following statements regarding 'Devaluation of Currency': <br/> '</b>मुद्रा के अवमूल्यन<b>' (Devaluation) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is a deliberate reduction in the value of a country's currency relative to foreign currencies. / </b>यह विदेशी मुद्राओं की तुलना में देश की मुद्रा के मूल्य में जानबूझकर की गई कमी है। <b><br/> (b) It makes imports cheaper and exports costlier. / </b>यह आयात को सस्ता और निर्यात को महंगा बनाता है। <b><br/> (c) It is usually done to improve the balance of trade. / </b>यह आमतौर पर व्यापार संतुलन सुधारने के लिए किया जाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and c / a और c</p>",
+      "option2": "<p> Only a / केवल a</p>",
+      "option3": "<p> a and b / a और b</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Devaluation makes exports cheaper (more competitive) and imports costlier, which helps in reducing the trade deficit.<br/> अवमूल्यन निर्यात को सस्ता (अधिक प्रतिस्पर्धी) और आयात को महंगा बनाता है, जिससे व्यापार घाटे को कम करने में मदद मिलती है।</p>"
+    },
+    {
+      "sr_no": 25,
+      "question": "<p> <b>Which of the following constitutes 'Narrow Money' (M1)? <br/> </b>निम्नलिखित में से कौन <b>'</b>संकीर्ण मुद्रा<b>' (Narrow Money - M1) </b>का हिस्सा है<b>?</b></p>",
+      "option1": "<p> Currency with Public + Demand Deposits / जनता के पास मुद्रा + मांग जमा</p>",
+      "option2": "<p> Currency with Public + Time Deposits / जनता के पास मुद्रा + समय जमा</p>",
+      "option3": "<p> M3 + Post office savings / M3 + डाकघर बचत</p>",
+      "option4": "<p> Only Time Deposits / केवल समय जमा</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> M1 = Currency with Public + Demand Deposits (CASA) + Other deposits with RBI. It is the most liquid form of money.<br/> M1 = जनता के पास मुद्रा + मांग जमा (CASA) + RBI के पास अन्य जमा। यह मुद्रा का सबसे तरल रूप है।</p>"
+    },
+    {
+      "sr_no": 26,
+      "question": "<p> <b>Consider the following statements regarding 'Invisible Hand' theory: <br/> '</b>इनविजिबल हैंड<b>' (Invisible Hand) </b>सिद्धांत के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It was proposed by Adam Smith. / </b>यह एडम स्मिथ द्वारा प्रस्तावित किया गया था। <b><br/> (b) It suggests that individuals' self-interest leads to social benefits in a free market. / </b>यह सुझाव देता है कि मुक्त बाजार में व्यक्तियों का स्वार्थ सामाजिक लाभ की ओर ले जाता है। <b><br/> (c) It advocates for heavy government intervention in markets. / </b>यह बाजारों में भारी सरकारी हस्तक्षेप की वकालत करता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and b / a और b</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Adam Smith’s 'Invisible Hand' advocates for a Laissez-faire economy with minimal government intervention.<br/> एडम स्मिथ का 'इनविजिबल हैंड' न्यूनतम सरकारी हस्तक्षेप वाली अहस्तक्षेप (Laissez-faire) अर्थव्यवस्था की वकालत करता है।</p>"
+    },
+    {
+      "sr_no": 27,
+      "question": "<p> <b>The 'Kuznets Curve' describes the relationship between: <br/> '</b>कुजनेट वक्र<b>' (Kuznets Curve) </b>किसके बीच संबंध का वर्णन करता है<b>?</b></p>",
+      "option1": "<p> Economic growth and environmental degradation. / आर्थिक विकास और पर्यावरणीय गिरावट।</p>",
+      "option2": "<p> Economic growth and income inequality. / आर्थिक विकास और आय की असमानता।</p>",
+      "option3": "<p> Unemployment and inflation. / बेरोजगारी और मुद्रास्फीति।</p>",
+      "option4": "<p> Population growth and food supply. / जनसंख्या वृद्धि और खाद्य आपूर्ति।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Kuznets curve suggests that as an economy develops, market forces first increase and then decrease economic inequality.<br/> कुजनेट वक्र सुझाव देता है कि जैसे-जैसे अर्थव्यवस्था विकसित होती है, बाजार की ताकतें पहले आर्थिक असमानता को बढ़ाती हैं और फिर घटाती हैं।</p>"
+    },
+    {
+      "sr_no": 28,
+      "question": "<p> <b>Consider the following statements about 'Microeconomics': <br/> '</b>व्यष्टि अर्थशास्त्र<b>' (Microeconomics) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It deals with the behavior of individual economic units like households and firms. / </b>यह घरों और फर्मों जैसी व्यक्तिगत आर्थिक इकाइयों के व्यवहार से संबंधित है। <b><br/> (b) It is also known as 'Price Theory'. / </b>इसे <b>'</b>कीमत सिद्धांत<b>' (Price Theory) </b>के रूप में भी जाना जाता है। <b><br/> (c) Determination of national income is a subject matter of microeconomics. / </b>राष्ट्रीय आय का निर्धारण व्यष्टि अर्थशास्त्र की विषय<b>-</b>वस्तु है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> Only a / केवल a</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> National income determination is a part of Macroeconomics, not Microeconomics.<br/> राष्ट्रीय आय का निर्धारण समष्टि अर्थशास्त्र (Macroeconomics) का हिस्सा है, व्यष्टि अर्थशास्त्र का नहीं।</p>"
+    },
+    {
+      "sr_no": 29,
+      "question": "<p> <b>In a 'Liquidity Trap' situation, what happens to the demand for money? <br/> '</b>तरलता जाल<b>' (Liquidity Trap) </b>की स्थिति में<b>, </b>मुद्रा की मांग पर क्या प्रभाव पड़ता है<b>?</b></p>",
+      "option1": "<p> Demand for money becomes zero. / मुद्रा की मांग शून्य हो जाती है।</p>",
+      "option2": "<p> Demand for money becomes perfectly inelastic. / मुद्रा की मांग पूरी तरह से बेलोचदार हो जाती है।</p>",
+      "option3": "<p> Demand for money becomes perfectly elastic. / मुद्रा की मांग पूरी तरह से लोचदार हो जाती है।</p>",
+      "option4": "<p> People start investing in the stock market. / लोग शेयर बाजार में निवेश करना शुरू कर देते हैं।</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> In a liquidity trap, interest rates are very low and people prefer to hold cash rather than investing, making money demand perfectly elastic.<br/> तरलता जाल में, ब्याज दरें बहुत कम होती हैं और लोग निवेश करने के बजाय नकदी रखना पसंद करते हैं, जिससे मुद्रा की मांग पूरी तरह से लोचदार हो जाती है।</p>"
+    },
+    {
+      "sr_no": 30,
+      "question": "<p> <b>Consider the following statements regarding 'Fixed Exchange Rate': <br/> '</b>निश्चित विनिमय दर<b>' (Fixed Exchange Rate) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) The value of the currency is determined by market forces of demand and supply. / </b>मुद्रा का मूल्य मांग और आपूर्ति की बाजार शक्तियों द्वारा निर्धारित किया जाता है। <b><br/> (b) The value is pegged to another currency or gold by the government. / </b>सरकार द्वारा मूल्य को दूसरी मुद्रा या सोने से जोड़ा <b>(Pegged) </b>जाता है। <b><br/> (c) It requires the central bank to maintain large foreign exchange reserves. / </b>इसके लिए केंद्रीय बैंक को बड़े विदेशी मुद्रा भंडार बनाए रखने की आवश्यकता होती है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> Only b / केवल b</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Market forces determine values in a 'Floating Exchange Rate' system. In a fixed system, the government/central bank intervenes.<br/> 'फ्लोटिंग विनिमय दर' प्रणाली में बाजार की शक्तियां मूल्य निर्धारित करती हैं। निश्चित प्रणाली में, सरकार/केंद्रीय बैंक हस्तक्षेप करते हैं।</p>"
+    },
+    {
+      "sr_no": 31,
+      "question": "<p> <b>Consider the following statements regarding 'Fiscal Policy' in India: <br/> </b>भारत में <b>'</b>राजकोषीय नीति<b>' (Fiscal Policy) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is formulated by the Reserve Bank of India. / </b>यह भारतीय रिजर्व बैंक द्वारा तैयार की जाती है। <b><br/> (b) Its main tools are taxation and public expenditure. / </b>इसके मुख्य उपकरण कराधान और सार्वजनिक व्यय हैं। <b><br/> (c) It aims to achieve economic stability and growth. / </b>इसका उद्देश्य आर्थिक स्थिरता और विकास प्राप्त करना है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Fiscal policy is formulated by the Ministry of Finance (Government), not the RBI. RBI formulates the Monetary Policy.<br/> राजकोषीय नीति वित्त मंत्रालय (सरकार) द्वारा तैयार की जाती है, न कि RBI द्वारा। RBI मौद्रिक नीति तैयार करता है।</p>"
+    },
+    {
+      "sr_no": 32,
+      "question": "<p> <b>Which of the following is correct about 'Masala Bonds'? <br/> '</b>मसाला बॉण्ड<b>' (Masala Bonds) </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> They are rupee-denominated bonds issued in overseas markets. / ये विदेशी बाजारों में जारी किए गए रुपये के मूल्यवर्ग वाले बॉण्ड हैं।</p>",
+      "option2": "<p> They are dollar-denominated bonds issued in India. / ये भारत में जारी किए गए डॉलर के मूल्यवर्ग वाले बॉण्ड हैं।</p>",
+      "option3": "<p> They are used exclusively for the spice trade. / इनका उपयोग विशेष रूप से मसालों के व्यापार के लिए किया जाता है।</p>",
+      "option4": "<p> They are issued by the RBI only. / ये केवल RBI द्वारा जारी किए जाते हैं।</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Masala Bonds are bonds issued outside India by Indian entities, denominated in Indian Rupees rather than local currency.<br/> मसाला बॉण्ड भारतीय संस्थाओं द्वारा भारत के बाहर जारी किए गए बॉण्ड हैं, जो स्थानीय मुद्रा के बजाय भारतीय रुपये में होते हैं।</p>"
+    },
+    {
+      "sr_no": 33,
+      "question": "<p> <b>Consider the following statements about the 'World Bank' and 'IMF': <br/> '</b>विश्व बैंक<b>' (World Bank) </b>और <b>'IMF' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) IMF provides loans to meet Balance of Payment (BoP) crises. / IMF </b>भुगतान संतुलन <b>(BoP) </b>संकट को दूर करने के लिए ऋण प्रदान करता है। <b><br/> (b) World Bank provides long-term loans for developmental projects. / </b>विश्व बैंक विकासात्मक परियोजनाओं के लिए दीर्घकालिक ऋण प्रदान करता है। <b><br/> (c) Both organizations are headquartered in Geneva. / </b>दोनों संगठनों का मुख्यालय जिनेवा में है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> Only a / केवल a</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Both the World Bank and IMF are headquartered in Washington D.C., USA, not Geneva.<br/> विश्व बैंक और IMF दोनों का मुख्यालय वाशिंगटन डी.सी., अमेरिका में है, जिनेवा में नहीं।</p>"
+    },
+    {
+      "sr_no": 34,
+      "question": "<p> <b>The 'Engel's Law' states the relationship between: <br/> '</b>एंजेल का नियम<b>' (Engel's Law) </b>किसके बीच संबंध बताता है<b>?</b></p>",
+      "option1": "<p> Income level and expenditure on food / आय का स्तर और भोजन पर व्यय</p>",
+      "option2": "<p> Tax rates and revenue / कर की दरें और राजस्व</p>",
+      "option3": "<p> Price and demand / कीमत और मांग</p>",
+      "option4": "<p> Inflation and unemployment / मुद्रास्फीति और बेरोजगारी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Engel's Law states that as income rises, the proportion of income spent on food falls, even if actual expenditure on food rises.<br/> एंजेल का नियम कहता है कि जैसे-जैसे आय बढ़ती है, भोजन पर खर्च की जाने वाली आय का अनुपात गिरता जाता है, भले ही भोजन पर वास्तविक खर्च बढ़ जाए।</p>"
+    },
+    {
+      "sr_no": 35,
+      "question": "<p> <b>Consider the following statements regarding 'Primary Deficit': <br/> '</b>प्राथमिक घाटे<b>' (Primary Deficit) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is calculated by subtracting interest payments from Fiscal Deficit. / </b>इसकी गणना राजकोषीय घाटे में से ब्याज भुगतान घटाकर की जाती है। <b><br/> (b) Zero primary deficit means the government has to borrow only to pay back interest. / </b>शून्य प्राथमिक घाटे का अर्थ है कि सरकार को केवल ब्याज चुकाने के लिए उधार लेना पड़ता है। <b><br/> (c) It includes the entire borrowing requirement of the government. / </b>इसमें सरकार की पूरी उधार आवश्यकता शामिल होती है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> Only b / केवल b</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Primary Deficit = Fiscal Deficit - Interest Payments. It shows the borrowing requirement excluding interest on previous loans.<br/> प्राथमिक घाटा = राजकोषीय घाटा - ब्याज भुगतान। यह पिछले ऋणों पर ब्याज को छोड़कर उधार की आवश्यकता को दर्शाता है।</p>"
+    },
+    {
+      "sr_no": 36,
+      "question": "<p> <b>Which of the following is an example of an 'Automatic Stabilizer' in an economy? <br/> </b>निम्नलिखित में से कौन अर्थव्यवस्था में <b>'</b>स्वचालित स्थिरक<b>' (Automatic Stabilizer) </b>का उदाहरण है<b>?</b></p>",
+      "option1": "<p> Open Market Operations / ओपन मार्केट ऑपरेशंस</p>",
+      "option2": "<p> Progressive Income Tax / प्रगतिशील आयकर</p>",
+      "option3": "<p> Foreign Direct Investment / प्रत्यक्ष विदेशी निवेश</p>",
+      "option4": "<p> Repo Rate / रेपो रेट</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Automatic stabilizers are features of fiscal policy (like progressive taxes and welfare benefits) that offset fluctuations in economic activity without direct govt intervention.<br/> स्वचालित स्थिरक राजकोषीय नीति की विशेषताएं हैं (जैसे प्रगतिशील कर और कल्याणकारी लाभ) जो सीधे सरकारी हस्तक्षेप के बिना आर्थिक गतिविधि में उतार-चढ़ाव को संतुलित करती हैं।</p>"
+    },
+    {
+      "sr_no": 37,
+      "question": "<p> <b>Consider the following statements about 'Capital Adequacy Ratio' (CAR): <br/> '</b>पूंजी पर्याप्तता अनुपात<b>' (CAR) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is the ratio of a bank's capital to its risk-weighted assets. / </b>यह बैंक की पूंजी का उसकी जोखिम<b>-</b>भारित संपत्ति <b>(Risk-weighted assets) </b>से अनुपात है। <b><br/> (b) It is decided by the Basel Committee on Banking Supervision. / </b>यह बैंकिंग पर्यवेक्षण पर बेसल समिति द्वारा तय किया जाता है। <b><br/> (c) A higher CAR makes a bank more vulnerable to financial shocks. / </b>उच्च <b>CAR </b>बैंक को वित्तीय झटकों के प्रति अधिक संवेदनशील बनाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> A higher CAR actually makes a bank more stable and less vulnerable to shocks as it acts as a cushion.<br/> एक उच्च CAR वास्तव में बैंक को अधिक स्थिर बनाता है और झटकों के प्रति कम संवेदनशील बनाता है क्योंकि यह सुरक्षा कवच के रूप में कार्य करता है।</p>"
+    },
+    {
+      "sr_no": 38,
+      "question": "<p> <b>'Blue Chip' companies refer to: <br/> '</b>ब्लू चिप<b>' (Blue Chip) </b>कंपनियां किन्हें संदर्भित करती हैं<b>?</b></p>",
+      "option1": "<p> Companies dealing in blue-colored products. / नीले रंग के उत्पाद बेचने वाली कंपनियां।</p>",
+      "option2": "<p> Newly started tech startups. / नई शुरू हुई टेक स्टार्टअप कंपनियां।</p>",
+      "option3": "<p> Well-established, financially sound, and large-cap companies. / अच्छी तरह से स्थापित, वित्तीय रूप से सुदृढ़ और लार्ज-कैप कंपनियां।</p>",
+      "option4": "<p> Companies that are in loss. / वे कंपनियां जो घाटे में हैं।</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Blue chip companies are large, reputable, and financially stable companies that have a history of reliable earnings.<br/> ब्लू चिप कंपनियां बड़ी, प्रतिष्ठित और वित्तीय रूप से स्थिर कंपनियां होती हैं जिनका विश्वसनीय कमाई का इतिहास होता है।</p>"
+    },
+    {
+      "sr_no": 39,
+      "question": "<p> <b>Consider the following statements regarding 'Goods and Services Tax' (GST): <br/> '</b>वस्तु एवं सेवा कर<b>' (GST) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is a destination-based consumption tax. / </b>यह एक गंतव्य<b>-</b>आधारित <b>(Destination-based) </b>उपभोग कर है। <b><br/> (b) Alcohol for human consumption is kept outside the purview of GST. / </b>मानव उपभोग के लिए शराब को <b>GST </b>के दायरे से बाहर रखा गया है। <b><br/> (c) The GST Council is chaired by the Governor of RBI. / GST </b>परिषद की अध्यक्षता <b>RBI </b>के गवर्नर करते हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The GST Council is chaired by the Union Finance Minister, not the RBI Governor.<br/> GST परिषद की अध्यक्षता केंद्रीय वित्त मंत्री करते हैं, न कि RBI गवर्नर।</p>"
+    },
+    {
+      "sr_no": 40,
+      "question": "<p> <b>In which type of economy do both the public and private sectors coexist? <br/> </b>किस प्रकार की अर्थव्यवस्था में सार्वजनिक और निजी क्षेत्र दोनों सह<b>-</b>अस्तित्व में होते हैं<b>?</b></p>",
+      "option1": "<p> Capitalist Economy / पूंजीवादी अर्थव्यवस्था</p>",
+      "option2": "<p> Socialist Economy / समाजवादी अर्थव्यवस्था</p>",
+      "option3": "<p> Mixed Economy / मिश्रित अर्थव्यवस्था</p>",
+      "option4": "<p> Command Economy / कमांड अर्थव्यवस्था</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> A mixed economy, like India's, features characteristics of both capitalism and socialism.<br/> एक मिश्रित अर्थव्यवस्था, जैसे भारत की, में पूंजीवाद और समाजवाद दोनों की विशेषताएं होती हैं।</p>"
+    },
+    {
+      "sr_no": 41,
+      "question": "<p> <b>Consider the following statements about 'Special Drawing Rights' (SDR): <br/> '</b>विशेष आहरण अधिकार<b>' (SDR) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is a currency issued by the World Bank. / </b>यह विश्व बैंक द्वारा जारी की गई एक मुद्रा है। <b><br/> (b) It is also known as 'Paper Gold'. / </b>इसे <b>'</b>पेपर गोल्ड<b>' </b>के नाम से भी जाना जाता है। <b><br/> (c) Its value is based on a basket of five major currencies. / </b>इसका मूल्य पांच प्रमुख मुद्राओं की टोकरी पर आधारित है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> Only b / केवल b</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> SDR is an international reserve asset created by the IMF, not the World Bank. It is not a currency but a claim to currency.<br/> SDR आईएमएफ (IMF) द्वारा निर्मित एक अंतरराष्ट्रीय आरक्षित संपत्ति है, विश्व बैंक द्वारा नहीं। यह मुद्रा नहीं है बल्कि मुद्रा का दावा है।</p>"
+    },
+    {
+      "sr_no": 42,
+      "question": "<p> <b>Which of the following is correct regarding 'Gini Coefficient'? <br/> '</b>गिनी गुणांक<b>' (Gini Coefficient) </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> A value of 0 represents perfect inequality. / 0 का मान पूर्ण असमानता को दर्शाता है।</p>",
+      "option2": "<p> A value of 1 represents perfect equality. / 1 का मान पूर्ण समानता को दर्शाता है।</p>",
+      "option3": "<p> It is derived from the Lorenz Curve. / यह लोरेंज वक्र से प्राप्त किया जाता है।</p>",
+      "option4": "<p> It measures the rate of inflation. / यह मुद्रास्फीति की दर को मापता है।</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> In Gini Coefficient, 0 represents perfect equality and 1 represents perfect inequality. It is the ratio of areas on the Lorenz Curve diagram.<br/> गिनी गुणांक में, 0 पूर्ण समानता को दर्शाता है और 1 पूर्ण असमानता को। यह लोरेंज वक्र आरेख पर क्षेत्रों का अनुपात है।</p>"
+    },
+    {
+      "sr_no": 43,
+      "question": "<p> <b>Consider the following statements regarding 'Non-Performing Assets' (NPA): <br/> '</b>गैर<b>-</b>निष्पादित संपत्ति<b>' (NPA) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) A loan is classified as NPA when the principal or interest payment remains overdue for more than 90 days. / </b>एक ऋण को <b>NPA </b>के रूप में वर्गीकृत किया जाता है जब मूलधन या ब्याज का भुगतान <b>90 </b>दिनों से अधिक समय तक बकाया रहता है। <b><br/> (b) 'Sub-standard assets' are those which have remained NPA for less than or equal to 12 months. / '</b>सब<b>-</b>स्टैंडर्ड एसेट्स<b>' </b>वे हैं जो <b>12 </b>महीने या उससे कम समय तक <b>NPA </b>रहे हैं। <b><br/> (c) High NPA improves the lending capacity of banks. / </b>उच्च <b>NPA </b>बैंकों की ऋण देने की क्षमता में सुधार करता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> Only a / केवल a</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> High NPA reduces the liquidity and lending capacity of banks as their capital gets blocked.<br/> उच्च NPA बैंकों की तरलता और ऋण देने की क्षमता को कम करता है क्योंकि उनकी पूंजी अवरुद्ध हो जाती है।</p>"
+    },
+    {
+      "sr_no": 44,
+      "question": "<p> <b>The 'Paradox of Thrift' was popularized by which economist? <br/> '</b>बचत का विरोधाभास<b>' (Paradox of Thrift) </b>किस अर्थशास्त्री द्वारा लोकप्रिय बनाया गया था<b>?</b></p>",
+      "option1": "<p> Adam Smith / एडम स्मिथ</p>",
+      "option2": "<p> J.M. Keynes / जे.एम. कीन्स</p>",
+      "option3": "<p> David Ricardo / डेविड रिकार्डो</p>",
+      "option4": "<p> Milton Friedman / मिल्टन फ्रीडमैन</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Keynes argued that if everyone tries to save more during a recession, aggregate demand falls, which leads to lower total savings in the economy.<br/> कीन्स ने तर्क दिया कि यदि मंदी के दौरान हर कोई अधिक बचत करने की कोशिश करता है, तो कुल मांग गिर जाती है, जिससे अर्थव्यवस्था में कुल बचत कम हो जाती है।</p>"
+    },
+    {
+      "sr_no": 45,
+      "question": "<p> <b>Consider the following statements about 'Micro, Small and Medium Enterprises' (MSME) in India: <br/> </b>भारत में <b>'</b>सूक्ष्म<b>, </b>लघु और मध्यम उद्यम<b>' (MSME) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Their classification is based on investment in plant &amp; machinery and annual turnover. / </b>उनका वर्गीकरण संयंत्र और मशीनरी में निवेश और वार्षिक टर्नओवर पर आधारित है। <b><br/> (b) For a 'Micro' enterprise, investment should not exceed ₹1 crore and turnover should not exceed ₹5 crore. / '</b>सूक्ष्म<b>' </b>उद्यम के लिए<b>, </b>निवेश ₹<b>1 </b>करोड़ से अधिक और टर्नओवर ₹<b>5 </b>करोड़ से अधिक नहीं होना चाहिए। <b><br/> (c) MSMEs are often called the backbone of the Indian economy. / MSME </b>को अक्सर भारतीय अर्थव्यवस्था की रीढ़ कहा जाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct according to the revised MSME definition effective from July 2020.<br/> जुलाई 2020 से प्रभावी संशोधित MSME परिभाषा के अनुसार सभी कथन सही हैं।</p>"
+    },
+    {
+      "sr_no": 46,
+      "question": "<p> <b>Consider the following statements regarding 'Bull' and 'Bear' in the Stock Market: <br/> </b>शेयर बाजार में <b>'</b>बुल<b>' (Bull) </b>और <b>'</b>बेयर<b>' (Bear) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) A 'Bull' is an investor who expects the prices of securities to rise. / '</b>बुल<b>' </b>वह निवेशक है जो प्रतिभूतियों की कीमतों में वृद्धि की उम्मीद करता है। <b><br/> (b) A 'Bear' is an investor who expects the prices of securities to fall. / '</b>बेयर<b>' </b>वह निवेशक है जो प्रतिभूतियों की कीमतों में गिरावट की उम्मीद करता है। <b><br/> (c) 'Bulls' are generally pessimistic about the economy. / '</b>बुल<b>' </b>आमतौर पर अर्थव्यवस्था के बारे में निराशावादी होते हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> Only b / केवल b</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Bulls are optimistic (expecting growth), while Bears are pessimistic (expecting decline).<br/> बुल आशावादी होते हैं (विकास की उम्मीद करते हैं), जबकि बेयर निराशावादी होते हैं (गिरावट की उम्मीद करते हैं)।</p>"
+    },
+    {
+      "sr_no": 47,
+      "question": "<p> <b>Which of the following is correct regarding 'Hot Money'? <br/> '</b>हॉट मनी<b>' (Hot Money) </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> Money that is physically hot due to printing. / वह धन जो छपाई के कारण भौतिक रूप से गर्म है।</p>",
+      "option2": "<p> Capital that moves frequently and quickly between financial markets for higher interest rates. / वह पूंजी जो उच्च ब्याज दरों के लिए वित्तीय बाजारों के बीच बार-बार और जल्दी स्थानांतरित होती है।</p>",
+      "option3": "<p> Money earned through illegal sources. / अवैध स्रोतों से कमाया गया धन।</p>",
+      "option4": "<p> Money issued by the government during an emergency. / आपातकाल के दौरान सरकार द्वारा जारी किया गया धन।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Hot money refers to short-term capital that flows into a country to take advantage of favorable interest rates or exchange rates but leaves quickly at the first sign of trouble.<br/> हॉट मनी का तात्पर्य अल्पकालिक पूंजी से है जो अनुकूल ब्याज दरों या विनिमय दरों का लाभ उठाने के लिए किसी देश में आती है लेकिन परेशानी का संकेत मिलते ही जल्दी निकल जाती है।</p>"
+    },
+    {
+      "sr_no": 48,
+      "question": "<p> <b>Consider the following statements about 'Frictional Unemployment': <br/> '</b>प्रतिरोधात्मक बेरोजगारी<b>' (Frictional Unemployment) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It occurs when people are between jobs or are looking for their first job. / </b>यह तब होता है जब लोग एक नौकरी से दूसरी नौकरी के बीच होते हैं या अपनी पहली नौकरी की तलाश में होते हैं। <b><br/> (b) It is a permanent type of unemployment. / </b>यह एक स्थायी प्रकार की बेरोजगारी है। <b><br/> (c) It is also known as search unemployment. / </b>इसे <b>'</b>सर्च अनइम्प्लॉयमेंट<b>' </b>के नाम से भी जाना जाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> Only a / केवल a</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Frictional unemployment is temporary and exists even in a healthy economy as people transition between roles.<br/> प्रतिरोधात्मक बेरोजगारी अस्थायी होती है और एक स्वस्थ अर्थव्यवस्था में भी मौजूद रहती है क्योंकि लोग भूमिकाओं के बीच संक्रमण करते हैं।</p>"
+    },
+    {
+      "sr_no": 49,
+      "question": "<p> <b>The 'J-Curve' effect describes the impact of which of the following? <br/> 'J-</b>वक्र<b>' (J-Curve) </b>प्रभाव निम्नलिखित में से किसके प्रभाव का वर्णन करता है<b>?</b></p>",
+      "option1": "<p> Impact of tax cuts on revenue. / राजस्व पर कर कटौती का प्रभाव।</p>",
+      "option2": "<p> Impact of currency devaluation on trade balance. / व्यापार संतुलन पर मुद्रा अवमूल्यन का प्रभाव।</p>",
+      "option3": "<p> Relationship between inflation and growth. / मुद्रास्फीति और विकास के बीच संबंध।</p>",
+      "option4": "<p> Population growth over time. / समय के साथ जनसंख्या वृद्धि।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The J-Curve shows that after currency devaluation, a country's trade deficit initially worsens before improving in the long run.<br/> J-वक्र दर्शाता है कि मुद्रा अवमूल्यन के बाद, किसी देश का व्यापार घाटा लंबे समय में सुधरने से पहले शुरू में और खराब हो जाता है।</p>"
+    },
+    {
+      "sr_no": 50,
+      "question": "<p> <b>Consider the following statements regarding 'Veblen Goods': <br/> '</b>वेबलेन वस्तुओं<b>' (Veblen Goods) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Their demand increases as the price increases. / </b>कीमत बढ़ने पर इनकी मांग बढ़ती है। <b><br/> (b) They are generally luxury goods that serve as status symbols. / </b>ये आम तौर पर विलासिता की वस्तुएं हैं जो स्टेटस सिंबल के रूप में काम करती हैं। <b><br/> (c) They follow the standard Law of Demand. / </b>ये मांग के मानक नियम का पालन करते हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> Only b / केवल b</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Veblen goods violate the Law of Demand because their high price makes them more desirable as a status symbol (e.g., luxury cars).<br/> वेबलेन वस्तुएं मांग के नियम का उल्लंघन करती हैं क्योंकि उनकी उच्च कीमत उन्हें स्टेटस सिंबल (जैसे लक्जरी कार) के रूप में अधिक वांछनीय बनाती है।</p>"
+    },
+    {
+      "sr_no": 51,
+      "question": "<p> <b>Which of the following is NOT a component of the 'Capital Account' of BoP? <br/> </b>निम्नलिखित में से कौन भुगतान संतुलन <b>(BoP) </b>के <b>'</b>पूंजी खाते<b>' (Capital Account) </b>का घटक नहीं है<b>?</b></p>",
+      "option1": "<p> Foreign Direct Investment (FDI) / प्रत्यक्ष विदेशी निवेश</p>",
+      "option2": "<p> External Commercial Borrowings (ECB) / बाहरी वाणिज्यिक उधार</p>",
+      "option3": "<p> Remittances from abroad / विदेश से प्रेषित धन (Remittances)</p>",
+      "option4": "<p> Portfolio Investment / पोर्टफोलियो निवेश</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Remittances are part of the 'Current Account' (under Unilateral Transfers), not the Capital Account.<br/> प्रेषण (Remittances) 'चालू खाते' (एकपक्षीय हस्तांतरण के तहत) का हिस्सा हैं, पूंजी खाते का नहीं।</p>"
+    },
+    {
+      "sr_no": 52,
+      "question": "<p> <b>Consider the following statements about 'Core Inflation': <br/> '</b>कोर मुद्रास्फीति<b>' (Core Inflation) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It measures inflation excluding food and fuel components. / </b>यह भोजन और ईंधन घटकों को छोड़कर मुद्रास्फीति को मापता है। <b><br/> (b) It is more volatile than Headline Inflation. / </b>यह हेडलाइन मुद्रास्फीति की तुलना में अधिक अस्थिर है। <b><br/> (c) It reflects the long-term trend in the price level. / </b>यह मूल्य स्तर में दीर्घकालिक प्रवृत्ति को दर्शाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Core inflation is LESS volatile because it excludes items like food and energy which have frequent price fluctuations.<br/> कोर मुद्रास्फीति कम अस्थिर होती है क्योंकि इसमें भोजन और ऊर्जा जैसी वस्तुएं शामिल नहीं होतीं जिनकी कीमतों में बार-बार उतार-चढ़ाव होता है।</p>"
+    },
+    {
+      "sr_no": 53,
+      "question": "<p> <b>What is 'Disinvestment'? <br/> '</b>विनिवेश<b>' (Disinvestment) </b>क्या है<b>?</b></p>",
+      "option1": "<p> Increase in government investment in PSUs. / PSUs में सरकारी निवेश में वृद्धि।</p>",
+      "option2": "<p> Selling of government-held shares in public sector enterprises. / सार्वजनिक क्षेत्र के उद्यमों में सरकार के पास मौजूद शेयरों की बिक्री।</p>",
+      "option3": "<p> Closing down of all private companies. / सभी निजी कंपनियों को बंद करना।</p>",
+      "option4": "<p> Borrowing money from the World Bank. / विश्व बैंक से पैसा उधार लेना।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Disinvestment involves the government selling its stake in PSUs to private entities or the public to raise funds.<br/> विनिवेश में सरकार द्वारा धन जुटाने के लिए PSUs में अपनी हिस्सेदारी निजी संस्थाओं या जनता को बेचना शामिल है।</p>"
+    },
+    {
+      "sr_no": 54,
+      "question": "<p> <b>Consider the following statements regarding 'Normal Goods': <br/> '</b>सामान्य वस्तुओं<b>' (Normal Goods) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) There is a positive relationship between income and demand for these goods. / </b>इन वस्तुओं की आय और मांग के बीच सकारात्मक संबंध होता है। <b><br/> (b) Income elasticity of demand for normal goods is always negative. / </b>सामान्य वस्तुओं के लिए मांग की आय लोच हमेशा नकारात्मक होती है। <b><br/> (c) As a person becomes richer, they buy more of these goods. / </b>जैसे<b>-</b>जैसे व्यक्ति अमीर होता है<b>, </b>वह इन वस्तुओं को अधिक खरीदता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> a and c / a और c</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> Only a / केवल a</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Income elasticity for normal goods is positive (Greater than 0). For inferior goods, it is negative.<br/> सामान्य वस्तुओं के लिए आय लोच सकारात्मक (0 से अधिक) होती है। घटिया वस्तुओं के लिए यह नकारात्मक होती है।</p>"
+    },
+    {
+      "sr_no": 55,
+      "question": "<p> <b>In the context of the Indian Economy, 'Term Loans' in banking usually refer to loans with a tenure of: <br/> </b>भारतीय अर्थव्यवस्था के संदर्भ में<b>, </b>बैंकिंग में <b>'</b>सावधि ऋण<b>' (Term Loans) </b>आमतौर पर कितनी अवधि के ऋणों को संदर्भित करते हैं<b>?</b></p>",
+      "option1": "<p> Less than 1 year / 1 वर्ष से कम</p>",
+      "option2": "<p> More than 1 year / 1 वर्ष से अधिक</p>",
+      "option3": "<p> Exactly 100 days / ठीक 100 दिन</p>",
+      "option4": "<p> Only for overnight purposes / केवल ओवरनाइट उद्देश्यों के लिए</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Term loans are provided for a specific period (usually more than a year) and are repaid in scheduled installments.<br/> सावधि ऋण एक विशिष्ट अवधि (आमतौर पर एक वर्ष से अधिक) के लिए प्रदान किए जाते हैं और निर्धारित किश्तों में चुकाए जाते हैं।</p>"
+    },
+    {
+      "sr_no": 56,
+      "question": "<p> <b>Consider the following statements about the 'Laffer Curve': <br/> '</b>लैफर वक्र<b>' (Laffer Curve) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It shows that 100% tax rate results in zero tax revenue. / </b>यह दर्शाता है कि <b>100% </b>कर दर का परिणाम शून्य कर राजस्व होता है। <b><br/> (b) It suggests that cutting tax rates can sometimes increase total tax revenue. / </b>यह सुझाव देता है कि कर दरों में कटौती करने से कभी<b>-</b>कभी कुल कर राजस्व बढ़ सकता है। <b><br/> (c) It is a bell-shaped curve. / </b>यह एक घंटी के आकार का <b>(Bell-shaped) </b>वक्र है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> At 0% and 100% tax rates, revenue is zero. In between, there is an optimal rate. Cutting very high rates encourages more economic activity, thus increasing revenue.<br/> 0% और 100% कर दरों पर राजस्व शून्य होता है। इनके बीच एक इष्टतम दर होती है। बहुत उच्च दरों में कटौती आर्थिक गतिविधि को प्रोत्साहित करती है, जिससे राजस्व बढ़ता है।</p>"
+    },
+    {
+      "sr_no": 57,
+      "question": "<p> <b>Which of the following is correct regarding 'Fiat Money'? <br/> '</b>फिएट मनी<b>' (Fiat Money) </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> It is backed by physical gold reserves. / इसे भौतिक स्वर्ण भंडार का समर्थन प्राप्त है।</p>",
+      "option2": "<p> It has no intrinsic value and is backed by government order. / इसका कोई आंतरिक मूल्य नहीं है और इसे सरकारी आदेश का समर्थन प्राप्त है।</p>",
+      "option3": "<p> It can only be used in the automobile industry. / इसका उपयोग केवल ऑटोमोबाइल उद्योग में किया जा सकता है।</p>",
+      "option4": "<p> It is a type of commodity money. / यह एक प्रकार की वस्तु मुद्रा (Commodity money) है।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Modern currency notes and coins are fiat money; they have value because the government declares them as legal tender, not because of the paper's worth.<br/> आधुनिक मुद्रा नोट और सिक्के फिएट मनी हैं; उनका मूल्य इसलिए है क्योंकि सरकार उन्हें कानूनी निविदा घोषित करती है, न कि कागज की कीमत के कारण।</p>"
+    },
+    {
+      "sr_no": 58,
+      "question": "<p> <b>Consider the following statements regarding 'Expansionary Monetary Policy': <br/> '</b>विस्तारवादी मौद्रिक नीति<b>' (Expansionary Monetary Policy) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is used to combat recession. / </b>इसका उपयोग मंदी से निपटने के लिए किया जाता है। <b><br/> (b) It involves increasing interest rates and CRR. / </b>इसमें ब्याज दरों और <b>CRR </b>को बढ़ाना शामिल है। <b><br/> (c) It aims to increase the money supply in the economy. / </b>इसका उद्देश्य अर्थव्यवस्था में मुद्रा आपूर्ति को बढ़ाना है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> Only c / केवल c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Expansionary policy involves decreasing interest rates (like Repo rate) and CRR to make borrowing cheaper and increase liquidity.<br/> विस्तारवादी नीति में उधार को सस्ता करने और तरलता बढ़ाने के लिए ब्याज दरों (जैसे रेपो रेट) और CRR को कम करना शामिल है।</p>"
+    },
+    {
+      "sr_no": 59,
+      "question": "<p> <b>The 'Twin Deficit' problem in an economy refers to: <br/> </b>किसी अर्थव्यवस्था में <b>'</b>ट्विन डेफिसिट<b>' (Twin Deficit) </b>समस्या किसे संदर्भित करती है<b>?</b></p>",
+      "option1": "<p> High Inflation and High Unemployment / उच्च मुद्रास्फीति और उच्च बेरोजगारी</p>",
+      "option2": "<p> Fiscal Deficit and Current Account Deficit / राजकोषीय घाटा और चालू खाता घाटा</p>",
+      "option3": "<p> Revenue Deficit and Primary Deficit / राजस्व घाटा और प्राथमिक घाटा</p>",
+      "option4": "<p> Budget Deficit and Trade Deficit / बजट घाटा और व्यापार घाटा</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Twin deficit occurs when a country has both a high Fiscal Deficit (government overspending) and a high Current Account Deficit (imports exceeding exports).<br/> ट्विन डेफिसिट तब होता है जब किसी देश में उच्च राजकोषीय घाटा और उच्च चालू खाता घाटा दोनों होते हैं।</p>"
+    },
+    {
+      "sr_no": 60,
+      "question": "<p> <b>Consider the following statements about 'GST Council': <br/> 'GST </b>परिषद<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is a constitutional body under Article 279A. / </b>यह अनुच्छेद <b>279A </b>के तहत एक संवैधानिक निकाय है। <b><br/> (b) Every decision of the council is taken by a majority of not less than three-fourths of the weighted votes. / </b>परिषद का प्रत्येक निर्णय भारित मतों <b>(Weighted votes) </b>के कम से कम तीन<b>-</b>चौथाई बहुमत से लिया जाता है। <b><br/> (c) The Union Government has one-third weightage of the total votes cast. / </b>डाले गए कुल मतों में केंद्र सरकार का भार एक<b>-</b>तिहाई होता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct regarding the voting structure and constitutional status of the GST Council.<br/> GST परिषद की मतदान संरचना और संवैधानिक स्थिति के संबंध में सभी कथन सही हैं।</p>"
+    },
+    {
+      "sr_no": 61,
+      "question": "<p> <b>Consider the following statements regarding 'Narasimham Committee' reports: <br/> '</b>नरसिम्हन समिति<b>' (Narasimham Committee) </b>की रिपोर्टों के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) These committees are related to Banking Sector Reforms. / </b>ये समितियाँ बैंकिंग क्षेत्र के सुधारों से संबंधित हैं। <b><br/> (b) The committee recommended the reduction of SLR and CRR. / </b>समिति ने <b>SLR </b>और <b>CRR </b>को कम करने की सिफारिश की थी।<b><br/> (c) It suggested the establishment of a 4-tier banking structure. / </b>इसने <b>4-</b>स्तरीय बैंकिंग संरचना की स्थापना का सुझाव दिया था।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Narasimham Committee (1991 &amp; 1998) laid the foundation for modern banking reforms in India, including reducing reserve ratios and structural changes.<br/> नरसिम्हन समिति (1991 और 1998) ने भारत में आधुनिक बैंकिंग सुधारों की नींव रखी, जिसमें आरक्षित अनुपात को कम करना और संरचनात्मक परिवर्तन शामिल थे।</p>"
+    },
+    {
+      "sr_no": 62,
+      "question": "<p> <b>Which of the following is correct regarding 'Dematerialization' (Demat)? <br/> '</b>डीमैटरियलाइजेशन<b>' (Demat) </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> Process of converting physical shares into electronic form. / भौतिक शेयरों को इलेक्ट्रॉनिक रूप में बदलने की प्रक्रिया।</p>",
+      "option2": "<p> Process of printing new currency notes. / नए करेंसी नोट छापने की प्रक्रिया।</p>",
+      "option3": "<p> Selling of gold to the central bank. / केंद्रीय बैंक को सोना बेचना।</p>",
+      "option4": "<p> Reducing the number of banks in a country. / किसी देश में बैंकों की संख्या कम करना।</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Dematerialization is the process by which physical certificates of an investor are taken back by the company/registrar and destroyed, and an equivalent number of securities are credited in electronic form.<br/> डीमैटरियलाइजेशन वह प्रक्रिया है जिसके द्वारा निवेशक के भौतिक प्रमाणपत्रों को वापस ले लिया जाता है और इलेक्ट्रॉनिक रूप में प्रतिभूतियां जमा की जाती हैं।</p>"
+    },
+    {
+      "sr_no": 63,
+      "question": "<p> <b>Consider the following statements about 'Mahalanobis Model': <br/> '</b>महालनोबिस मॉडल<b>' (Mahalanobis Model) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It was the basis of the First Five Year Plan. / </b>यह प्रथम पंचवर्षीय योजना का आधार था। <b><br/> (b) It emphasized the development of heavy and basic industries. / </b>इसने भारी और बुनियादी उद्योगों के विकास पर जोर दिया। <b><br/> (c) It aimed at rapid industrialization of the Indian economy. / </b>इसका उद्देश्य भारतीय अर्थव्यवस्था का तीव्र औद्योगीकरण था।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> Only b / केवल b</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Mahalanobis Model was the basis of the Second Five Year Plan (1956-61). The First Plan was based on the Harrod-Domar Model.<br/> महालनोबिस मॉडल दूसरी पंचवर्षीय योजना (1956-61) का आधार था। पहली योजना हैरोड-डोमर मॉडल पर आधारित थी।</p>"
+    },
+    {
+      "sr_no": 64,
+      "question": "<p> <b>The 'Base Effect' in inflation refers to:<br/> </b>मुद्रास्फीति में <b>'</b>बेस इफेक्ट<b>' (Base Effect) </b>किसे संदर्भित करता है<b>?</b></p>",
+      "option1": "<p> Impact of price levels of the previous year on the current inflation rate. / वर्तमान मुद्रास्फीति दर पर पिछले वर्ष के मूल्य स्तरों का प्रभाव।</p>",
+      "option2": "<p> Increase in prices due to high demand. / उच्च मांग के कारण कीमतों में वृद्धि।</p>",
+      "option3": "<p> Increase in prices due to high cost of production. / उत्पादन की उच्च लागत के कारण कीमतों में वृद्धि।</p>",
+      "option4": "<p> Impact of global oil prices on the economy. / अर्थव्यवस्था पर वैश्विक तेल कीमतों का प्रभाव।</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Base effect refers to the impact of the price levels of the corresponding period of the previous year on the inflation rate calculation.<br/> बेस इफेक्ट पिछले वर्ष की इसी अवधि के मूल्य स्तरों का मुद्रास्फीति दर की गणना पर पड़ने वाले प्रभाव को संदर्भित करता है।</p>"
+    },
+    {
+      "sr_no": 65,
+      "question": "<p> <b>Consider the following statements regarding 'SEBI' (Securities and Exchange Board of India): <br/> '</b>सेबी<b>' (SEBI) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It was established in 1988 and given statutory powers in 1992. / </b>इसकी स्थापना <b>1988 </b>में हुई थी और <b>1992 </b>में इसे वैधानिक शक्तियां दी गई थीं। <b><br/> (b) It regulates the commodity market along with the stock market. / </b>यह शेयर बाजार के साथ<b>-</b>साथ कमोडिटी बाजार को भी नियंत्रित करता है। <b><br/> (c) It protects the interests of investors in securities. / </b>यह प्रतिभूतियों में निवेशकों के हितों की रक्षा करता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> Only c / केवल c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> SEBI is the regulatory body for securities and commodity markets in India under the jurisdiction of the Ministry of Finance.<br/> सेबी वित्त मंत्रालय के अधिकार क्षेत्र में भारत में प्रतिभूति और कमोडिटी बाजारों के लिए नियामक संस्था है।</p>"
+    },
+    {
+      "sr_no": 66,
+      "question": "<p> <b>'Closed Economy' is an economy in which: <br/> '</b>बंद अर्थव्यवस्था<b>' (Closed Economy) </b>वह अर्थव्यवस्था है जिसमें<b>:</b></p>",
+      "option1": "<p> Only exports take place. / केवल निर्यात होता है।</p>",
+      "option2": "<p> Money supply is fully controlled. / मुद्रा आपूर्ति पूरी तरह से नियंत्रित होती है।</p>",
+      "option3": "<p> Deficit financing takes place. / घाटे की वित्त व्यवस्था होती है।</p>",
+      "option4": "<p> Neither exports nor imports take place. / न तो निर्यात होता है और न ही आयात।</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> A closed economy does not trade with the outside world and is self-sufficient.<br/> एक बंद अर्थव्यवस्था बाहरी दुनिया के साथ व्यापार नहीं करती है और आत्मनिर्भर होती है।</p>"
+    },
+    {
+      "sr_no": 67,
+      "question": "<p> <b>Consider the following statements about 'Call Money Market': <br/> '</b>कॉल मनी मार्केट<b>' (Call Money Market) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It deals with the inter-bank lending and borrowing for a very short period. / </b>यह बहुत कम अवधि के लिए अंतर<b>-</b>बैंक उधार और लेनदेन से संबंधित है। <b><br/> (b) 'Call Money' refers to funds borrowed for 1 day. / '</b>कॉल मनी<b>' 1 </b>दिन के लिए उधार लिए गए धन को संदर्भित करता है। <b><br/> (c) 'Notice Money' refers to funds borrowed for 2 to 14 days. / '</b>नोटिस मनी<b>' 2 </b>से <b>14 </b>दिनों के लिए उधार लिए गए धन को संदर्भित करता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Call money market is a part of the money market where scheduled commercial banks borrow/lend to manage their temporary liquidity mismatches.<br/> कॉल मनी मार्केट मुद्रा बाजार का एक हिस्सा है जहां अनुसूचित वाणिज्यिक बैंक अपनी अस्थायी तरलता विसंगतियों को प्रबंधित करने के लिए उधार लेते/देते हैं।</p>"
+    },
+    {
+      "sr_no": 68,
+      "question": "<p> <b>Which of the following is correct regarding the 'Standard of Living' in a country? <br/> </b>किसी देश में <b>'</b>जीवन स्तर<b>' (Standard of Living) </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> It is best measured by Gross National Product (GNP). / इसे सकल राष्ट्रीय उत्पाद (GNP) द्वारा सबसे अच्छा मापा जाता है।</p>",
+      "option2": "<p> It is best measured by Per Capita Real Income. / इसे प्रति व्यक्ति वास्तविक आय द्वारा सबसे अच्छा मापा जाता है।</p>",
+      "option3": "<p> It depends only on the population of the country. / यह केवल देश की जनसंख्या पर निर्भर करता है।</p>",
+      "option4": "<p> It is measured by the total gold reserves. / इसे कुल स्वर्ण भंडार द्वारा मापा जाता है।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Per capita real income (income adjusted for inflation per person) is considered the most reliable indicator of the average standard of living.<br/> प्रति व्यक्ति वास्तविक आय (प्रति व्यक्ति मुद्रास्फीति के लिए समायोजित आय) को औसत जीवन स्तर का सबसे विश्वसनीय संकेतक माना जाता है।</p>"
+    },
+    {
+      "sr_no": 69,
+      "question": "<p> <b>Consider the following statements regarding 'Insurance Regulatory and Development Authority of India' (IRDAI): <br/> '</b>भारतीय बीमा विनियामक और विकास प्राधिकरण<b>' (IRDAI) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is a statutory body under the IRDA Act, 1999. / </b>यह <b>IRDA </b>अधिनियम<b>, 1999 </b>के तहत एक वैधानिक निकाय है। <b><br/> (b) It is headquartered in Mumbai. / </b>इसका मुख्यालय मुंबई में है। <b><br/> (c) It regulates both life and general insurance industries. / </b>यह जीवन और सामान्य बीमा दोनों उद्योगों को नियंत्रित करता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and c / a और c</p>",
+      "option2": "<p> Only a / केवल a</p>",
+      "option3": "<p> a and b / a और b</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> IRDAI is headquartered in Hyderabad, not Mumbai. It was moved from Delhi to Hyderabad in 2001.<br/> IRDAI का मुख्यालय हैदराबाद में है, मुंबई में नहीं। इसे 2001 में दिल्ली से हैदराबाद स्थानांतरित किया गया था।</p>"
+    },
+    {
+      "sr_no": 70,
+      "question": "<p> <b>The 'Global Gender Gap Report' is released by which of the following? <br/> '</b>ग्लोबल जेंडर गैप रिपोर्ट<b>' (Global Gender Gap Report) </b>निम्नलिखित में से किसके द्वारा जारी की जाती है<b>?</b></p>",
+      "option1": "<p> World Bank / विश्व बैंक</p>",
+      "option2": "<p> International Labour Organization (ILO) / अंतर्राष्ट्रीय श्रम संगठन</p>",
+      "option3": "<p> World Economic Forum (WEF) / विश्व आर्थिक मंच</p>",
+      "option4": "<p> UNDP / यूएनडीपी</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The WEF releases this annual report measuring gender parity across four key dimensions: Economy, Education, Health, and Politics.<br/> WEF यह वार्षिक रिपोर्ट जारी करता है जो चार प्रमुख आयामों: अर्थव्यवस्था, शिक्षा, स्वास्थ्य और राजनीति में लैंगिक समानता को मापती है।</p>"
+    },
+    {
+      "sr_no": 71,
+      "question": "<p> <b>Consider the following statements regarding 'Engel's Law': <br/> '</b>एंजेल के नियम<b>' (Engel's Law) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) As income increases, the absolute expenditure on food decreases. / </b>जैसे<b>-</b>जैसे आय बढ़ती है<b>, </b>भोजन पर पूर्ण व्यय <b>(absolute expenditure) </b>कम हो जाता है। <b><br/> (b) As income increases, the percentage of income spent on food decreases. / </b>जैसे<b>-</b>जैसे आय बढ़ती है<b>, </b>भोजन पर खर्च की जाने वाली आय का प्रतिशत कम हो जाता है। <b><br/> (c) It helps in determining the poverty line in many countries. / </b>यह कई देशों में गरीबी रेखा निर्धारित करने में मदद करता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> Only b / केवल b</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Absolute expenditure on food usually increases as people buy better quality food, but its share (percentage) in the total budget decreases.<br/> भोजन पर पूर्ण व्यय आमतौर पर बढ़ता है क्योंकि लोग बेहतर गुणवत्ता वाला भोजन खरीदते हैं, लेकिन कुल बजट में इसकी हिस्सेदारी (प्रतिशत) कम हो जाती है।</p>"
+    },
+    {
+      "sr_no": 72,
+      "question": "<p> <b>Which of the following is the main objective of 'PM Gati Shakti' National Master Plan? <br/> </b>निम्नलिखित में से कौन <b>'</b>पीएम गति शक्ति<b>' </b>राष्ट्रीय मास्टर प्लान का मुख्य उद्देश्य है<b>?</b></p>",
+      "option1": "<p> Promotion of digital payments. / डिजिटल भुगतान को बढ़ावा देना।</p>",
+      "option2": "<p> Integrated planning and coordinated implementation of infrastructure connectivity projects. / बुनियादी ढांचा कनेक्टिविटी परियोजनाओं की एकीकृत योजना और समन्वित कार्यान्वयन।</p>",
+      "option3": "<p> Free health insurance to all citizens. / सभी नागरिकों को मुफ्त स्वास्थ्य बीमा।</p>",
+      "option4": "<p> Doubling farmers' income by 2025. / 2025 तक किसानों की आय दोगुनी करना।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> PM Gati Shakti is a transformative approach for economic growth and sustainable development, driven by 7 engines (Roads, Railways, Airports, etc.).<br/> पीएम गति शक्ति आर्थिक विकास और सतत विकास के लिए एक परिवर्तनकारी दृष्टिकोण है, जो 7 इंजनों (सड़क, रेलवे, हवाई अड्डे, आदि) द्वारा संचालित है।</p>"
+    },
+    {
+      "sr_no": 73,
+      "question": "<p> <b>Consider the following statements regarding 'Balance of Trade' (BoT): <br/> '</b>व्यापार संतुलन<b>' (BoT) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is the difference between the value of a country's visible exports and visible imports. / </b>यह किसी देश के दृश्य निर्यात और दृश्य आयात के मूल्य के बीच का अंतर है।<b><br/> (b) It includes the trade in services. / </b>इसमें सेवाओं का व्यापार शामिल है। <b><br/> (c) If exports exceed imports, it is called a Trade Surplus. / </b>यदि निर्यात आयात से अधिक हो<b>, </b>तो इसे व्यापार अधिशेष कहा जाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-sa/se </b>कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> Only a / केवल a</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Balance of Trade only considers visible items (goods). Services are included in the 'Balance of Invisibles' under the Current Account.<br/> व्यापार संतुलन केवल दृश्य वस्तुओं (माल) पर विचार करता है। सेवाओं को चालू खाते के तहत 'अदृश्य संतुलन' में शामिल किया जाता है।</p>"
+    },
+    {
+      "sr_no": 74,
+      "question": "<p> <b>Which of the following is correct about 'Command Economy'? <br/> '</b>कमांड इकोनॉमी<b>' (Command Economy) </b>के बारे में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> Prices are determined by the market forces of demand and supply. / कीमतें मांग और आपूर्ति की बाजार शक्तियों द्वारा निर्धारित की जाती हैं।</p>",
+      "option2": "<p> The government makes all major decisions regarding production and distribution. / सरकार उत्पादन और वितरण के संबंध में सभी प्रमुख निर्णय लेती है।</p>",
+      "option3": "<p> Private ownership of property is highly encouraged. / संपत्ति के निजी स्वामित्व को अत्यधिक प्रोत्साहित किया जाता है।</p>",
+      "option4": "<p> It is another name for a Capitalist economy. / यह पूंजीवादी अर्थव्यवस्था का दूसरा नाम है।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> In a command economy (like in a communist state), the central government determines what goods are produced and how they are distributed.<br/> कमांड इकोनॉमी में (जैसे कि एक कम्युनिस्ट राज्य में), केंद्र सरकार यह निर्धारित करती है कि किन वस्तुओं का उत्पादन किया जाता है और उन्हें कैसे वितरित किया जाता है।</p>"
+    },
+    {
+      "sr_no": 75,
+      "question": "<p> <b>Consider the following statements regarding 'Mahila Samman Savings Certificate' (MSSC): <br/> '</b>महिला सम्मान बचत प्रमाणपत्र<b>' (MSSC) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It was announced in the Union Budget 2023-24. / </b>इसकी घोषणा केंद्रीय बजट <b>2023-24 </b>में की गई थी। <b><br/> (b) It offers a fixed interest rate for a period of 2 years. / </b>यह <b>2 </b>वर्ष की अवधि के लिए एक निश्चित ब्याज दर प्रदान करता है। <b><br/> (c) The maximum deposit limit is ₹2 lakh. / </b>अधिकतम जमा सीमा ₹<b>2 </b>लाख है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> Only c / केवल c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> MSSC is a one-time small savings scheme for women and girls with a fixed interest rate of 7.5% per annum.<br/> MSSC महिलाओं और लड़कियों के लिए 7.5% प्रति वर्ष की निश्चित ब्याज दर वाली एकमुश्त लघु बचत योजना है।</p>"
+    }
+  ]
+};
+
+// Extract questions and time from new structure
+const questions = quizData.questions;
+const totalTimeMinutes = quizData.time_minutes;
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = totalTimeMinutes * 60;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape') {
+      if (isPaletteOpen) {
+        closePalette();
+      }
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimer();
+    
+    // Auto-submit when time runs out
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      alert('Time is up! Submitting quiz automatically.');
+      submitQuiz();
+      return;
+    }
+    
+    if (timerSeconds <= 120) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    questionText.innerHTML = '';
+    const questionContent = createOptionContent(q.question);
+    questionText.appendChild(questionContent);
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message = `You have ${unattempted} unanswered questions. ${message}`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  const timeTaken = (totalTimeMinutes * 60) - timerSeconds;
+  const minutesTaken = Math.floor(timeTaken / 60);
+  const secondsTaken = timeTaken % 60;
+  const timeTakenText = `${minutesTaken}m ${secondsTaken}s`;
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeTakenText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    let questionDisplay = '';
+    if (isImageURL(q.question)) {
+      questionDisplay = `<img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`;
+    } else {
+      questionDisplay = q.question;
+    }
+    html += `<div class="question-review">
+      <h4>Q${q.sr_no}: ${questionDisplay}</h4>`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution && q.solution.trim() !== '') {
+      let solutionDisplay = '';
+      if (isImageURL(q.solution)) {
+        solutionDisplay = `<img src="${q.solution}" class="solution-image" alt="Solution" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">`;
+      } else {
+        solutionDisplay = q.solution;
+      }
+      
+      html += `<div class="solution-section" style="margin-top: 15px; padding: 15px; background: #f0f8ff; border-left: 4px solid #007bff; border-radius: 8px;">
+        <strong style="color: #007bff;">💡 Solution:</strong>
+        <div style="margin-top: 8px; color: #333;">${solutionDisplay}</div>
+      </div>`;
+    }
+    
+    html += `</div>`;
+  });
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https')) &&
+    (str.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i));
+}
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = totalTimeMinutes * 60;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    updateTimer();
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FULL ECONOMICS TEST</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">MOTION 3.0 - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem('quizState', JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem('quizState');
+    if (saved) {
+      const state = JSON.parse(saved);
+      if (Date.now() - state.timestamp < 24 * 60 * 60 * 1000) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || (totalTimeMinutes * 60); // MODIFIED
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem('quizState');
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

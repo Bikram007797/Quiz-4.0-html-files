@@ -1,0 +1,2915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>BIOLOGY FULL TEST</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.question-image, .option-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: block;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎯 BIOLOGY FULL TEST</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color)"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color)"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color)"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color)"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">Clear</button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">Submit Quiz</button>
+</div>
+
+<script>
+// MODIFIED: Quiz data structure with time_minutes
+const quizData = {
+  "time_minutes": 50,
+  "questions": [
+    {
+      "sr_no": 1,
+      "question": "<p><strong>Consider the following statements regarding Cell organelles: </strong><br/> कोशिकांगों के संबंध में निम्नलिखित कथनों पर विचार करें<strong>:<br/> (a) Lysosomes are known as the 'suicide bags' because of their hydrolytic enzymes. / </strong>लाइसोसोम अपने हाइड्रोलाइटिक एंजाइमों के कारण <strong>'</strong>आत्मघाती थैली<strong>' </strong>के रूप में जाने जाते हैं।<br/> <strong>(b) Mitochondria possess their own DNA and ribosomes. / </strong>माइटोकॉन्ड्रिया के पास अपना स्वयं का <strong>DNA </strong>और राइबोसोम होता है।<br/> <strong>(c) Endoplasmic Reticulum is responsible for protein and lipid synthesis. / </strong>अंतःप्रद्रव्यी जालिका प्रोटीन और लिपिड संश्लेषण के लिए जिम्मेदार है।<br/> <strong>Which of the above statements are correct? </strong><br/> उपरोक्त में से कौन<strong>-</strong>से कथन सही हैं<strong>?</strong></p>",
+      "option1": "<p>a and b only / केवल a और b</p>",
+      "option2": "<p>b and c only / केवल b और c</p>",
+      "option3": "<p>a and c only / केवल a और c</p>",
+      "option4": "<p>a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>All three statements are correct. Lysosomes contain digestive enzymes, Mitochondria are semi-autonomous, and ER (Rough and Smooth) synthesizes proteins and lipids.<br/> तीनों कथन सही हैं। लाइसोसोम में पाचक एंजाइम होते हैं, माइटोकॉन्ड्रिया अर्ध-स्वायत्त होते हैं, और ER (खुरदरी और चिकनी) प्रोटीन और लिपिड का संश्लेषण करती है।</p>"
+    },
+    {
+      "sr_no": 2,
+      "question": "<p> <b>Which of the following statements is correct regarding Xylem in plants? <br/> </b>पौधों में जाइलम के संबंध में निम्नलिखित में से कौन सा कथन सही है<b>?</b></p>",
+      "option1": "<p> It transports food from leaves to other parts. / यह पत्तियों से अन्य भागों तक भोजन का परिवहन करता है।</p>",
+      "option2": "<p> It consists of mostly living cells at maturity. / इसमें परिपक्वता के समय अधिकांशतः जीवित कोशिकाएं होती हैं।</p>",
+      "option3": "<p> It conducts water and minerals unidirectionally. / यह जल और खनिजों का एकदिशीय संचालन करता है।</p>",
+      "option4": "<p> Sieve tubes are its main conducting elements. / चालनी नलिकाएं इसके मुख्य संवाहक तत्व हैं।</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Xylem conducts water and minerals from roots to leaves in a single direction (unidirectional), while food transport is the function of Phloem.<br/> जाइलम जड़ों से पत्तियों तक जल और खनिजों का एक ही दिशा (एकदिशीय) में संचालन करता है, जबकि भोजन परिवहन फ्लोएम का कार्य है।</p>"
+    },
+    {
+      "sr_no": 3,
+      "question": "<p> <b>Consider the following statements about Enzymes: <br/> </b>एंजाइमों के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) All enzymes are proteins, but all proteins are not enzymes. / </b>सभी एंजाइम प्रोटीन होते हैं<b>, </b>लेकिन सभी प्रोटीन एंजाइम नहीं होते हैं। <b><br/> (b) Enzymes act as biocatalysts that speed up chemical reactions. / </b>एंजाइम जैव<b>-</b>उत्प्रेरक के रूप में कार्य करते हैं जो रासायनिक प्रतिक्रियाओं को तेज करते हैं। <b><br/> (c) They are consumed completely during a chemical reaction. / </b>रासायनिक प्रतिक्रिया के दौरान वे पूरी तरह से खपत हो जाते हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b only / केवल a और b</p>",
+      "option3": "<p> b and c only / केवल b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Enzymes are biocatalysts (mostly proteins) but they are not consumed in the reaction; they can be reused.<br/> एंजाइम जैव-उत्प्रेरक (ज्यादातर प्रोटीन) होते हैं लेकिन वे प्रतिक्रिया में खपत नहीं होते हैं; उन्हें पुन: उपयोग किया जा सकता है।</p>"
+    },
+    {
+      "sr_no": 4,
+      "question": "<p> <b>Which of the following nitrogenous bases is found in RNA but not in DNA?<br/> </b>निम्नलिखित में से कौन सा नाइट्रोजनयुक्त क्षार <b>RNA </b>में पाया जाता है लेकिन <b>DNA </b>में नहीं<b>?</b></p>",
+      "option1": "<p> Cytosine / साइटोसिन</p>",
+      "option2": "<p> Guanine / गुआनिन</p>",
+      "option3": "<p> Thymine / थायमीन</p>",
+      "option4": "<p> Uracil / यूरेसिल</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> DNA contains Adenine, Guanine, Cytosine, and Thymine. In RNA, Thymine is replaced by Uracil.<br/> DNA में एडेनिन, गुआनिन, साइटोसिन और थायमीन होते हैं। RNA में, थायमीन की जगह यूरेसिल ले लेता है।</p>"
+    },
+    {
+      "sr_no": 5,
+      "question": "<p> <b>Consider the following statements regarding Human Blood: <br/> </b>मानव रक्त के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Red Blood Cells (RBCs) lack a nucleus at maturity in humans. / </b>मनुष्यों में लाल रक्त कोशिकाएं <b>(RBCs) </b>परिपक्वता पर केंद्रक विहीन होती हैं। <b><br/> (b) Monocytes are the most abundant type of White Blood Cells. / </b>मोनोसाइट्स श्वेत रक्त कोशिकाओं का सबसे प्रचुर प्रकार हैं। <b><br/> (c) Blood platelets help in the coagulation of blood. / </b>रक्त प्लेटलेट्स रक्त के थक्के जमने में मदद करते हैं।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Neutrophils are the most abundant WBCs (60-65%), not Monocytes. RBCs are enucleated and platelets aid in clotting.<br/> न्यूट्रोफिल सबसे प्रचुर मात्रा में पाए जाने वाले WBCs (60-65%) हैं, मोनोसाइट्स नहीं। RBCs केंद्रक विहीन होते हैं और प्लेटलेट्स थक्के जमने में मदद करते हैं।</p>"
+    },
+    {
+      "sr_no": 6,
+      "question": "<p> <b>Which of the following statements is correct about 'Myopia'? <br/> '</b>मायोपिया<b>' (</b>निकट दृष्टिदोष<b>) </b>के बारे में निम्नलिखित में से कौन सा कथन सही है<b>?</b></p>",
+      "option1": "<p> The person cannot see nearby objects clearly. / व्यक्ति पास की वस्तुओं को स्पष्ट रूप से नहीं देख सकता है।</p>",
+      "option2": "<p> The image is formed behind the retina. / प्रतिबिंब रेटिना के पीछे बनता है।</p>",
+      "option3": "<p> It can be corrected using a concave lens. / इसे अवतल लेंस का उपयोग करके ठीक किया जा सकता है।</p>",
+      "option4": "<p> It is also known as far-sightedness. / इसे दूर-दृष्टिदोष के रूप में भी जाना जाता है।</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> In Myopia (short-sightedness), the person can see near objects but not distant ones. The image forms in front of the retina and is corrected by a concave lens.<br/> मायोपिया (निकट दृष्टिदोष) में, व्यक्ति पास की वस्तुओं को देख सकता है लेकिन दूर की नहीं। प्रतिबिंब रेटिना के सामने बनता है और इसे अवतल लेंस द्वारा ठीक किया जाता है।</p>"
+    },
+    {
+      "sr_no": 7,
+      "question": "<p> <b>Consider the following statements regarding Vitamins: <br/> </b>विटामिन के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Vitamin B and C are fat-soluble vitamins. / </b>विटामिन <b>B </b>और <b>C </b>वसा में घुलनशील विटामिन हैं। <b><br/> (b) Vitamin K is essential for blood clotting. / </b>विटामिन <b>K </b>रक्त के थक्के जमने के लिए आवश्यक है। <b><br/> (c) Deficiency of Vitamin D causes Rickets in children. / </b>विटामिन <b>D </b>की कमी से बच्चों में रिकेट्स होता है।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Vitamin B and C are water-soluble. Vitamins A, D, E, and K are fat-soluble. Statements b and c are factually correct.<br/> विटामिन B और C जल में घुलनशील हैं। विटामिन A, D, E और K वसा में घुलनशील हैं। कथन b और c तथ्यात्मक रूप से सही हैं।</p>"
+    },
+    {
+      "sr_no": 8,
+      "question": "<p> <b>Which of the following hormones is known as the 'Emergency Hormone'? <br/> </b>निम्नलिखित में से किस हार्मोन को <b>'</b>आपातकालीन हार्मोन<b>' </b>के रूप में जाना जाता है<b>?</b></p>",
+      "option1": "<p> Insulin / इंसुलिन</p>",
+      "option2": "<p> Thyroxine / थायरोक्सिन</p>",
+      "option3": "<p> Adrenaline / एड्रेनालिन</p>",
+      "option4": "<p> Estrogen / एस्ट्रोजन</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> <br/> </p>"
+    },
+    {
+      "sr_no": 9,
+      "question": "<p> <b>Consider the following statements regarding Photosynthesis: <br/> </b>प्रकाश संश्लेषण के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is a catabolic process. / </b>यह एक अपचयी <b>(catabolic) </b>प्रक्रिया है। <b><br/> (b) Chlorophyll absorbs mainly red and blue light. / </b>क्लोरोफिल मुख्य रूप से लाल और नीले प्रकाश को अवशोषित करता है। <b><br/> (c) Oxygen released during photosynthesis comes from water molecules. / </b>प्रकाश संश्लेषण के दौरान निकलने वाली ऑक्सीजन जल के अणुओं से आती है।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Photosynthesis is an anabolic (building) process, not catabolic. Oxygen is derived from the photolysis of water.<br/> प्रकाश संश्लेषण एक उपचयी (anabolic) प्रक्रिया है, अपचयी नहीं। ऑक्सीजन जल के प्रकाश-अपघटन (photolysis) से प्राप्त होती है।</p>"
+    },
+    {
+      "sr_no": 10,
+      "question": "<p> <b>Which part of the human brain is responsible for maintaining body posture and balance? <br/> </b>मानव मस्तिष्क का कौन सा भाग शरीर की मुद्रा और संतुलन बनाए रखने के लिए जिम्मेदार है<b>?</b></p>",
+      "option1": "<p> Cerebrum / प्रमस्तिष्क</p>",
+      "option2": "<p> Cerebellum / अनुमस्तिष्क</p>",
+      "option3": "<p> Medulla Oblongata / मेडुला ओब्लोंगाटा</p>",
+      "option4": "<p> Hypothalamus / हाइपोथैलेमस</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Cerebellum (hindbrain) coordinates voluntary movements and maintains posture, balance, and equilibrium.<br/> अनुमस्तिष्क (Cerebellum) स्वैच्छिक गतिविधियों का समन्वय करता है और शरीर की मुद्रा, संतुलन और साम्यावस्था बनाए रखता है।</p>"
+    },
+    {
+      "sr_no": 11,
+      "question": "<p> <b>Consider the following statements about Human Digestive System: <br/> </b>मानव पाचन तंत्र के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Digestion of carbohydrates starts in the mouth. / </b>कार्बोहाइड्रेट का पाचन मुख से शुरू होता है। <b><br/> (b) Bile juice is secreted by the Gallbladder. / </b>पित्त रस का स्राव पित्ताशय द्वारा होता है। <b><br/> (c) The inner lining of the small intestine has villi for absorption. / </b>छोटी आंत की आंतरिक परत में अवशोषण के लिए विली <b>(villi) </b>होते हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Bile is produced/secreted by the Liver and only stored in the Gallbladder. Carbohydrate digestion begins in the mouth via salivary amylase.<br/> पित्त यकृत द्वारा निर्मित/स्रावित होता है और केवल पित्ताशय में जमा होता है। कार्बोहाइड्रेट का पाचन लार एमाइलेज के माध्यम से मुख में शुरू होता है।</p>"
+    },
+    {
+      "sr_no": 12,
+      "question": "<p> <b>Match the following Respiratory Organs with the organisms: <br/> </b>निम्नलिखित श्वसन अंगों का जीवों के साथ मिलान करें<b>:<br/> (a) Skin / </b>त्वचा <b>- (i) Fish / </b>मछली <b><br/> (b) Gills / </b>गलफड़े <b>- (ii) Earthworm / </b>केंचुआ <b><br/> (c) Trachea / </b>श्वासनली <b>- (iii) Cockroach / </b>तिलचट्टा<b><br/> Choose the correct option: <br/> </b>सही विकल्प चुनें<b>:</b></p>",
+      "option1": "<p> a-i, b-ii, c-iii</p>",
+      "option2": "<p> a-ii, b-i, c-iii</p>",
+      "option3": "<p> a-ii, b-iii, c-i</p>",
+      "option4": "<p> a-iii, b-i, c-ii</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Earthworms breathe through moist skin, fish use gills, and insects like cockroaches use a tracheal system.<br/> केंचुए नम त्वचा के माध्यम से सांस लेते हैं, मछलियां गलफड़ों का उपयोग करती हैं, और तिलचट्टे जैसे कीट श्वासनली तंत्र का उपयोग करते हैं।</p>"
+    },
+    {
+      "sr_no": 13,
+      "question": "<p> <b>Consider the following statements about Fungi: <br/> </b>कवक के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Fungi are autotrophic organisms. / </b>कवक स्वपोषी जीव होते हैं। <b><br/> (b) Their cell wall is made of Chitin. / </b>उनकी कोशिका भित्ति काइटिन की बनी होती है। <b><br/> (c) Yeast is a multicellular fungus used in baking. / </b>यीस्ट एक बहुकोशिकीय कवक है जिसका उपयोग बेकिंग में किया जाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> b only / केवल b</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> b and c / b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Fungi are heterotrophic (not autotrophic). Yeast is a unicellular fungus, not multicellular. Their cell wall is indeed made of chitin.<br/> कवक विषमपोषी (स्वपोषी नहीं) होते हैं। यीस्ट एककोशिकीय कवक है, बहुकोशिकीय नहीं। उनकी कोशिका भित्ति वास्तव में काइटिन की बनी होती है।</p>"
+    },
+    {
+      "sr_no": 14,
+      "question": "<p> <b>Which of the following is correct regarding the 'Universal Donor' blood group? <br/> '</b>सर्वदाता<b>' </b>रक्त समूह के संबंध में निम्नलिखित में से कौन सा सही है<b>?</b></p>",
+      "option1": "<p> AB Positive, as it lacks antibodies. / AB पॉजिटिव, क्योंकि इसमें एंटीबॉडी की कमी होती है।</p>",
+      "option2": "<p> O Negative, as it lacks A, B, and Rh antigens. / O नेगेटिव, क्योंकि इसमें A, B और Rh एंटीजन की कमी होती है।</p>",
+      "option3": "<p> O Positive, as it can be given to anyone. / O पॉजिटिव, क्योंकि इसे किसी को भी दिया जा सकता है।</p>",
+      "option4": "<p> AB Negative, as it lacks Rh antigen. / AB नेगेटिव, क्योंकि इसमें Rh एंटीजन की कमी होती है।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> O Negative is the true universal donor because it lacks A and B antigens on RBCs and also lacks the Rh factor, preventing immune reactions.<br/> O नेगेटिव वास्तविक सर्वदाता है क्योंकि इसमें RBCs पर A और B एंटीजन की कमी होती है और Rh कारक भी नहीं होता है, जिससे प्रतिरक्षा प्रतिक्रिया रुक जाती है।</p>"
+    },
+    {
+      "sr_no": 15,
+      "question": "<p> <b>Consider the following statements regarding Heart: <br/> </b>हृदय के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) The right side of the heart contains oxygenated blood. / </b>हृदय के दाहिने हिस्से में ऑक्सीजन युक्त रक्त होता है। <b><br/> (b) Pulmonary artery carries deoxygenated blood to the lungs. / </b>फुफ्फुस धमनी विऑक्सीजनित रक्त को फेफड़ों तक ले जाती है। <b><br/> (c) The pacemaker of the human heart is the SA node. / </b>मानव हृदय का पेसमेकर <b>SA </b>नोड है।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The right side of the heart receives deoxygenated blood. Pulmonary artery is an exception as it carries deoxygenated blood. SA node initiates heartbeats.<br/> हृदय के दाहिने हिस्से में विऑक्सीजनित रक्त प्राप्त होता है। फुफ्फुस धमनी एक अपवाद है क्योंकि यह विऑक्सीजनित रक्त ले जाती है। SA नोड दिल की धड़कन शुरू करता है।</p>"
+    },
+    {
+      "sr_no": 16,
+      "question": "<p> <b>Consider the following statements regarding Plant Hormones: <br/> </b>पादप हार्मोन के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) Auxin is responsible for apical dominance and cell elongation. / </b>ऑक्सिन शीर्ष प्रमुखता <b>(apical dominance) </b>और कोशिका विस्तार के लिए जिम्मेदार है। <b><br/> (b) Cytokinins promote cell division and delay leaf senescence. / </b>साइटोकिनिन कोशिका विभाजन को बढ़ावा देते हैं और पत्तियों के बुढ़ापे में देरी करते हैं। <b><br/> (c) Abscisic Acid (ABA) is known as the 'growth promoter' hormone. / </b>एब्सिसिक एसिड <b>(ABA) </b>को <b>'</b>वृद्धि प्रवर्तक<b>' </b>हार्मोन के रूप में जाना जाता है।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Abscisic Acid (ABA) is a growth inhibitor, not a promoter. It helps in closing stomata during water stress.<br/> एब्सिसिक एसिड (ABA) एक वृद्धि अवरोधक है, प्रवर्तक नहीं। यह जल तनाव के दौरान रंध्रों को बंद करने में मदद करता है।</p>"
+    },
+    {
+      "sr_no": 17,
+      "question": "<p> <b>Which of the following statements is correct regarding the 'Nephron'? <br/> '</b>नेफ्रॉन<b>' </b>के संबंध में निम्नलिखित में से कौन सा कथन सही है<b>?</b></p>",
+      "option1": "<p> It is the structural and functional unit of the Liver. / यह यकृत की संरचनात्मक और कार्यात्मक इकाई है।</p>",
+      "option2": "<p> Ultrafiltration occurs in the Bowman's capsule. / बोमन कैप्सूल में अल्ट्राफिल्ट्रेशन (अतिसूक्ष्म निस्यंदन) होता है।</p>",
+      "option3": "<p> It reabsorbs 100% of the urea from the filtrate. / यह निस्यंद से 100% यूरिया को पुन: अवशोषित करता है।</p>",
+      "option4": "<p> It is located in the thoracic cavity. / यह वक्ष गुहा में स्थित होता है।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Nephron is the unit of the Kidney. Ultrafiltration happens in the Bowman's capsule/Glomerulus. Most urea is excreted, not fully reabsorbed.<br/> नेफ्रॉन गुर्दे (Kidney) की इकाई है। अल्ट्राफिल्ट्रेशन बोमन कैप्सूल/ग्लोमेरुलस में होता है। अधिकांश यूरिया उत्सर्जित होता है, पूरी तरह पुन: अवशोषित नहीं।</p>"
+    },
+    {
+      "sr_no": 18,
+      "question": "<p> <b>Consider the following statements about Human Respiration: <br/> </b>मानव श्वसन के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Diaphragm moves down during inhalation. / </b>श्वास लेने <b>(</b>अंतःश्वसन<b>) </b>के दौरान डायाफ्राम नीचे की ओर चलता है। <b><br/> (b) Exchange of gases occurs in the Alveoli. / </b>गैसों का विनिमय वायुकोशिका <b>(Alveoli) </b>में होता है। <b><br/> (c) Hemoglobin has a higher affinity for Oxygen than Carbon Monoxide. / </b>हीमोग्लोबिन में कार्बन मोनोऑक्साइड की तुलना में ऑक्सीजन के लिए उच्च बंधुता होती है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Hemoglobin has a much higher affinity (about 200-250 times) for Carbon Monoxide than for Oxygen, which is why CO is toxic.<br/> हीमोग्लोबिन में ऑक्सीजन की तुलना में कार्बन मोनोऑक्साइड के लिए बहुत अधिक बंधुता (लगभग 200-250 गुना) होती है, यही कारण है कि CO विषाक्त है।</p>"
+    },
+    {
+      "sr_no": 19,
+      "question": "<p> <b>Which of the following is a 'Double Membrane-bound' organelle? <br/> </b>निम्नलिखित में से कौन सा <b>'</b>दोहरी झिल्ली<b>-</b>बद्ध<b>' </b>कोशिकांग है<b>?</b></p>",
+      "option1": "<p> Ribosome / राइबोसोम</p>",
+      "option2": "<p> Lysosome / लाइसोसोम</p>",
+      "option3": "<p> Chloroplast / क्लोरोप्लास्ट</p>",
+      "option4": "<p> Golgi Body / गोल्जी बॉडी</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Nucleus, Mitochondria, and Chloroplasts are double membrane-bound. Ribosomes have no membrane.<br/> केंद्रक, माइटोकॉन्ड्रिया और क्लोरोप्लास्ट दोहरी झिल्ली वाले होते हैं। राइबोसोम में कोई झिल्ली नहीं होती है।</p>"
+    },
+    {
+      "sr_no": 20,
+      "question": "<p> <b>Consider the following statements regarding Down's Syndrome: <br/> </b>डाउन सिंड्रोम के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is caused by the trisomy of the 21st chromosome. / </b>यह <b>21</b>वें गुणसूत्र की ट्राइसोमी के कारण होता है। <b><br/> (b) It is a sex-linked genetic disorder. / </b>यह एक लिंग<b>-</b>सहलग्न <b>(sex-linked) </b>आनुवंशिक विकार है। <b><br/> (c) Affected individuals often have a short stature and furrowed tongue. / </b>प्रभावित व्यक्तियों का कद अक्सर छोटा होता है और जीभ फटी हुई होती है।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Down's Syndrome is an autosomal disorder (chromosome 21), not sex-linked (like Colour Blindness or Hemophilia).<br/> डाउन सिंड्रोम एक ऑटोसोमल विकार (गुणसूत्र 21) है, न कि लिंग-सहलग्न (जैसे वर्णांधता या हीमोफिलिया)।</p>"
+    },
+    {
+      "sr_no": 21,
+      "question": "<p> <b>The 'Nodes of Ranvier' are found in which of the following? <br/> '</b>रैनवियर के नोड्स<b>' </b>निम्नलिखित में से किसमें पाए जाते हैं<b>?</b></p>",
+      "option1": "<p> Muscle fibers / मांसपेशी तंतु</p>",
+      "option2": "<p> Neurons / न्यूरॉन्स</p>",
+      "option3": "<p> Nephrons / नेफ्रॉन्स</p>",
+      "option4": "<p> Osteocytes / अस्थि कोशिकाएं</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Nodes of Ranvier are the gaps in the myelin sheath of an axon in a neuron.<br/> रैनवियर के नोड एक न्यूरॉन में अक्षतंतु (axon) के माइलिन म्यान (myelin sheath) में अंतराल होते हैं।</p>"
+    },
+    {
+      "sr_no": 22,
+      "question": "<p> <b>Consider the following pairs of Diseases and their Causes: <br/> </b>रोगों और उनके कारणों के निम्नलिखित युग्मों पर विचार करें<b>:<br/> (a) Scurvy / </b>स्कर्वी <b>- Vitamin C / </b>विटामिन <b>C <br/> (b) Xerophthalmia / </b>ज़ेरोफ़थैल्मिया <b>- Vitamin A / </b>विटामिन <b>A <br/> (c) Beri-beri / </b>बेरी<b>-</b>बेरी <b>- Vitamin B12 / </b>विटामिन <b>B12<br/> Which of the above pairs is/are correctly matched?<br/> </b>उपरोक्त में से कौन सा<b>/</b>से युग्म सही सुमेलित है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b only / केवल a और b</p>",
+      "option3": "<p> b and c only / केवल b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Beri-beri is caused by the deficiency of Vitamin B1 (Thiamine), not B12.<br/> बेरी-बेरी विटामिन B1 (थायमिन) की कमी से होता है, न कि B12 से।</p>"
+    },
+    {
+      "sr_no": 23,
+      "question": "<p> <b>Which of the following statements is correct about 'Xylem Parenchyma'? <br/> '</b>जाइलम पैरेन्काइमा<b>' </b>के बारे में निम्नलिखित में से कौन सा कथन सही है<b>?</b></p>",
+      "option1": "<p> It is the only living component of xylem. / यह जाइलम का एकमात्र जीवित घटक है।</p>",
+      "option2": "<p> It is responsible for water conduction in tall trees. / यह ऊंचे पेड़ों में जल संचालन के लिए जिम्मेदार है।</p>",
+      "option3": "<p> Its cell wall is made of lignin only. / इसकी कोशिका भित्ति केवल लिग्निन से बनी होती है।</p>",
+      "option4": "<p> It is a dead tissue. / यह एक मृत ऊतक है।</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> In Xylem, tracheids, vessels, and xylem fibers are dead, while Xylem Parenchyma is living and stores food.<br/> जाइलम में, ट्रैकईड्स, वाहिकाएं और जाइलम फाइबर मृत होते हैं, जबकि जाइलम पैरेन्काइमा जीवित होता है और भोजन का संचय करता है।</p>"
+    },
+    {
+      "sr_no": 24,
+      "question": "<p> <b>Consider the following statements regarding the Human Heartbeat: <br/> </b>मानव हृदय की धड़कन के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) The 'Lubb' sound is produced by the closure of AV valves. / '</b>लब<b>' </b>ध्वनि <b>AV </b>वाल्व के बंद होने से उत्पन्न होती है। <b><br/> (b) The 'Dupp' sound is produced by the closure of semilunar valves. / '</b>डप<b>' </b>ध्वनि अर्धचंद्राकार <b>(semilunar) </b>वाल्व के बंद होने से उत्पन्न होती है।<b><br/> (c) An average adult heart beats 100-110 times per minute. / </b>एक औसत वयस्क का दिल प्रति मिनट <b>100-110 </b>बार धड़कता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b only / केवल a और b</p>",
+      "option3": "<p> b and c only / केवल b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The normal resting heart rate for adults is 72 times per minute. Statements (a) and (b) correctly describe heart sounds.<br/> वयस्कों के लिए सामान्य विश्राम हृदय गति 72 बार प्रति मिनट है। कथन (a) और (b) हृदय की ध्वनियों का सही वर्णन करते हैं।</p>"
+    },
+    {
+      "sr_no": 25,
+      "question": "<p> <b>Which of the following cell organelles is involved in the formation of Acrosome in human sperm? <br/> </b>निम्नलिखित में से कौन सा कोशिकांग मानव शुक्राणु में एक्रोसोम के निर्माण में शामिल है<b>?</b></p>",
+      "option1": "<p> Mitochondria / माइटोकॉन्ड्रिया</p>",
+      "option2": "<p> Golgi Apparatus / गोल्जी उपकरण</p>",
+      "option3": "<p> Centriole / सेंट्रियोल</p>",
+      "option4": "<p> Nucleus / केंद्रक</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Acrosome, which helps the sperm penetrate the egg, is derived from the Golgi apparatus.<br/> एक्रोसोम, जो शुक्राणु को अंडे में प्रवेश करने में मदद करता है, गोल्जी उपकरण से प्राप्त होता है।</p>"
+    },
+    {
+      "sr_no": 26,
+      "question": "<p> <b>Consider the following statements about DNA Replication: <br/> DNA </b>प्रतिकृति <b>(Replication) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It occurs during the S-phase of the Cell Cycle. / </b>यह कोशिका चक्र के <b>S-</b>चरण के दौरान होता है। <b><br/> (b) DNA polymerase is the main enzyme involved. / DNA </b>पॉलीमरेज़ शामिल मुख्य एंजाइम है। <b><br/> (c) It is a conservative process. / </b>यह एक संरक्षी <b>(conservative) </b>प्रक्रिया है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> DNA replication is semi-conservative, meaning each new DNA molecule has one old and one new strand.<br/> DNA प्रतिकृति अर्ध-संरक्षी (semi-conservative) है, जिसका अर्थ है कि प्रत्येक नए DNA अणु में एक पुराना और एक नया स्ट्रैंड होता है।</p>"
+    },
+    {
+      "sr_no": 27,
+      "question": "<p> <b>Which of the following statements is INCORRECT regarding 'Parenchyma' tissue? <br/> '</b>पैरेन्काइमा<b>' </b>ऊतक के संबंध में निम्नलिखित में से कौन सा कथन गलत है<b>?</b></p>",
+      "option1": "<p> It is a simple permanent tissue. / यह एक सरल स्थायी ऊतक है।</p>",
+      "option2": "<p> The cells are thin-walled and living. / कोशिकाएं पतली भित्ति वाली और जीवित होती हैं।</p>",
+      "option3": "<p> It provides mechanical strength to the plants like sclerenchyma. / यह स्क्लेरेन्काइमा की तरह पौधों को यांत्रिक शक्ति प्रदान करता है।</p>",
+      "option4": "<p> It is involved in food storage and photosynthesis. / यह भोजन संचय और प्रकाश संश्लेषण में शामिल है।</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Sclerenchyma provides mechanical strength; Parenchyma is primarily for storage and basic metabolism.<br/> स्क्लेरेन्काइमा यांत्रिक शक्ति प्रदान करता है; पैरेन्काइमा मुख्य रूप से संचय और बुनियादी चयापचय के लिए है।</p>"
+    },
+    {
+      "sr_no": 28,
+      "question": "<p> <b>Consider the following statements regarding the 'Pancreas': <br/> '</b>अग्न्याशय<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It acts as both exocrine and endocrine gland. / </b>यह बहिःस्रावी और अंतःस्रावी दोनों ग्रंथियों के रूप में कार्य करता है। <b><br/> (b) Insulin is secreted by Alpha cells of Islets of Langerhans. / </b>इंसुलिन का स्राव लैंगरहैंस के द्वीपों की अल्फा कोशिकाओं द्वारा किया जाता है। <b><br/> (c) Glucagon increases blood glucose levels. / </b>ग्लूकागन रक्त शर्करा के स्तर को बढ़ाता है।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Insulin is secreted by Beta cells, while Alpha cells secrete Glucagon.<br/> इंसुलिन बीटा कोशिकाओं द्वारा स्रावित होता है, जबकि अल्फा कोशिकाएं ग्लूकागन स्रावित करती हैं।</p>"
+    },
+    {
+      "sr_no": 29,
+      "question": "<p> <b>'Triple Antigen' (DPT) vaccine is given to protect against which diseases? <br/> '</b>ट्रिपल एंटीजन<b>' (DPT) </b>का टीका किन बीमारियों से बचाने के लिए दिया जाता है<b>?</b></p>",
+      "option1": "<p> Diarrhea, Polio, Typhoid / दस्त, पोलियो, टाइफाइड</p>",
+      "option2": "<p> Diphtheria, Pertussis, Tetanus / डिप्थीरिया, पर्टुसिस (काली खांसी), टेटनस</p>",
+      "option3": "<p> Diphtheria, Polio, Tetanus / डिप्थीरिया, पोलियो, टेटनस</p>",
+      "option4": "<p> Dengue, Pertussis, Typhoid / डेंगू, पर्टुसिस, टाइफाइड</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> DPT stands for Diphtheria, Pertussis (Whooping cough), and Tetanus.<br/> DPT का अर्थ डिप्थीरिया, पर्टुसिस (काली खांसी) और टेटनस है।</p>"
+    },
+    {
+      "sr_no": 30,
+      "question": "<p> <b>Consider the following statements about 'Blood Pressure': <br/> '</b>रक्तचाप<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) The normal blood pressure is 120/80 mm Hg. / </b>सामान्य रक्तचाप <b>120/80 mm Hg </b>होता है। <b><br/> (b) 120 represents the diastolic pressure. / 120 </b>डायस्टोलिक दबाव को दर्शाता है। <b><br/> (c) It is measured using an instrument called Sphygmomanometer. / </b>इसे स्फिग्मोमैनोमीटर नामक उपकरण का उपयोग करके मापा जाता है।<b><br/> Which of the above statements is/are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and c / a और c</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> 120 is the systolic (pumping) pressure and 80 is the diastolic (resting) pressure.<br/> 120 सिस्टोलिक (पंपिंग) दबाव है और 80 डायस्टोलिक (विश्राम) दबाव है।</p>"
+    },
+    {
+      "sr_no": 31,
+      "question": "<p> <b>Consider the following statements regarding 'Mendel’s Laws of Inheritance': <br/> '</b>मेंडल के वंशानुक्रम के नियमों<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) The Law of Segregation states that alleles separate during gamete formation. / </b>पृथक्करण का नियम कहता है कि युग्मक निर्माण के दौरान एलील अलग हो जाते हैं। <b><br/> (b) The Law of Independent Assortment is observed in monohybrid crosses. / </b>स्वतंत्र अपव्यूहन का नियम मोनोहाइब्रिड क्रॉस में देखा जाता है। <b><br/> (c) Phenotypic ratio of a dihybrid cross is 9:3:3:1. / </b>डाइहाइब्रिड क्रॉस का फेनोटाइपिक अनुपात <b>9:3:3:1 </b>है।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Law of Independent Assortment is observed in dihybrid crosses, not monohybrid.<br/> स्वतंत्र अपव्यूहन का नियम डाइहाइब्रिड क्रॉस में देखा जाता है, मोनोहाइब्रिड में नहीं।</p>"
+    },
+    {
+      "sr_no": 32,
+      "question": "<p> <b>Which of the following statements is correct regarding 'Meiosis'? <br/> '</b>अर्धसूत्रीविभाजन<b>' (Meiosis) </b>के संबंध में निम्नलिखित में से कौन सा कथन सही है<b>?</b></p>",
+      "option1": "<p> It occurs in somatic cells for growth. / यह वृद्धि के लिए दैहिक कोशिकाओं में होता है।</p>",
+      "option2": "<p> It results in two daughter cells with the same number of chromosomes. / इसके परिणामस्वरूप समान गुणसूत्र संख्या वाली दो संतति कोशिकाएं बनती हैं।</p>",
+      "option3": "<p> Crossing over occurs during Prophase I. / प्रोपेज़ I के दौरान क्रॉसिंग ओवर (जीन विनिमय) होता है।</p>",
+      "option4": "<p> It is a single-step division process. / यह एक एकल-चरणीय विभाजन प्रक्रिया है।</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Meiosis occurs in germ cells, results in four haploid cells, and involves crossing over in Prophase I to increase genetic diversity.<br/> अर्धसूत्रीविभाजन जनन कोशिकाओं में होता है, इसके परिणामस्वरूप चार अगुणित कोशिकाएं बनती हैं, और आनुवंशिक विविधता बढ़ाने के लिए प्रोपेज़ I में क्रॉसिंग ओवर शामिल होता है।</p>"
+    },
+    {
+      "sr_no": 33,
+      "question": "<p> <b>Consider the following pairs of Organisms and their Mode of Reproduction: <br/> </b>जीवों और उनके प्रजनन के तरीकों के निम्नलिखित युग्मों पर विचार करें<b>:<br/> (a) Hydra / </b>हाइड्रा <b>- Budding / </b>मुकुलन <b><br/> (b) Amoeba / </b>अमीबा <b>- Multiple Fission / </b>बहु विखंडन <b><br/> (c) Spirogyra / </b>स्पाइरोगाइरा <b>- Fragmentation / </b>विखंडन<b><br/> Which of the above pairs is/are correctly matched? <br/> </b>उपरोक्त में से कौन सा<b>/</b>से युग्म सही सुमेलित है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and c only / केवल a और c</p>",
+      "option3": "<p> b and c only / केवल b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All are correct. Amoeba shows both binary and multiple fission (under unfavorable conditions).<br/> सभी सही हैं। अमीबा बाइनरी और बहु विखंडन (प्रतिकूल परिस्थितियों में) दोनों दिखाता है।</p>"
+    },
+    {
+      "sr_no": 34,
+      "question": "<p> <b>Which of the following statements is correct about 'Antibiotics'? <br/> '</b>एंटीबायोटिक्स<b>' </b>के बारे में निम्नलिखित में से कौन सा कथन सही है<b>?</b></p>",
+      "option1": "<p> They are effective against both viruses and bacteria. / वे वायरस और बैक्टीरिया दोनों के खिलाफ प्रभावी हैं।</p>",
+      "option2": "<p> Penicillin was the first antibiotic discovered by Alexander Fleming. / पेनिसिलिन अलेक्जेंडर फ्लेमिंग द्वारा खोजा गया पहला एंटीबायोटिक था।</p>",
+      "option3": "<p> They work by strengthening the human immune system only. / वे केवल मानव प्रतिरक्षा प्रणाली को मजबूत करके काम करते हैं।</p>",
+      "option4": "<p> They can be taken without a doctor's prescription safely. / उन्हें डॉक्टर के पर्चे के बिना सुरक्षित रूप से लिया जा सकता है।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Antibiotics only work against bacteria, not viruses, by inhibiting bacterial cell wall synthesis or metabolism.<br/> एंटीबायोटिक्स केवल बैक्टीरिया के खिलाफ काम करते हैं, वायरस के खिलाफ नहीं, बैक्टीरिया की कोशिका भित्ति संश्लेषण या चयापचय को रोककर।</p>"
+    },
+    {
+      "sr_no": 35,
+      "question": "<p> <b>Consider the following statements regarding the 'Human Skeleton': <br/> '</b>मानव कंकाल<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) The adult human skeleton consists of 206 bones. / </b>वयस्क मानव कंकाल में <b>206 </b>हड्डियाँ होती हैं। <b><br/> (b) Femur is the longest and strongest bone in the body. / </b>फीमर शरीर की सबसे लंबी और सबसे मजबूत हड्डी है। <b><br/> (c) Stapes, the smallest bone, is found in the middle ear. / </b>स्टेप्स<b>, </b>सबसे छोटी हड्डी<b>, </b>मध्य कान में पाई जाती है।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are factual. The human skeleton is divided into Axial and Appendicular parts.<br/> सभी कथन तथ्यात्मक हैं। मानव कंकाल को अक्षीय और उपांगीय भागों में विभाजित किया गया है।</p>"
+    },
+    {
+      "sr_no": 36,
+      "question": "<p> <b>Which of the following is correct regarding 'Phototropism' in plants? <br/> </b>पौधों में <b>'</b>प्रकाशानुवर्तन<b>' (Phototropism) </b>के संबंध में निम्नलिखित में से कौन सा सही है<b>?</b></p>",
+      "option1": "<p> Shoots show negative phototropism. / प्ररोह (Shoots) नकारात्मक प्रकाशानुवर्तन दिखाते हैं।</p>",
+      "option2": "<p> Roots show positive phototropism. / जड़ें सकारात्मक प्रकाशानुवर्तन दिखाती हैं।</p>",
+      "option3": "<p> It is caused by the unequal distribution of Auxin. / यह ऑक्सिन के असमान वितरण के कारण होता है।</p>",
+      "option4": "<p> Gibberellins are the primary hormone involved. / गिब्बेरेलिन इसमें शामिल प्राथमिक हार्मोन हैं।</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Shoots are positively phototropic (bend towards light) due to Auxin accumulating on the shaded side, causing it to grow faster.<br/> ऑक्सिन के छायादार पक्ष में जमा होने के कारण प्ररोह सकारात्मक रूप से प्रकाशानुवर्ती (प्रकाश की ओर झुकना) होते हैं, जिससे वह तेजी से बढ़ता है।</p>"
+    },
+    {
+      "sr_no": 37,
+      "question": "<p> <b>Consider the following statements regarding 'AIDS': <br/> '</b>एड्स<b>' (AIDS) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is caused by a DNA virus called HIV. / </b>यह <b>HIV </b>नामक <b>DNA </b>वायरस के कारण होता है। <b><br/> (b) It drastically reduces the number of Helper T-cells. / </b>यह हेल्पर <b>T-</b>कोशिकाओं की संख्या को बहुत कम कर देता है। <b><br/> (c) ELISA test is used for the screening of AIDS. / ELISA </b>परीक्षण का उपयोग एड्स की स्क्रीनिंग के लिए किया जाता है।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> HIV is a Retrovirus, meaning its genetic material is RNA, not DNA.<br/> HIV एक रेट्रोवायरस है, जिसका अर्थ है कि इसकी आनुवंशिक सामग्री RNA है, DNA नहीं।</p>"
+    },
+    {
+      "sr_no": 38,
+      "question": "<p> <b>Which of the following parts of the plant is involved in 'Vegetative Propagation' in Bryophyllum? <br/> </b>ब्रायोफिलम में <b>'</b>वानस्पतिक प्रवर्धन<b>' (Vegetative Propagation) </b>में पौधे का कौन सा भाग शामिल होता है<b>?</b></p>",
+      "option1": "<p> Stem / तना</p>",
+      "option2": "<p> Root / जड़</p>",
+      "option3": "<p> Leaves / पत्तियां</p>",
+      "option4": "<p> Flower / फूल</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Bryophyllum propagates through buds produced in the notches along the leaf margins.<br/> ब्रायोफिलम पत्ती के किनारों के साथ खांचों में उत्पन्न कलियों के माध्यम से फैलता है।</p>"
+    },
+    {
+      "sr_no": 39,
+      "question": "<p> <b>Consider the following statements regarding 'Bile Juice': <br/> '</b>पित्त रस<b>' (Bile Juice) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It does not contain any digestive enzymes. / </b>इसमें कोई पाचक एंजाइम नहीं होता है। <b><br/> (b) It helps in the emulsification of fats. / </b>यह वसा के पायसीकरण <b>(emulsification) </b>में मदद करता है। <b><br/> (c) It makes the medium of food acidic in the small intestine. / </b>यह छोटी आंत में भोजन के माध्यम को अम्लीय बनाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b only / केवल a और b</p>",
+      "option3": "<p> b and c only / केवल b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Bile is alkaline and neutralizes the acidity of stomach food (chyme) to make it alkaline for pancreatic enzymes.<br/> पित्त क्षारीय होता है और अग्न्याशय के एंजाइमों के लिए इसे क्षारीय बनाने के लिए पेट के भोजन (chyme) की अम्लता को बेअसर करता है।</p>"
+    },
+    {
+      "sr_no": 40,
+      "question": "<p> <b>Match the following deficiency diseases with the respective minerals: <br/> </b>निम्नलिखित कमी वाले रोगों का संबंधित खनिजों के साथ मिलान करें<b>:<br/> (a) Goitre / </b>घेंघा <b>- (i) Iron / </b>लोहा <b><br/> (b) Anemia / </b>एनीमिया <b>- (ii) Calcium / </b>कैल्शियम <b><br/> (c) Osteoporosis / </b>ऑस्टियोपोरोसिस <b>- (iii) Iodine / </b>आयोडीन<b><br/> Choose the correct option: <br/> </b>सही विकल्प चुनें<b>:</b></p>",
+      "option1": "<p> a-iii, b-i, c-ii</p>",
+      "option2": "<p> a-i, b-ii, c-iii</p>",
+      "option3": "<p> a-iii, b-ii, c-i</p>",
+      "option4": "<p> a-ii, b-i, c-iii</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Iodine deficiency causes Goitre, Iron deficiency leads to Anemia, and Calcium deficiency causes bone issues like Osteoporosis.<br/> आयोडीन की कमी से घेंघा होता है, लोहे की कमी से एनीमिया होता है, और कैल्शियम की कमी से ऑस्टियोपोरोसिस जैसी हड्डियों की समस्याएं होती हैं।</p>"
+    },
+    {
+      "sr_no": 41,
+      "question": "<p> <b>Consider the following statements about 'Double Fertilization' in Angiosperms: <br/> </b>एंजियोस्पर्म <b>(</b>आवृतबीजी<b>) </b>में <b>'</b>दोहरे निषेचन<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It involves both Syngamy and Triple Fusion. / </b>इसमें युग्मक संलयन <b>(Syngamy) </b>और त्रिसंलयन <b>(Triple Fusion) </b>दोनों शामिल हैं। <b><br/> (b) One male gamete fuses with the egg to form a Zygote. / </b>एक नर युग्मक अंडे के साथ संलयित होकर युग्मनज <b>(Zygote) </b>बनाता है। <b><br/> (c) Triple fusion results in the formation of Endosperm. / </b>त्रिसंलयन के परिणामस्वरूप भ्रूणपोष <b>(Endosperm) </b>का निर्माण होता है।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. Double fertilization is a unique feature of flowering plants.<br/> सभी कथन सही हैं। दोहरा निषेचन पुष्पीय पौधों की एक अनूठी विशेषता है।</p>"
+    },
+    {
+      "sr_no": 42,
+      "question": "<p> <b>Which of the following cell organelles is responsible for the detoxification of drugs and poisons in the liver? <br/> </b>यकृत में दवाओं और जहरों के विषहरण <b>(detoxification) </b>के लिए निम्नलिखित में से कौन सा कोशिकांग जिम्मेदार है<b>?</b></p>",
+      "option1": "<p> Rough Endoplasmic Reticulum / खुरदरी अंतःप्रद्रव्यी जालिका</p>",
+      "option2": "<p> Smooth Endoplasmic Reticulum / चिकनी अंतःप्रद्रव्यी जालिका</p>",
+      "option3": "<p> Mitochondria / माइटोकॉन्ड्रिया</p>",
+      "option4": "<p> Vacuoles / रिक्तिकाएं</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Smooth ER (SER) plays a crucial role in detoxifying many poisons and drugs in the liver cells of vertebrates.<br/> चिकनी ER (SER) कशेरुकियों की यकृत कोशिकाओं में कई जहरों और दवाओं को विषमुक्त करने में महत्वपूर्ण भूमिका निभाती है।</p>"
+    },
+    {
+      "sr_no": 43,
+      "question": "<p> <b>Consider the following statements about 'Reflex Action': <br/> ‘</b>प्रतिवर्ती क्रिया<b>' (Reflex Action) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is a fast, involuntary response to a stimulus. / </b>यह उद्दीपन के प्रति एक तीव्र<b>, </b>अनैच्छिक प्रतिक्रिया है। <b><br/> (b) The pathway is controlled mainly by the Spinal Cord. / </b>यह पथ मुख्य रूप से रीढ़ की हड्डी <b>(Spinal Cord) </b>द्वारा नियंत्रित होता है। <b><br/> (c) Sensory neurons carry signals from the spinal cord to muscles. / </b>संवेदी न्यूरॉन्स रीढ़ की हड्डी से मांसपेशियों तक संकेत ले जाते हैं। <b>W<br/> hich of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Sensory neurons carry signals from receptors to the spinal cord; Motor neurons carry signals from the spinal cord to muscles.<br/> संवेदी न्यूरॉन्स रिसेप्टर्स से रीढ़ की हड्डी तक संकेत ले जाते हैं; मोटर न्यूरॉन्स रीढ़ की हड्डी से मांसपेशियों तक संकेत ले जाते हैं।</p>"
+    },
+    {
+      "sr_no": 44,
+      "question": "<p> <b>Which of the following is correct regarding 'Parthenocarpy'? <br/> '</b>पार्थेनोकार्पी<b>' (</b>अनिषेकफलन<b>) </b>के संबंध में निम्नलिखित में से कौन सा सही है<b>?</b></p>",
+      "option1": "<p> Formation of fruit without fertilization. / निषेचन के बिना फल का निर्माण।</p>",
+      "option2": "<p> Formation of seed without fertilization. / निषेचन के बिना बीज का निर्माण।</p>",
+      "option3": "<p> Formation of fruit from parts other than ovary. / अंडाशय के अलावा अन्य भागों से फल का निर्माण।</p>",
+      "option4": "<p> Death of the embryo after fertilization. / निषेचन के बाद भ्रूण की मृत्यु।</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Parthenocarpy is the production of fruit without fertilization, resulting in seedless fruits like bananas.<br/> पार्थेनोकार्पी निषेचन के बिना फल का उत्पादन है, जिसके परिणामस्वरूप केले जैसे बीज रहित फल प्राप्त होते हैं।</p>"
+    },
+    {
+      "sr_no": 45,
+      "question": "<p> <b>Consider the following statements regarding 'Human Sex Determination': <br/> '</b>मानव लिंग निर्धारण<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Females have two identical sex chromosomes (XX). / </b>महिलाओं में दो समान लिंग गुणसूत्र <b>(XX) </b>होते हैं। <b><br/> (b) Males produce two types of sperms (X and Y). / </b>पुरुष दो प्रकार के शुक्राणु <b>(X </b>और <b>Y) </b>उत्पन्न करते हैं। <b><br/> (c) The sex of the child is determined by the mother's egg. / </b>बच्चे का लिंग माँ के अंडे से निर्धारित होता है।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Since the mother always provides an X chromosome, the sex of the child depends on whether the father's sperm carries an X or a Y chromosome.<br/> चूंकि मां हमेशा X गुणसूत्र प्रदान करती है, इसलिए बच्चे का लिंग इस बात पर निर्भर करता है कि पिता के शुक्राणु में X या Y गुणसूत्र है या नहीं।</p>"
+    },
+    {
+      "sr_no": 46,
+      "question": "<p> <b>Consider the following statements regarding 'Phylum Arthropoda':<br/> '</b>फाइलम आर्थ्रोपोडा<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is the largest phylum of Animalia which includes insects. / </b>यह एनिमेलिया का सबसे बड़ा संघ है जिसमें कीट शामिल हैं।<b><br/> (b) They have an open circulatory system. / </b>इनमें खुला परिसंचरण तंत्र होता है।<b><br/> (c) Their body is covered by a calcareous shell. / </b>इनका शरीर चूनेदार <b>(calcareous) </b>खोल से ढका होता है।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a and c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Arthropods have an exoskeleton made of chitin, not a calcareous shell (which is a feature of Molluscs).<br/> आर्थ्रोपोड्स में काइटिन से बना बाह्य कंकाल होता है, न कि चूनेदार खोल (जो मोलस्क की विशेषता है)।</p>"
+    },
+    {
+      "sr_no": 47,
+      "question": "<p> <b>Which of the following statements is correct regarding 'Ecological Pyramids'?<br/> '</b>पारिस्थितिक पिरामिड<b>' </b>के संबंध में निम्नलिखित में से कौन सा कथन सही है<b>?</b></p>",
+      "option1": "<p> Pyramid of energy is always upright. / ऊर्जा का पिरामिड हमेशा सीधा होता है।</p>",
+      "option2": "<p> Pyramid of biomass in a sea is always upright. / समुद्र में जैवभार का पिरामिड हमेशा सीधा होता है।</p>",
+      "option3": "<p> Pyramid of numbers in a forest ecosystem is always inverted. / वन पारिस्थितिकी तंत्र में संख्याओं का पिरामिड हमेशा उल्टा होता है।</p>",
+      "option4": "<p> None of the above. / उपरोक्त में से कोई नहीं।</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Energy pyramid is always upright because energy is lost as heat at each trophic level (10% law). Sea biomass pyramid is usually inverted.<br/> ऊर्जा का पिरामिड हमेशा सीधा होता है क्योंकि प्रत्येक पोषण स्तर पर ऊर्जा का क्षय ऊष्मा के रूप में होता है (10% नियम)। समुद्र का जैवभार पिरामिड आमतौर पर उल्टा होता है।</p>"
+    },
+    {
+      "sr_no": 48,
+      "question": "<p> <b>Consider the following statements about 'Amphibians':<br/> '</b>उभयचरों<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) They have a three-chambered heart. / </b>इनका हृदय तीन कक्षों वाला होता है।<b><br/> (b) They are warm-blooded (Homeothermic) animals. / </b>ये गर्म रक्त वाले <b>(</b>होमियोथर्मिक<b>) </b>जानवर हैं।<b><br/> (c) Respiration can occur through gills, lungs, and skin. / </b>श्वसन गलफड़ों<b>, </b>फेफड़ों और त्वचा के माध्यम से हो सकता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Amphibians are cold-blooded (Poikilothermic), meaning their body temperature changes with the environment.<br/> उभयचर ठंडे रक्त वाले (पोइकिलोथर्मिक) होते हैं, जिसका अर्थ है कि उनके शरीर का तापमान पर्यावरण के साथ बदलता रहता है।</p>"
+    },
+    {
+      "sr_no": 49,
+      "question": "<p> <b>Which of the following is correct regarding 'Lichen'?<br/> '</b>लाइकेन<b>' </b>के संबंध में निम्नलिखित में से कौन सा सही है<b>?</b></p>",
+      "option1": "<p> It is a symbiotic association between a Fungus and an Alga. / यह कवक और शैवाल के बीच एक सहजीवी संबंध है।</p>",
+      "option2": "<p> It is a primary indicator of water pollution. / यह जल प्रदूषण का प्राथमिक संकेतक है।</p>",
+      "option3": "<p> The fungal part is called Phycobiont. / इसके कवक वाले भाग को फाइकोबियोन्ट कहा जाता है।</p>",
+      "option4": "<p> They grow rapidly in areas with high Sulfur dioxide concentration. / ये उच्च सल्फर डाइऑक्साइड सांद्रता वाले क्षेत्रों में तेजी से बढ़ते हैं।</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Lichen is a symbiosis of Algae (Phycobiont) and Fungi (Mycobiont). They are indicators of air pollution (especially $SO_2$) and do not grow in polluted air.<br/> लाइकेन शैवाल (फाइकोबियोन्ट) और कवक (माइकोबियोन्ट) का सहजीवन है। वे वायु प्रदूषण (विशेष रूप से $SO_2$) के संकेतक हैं और प्रदूषित हवा में नहीं उगते हैं।</p>"
+    },
+    {
+      "sr_no": 50,
+      "question": "<p> <b>Consider the following statements regarding 'Connective Tissue':<br/> '</b>संयोजी ऊतक<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Ligaments connect muscle to bone. / </b>लिगामेंट मांसपेशी को हड्डी से जोड़ते हैं।<b><br/> (b) Tendons connect bone to bone. / </b>टेंडन हड्डी को हड्डी से जोड़ते हैं।<b><br/> (c) Cartilage and Bone are types of skeletal connective tissue. / </b>उपास्थि <b>(Cartilage) </b>और अस्थि कंकाल संयोजी ऊतक के प्रकार हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> c only / केवल c</p>",
+      "option3": "<p> a and b / a और b</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Ligaments connect Bone to Bone (B-L-B). Tendons connect Muscle to Bone (M-T-B).<br/> लिगामेंट हड्डी को हड्डी से जोड़ते हैं। टेंडन मांसपेशी को हड्डी से जोड़ते हैं।</p>"
+    },
+    {
+      "sr_no": 51,
+      "question": "<p> <b>Which of the following cell organelles is known as the 'Traffic Police' of the cell?<br/> </b>निम्नलिखित में से किस कोशिकांग को कोशिका का <b>'</b>ट्रैफिक पुलिस<b>' </b>कहा जाता है<b>?</b></p>",
+      "option1": "<p> Lysosome / लाइसोसोम</p>",
+      "option2": "<p> Golgi Apparatus / गोल्जी उपकरण</p>",
+      "option3": "<p> Ribosome / राइबोसोम</p>",
+      "option4": "<p> Endoplasmic Reticulum / अंतःप्रद्रव्यी जालिका</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Golgi Apparatus is responsible for packaging and dispatching proteins/lipids to their targets, thus acting as a traffic police.<br/> गोल्जी उपकरण प्रोटीन/लिपिड की पैकेजिंग और उनके लक्ष्यों तक भेजने के लिए जिम्मेदार है, इस प्रकार यह ट्रैफिक पुलिस के रूप में कार्य करता है।</p>"
+    },
+    {
+      "sr_no": 52,
+      "question": "<p> <b>Consider the following statements about 'Casparian Strips':<br/> '</b>कैस्पेरियन स्ट्रिप्स<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) They are found in the endodermis of roots. / </b>ये जड़ों के एंडोडर्मिस में पाए जाते हैं।<b><br/> (b) They are made of a water-impermeable waxy material called Suberin. / </b>ये सुबेरिन नामक जल<b>-</b>अभेद्य मोमी पदार्थ से बने होते हैं।<b><br/> (c) They facilitate the free flow of water into the vascular cylinder. / </b>ये संवहनी सिलेंडर में जल के मुक्त प्रवाह को सुगम बनाते हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Casparian strips block the apoplastic (cell wall) pathway, forcing water to pass through the cell membrane (symplastic) to regulate intake.<br/> कैस्पेरियन स्ट्रिप्स एपोप्लास्टिक (कोशिका भित्ति) मार्ग को रोकती हैं, जिससे जल को सेवन को विनियमित करने के लिए कोशिका झिल्ली (सिम्प्लास्टिक) के माध्यम से गुजरने के लिए मजबूर होना पड़ता है।</p>"
+    },
+    {
+      "sr_no": 53,
+      "question": "<p> <b>Which of the following statements is correct regarding 'Platyhelminthes'?<br/> '</b>प्लेटिहेल्मिन्थेस<b>' </b>के संबंध में निम्नलिखित में से कौन सा कथन सही है<b>?</b></p>",
+      "option1": "<p> They are commonly called Roundworms. / इन्हें आमतौर पर गोलकृमि कहा जाता है।</p>",
+      "option2": "<p> They possess a true coelom (body cavity). / इनमें वास्तविक सीलोम (शरीर गुहा) होती है।</p>",
+      "option3": "<p> Flame cells are used for excretion and osmoregulation. / ज्वाला कोशिकाओं (Flame cells) का उपयोग उत्सर्जन और परासरण नियमन के लिए किया जाता है।</p>",
+      "option4": "<p> They have a complete digestive system. / इनका पाचन तंत्र पूर्ण होता है।</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Platyhelminthes (Flatworms) are acoelomates and have an incomplete digestive system. Flame cells are their unique excretory organs.<br/> प्लेटिहेल्मिन्थेस (चपटे कृमि) असीलोमेट्स होते हैं और इनका पाचन तंत्र अधूरा होता है। ज्वाला कोशिकाएं इनके अद्वितीय उत्सर्जन अंग हैं।</p>"
+    },
+    {
+      "sr_no": 54,
+      "question": "<p> <b>Consider the following statements regarding 'Xerophytes':<br/> '</b>ज़ेरोफाइट्स<b>' (</b>मरुद्भिद<b>) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) They have sunken stomata to reduce transpiration. / </b>वाष्पोत्सर्जन को कम करने के लिए इनमें धंसे हुए रंध्र <b>(sunken stomata) </b>होते हैं।<b><br/> (b) Leaves are often modified into spines. / </b>पत्तियां अक्सर कांटों में रूपांतरित हो जाती हैं।<b><br/> (c) They lack a thick cuticle on their leaf surface. / </b>उनकी पत्ती की सतह पर मोटी क्यूटिकल की कमी होती है।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Xerophytes have a very thick waxy cuticle to prevent water loss in arid environments.<br/> मरुद्भिद (Xerophytes) में शुष्क वातावरण में जल की हानि को रोकने के लिए बहुत मोटी मोमी क्यूटिकल होती है।</p>"
+    },
+    {
+      "sr_no": 55,
+      "question": "<p> <b>In the context of human blood, what is 'Serum'?<br/> </b>मानव रक्त के संदर्भ में <b>'</b>सीरम<b>' </b>क्या है<b>?</b></p>",
+      "option1": "<p> Plasma without Clotting Factors / क्लॉटिंग कारकों के बिना प्लाज्मा</p>",
+      "option2": "<p> Plasma with RBCs / RBCs के साथ प्लाज्मा</p>",
+      "option3": "<p> Blood without WBCs / WBCs के बिना रक्त</p>",
+      "option4": "<p> Lymph without Proteins / प्रोटीन के बिना लसीका</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Serum is the fluid component of blood that remains after the blood has clotted (Plasma minus Fibrinogen/Clotting factors).<br/> सीरम रक्त का वह तरल घटक है जो रक्त के थक्के जमने के बाद बचता है (प्लाज्मा ऋण फाइब्रिनोजेन/क्लॉटिंग कारक)।</p>"
+    },
+    {
+      "sr_no": 56,
+      "question": "<p> <b>Consider the following statements about 'Bryophytes':<br/> '</b>ब्रायोफाइट्स<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) They are called the 'Amphibians of the Plant Kingdom'. / </b>इन्हें <b>'</b>पादप जगत का उभयचर<b>' </b>कहा जाता है।<b><br/> (b) They lack true roots, stems, and leaves. / </b>इनमें वास्तविक जड़<b>, </b>तना और पत्तियों का अभाव होता है।<b><br/> (c) They possess specialized vascular tissues (Xylem/Phloem). / </b>इनमें विशिष्ट संवहनी ऊतक <b>(</b>जाइलम<b>/</b>फ्लोएम<b>) </b>होते हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b only / केवल a और b</p>",
+      "option3": "<p> b and c only / केवल b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Bryophytes are non-vascular plants; they do not have xylem or phloem. They need water for fertilization, hence called amphibians.<br/> ब्रायोफाइट्स गैर-संवहनी पौधे हैं; उनमें जाइलम या फ्लोएम नहीं होता है। उन्हें निषेचन के लिए जल की आवश्यकता होती है, इसलिए उन्हें उभयचर कहा जाता है।</p>"
+    },
+    {
+      "sr_no": 57,
+      "question": "<p> <b>Which of the following hormones is responsible for the 'Milk Ejection' from mammary glands?<br/> </b>स्तन ग्रंथियों से <b>'</b>दूध के निष्कासन<b>' </b>के लिए निम्नलिखित में से कौन सा हार्मोन जिम्मेदार है<b>?</b></p>",
+      "option1": "<p> Prolactin / प्रोलैक्टिन</p>",
+      "option2": "<p> Oxytocin / ऑक्सीटोसिन</p>",
+      "option3": "<p> Progesterone / प्रोजेस्टेरोन</p>",
+      "option4": "<p> Estrogen / एस्ट्रोजन</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Prolactin helps in milk <i>production</i>, but Oxytocin (the love hormone) is responsible for milk <i>ejection</i> or let-down.<br/> प्रोलैक्टिन दूध के उत्पादन में मदद करता है, लेकिन ऑक्सीटोसिन दूध के निष्कासन के लिए जिम्मेदार है।</p>"
+    },
+    {
+      "sr_no": 58,
+      "question": "<p> <b>Consider the following statements regarding 'Secondary Growth' in plants:<br/> </b>पौधों में <b>'</b>द्वितीयक वृद्धि<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is responsible for the increase in the girth (thickness) of the plant. / </b>यह पौधे के घेरे <b>(</b>मोटाई<b>) </b>में वृद्धि के लिए जिम्मेदार है।<b><br/> (b) It occurs due to the activity of Lateral Meristems (Vascular Cambium). / </b>यह पार्श्व विभज्योतक <b>(</b>संवहनी कैंबियम<b>) </b>की गतिविधि के कारण होता है।<b><br/> (c) It is a characteristic feature of Monocots. / </b>यह एकबीजपत्री <b>(Monocots) </b>की एक विशिष्ट विशेषता है।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b and c</p>",
+      "option3": "<p> a and c only / केवल a and c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Secondary growth is absent in Monocots because they lack cambium; it is found in Dicots and Gymnosperms.<br/> एकबीजपत्री में द्वितीयक वृद्धि अनुपस्थित होती है क्योंकि उनमें कैंबियम की कमी होती है; यह द्विबीजपत्री और जिम्नोस्पर्म में पाई जाती है।</p>"
+    },
+    {
+      "sr_no": 59,
+      "question": "<p> <b>'Osteoblasts' and 'Osteoclasts' are cells related to which of the following?<br/> '</b>ओस्टियोब्लास्ट<b>' </b>और <b>'</b>ओस्टियोक्लास्ट<b>' </b>कोशिकाएं निम्नलिखित में से किससे संबंधित हैं<b>?</b></p>",
+      "option1": "<p> Blood formation / रक्त निर्माण</p>",
+      "option2": "<p> Bone remodeling / हड्डी का पुनर्गठन</p>",
+      "option3": "<p> Nerve conduction / तंत्रिका संचालन</p>",
+      "option4": "<p> Muscle contraction / मांसपेशियों का संकुचन</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Osteoblasts are bone-forming cells, and Osteoclasts are bone-resorbing (breaking down) cells. Together they remodel bones.<br/> ओस्टियोब्लास्ट हड्डी बनाने वाली कोशिकाएं हैं, और ओस्टियोक्लास्ट हड्डी को तोड़ने वाली कोशिकाएं हैं। साथ में वे हड्डियों का पुनर्गठन करते हैं।</p>"
+    },
+    {
+      "sr_no": 60,
+      "question": "<p> <b>Consider the following statements about 'Mitochondria':<br/> '</b>माइटोकॉन्ड्रिया<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) The inner membrane is folded into finger-like structures called Cristae. / </b>आंतरिक झिल्ली उंगली जैसी संरचनाओं में मुड़ी होती है जिन्हें क्रिस्टी कहा जाता है।<b><br/> (b) It is the site of Anaerobic respiration. / </b>यह अवायवीय श्वसन का स्थल है।<b><br/> (c) ATP is known as the energy currency produced here. / </b>यहाँ उत्पादित <b>ATP </b>को ऊर्जा मुद्रा के रूप में जाना जाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Mitochondria is the site of Aerobic respiration (Krebs cycle). Anaerobic respiration occurs in the Cytoplasm.<br/> माइटोकॉन्ड्रिया वायवीय श्वसन (क्रेब्स चक्र) का स्थल है। अवायवीय श्वसन कोशिका द्रव्य (Cytoplasm) में होता है।</p>"
+    },
+    {
+      "sr_no": 61,
+      "question": "<p> <b>Consider the following statements regarding 'Gymnosperms': <br/> '</b>जिम्नोस्पर्म<b>' (</b>अनावृतबीजी<b>) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) They bear naked seeds as the ovules are not enclosed by an ovary wall. / </b>इनमें नग्न बीज होते हैं क्योंकि बीजांड अंडाशय की दीवार से घिरे नहीं होते हैं। <b><br/> (b) They include the tallest tree species like Sequoia. / </b>इनमें सिकोइया जैसी सबसे ऊंची पेड़ों की प्रजातियां शामिल हैं। <b><br/> (c) They produce flowers and fruits just like Angiosperms. / </b>ये एंजियोस्पर्म की तरह ही फूल और फल पैदा करते हैं।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Gymnosperms do not produce flowers or fruits. Their seeds are exposed on cones.<br/> जिम्नोस्पर्म फूल या फल पैदा नहीं करते हैं। उनके बीज शंकु (cones) पर खुले होते हैं।</p>"
+    },
+    {
+      "sr_no": 62,
+      "question": "<p> <b>Which of the following statements is correct regarding the 'Thyroid Gland'? <br/> '</b>थायरॉयड ग्रंथि<b>' </b>के संबंध में निम्नलिखित में से कौन सा कथन सही है<b>?</b></p>",
+      "option1": "<p> It is the largest endocrine gland in the human body. / यह मानव शरीर की सबसे बड़ी अंतःस्रावी ग्रंथि है।</p>",
+      "option2": "<p> It secretes Iodine directly into the blood. / यह आयोडीन को सीधे रक्त में स्रावित करती है।</p>",
+      "option3": "<p> Deficiency of thyroxine causes Diabetes Insipidus. / थायरोक्सिन की कमी से डायबिटीज इंसिपिडस होता है।</p>",
+      "option4": "<p> It is located in the abdominal cavity. / यह उदर गुहा में स्थित होती है।</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Thyroid is the largest endocrine gland. Iodine is required for hormone synthesis, not secreted. Diabetes Insipidus is related to ADH hormone.<br/> थायरॉयड सबसे बड़ी अंतःस्रावी ग्रंथि है। हार्मोन संश्लेषण के लिए आयोडीन आवश्यक है, स्रावित नहीं। डायबिटीज इंसिपिडस ADH हार्मोन से संबंधित है।</p>"
+    },
+    {
+      "sr_no": 63,
+      "question": "<p> <b>Consider the following statements about 'Blood Vessels': <br/> '</b>रक्त वाहिकाओं<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Arteries have thick elastic walls and no valves. / </b>धमनियों में मोटी लोचदार दीवारें होती हैं और कोई वाल्व नहीं होते हैं। <b><br/> (b) Veins carry blood under high pressure. / </b>शिराएं उच्च दबाव में रक्त ले जाती हैं। <b><br/> (c) Capillaries are the site of exchange of materials between blood and tissues. / </b>केशिकाएं <b>(Capillaries) </b>रक्त और ऊतकों के बीच पदार्थों के विनिमय का स्थल हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and c only / केवल a और c</p>",
+      "option3": "<p> b and c only / केवल b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Veins carry blood under low pressure and have valves to prevent backflow. High pressure is found in arteries.<br/> शिराएं कम दबाव में रक्त ले जाती हैं और उनमें रक्त के पीछे के प्रवाह को रोकने के लिए वाल्व होते हैं। उच्च दबाव धमनियों में पाया जाता है।</p>"
+    },
+    {
+      "sr_no": 64,
+      "question": "<p> <b>Which of the following is correct regarding 'Meiosis II'? <br/> '</b>अर्धसूत्रीविभाजन <b>II' (Meiosis II) </b>के संबंध में निम्नलिखित में से कौन सा सही है<b>?</b></p>",
+      "option1": "<p> It is a reductional division. / यह एक न्यूनकारी (reductional) विभाजन है।</p>",
+      "option2": "<p> It is similar to Mitosis as it separates sister chromatids. / यह समसूत्री विभाजन के समान है क्योंकि यह सिस्टर क्रोमैटिड्स को अलग करता है।</p>",
+      "option3": "<p> DNA replication occurs before Meiosis II starts. / अर्धसूत्रीविभाजन II शुरू होने से पहले DNA प्रतिकृति होती है।</p>",
+      "option4": "<p> It results in diploid daughter cells. / इसके परिणामस्वरूप द्विगुणित संतति कोशिकाएं बनती हैं।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Meiosis II is an equational division (like mitosis) because the chromosome number remains same; reduction happens in Meiosis I.<br/> अर्धसूत्रीविभाजन II एक समकारी विभाजन (समसूत्री विभाजन की तरह) है क्योंकि गुणसूत्र संख्या समान रहती है; कमी अर्धसूत्रीविभाजन I में होती है।</p>"
+    },
+    {
+      "sr_no": 65,
+      "question": "<p> <b>Consider the following statements regarding 'Bacterial Diseases': <br/> '</b>जीवाणु रोगों<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Typhoid is caused by Salmonella typhi. / </b>टाइफाइड साल्मोनेला टाइफी के कारण होता है। <b><br/> (b) Tuberculosis (TB) primarily affects the lungs and is caused by a virus. / </b>क्षय रोग <b>(</b>टीबी<b>) </b>मुख्य रूप से फेफड़ों को प्रभावित करता है और वायरस के कारण होता है। <b><br/> (c) Cholera is spread through contaminated food and water. / </b>हैजा दूषित भोजन और पानी के माध्यम से फैलता है।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a and c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> TB is caused by a bacterium (Mycobacterium tuberculosis), not a virus.<br/> टीबी एक बैक्टीरिया (माइकोबैक्टीरियम ट्यूबरकुलोसिस) के कारण होता है, वायरस के कारण नहीं।</p>"
+    },
+    {
+      "sr_no": 66,
+      "question": "<p> <b>The 'Islets of Langerhans' are found in which organ? <br/> '</b>लैंगरहैंस के द्वीप<b>' </b>किस अंग में पाए जाते हैं<b>?</b></p>",
+      "option1": "<p> Liver / यकृत</p>",
+      "option2": "<p> Spleen / प्लीहा</p>",
+      "option3": "<p> Pancreas / अग्न्याशय</p>",
+      "option4": "<p> Pituitary / पीयूष ग्रंथि</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Islets of Langerhans are the endocrine part of the pancreas, containing alpha, beta, and delta cells.<br/> लैंगरहैंस के द्वीप अग्न्याशय के अंतःस्रावी भाग हैं, जिनमें अल्फा, बीटा और डेल्टा कोशिकाएं होती हैं।</p>"
+    },
+    {
+      "sr_no": 67,
+      "question": "<p> <b>Consider the following statements about 'Cerebrospinal Fluid' (CSF): <br/> '</b>सेरेब्रोस्पाइनल फ्लूइड<b>' (CSF) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It protects the brain from mechanical shocks. / </b>यह मस्तिष्क को यांत्रिक झटकों से बचाता है। <b><br/> (b) It is found in the subarachnoid space. / </b>यह सबराचनोइड स्पेस में पाया जाता है। <b><br/> (c) It helps in the exchange of nutrients and waste products in the CNS. / </b>यह <b>CNS </b>में पोषक तत्वों और अपशिष्ट उत्पादों के विनिमय में मदद करता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b only / केवल a और b</p>",
+      "option3": "<p> a, b and c / a, b और c</p>",
+      "option4": "<p> b and c only / केवल b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> CSF acts as a cushion for the brain and spinal cord, providing both protection and nourishment.<br/> CSF मस्तिष्क और रीढ़ की हड्डी के लिए एक कुशन के रूप में कार्य करता है, जो सुरक्षा और पोषण दोनों प्रदान करता है।</p>"
+    },
+    {
+      "sr_no": 68,
+      "question": "<p> <b>Which of the following is correct regarding 'Reptiles'? <br/> '</b>सरीसृप<b>' </b>के संबंध में निम्नलिखित में से कौन सा सही है<b>?</b></p>",
+      "option1": "<p> They have a four-chambered heart in all species. / सभी प्रजातियों में इनका हृदय चार कक्षों वाला होता है।</p>",
+      "option2": "<p> They are uricotelic, meaning they excrete uric acid. / वे यूरिकोटेलिक हैं, जिसका अर्थ है कि वे यूरिक एसिड उत्सर्जित करते हैं।</p>",
+      "option3": "<p> They have moist skin without scales. / उनकी त्वचा नम होती है और उस पर शल्क (scales) नहीं होते।</p>",
+      "option4": "<p> They are mostly viviparous (give birth to young ones). / वे ज्यादातर जरायुज (बच्चों को जन्म देने वाले) होते हैं।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Reptiles have dry, scaly skin and are oviparous (lay eggs). Crocodile is the only reptile with a 4-chambered heart; others have 3.<br/> सरीसृपों की त्वचा सूखी, शल्कदार होती है और वे अंडज (अंडे देने वाले) होते हैं। मगरमच्छ एकमात्र सरीसृप है जिसका हृदय 4-कक्षीय होता है; अन्यों में 3 होते हैं।</p>"
+    },
+    {
+      "sr_no": 69,
+      "question": "<p> <b>Consider the following statements regarding 'Vitamins': <br/> '</b>विटामिन<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Vitamin B12 contains Cobalt. / </b>विटामिन <b>B12 </b>में कोबाल्ट होता है। <b><br/> (b) Golden Rice is a rich source of Vitamin A. / </b>गोल्डन राइस विटामिन <b>A </b>का एक समृद्ध स्रोत है। <b><br/> (c) Humans can synthesize Vitamin C within their bodies. / </b>मनुष्य अपने शरीर के भीतर विटामिन <b>C </b>का संश्लेषण कर सकते हैं।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a and c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Humans cannot synthesize Vitamin C and must obtain it from diet (citrus fruits).<br/> मनुष्य विटामिन C का संश्लेषण नहीं कर सकते हैं और इसे आहार (खट्टे फलों) से प्राप्त करना चाहिए।</p>"
+    },
+    {
+      "sr_no": 70,
+      "question": "<p> <b>Which of the following is known as the 'Widow's Mite' or 'Master Gland' of the endocrine system? <br/> </b>निम्नलिखित में से किसे अंतःस्रावी तंत्र की <b>'</b>मास्टर ग्रंथि<b>' </b>के रूप में जाना जाता है<b>?</b></p>",
+      "option1": "<p> Thyroid / थायरॉयड</p>",
+      "option2": "<p> Adrenal / अधिवृक्क</p>",
+      "option3": "<p> Pituitary / पीयूष ग्रंथि</p>",
+      "option4": "<p> Thymus / थाइमस</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Pituitary gland is called the Master Gland because it controls the functioning of many other endocrine glands.<br/> पीयूष ग्रंथि को मास्टर ग्रंथि कहा जाता है क्योंकि यह कई अन्य अंतःस्रावी ग्रंथियों के कामकाज को नियंत्रित करती है।</p>"
+    },
+    {
+      "sr_no": 71,
+      "question": "<p> <b>Consider the following statements regarding 'Monocot' and 'Dicot' plants: <br/> '</b>एकबीजपत्री<b>' </b>और <b>'</b>द्विबीजपत्री<b>' </b>पौधों के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Monocots have parallel venation in their leaves. / </b>एकबीजपत्री पौधों की पत्तियों में समानांतर शिराविन्यास <b>(parallel venation) </b>होता है। <b><br/> (b) Dicots have a taproot system. / </b>द्विबीजपत्री पौधों में मूसला जड़ <b>(taproot) </b>तंत्र होता है। <b><br/> (c) Monocots have vascular bundles arranged in a ring. / </b>एकबीजपत्री पौधों में संवहनी बंडल एक छल्ले <b>(ring) </b>में व्यवस्थित होते हैं।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> In Monocots, vascular bundles are scattered, while in Dicots, they are arranged in a ring.<br/> एकबीजपत्री में, संवहनी बंडल बिखरे हुए होते हैं, जबकि द्विबीजपत्री में, वे एक छल्ले में व्यवस्थित होते हैं।</p>"
+    },
+    {
+      "sr_no": 72,
+      "question": "<p> <b>Which of the following is correct regarding 'Mollusca'? <br/> '</b>मोलस्का<b>' </b>के संबंध में निम्नलिखित में से कौन सा सही है<b>?</b></p>",
+      "option1": "<p> It is the second largest animal phylum. / यह दूसरा सबसे बड़ा जंतु संघ है।</p>",
+      "option2": "<p> They have segmented bodies like Annelids. / इनका शरीर एनेलिड्स की तरह खंडित होता है।</p>",
+      "option3": "<p> A rasping organ called Radula is present for feeding. / भोजन के लिए रेडुला (Radula) नामक रेती जैसा अंग मौजूद होता है।</p>",
+      "option4": "<p> Both 1 and 3 / 1 और 3 दोनों</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Molluscs are the second largest phylum after Arthropoda. They have unsegmented bodies and use Radula for feeding.<br/> आर्थ्रोपोडा के बाद मोलस्क दूसरा सबसे बड़ा संघ है। उनका शरीर खंडित नहीं होता है और वे भोजन के लिए रेडुला का उपयोग करते हैं।</p>"
+    },
+    {
+      "sr_no": 73,
+      "question": "<p> <b>Consider the following statements about 'DNA Fingerprinting': <br/> 'DNA </b>फिंगरप्रिंटिंग<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It was developed by Alec Jeffreys. / </b>इसे एलेक जेफ्रीस द्वारा विकसित किया गया था। <b><br/> (b) It identifies the similarities in the non-coding DNA sequences. / </b>यह गैर<b>-</b>कोडिंग <b>DNA </b>अनुक्रमों में समानता की पहचान करता है। <b><br/> (c) It is 100% identical for fraternal twins. / </b>यह भ्रातृ यमजों <b>(fraternal twins) </b>के लिए <b>100% </b>समान होता है।<b><br/> Which of the above statements is/are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b only / केवल a और b</p>",
+      "option3": "<p> b and c only / केवल b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> DNA fingerprinting is 100% identical only for identical (monozygotic) twins, not fraternal twins.<br/> DNA फिंगरप्रिंटिंग केवल समान (मोनोजाइगोटिक) जुड़वा बच्चों के लिए 100% समान होती है, भ्रातृ यमजों के लिए नहीं।</p>"
+    },
+    {
+      "sr_no": 74,
+      "question": "<p> <b>Which part of the eye is responsible for giving it its distinct color? <br/> </b>आंख का कौन सा भाग उसे विशिष्ट रंग देने के लिए जिम्मेदार है<b>?</b></p>",
+      "option1": "<p> Pupil / पुतली</p>",
+      "option2": "<p> Retina / रेटिना</p>",
+      "option3": "<p> Iris / परितारिका (Iris)</p>",
+      "option4": "<p> Cornea / कॉर्निया</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Iris is the pigmented part of the eye that controls the diameter and size of the pupil and gives the eye its color.<br/> आइरिस आंख का रंजित (pigmented) हिस्सा है जो पुतली के व्यास और आकार को नियंत्रित करता है और आंख को उसका रंग देता है।</p>"
+    },
+    {
+      "sr_no": 75,
+      "question": "<p> <b>Consider the following statements regarding 'Photosynthesis' and 'Respiration': <br/> '</b>प्रकाश संश्लेषण<b>' </b>और <b>'</b>श्वसन<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Photosynthesis occurs only during the day, while respiration occurs 24/7. / </b>प्रकाश संश्लेषण केवल दिन के दौरान होता है<b>, </b>जबकि श्वसन <b>24/7 </b>होता है। <b><br/> (b) Photosynthesis stores energy, while respiration releases energy. / </b>प्रकाश संश्लेषण ऊर्जा का संचय करता है<b>, </b>जबकि श्वसन ऊर्जा मुक्त करता है। <b><br/> (c) The end products of photosynthesis are the reactants for respiration. / </b>प्रकाश संश्लेषण के अंतिम उत्पाद श्वसन के लिए अभिकारक <b>(reactants) </b>होते हैं।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. Photosynthesis (Anabolic) and Respiration (Catabolic) are complementary processes.<br/> सभी कथन सही हैं। प्रकाश संश्लेषण (उपचयी) और श्वसन (अपचयी) पूरक प्रक्रियाएं हैं।</p>"
+    }
+  ]
+};
+
+// Extract questions and time from new structure
+const questions = quizData.questions;
+const totalTimeMinutes = quizData.time_minutes;
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = totalTimeMinutes * 60;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape') {
+      if (isPaletteOpen) {
+        closePalette();
+      }
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimer();
+    
+    // Auto-submit when time runs out
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      alert('Time is up! Submitting quiz automatically.');
+      submitQuiz();
+      return;
+    }
+    
+    if (timerSeconds <= 120) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    questionText.innerHTML = '';
+    const questionContent = createOptionContent(q.question);
+    questionText.appendChild(questionContent);
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message = `You have ${unattempted} unanswered questions. ${message}`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  const timeTaken = (totalTimeMinutes * 60) - timerSeconds;
+  const minutesTaken = Math.floor(timeTaken / 60);
+  const secondsTaken = timeTaken % 60;
+  const timeTakenText = `${minutesTaken}m ${secondsTaken}s`;
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeTakenText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    let questionDisplay = '';
+    if (isImageURL(q.question)) {
+      questionDisplay = `<img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`;
+    } else {
+      questionDisplay = q.question;
+    }
+    html += `<div class="question-review">
+      <h4>Q${q.sr_no}: ${questionDisplay}</h4>`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution && q.solution.trim() !== '') {
+      let solutionDisplay = '';
+      if (isImageURL(q.solution)) {
+        solutionDisplay = `<img src="${q.solution}" class="solution-image" alt="Solution" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">`;
+      } else {
+        solutionDisplay = q.solution;
+      }
+      
+      html += `<div class="solution-section" style="margin-top: 15px; padding: 15px; background: #f0f8ff; border-left: 4px solid #007bff; border-radius: 8px;">
+        <strong style="color: #007bff;">💡 Solution:</strong>
+        <div style="margin-top: 8px; color: #333;">${solutionDisplay}</div>
+      </div>`;
+    }
+    
+    html += `</div>`;
+  });
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https')) &&
+    (str.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i));
+}
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = totalTimeMinutes * 60;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    updateTimer();
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BIOLOGY FULL TEST</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">MOTION 3.0 - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem('quizState', JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem('quizState');
+    if (saved) {
+      const state = JSON.parse(saved);
+      if (Date.now() - state.timestamp < 24 * 60 * 60 * 1000) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || (totalTimeMinutes * 60); // MODIFIED
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem('quizState');
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

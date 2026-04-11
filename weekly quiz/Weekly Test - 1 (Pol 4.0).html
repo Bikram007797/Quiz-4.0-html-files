@@ -1,0 +1,3095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>POLITY TEST - 1</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.question-image, .option-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: block;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎯 POLITY TEST - 1</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color)"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color)"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color)"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color)"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">Clear</button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">Submit Quiz</button>
+</div>
+
+<script>
+// MODIFIED: Quiz data structure with time_minutes
+const quizData = {
+  "time_minutes": 60,
+  "questions": [
+    {
+      "sr_no": 1,
+      "question": "<p> <b>Consider the following statements about the Constituent Assembly:<br/> </b>संविधान सभा के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It was formed under the Cabinet Mission Plan (1946).<br/> </b>यह कैबिनेट मिशन योजना <b>(1946) </b>के तहत गठित हुई थी।<b><br/> (b) Its members were directly elected by the people of India.<br/> </b>इसके सदस्य सीधे जनता द्वारा चुने गए थे।<b><br/> (c) It acted as a provisional parliament even after Independence.<br/> </b>स्वतंत्रता के बाद इसने अंतरिम संसद के रूप में कार्य किया।<b><br/> Which of the above statements are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> (a) and (b) / (a) और (b)</p>",
+      "option2": "<p> (a) and (c) / (a) और (c)</p>",
+      "option3": "<p> (b) and (c) / (b) और (c)</p>",
+      "option4": "<p> (a), (b) and (c) / (a), (b) और (c)</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Formed under the Cabinet Mission Plan; continued as Provisional Parliament after independence. Members were not directly elected.<br/> यह कैबिनेट मिशन योजना के तहत बनी और स्वतंत्रता के बाद अंतरिम संसद बनी। सदस्य सीधे जनता से नहीं चुने गए थे।</p>"
+    },
+    {
+      "sr_no": 2,
+      "question": "<p> <b>Who was the Chairman of the Drafting Committee of the Constituent Assembly?<br/> </b>संविधान सभा की प्रारूप समिति के अध्यक्ष कौन थे<b>?</b></p>",
+      "option1": "<p> Dr. Rajendra Prasad / डॉ. राजेंद्र प्रसाद</p>",
+      "option2": "<p> Dr. B.R. Ambedkar / डॉ. बी.आर. अम्बेडकर</p>",
+      "option3": "<p> K.M. Munshi / के.एम. मुंशी</p>",
+      "option4": "<p> Alladi Krishnaswamy Aiyar / अल्लादी कृष्णस्वामी अय्यर</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Drafting Committee was formed on 29 Aug 1947 under the chairmanship of Dr. B.R. Ambedkar.<br/> प्रारूप समिति 29 अगस्त 1947 को बनी और इसके अध्यक्ष डॉ. बी.आर. अम्बेडकर थे।</p>"
+    },
+    {
+      "sr_no": 3,
+      "question": "<p> <b>Consider the following statements regarding the Objectives Resolution:<br/> </b>उद्देश्य प्रस्ताव से संबंधित निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It was moved by Jawaharlal Nehru.<br/> </b>यह जवाहरलाल नेहरू द्वारा प्रस्तुत किया गया था।<b><br/> (b) It later became the basis of the Preamble.<br/> </b>यह बाद में प्रस्तावना का आधार बना।<b><br/> (c) It demanded a federal polity with unitary bias.<br/> </b>इसमें एकात्मक झुकाव का उल्लेख नहीं था।<b><br/> Which of the above statements are correct?<br/> </b>कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> (a) and (b) / (a) और (b)</p>",
+      "option2": "<p> (b) and (c) / (b) और (c)</p>",
+      "option3": "<p> (a) and (c) / (a) और (c)</p>",
+      "option4": "<p> (a), (b) and (c) / (a), (b) और (c)</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Objectives Resolution was moved by Nehru and became the basis of the Preamble. It did not propose a unitary tilt.<br/> उद्देश्य प्रस्ताव नेहरू ने प्रस्तुत किया और यह प्रस्तावना का आधार बना। इसमें एकात्मक झुकाव का उल्लेख नहीं था।</p>"
+    },
+    {
+      "sr_no": 4,
+      "question": "<p> <b>The first meeting of the Constituent Assembly was held on—<br/> </b>संविधान सभा की पहली बैठक कब हुई थी<b>?</b></p>",
+      "option1": "<p> 9 December 1946 / 9 दिसंबर 1946</p>",
+      "option2": "<p> 26 January 1947 / 26 जनवरी 1947</p>",
+      "option3": "<p> 15 August 1947 / 15 अगस्त 1947</p>",
+      "option4": "<p> 29 August 1947 / 29 अगस्त 1947</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The first meeting of the Constituent Assembly was on 9 December 1946.<br/> संविधान सभा की पहली बैठक 9 दिसंबर 1946 को हुई थी।</p>"
+    },
+    {
+      "sr_no": 5,
+      "question": "<p> <b>Who was elected the temporary Chairman of the Constituent Assembly?<br/> </b>संविधान सभा के अस्थायी अध्यक्ष कौन थे<b>?</b></p>",
+      "option1": "<p> Dr. Sachidanand Sinha / डॉ. सच्चिदानंद सिन्हा</p>",
+      "option2": "<p> Dr. Rajendra Prasad / डॉ. राजेंद्र प्रसाद</p>",
+      "option3": "<p> H.C. Mukherjee / एच.सी. मुखर्जी</p>",
+      "option4": "<p> Jawaharlal Nehru / जवाहरलाल नेहरू</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Dr. Sachidanand Sinha was elected the temporary Chairman before Dr. Rajendra Prasad became permanent President.<br/> डॉ. राजेंद्र प्रसाद स्थायी अध्यक्ष बनने से पहले अस्थायी अध्यक्ष डॉ. सच्चिदानंद सिन्हा थे।</p>"
+    },
+    {
+      "sr_no": 6,
+      "question": "<p> <b>The Constituent Assembly adopted the Constitution of India on—<br/> </b>संविधान सभा ने भारतीय संविधान को कब अपनाया<b>?</b></p>",
+      "option1": "<p> 26 November 1949 / 26 नवंबर 1949</p>",
+      "option2": "<p> 26 January 1950 / 26 जनवरी 1950</p>",
+      "option3": "<p> 15 August 1947 / 15 अगस्त 1947</p>",
+      "option4": "<p> 24 January 1950 / 24 जनवरी 1950</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Constitution was adopted on 26 November 1949 though it came into force on 26 January 1950.<br/> संविधान 26 नवंबर 1949 को स्वीकार किया गया और 26 जनवरी 1950 को लागू हुआ।</p>"
+    },
+    {
+      "sr_no": 7,
+      "question": "<p> <b>Consider the following:<br/> </b>निम्नलिखित पर विचार करें<b>:<br/> (a) Total sittings of the Constituent Assembly were 11 sessions./ </b>संविधान सभा की कुल बैठकें <b>11 </b>सत्र थीं।<b><br/> (b) Draft Constitution was prepared by B.N. Rau./ </b>प्रारूप संविधान बी<b>. </b>एन<b>. </b>राऊ द्वारा तैयार किया गया था।<b><br/> (c) Constituent Assembly took 2 years 11 months 18 days./ </b>संविधान सभा ने <b>2 </b>वर्ष <b>11 </b>महीने <b>18 </b>दिन का समय लिया।<b><br/> Which are correct?<br/> </b>कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> (a) and (b) / (a) और (b)</p>",
+      "option2": "<p> (b) and (c) / (b) और (c)</p>",
+      "option3": "<p> (a) and (c) / (a) और (c)</p>",
+      "option4": "<p> (a), (b) and (c) / (a), (b) और (c)</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Assembly sat for 11 sessions; B.N. Rau prepared the draft; total time taken was 2 years 11 months 18 days.<br/> 11 सत्र हुए; मसौदा बी.एन. राउ ने तैयार किया; कुल समय 2 वर्ष 11 महीने 18 दिन लगा।</p>"
+    },
+    {
+      "sr_no": 8,
+      "question": "<p> <b>The Constituent Assembly was NOT a—<br/> </b>संविधान सभा … नहीं थी।</p>",
+      "option1": "<p> sovereign body / सार्वभौम संस्था</p>",
+      "option2": "<p> representative body / प्रतिनिधि संस्था</p>",
+      "option3": "<p> legislative body / विधायी संस्था</p>",
+      "option4": "<p> permanent body / स्थायी संस्था</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Constituent Assembly was temporary; it dissolved after the Constitution came into force.<br/> संविधान लागू होने के बाद संविधान सभा समाप्त हो गई, इसलिए यह स्थायी संस्था नहीं थी।</p>"
+    },
+    {
+      "sr_no": 9,
+      "question": "<p> <b>Under which plan were provinces allowed to elect representatives to the Constituent Assembly?<br/> </b>किस योजना के तहत प्रांत संविधान सभा के लिए प्रतिनिधि चुन सकते थे<b>?</b></p>",
+      "option1": "<p> Mountbatten Plan / माउंटबेटन योजना</p>",
+      "option2": "<p> Cabinet Mission Plan / कैबिनेट मिशन योजना</p>",
+      "option3": "<p> Cripps Mission / क्रिप्स मिशन</p>",
+      "option4": "<p> Wavell Plan / वेवेल योजना</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Cabinet Mission Plan provided the framework for electing members to the Constituent Assembly.<br/> संविधान सभा के लिए सदस्यों के चुनाव का ढांचा कैबिनेट मिशन योजना ने दिया था।</p>"
+    },
+    {
+      "sr_no": 10,
+      "question": "<p> <b>Consider the following statements:<br/> </b>निम्न कथनों पर विचार करें<b>:<br/> (a) Muslim League boycotted the first meeting./ </b>मुस्लिम लीग ने पहली बैठक का बहिष्कार किया।<b><br/> (b) French and Portuguese territories also participated./ </b>फ़्रांसीसी और पुर्तगाली क्षेत्रों ने भी भाग लिया।<b><br/> (c) Princely states joined gradually./ </b>रियासतें धीरे<b>-</b>धीरे शामिल हुईं।<b><br/> Correct statements?<br/> </b>कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> (a) only / केवल (a)</p>",
+      "option2": "<p> (a) and (c) / (a) और (c)</p>",
+      "option3": "<p> (b) and (c) / (b) और (c)</p>",
+      "option4": "<p> (a), (b) and (c) / (a), (b) और (c)</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Muslim League boycotted the first meeting; princely states gradually joined. French/Portuguese territories did not participate.<br/> मुस्लिम लीग ने पहली बैठक का बहिष्कार किया; रियासतें धीरे-धीरे शामिल हुईं। फ्रांसीसी/पुर्तगाली क्षेत्रों ने भाग नहीं लिया।</p>"
+    },
+    {
+      "sr_no": 11,
+      "question": "<p> <b>Who was the constitutional advisor to the Constituent Assembly?<br/> </b>संविधान सभा के संवैधानिक सलाहकार कौन थे<b>?</b></p>",
+      "option1": "<p> B.N. Rau / बी.एन. राउ</p>",
+      "option2": "<p> K.M. Panikkar / के.एम. पनिक्कर</p>",
+      "option3": "<p> Sardar Patel / सरदार पटेल</p>",
+      "option4": "<p> H.V. Kamath / एच.वी. कामथ</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> B.N. Rau served as constitutional advisor and prepared the initial draft.<br/> बी.एन. राउ संविधान सभा के संवैधानिक सलाहकार थे और प्रारंभिक मसौदा तैयार किया।</p>"
+    },
+    {
+      "sr_no": 12,
+      "question": "<p> <b>Which committee dealt with the integration of princely states?<br/> </b>कौन<b>-</b>सी समिति रियासतों के एकीकरण से संबंधित थी<b>?</b></p>",
+      "option1": "<p> Provincial Constitution Committee / प्रांतीय संविधान समिति</p>",
+      "option2": "<p> States Committee / रियासत समिति</p>",
+      "option3": "<p> Union Powers Committee / संघ शक्तियाँ समिति</p>",
+      "option4": "<p> Advisory Committee / सलाहकार समिति</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The States Committee dealt with integration and related matters of princely states.<br/> रियासतों के एकीकरण और उनसे संबंधित मामलों को States Committee संभालती थी।</p>"
+    },
+    {
+      "sr_no": 13,
+      "question": "<p> <b>Minimum age for election to the Constituent Assembly was—<br/> </b>संविधान सभा के चुनाव की न्यूनतम आयु क्या थी<b>?</b></p>",
+      "option1": "<p> 21 years / 21 वर्ष</p>",
+      "option2": "<p> 25 years / 25 वर्ष</p>",
+      "option3": "<p> 30 years / 30 वर्ष</p>",
+      "option4": "<p> 18 years / 18 वर्ष</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Minimum age for being elected to the Constituent Assembly was 21 years.<br/> संविधान सभा के चुनाव हेतु न्यूनतम आयु 21 वर्ष थी।</p>"
+    },
+    {
+      "sr_no": 14,
+      "question": "<p> <b>The Indian Independence Act came into force on—<br/> </b>भारतीय स्वतंत्रता अधिनियम कब लागू हुआ<b>?</b></p>",
+      "option1": "<p> 18 July 1947 / 18 जुलाई 1947</p>",
+      "option2": "<p> 15 August 1947 / 15 अगस्त 1947</p>",
+      "option3": "<p> 26 January 1950 / 26 जनवरी 1950</p>",
+      "option4": "<p> 9 December 1946 / 9 दिसंबर 1946</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Indian Independence Act took effect on 15 August 1947—India’s Independence Day.<br/> भारतीय स्वतंत्रता अधिनियम 15 अगस्त 1947 से लागू हुआ—यही भारत का स्वतंत्रता दिवस है।</p>"
+    },
+    {
+      "sr_no": 15,
+      "question": "<p> <b>Which committee looked into minority rights?<br/> </b>अल्पसंख्यक अधिकारों से संबंधित समिति कौन<b>-</b>सी थी<b>?</b></p>",
+      "option1": "<p> States Committee / रियासत समिति</p>",
+      "option2": "<p> Union Powers Committee / संघ शक्तियाँ समिति</p>",
+      "option3": "<p> Advisory Committee (on Fundamental Rights &amp; Minorities) / सलाहकार समिति (मौलिक अधिकार एवं अल्पसंख्यक)</p>",
+      "option4": "<p> Drafting Committee / प्रारूप समिति</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Advisory Committee handled Fundamental Rights and minority protections.<br/> मौलिक अधिकार और अल्पसंख्यक संबंधी विषय Advisory Committee देखती थी।</p>"
+    },
+    {
+      "sr_no": 16,
+      "question": "<p> <b>India is described as a ‘Union of States’ because—<br/> </b>भारत को <b>'</b>राज्यों का संघ<b>' </b>कहा जाता है क्योंकि—</p>",
+      "option1": "<p> It is indestructible / यह अविनाशी है</p>",
+      "option2": "<p> States have right to secede / राज्यों को अलग होने का अधिकार है</p>",
+      "option3": "<p> Swiss model is followed / स्विस मॉडल अपनाया गया है</p>",
+      "option4": "<p> States have complete autonomy / राज्यों को पूर्ण स्वायत्तता है</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> India is a Union of States because the Union is indestructible even though states can be reorganized.<br/> भारत का संघ अविनाशी है, इसलिए इसे राज्यों का संघ कहा गया—राज्यों में परिवर्तन संभव है, संघ में नहीं।</p>"
+    },
+    {
+      "sr_no": 17,
+      "question": "<p> <b>Consider the following:<br/> </b>निम्नलिखित पर विचार करें<b>:<br/> (a) Parliamentary system / </b>संसदीय प्रणाली<b><br/> (b) Judicial review / </b>न्यायिक पुनरावलोकन<b><br/> (c) Rigid constitution / </b>कठोर संविधान<b><br/> (d) Single citizenship / </b>एकल नागरिकता<b><br/> Which features are adopted from the British Constitution?<br/> </b>कौन<b>-</b>सी विशेषताएँ ब्रिटिश संविधान से ली गई हैं<b>?</b></p>",
+      "option1": "<p> (a) and (d) / (a) और (d)</p>",
+      "option2": "<p> (a) and (c) / (a) और (c)</p>",
+      "option3": "<p> (b) and (d) / (b) और (d)</p>",
+      "option4": "<p> (c) and (d) / (c) और (d)</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Parliamentary system and single citizenship are borrowed from Britain.<br/> संसदीय प्रणाली और एकल नागरिकता ब्रिटिश संविधान से ली गई विशेषताएँ हैं।</p>"
+    },
+    {
+      "sr_no": 18,
+      "question": "<p> <b>India’s federal system with a strong centre is inspired from—<br/> </b>सशक्त केंद्र वाला भारत का संघीय ढांचा किससे प्रेरित है<b>?</b></p>",
+      "option1": "<p> Canadian Constitution / कनाडाई संविधान</p>",
+      "option2": "<p> U.S. Constitution / अमेरिकी संविधान</p>",
+      "option3": "<p> Australian Constitution / ऑस्ट्रेलियाई संविधान</p>",
+      "option4": "<p> French Constitution / फ्रांसीसी संविधान</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Canadian Constitution inspired federation with a strong center.<br/> सशक्त केंद्र वाला संघीय ढांचा कनाडाई संविधान से लिया गया है।</p>"
+    },
+    {
+      "sr_no": 19,
+      "question": "<p> <b>Which of the following is NOT a federal feature?<br/> </b>निम्न में से कौन<b>-</b>सा संघीय विशेषता नहीं है<b>?</b></p>",
+      "option1": "<p> Division of powers / शक्तियों का विभाजन</p>",
+      "option2": "<p> Supremacy of Constitution / संविधान की सर्वोच्चता</p>",
+      "option3": "<p> Emergency provisions / आपातकालीन प्रावधान</p>",
+      "option4": "<p> Independent judiciary / स्वतंत्र न्यायपालिका</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Emergency provisions are a unitary feature, not a federal one.<br/> आपातकालीन प्रावधान एकात्मक विशेषता है, संघीय नहीं।</p>"
+    },
+    {
+      "sr_no": 20,
+      "question": "<p> <b>India’s Constitution is called “partly rigid and partly flexible” because—<br/> </b>भारत का संविधान <b>\"</b>आंशिक कठोर और आंशिक लचीला<b>\" </b>कहा जाता है क्योंकि—</p>",
+      "option1": "<p> Some parts require special majority / कुछ भागों के लिए विशेष बहुमत चाहिए</p>",
+      "option2": "<p> All amendments need referendum / सभी संशोधनों के लिए जनमत-संग्रह चाहिए</p>",
+      "option3": "<p> Only states can amend it / केवल राज्य इसे संशोधित कर सकते हैं</p>",
+      "option4": "<p> Supreme Court approves amendments / सुप्रीम कोर्ट संशोधन की अनुमति देता है</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Some constitutional amendments need special majority; others need simple majority — hence partly rigid and partly flexible.<br/> कुछ संशोधनों के लिए विशेष बहुमत चाहिए, कुछ के लिए सामान्य—इसीलिए यह आंशिक कठोर-आंशिक लचीला है।</p>"
+    },
+    {
+      "sr_no": 21,
+      "question": "<p> <b>Match the following:<br/> </b>निम्नलिखित का मिलान करें<b>:<br/> A. Irish Constitution – (i) Directive Principles / </b>आयरिश संविधान – <b>(i) </b>निदेशक सिद्धांत<b><br/> B. Australian Constitution – (ii) Concurrent List / </b>ऑस्ट्रेलियाई संविधान – <b>(ii) </b>समवर्ती सूची<b><br/> C. American Constitution – (iii) Judicial Review / </b>अमेरिकी संविधान – <b>(iii) </b>न्यायिक पुनरावलोकन<b><br/> Correct match is:<br/> </b>सही मिलान है<b>:</b></p>",
+      "option1": "<p> A–i, B–ii, C–iii</p>",
+      "option2": "<p> A–iii, B–i, C–ii</p>",
+      "option3": "<p> A–ii, B–iii, C–i</p>",
+      "option4": "<p> A–i, B–iii, C–ii</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> DPSP from Ireland; Concurrent List from Australia; Judicial Review from USA.<br/> नीति-निर्देशक तत्व आयरलैंड से; समवर्ती सूची ऑस्ट्रेलिया से; न्यायिक पुनरावलोकन अमेरिका से।</p>"
+    },
+    {
+      "sr_no": 22,
+      "question": "<p> <b>Single integrated judicial system in India is taken from—<br/> </b>भारत में एकीकृत न्यायिक प्रणाली किससे ली गई है<b>?</b></p>",
+      "option1": "<p> Britain / ब्रिटेन</p>",
+      "option2": "<p> Canada / कनाडा</p>",
+      "option3": "<p> Japan / जापान</p>",
+      "option4": "<p> USA / अमेरिका</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Integrated judicial system is influenced by the British model.<br/> एकीकृत न्यायिक प्रणाली ब्रिटिश मॉडल से ली गई है।</p>"
+    },
+    {
+      "sr_no": 23,
+      "question": "<p> <b>Consider the following:<br/> </b>निम्न पर विचार करें<b>:<br/> (a) Secular State / </b>धर्मनिरपेक्ष राज्य<b><br/> (b) Independent Judiciary / </b>स्वतंत्र न्यायपालिका<b><br/> (c) Bicameral Legislature / </b>द्विसदनीय विधायिका<b><br/> (d) Strong Centre / </b>सशक्त केन्द्र<b><br/> Which are unitary features?<br/> </b>कौन<b>-</b>सी एकात्मक विशेषताएँ हैं<b>?</b></p>",
+      "option1": "<p> (a) and (b) / (a) और (b)</p>",
+      "option2": "<p> (a) and (d) / (a) और (d)</p>",
+      "option3": "<p> (b) and (d) / (b) और (d)</p>",
+      "option4": "<p> (c) and (d) / (c) और (d)</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Bicameral legislature and strong center are unitary-leaning features.<br/> द्विसदनीय विधानमंडल और सशक्त केंद्र एकात्मक प्रवृत्ति वाली विशेषताएँ हैं।</p>"
+    },
+    {
+      "sr_no": 24,
+      "question": "<p> <b>Which of the following is the largest written Constitution?<br/> </b>निम्न में से विश्व का सबसे बड़ा लिखित संविधान कौन<b>-</b>सा है<b>?</b></p>",
+      "option1": "<p> U.S. Constitution / अमेरिकी संविधान</p>",
+      "option2": "<p> Indian Constitution / भारतीय संविधान</p>",
+      "option3": "<p> Australian Constitution / ऑस्ट्रेलियाई संविधान</p>",
+      "option4": "<p> Canadian Constitution / कनाडाई संविधान</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Indian Constitution is the world’s largest written Constitution.<br/> भारतीय संविधान विश्व का सबसे बड़ा लिखित संविधान है।</p>"
+    },
+    {
+      "sr_no": 25,
+      "question": "<p> <b>Universal Adult Franchise means—<br/> </b>सार्वभौमिक वयस्क मताधिकार का अर्थ है—</p>",
+      "option1": "<p> Only educated persons can vote / केवल शिक्षित लोग वोट दे सकते हैं</p>",
+      "option2": "<p> All adults above 21 / 21 वर्ष से ऊपर सभी</p>",
+      "option3": "<p> All adults above 18 / 18 वर्ष से ऊपर सभी</p>",
+      "option4": "<p> Only taxpayers can vote / केवल करदाता वोट दे सकते हैं</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Universal Franchise means all citizens aged 18+ can vote.<br/> सार्वभौमिक वयस्क मताधिकार का मतलब है 18 वर्ष से ऊपर सभी नागरिक वोट दे सकते हैं।</p>"
+    },
+    {
+      "sr_no": 26,
+      "question": "<p> <b>Guardian of the Constitution is—<br/> </b>संविधान का संरक्षक कौन है<b>?</b></p>",
+      "option1": "<p> President / राष्ट्रपति</p>",
+      "option2": "<p> Parliament / संसद</p>",
+      "option3": "<p> Supreme Court / सर्वोच्च न्यायालय</p>",
+      "option4": "<p> CAG / सीएजी</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Supreme Court is the guardian and interpreter of the Constitution.<br/> सर्वोच्च न्यायालय संविधान का संरक्षक और व्याख्याकार है।</p>"
+    },
+    {
+      "sr_no": 27,
+      "question": "<p> <b>India follows which Parliamentary system?<br/> </b>भारत किस संसदीय प्रणाली का पालन करता है<b>?</b></p>",
+      "option1": "<p> Westminster type / वेस्टमिंस्टर प्रकार</p>",
+      "option2": "<p> Presidential type / राष्ट्रपति प्रणाली</p>",
+      "option3": "<p> Swiss collegial type / स्विस सहयोगी प्रणाली</p>",
+      "option4": "<p> Hybrid type / मिश्रित प्रणाली</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> India follows the British Westminster model of Parliamentary system.<br/> भारत ब्रिटिश वेस्टमिंस्टर संसदीय मॉडल अपनाता है।</p>"
+    },
+    {
+      "sr_no": 28,
+      "question": "<p><b>“Rule of Law” is borrowed from—<br/> “</b>कानून का शासन” किस संविधान से लिया गया है<b>?</b></p>",
+      "option1": "<p> British Constitution / ब्रिटिश संविधान</p>",
+      "option2": "<p> American Constitution / अमेरिकी संविधान</p>",
+      "option3": "<p> French Constitution / फ्रांसीसी संविधान</p>",
+      "option4": "<p> German Constitution / जर्मन संविधान</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Rule of Law — equality before law — is borrowed from the British Constitution.<br/> कानून का शासन (Rule of Law) ब्रिटिश संविधान से लिया गया है।</p>"
+    },
+    {
+      "sr_no": 29,
+      "question": "<p> <b>Bicameralism in India is inspired by—<br/> </b>भारत में द्विसदनीयता किससे प्रेरित है<b>?</b></p>",
+      "option1": "<p> USA / अमेरिका</p>",
+      "option2": "<p> Britain / ब्रिटेन</p>",
+      "option3": "<p> Ireland / आयरलैंड</p>",
+      "option4": "<p> Canada / कनाडा</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Rule of Law — equality before law — is borrowed from the British Constitution.<br/> भारत में द्विसदनीयता ब्रिटिश संसद (हाउस ऑफ लॉर्ड्स और हाउस ऑफ कॉमन्स) से प्रेरित है।</p>"
+    },
+    {
+      "sr_no": 30,
+      "question": "<p> <b>India’s written and detailed Constitution is inspired from—<br/> </b>भारत का लिखित एवं विस्तृत संविधान किससे प्रेरित है<b>?</b></p>",
+      "option1": "<p> U.S. Constitution / अमेरिकी संविधान</p>",
+      "option2": "<p> Australia / ऑस्ट्रेलिया</p>",
+      "option3": "<p> Canada / कनाडा</p>",
+      "option4": "<p> France / फ्रांस</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Written, exhaustive Constitution idea is borrowed from the U.S. Constitution.<br/> लिखित व विस्तृत संविधान की अवधारणा अमेरिकी संविधान से ली गई है।</p>"
+    },
+    {
+      "sr_no": 31,
+      "question": "<p> <b>The Preamble declares India as—<br/> </b>प्रस्तावना भारत को किस रूप में घोषित करती है<b>?</b></p>",
+      "option1": "<p> Sovereign, Socialist, Secular, Democratic, Republic / सर्वभौम, समाजवादी, पंथनिरपेक्ष, लोकतांत्रिक, गणराज्य</p>",
+      "option2": "<p> Sovereign, Secular, Socialist, Democratic, Republic / सर्वभौम, पंथनिरपेक्ष, समाजवादी, लोकतांत्रिक, गणराज्य</p>",
+      "option3": "<p> Sovereign, Democratic, Republic / सर्वभौम, लोकतांत्रिक, गणराज्य</p>",
+      "option4": "<p> Socialist, Democratic, Republic / समाजवादी, लोकतांत्रिक, गणराज्य</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Preamble declares India Sovereign, Socialist, Secular, Democratic, Republic.<br/> प्रस्तावना भारत को सर्वभौम, समाजवादी, पंथनिरपेक्ष, लोकतांत्रिक, गणराज्य घोषित करती है।</p>"
+    },
+    {
+      "sr_no": 32,
+      "question": "<p><b>“Socialist” and “Secular” were added by—<br/> “</b>समाजवादी” और “पंथनिरपेक्ष” शब्द किस संशोधन से जोड़े गए<b>?</b></p>",
+      "option1": "<p> 24th Amendment / 24वाँ संशोधन</p>",
+      "option2": "<p> 42nd Amendment / 42वाँ संशोधन</p>",
+      "option3": "<p> 44th Amendment / 44वाँ संशोधन</p>",
+      "option4": "<p> 52nd Amendment / 52वाँ संशोधन</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> 42nd Amendment inserted “Socialist” and “Secular” in the Preamble.<br/> 42वें संशोधन द्वारा “समाजवादी” और “पंथनिरपेक्ष” शब्द जोड़े गए।</p>"
+    },
+    {
+      "sr_no": 33,
+      "question": "<p> <b>Preamble is based on—<br/> </b>प्रस्तावना किस पर आधारित है<b>?</b></p>",
+      "option1": "<p> Nehru Report / नेहरू रिपोर्ट</p>",
+      "option2": "<p> Objectives Resolution / उद्देश्य प्रस्ताव</p>",
+      "option3": "<p> Independence Act / स्वतंत्रता अधिनियम</p>",
+      "option4": "<p> Cripps Mission / क्रिप्स मिशन</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Preamble is directly based on Nehru’s Objectives Resolution.<br/> प्रस्तावना का आधार नेहरू का उद्देश्य प्रस्ताव है।</p>"
+    },
+    {
+      "sr_no": 34,
+      "question": "<p> <b>Consider the following statements:<br/> </b>निम्न कथनों पर विचार करें<b>:<br/> (a) Preamble is part of Constitution. / </b>प्रस्तावना संविधान का हिस्सा है।<b><br/> (b) It can be amended. / </b>इसे संशोधित किया जा सकता है।<b><br/> (c) It is not enforceable. / </b>यह न्यायालय में प्रवर्तनीय नहीं है।<b><br/> Which are correct?<br/> </b>कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> (a) and (b) / (a) और (b)</p>",
+      "option2": "<p> (b) and (c) / (b) और (c)</p>",
+      "option3": "<p> (a) and (c) / (a) और (c)</p>",
+      "option4": "<p> (a), (b) and (c) / (a), (b) और (c)</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Preamble is part of the Constitution, can be amended, but is not enforceable.<br/> प्रस्तावना संविधान का भाग है, संशोधित हो सकती है, पर न्यायालय में प्रवर्तनीय नहीं।</p>"
+    },
+    {
+      "sr_no": 35,
+      "question": "<p><b>“Liberty of thought, expression, belief, faith and worship” ensures—<br/> “</b>विचार<b>, </b>अभिव्यक्ति<b>, </b>विश्वास<b>, </b>धर्म और उपासना की स्वतंत्रता” किसे सुनिश्चित करती है<b>?</b></p>",
+      "option1": "<p> Political liberty / राजनीतिक स्वतंत्रता</p>",
+      "option2": "<p> Social liberty / सामाजिक स्वतंत्रता</p>",
+      "option3": "<p> Individual liberty / व्यक्तिगत स्वतंत्रता</p>",
+      "option4": "<p> Constitutional liberty / संवैधानिक स्वतंत्रता</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> These freedoms ensure individual liberty under the Constitution.<br/> ये सभी स्वतंत्रताएँ व्यक्ति की व्यक्तिगत स्वतंत्रता को सुनिश्चित करती हैं।</p>"
+    },
+    {
+      "sr_no": 36,
+      "question": "<p><b>“We, the People of India” signifies—<br/> “</b>हम भारत के लोग” का अर्थ है—</p>",
+      "option1": "<p> Popular sovereignty / जनसार्वभौमिकता</p>",
+      "option2": "<p> Judicial supremacy / न्यायिक सर्वोच्चता</p>",
+      "option3": "<p> Parliamentary sovereignty / संसदीय सर्वोच्चता</p>",
+      "option4": "<p> Presidential supremacy / राष्ट्रपति सर्वोच्चता</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>We the People” signifies popular sovereignty — power comes from the people.<br/> “हम भारत के लोग” का अर्थ है — शक्ति जनता से आती है (जनसर्वभौमिकता)।</p>"
+    },
+    {
+      "sr_no": 37,
+      "question": "<p><b>“Republic” in the Preamble means—<br/> </b>प्रस्तावना में “गणराज्य” का अर्थ है—</p>",
+      "option1": "<p> Head of State is elected / राष्ट्राध्यक्ष निर्वाचित होता है</p>",
+      "option2": "<p> Head of State is hereditary / राष्ट्राध्यक्ष वंशानुगत होता है</p>",
+      "option3": "<p> Parliament is supreme / संसद सर्वोच्च है</p>",
+      "option4": "<p> People have rights / लोगों के पास अधिकार हैं</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Republic means the head of state is elected, not hereditary.<br/> गणराज्य का मतलब है राष्ट्राध्यक्ष निर्वाचित होता है, वंशानुगत नहीं।</p>"
+    },
+    {
+      "sr_no": 38,
+      "question": "<p> <b>Consider the following:<br/> </b>निम्न पर विचार करें<b>:<br/> (a) Preamble provides source of authority / </b>प्रस्तावना प्राधिकार का स्रोत प्रदान करती है।<b><br/> (b) Contains basic structure / </b>इसमें मूल संरचना निहित होती है।<b><br/> (c) It is justiciable / </b>यह न्यायालय में प्रवर्तनीय है।<b><br/> Correct statements:<br/> </b>सही कथन कौन<b>-</b>से हैं<b>?</b></p>",
+      "option1": "<p> (a) and (b) / (a) और (b)</p>",
+      "option2": "<p> (b) and (c) / (b) और (c)</p>",
+      "option3": "<p> (a) and (c) / (a) और (c)</p>",
+      "option4": "<p> (a), (b) and (c) / (a), (b) और (c)</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Preamble gives authority source and expresses basic structure principles; it is not justiciable.<br/> प्रस्तावना अधिकार का स्रोत बताती है और मूल संरचना को अभिव्यक्त करती है; यह प्रवर्तनीय नहीं।</p>"
+    },
+    {
+      "sr_no": 39,
+      "question": "<p><b>“Fraternity” in Preamble promotes—<br/> </b>प्रस्तावना में “बंधुत्व” किसे बढ़ावा देता है<b>?</b></p>",
+      "option1": "<p> Economic justice / आर्थिक न्याय</p>",
+      "option2": "<p> National integration / राष्ट्रीय एकता</p>",
+      "option3": "<p> Gender equality / लैंगिक समानता</p>",
+      "option4": "<p> Judicial independence / न्यायिक स्वतंत्रता</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Fraternity promotes national integration and unity.<br/> बंधुत्व राष्ट्रीय एकता और सद्भाव को बढ़ावा देता है।</p>"
+    },
+    {
+      "sr_no": 40,
+      "question": "<p> <b>Amendment of Preamble is done under—<br/> </b>प्रस्तावना में संशोधन किसके तहत किया जाता है<b>?</b></p>",
+      "option1": "<p> Article 360 / अनुच्छेद 360</p>",
+      "option2": "<p> Article 368 / अनुच्छेद 368</p>",
+      "option3": "<p> Article 352 / अनुच्छेद 352</p>",
+      "option4": "<p> Article 32 / अनुच्छेद 32</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Preamble can be amended under Article 368, like other constitutional amendments.<br/> अनुच्छेद 368 के तहत प्रस्तावना में संशोधन किया जा सकता है।</p>"
+    },
+    {
+      "sr_no": 41,
+      "question": "<p><b>“Justice — social, economic and political” is derived from—<br/> “</b>न्याय — सामाजिक<b>, </b>आर्थिक और राजनीतिक” किससे लिया गया है<b>?</b></p>",
+      "option1": "<p> French Revolution / फ्रांसीसी क्रांति</p>",
+      "option2": "<p> Russian Revolution / रूसी क्रांति</p>",
+      "option3": "<p> American Declaration / अमेरिकी घोषणा</p>",
+      "option4": "<p> British Act / ब्रिटिश अधिनियम</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Social, economic, political justice concepts are inspired from the Russian Revolution.<br/> सामाजिक, आर्थिक एवं राजनीतिक न्याय की अवधारणा रूसी क्रांति से प्रेरित है।</p>"
+    },
+    {
+      "sr_no": 42,
+      "question": "<p> <b>The Preamble was adopted on—<br/> </b>प्रस्तावना कब अपनाई गई थी<b>?</b></p>",
+      "option1": "<p> 15 August 1947 / 15 अगस्त 1947</p>",
+      "option2": "<p> 29 August 1947 / 29 अगस्त 1947</p>",
+      "option3": "<p> 26 November 1949 / 26 नवंबर 1949</p>",
+      "option4": "<p> 24 January 1950 / 24 जनवरी 1950</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Preamble was adopted on 26 November 1949 along with the Constitution.<br/> प्रस्तावना 26 नवंबर 1949 को स्वीकार की गई।</p>"
+    },
+    {
+      "sr_no": 43,
+      "question": "<p><b>“Equality of status and opportunity” seeks to eliminate—<br/> “</b>स्थिति और अवसर की समानता” किसे समाप्त करना चाहती है<b>?</b></p>",
+      "option1": "<p> Social inequality / सामाजिक असमानता</p>",
+      "option2": "<p> Political participation / राजनीतिक भागीदारी</p>",
+      "option3": "<p> Administrative hurdles / प्रशासनिक बाधाएँ</p>",
+      "option4": "<p> Judicial review / न्यायिक पुनरावलोकन</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> It aims to end social inequalities and ensure equal opportunity for all.<br/> इसका उद्देश्य सामाजिक असमानताओं को समाप्त कर समान अवसर देना है।</p>"
+    },
+    {
+      "sr_no": 44,
+      "question": "<p> <b>The Preamble was called the “Identity card of Constitution” by—<br/> </b>प्रस्तावना को “संविधान का पहचान पत्र” किसने कहा<b>?</b></p>",
+      "option1": "<p> Dr. Ambedkar / डॉ. अम्बेडकर</p>",
+      "option2": "<p> K.M. Munshi / के.एम. मुंशी</p>",
+      "option3": "<p> N.A. Palkhivala / एन.ए. पालखीवाला</p>",
+      "option4": "<p> Jawaharlal Nehru / जवाहरलाल नेहरू</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> N.A. Palkhivala called the Preamble the “Identity card of the Constitution.”<br/> एन.ए. पालखीवाला ने प्रस्तावना को “संविधान का पहचान पत्र” कहा।</p>"
+    },
+    {
+      "sr_no": 45,
+      "question": "<p><b>“Sovereign” in Preamble means—<br/> </b>प्रस्तावना में “सर्वभौम” का अर्थ है—</p>",
+      "option1": "<p> Freedom from external control / बाहरी नियंत्रण से स्वतंत्रता</p>",
+      "option2": "<p> Controlled by UN / संयुक्त राष्ट्र द्वारा नियंत्रित</p>",
+      "option3": "<p> Under British rule / ब्रिटिश शासन के अधीन</p>",
+      "option4": "<p> Economic dependence / आर्थिक निर्भरता</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Sovereign means freedom from external control and full internal authority.<br/> सर्वभौम का अर्थ है — बाहरी नियंत्रण से पूर्ण स्वतंत्रता और आंतरिक सर्वोच्चता।</p>"
+    },
+    {
+      "sr_no": 46,
+      "question": "<p><b>“India, that is Bharat, shall be a Union of States” is stated in—<br/> “</b>भारत अर्थात इंडिया<b>, </b>राज्यों का संघ होगा” यह कहाँ कहा गया है<b>?</b></p>",
+      "option1": "<p> Article 1 / अनुच्छेद 1</p>",
+      "option2": "<p> Article 2 / अनुच्छेद 2</p>",
+      "option3": "<p> Article 3 / अनुच्छेद 3</p>",
+      "option4": "<p> Article 4 / अनुच्छेद 4</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 1 declares “India, that is Bharat, shall be a Union of States” and defines the name and territory of the Union.<br/> अनुच्छेद 1 में यह कहा गया है और यह संघ का नाम व क्षेत्र बताता है।</p>"
+    },
+    {
+      "sr_no": 47,
+      "question": "<p> <b>Article 2 deals with—<br/> </b>अनुच्छेद <b>2 </b>संबंधित है—</p>",
+      "option1": "<p> Admission of new States / नए राज्यों को प्रवेश</p>",
+      "option2": "<p> Formation of new States / नए राज्यों का गठन</p>",
+      "option3": "<p> Union territory administration / केंद्र शासित प्रदेश</p>",
+      "option4": "<p> Citizenship termination / नागरिकता समाप्ति</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 2 empowers Parliament to admit new States into the Union by law.<br/> अनुच्छेद 2 संसद को नए राज्यों को संघ में शामिल करने का अधिकार देता है।</p>"
+    },
+    {
+      "sr_no": 48,
+      "question": "<p> <b>Which Article empowers Parliament to form new States?<br/> </b>नए राज्यों के गठन का अधिकार संसद को किस अनुच्छेद से मिलता है<b>?</b></p>",
+      "option1": "<p> Article 2 / अनु. 2</p>",
+      "option2": "<p> Article 3 / अनु. 3</p>",
+      "option3": "<p> Article 5 / अनु. 5</p>",
+      "option4": "<p> Article 11 / अनु. 11</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 3 gives Parliament power to form new States, alter boundaries, or change names by law.<br/> अनुच्छेद 3 संसद को नए राज्य बनाने और सीमाएँ/नाम बदलने का अधिकार देता है।</p>"
+    },
+    {
+      "sr_no": 49,
+      "question": "<p> <b>Prior recommendation for altering state boundaries is required from—<br/> </b>राज्य की सीमाएँ बदलने के लिए किसकी सिफारिश आवश्यक है<b>?</b></p>",
+      "option1": "<p> Supreme Court / सर्वोच्च न्यायालय</p>",
+      "option2": "<p> President / राष्ट्रपति</p>",
+      "option3": "<p> Prime Minister / प्रधानमंत्री</p>",
+      "option4": "<p> Governor / राज्यपाल</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Before a reorganisation bill is introduced, the President must refer it to the State legislature for its opinion — President’s reference is required.<br/> पुनर्गठन विधेयक पेश करने से पहले राष्ट्रपति को उस राज्य विधानमंडल से राय लेने के लिए भेजना होता है — राष्ट्रपति की सिफारिश/संदर्भ आवश्यक है।</p>"
+    },
+    {
+      "sr_no": 50,
+      "question": "<p> <b>Citizenship is dealt in which Part?<br/> </b>नागरिकता किस भाग में दी गई है<b>?</b></p>",
+      "option1": "<p> Part I / भाग I</p>",
+      "option2": "<p> Part II / भाग II</p>",
+      "option3": "<p> Part III / भाग III</p>",
+      "option4": "<p> Part IX / भाग IX</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Citizenship is contained in Part II of the Constitution (Articles 5–11).<br/> नागरिकता का प्रावधान संविधान के भाग II (अनु. 5–11) में है।</p>"
+    },
+    {
+      "sr_no": 51,
+      "question": "<p> <b>Citizenship at the commencement of the Constitution is covered under—<br/> </b>संविधान लागू होने के समय नागरिकता किस अनुच्छेद में दी गई है<b>?</b></p>",
+      "option1": "<p> Article 5 / अनुच्छेद 5</p>",
+      "option2": "<p> Article 6 / अनुच्छेद 6</p>",
+      "option3": "<p> Article 7 / अनुच्छेद 7</p>",
+      "option4": "<p> Article 8 / अनुच्छेद 8</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 5 deals with citizenship at the commencement of the Constitution (who were citizens on 26.1.1950).<br/> अनुच्छेद 5 संविधान लागू होने के समय (26.1.1950) नागरिकों का निर्धारण करता है।</p>"
+    },
+    {
+      "sr_no": 52,
+      "question": "<p> <b>Article 6 deals with citizenship of—<br/> </b>अनुच्छेद <b>6 </b>किसकी नागरिकता से संबंधित है<b>?</b></p>",
+      "option1": "<p> Persons migrating to India from Pakistan भारत आने वाले पाकिस्तानी प्रवासियों से</p>",
+      "option2": "<p> Persons migrating to Pakistan पाकिस्तान जाने वालों से</p>",
+      "option3": "<p> Persons of Indian origin abroad विदेशों में भारतीय मूल के लोग</p>",
+      "option4": "<p> Illegal migrants अवैध प्रवासी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 6 deals with persons who migrated to India from Pakistan at the time of Partition.<br/> अनुच्छेद 6 विभाजन के समय पाकिस्तान से भारत आये प्रवासियों की नागरिकता से संबंधित है।</p>"
+    },
+    {
+      "sr_no": 53,
+      "question": "<p> <b>Citizenship termination is empowered under—<br/> </b>नागरिकता समाप्ति का अधिकार किस अनुच्छेद से मिलता है<b>?</b></p>",
+      "option1": "<p> Article 10 / अनु. 10</p>",
+      "option2": "<p> Article 9 / अनु. 9</p>",
+      "option3": "<p> Article 11 / अनु. 11</p>",
+      "option4": "<p> Article 12 / अनु. 12</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 11 empowers Parliament to make laws regarding termination or deprivation of citizenship after commencement.<br/> अनुच्छेद 11 संसद को संविधान लागू होने के बाद नागरिकता समाप्त या समाप्त करने के लिए कानून बनाने की शक्ति देता है।</p>"
+    },
+    {
+      "sr_no": 54,
+      "question": "<p> <b>Article 7 relates to—<br/> </b>अनुच्छेद <b>7 </b>संबंधित है—</p>",
+      "option1": "<p> Pakistani migrants returning to India / भारत लौटने वाले पाकिस्तानी प्रवासी</p>",
+      "option2": "<p> Residence requirement / निवास आवश्यकता</p>",
+      "option3": "<p> Overseas citizens / प्रवासी नागरिक</p>",
+      "option4": "<p> Naturalization / प्राकृतिककरण</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 7 relates to migration to India from Pakistan and rights of those who returned to India.<br/> अनुच्छेद 7 पाकिस्तान से भारत लौटे प्रवासियों और उनसे संबंधित अधिकारों से जुड़ा है।</p>"
+    },
+    {
+      "sr_no": 55,
+      "question": "<p> <b>Part II does NOT deal with—<br/> </b>भाग <b>II </b>निम्न में से किससे संबंधित नहीं है<b>?</b></p>",
+      "option1": "<p> Citizenship termination / नागरिकता समाप्ति</p>",
+      "option2": "<p> Citizenship by birth / जन्म से नागरिकता</p>",
+      "option3": "<p> Continuance of citizenship / नागरिकता निरंतरता</p>",
+      "option4": "<p> Rights of citizens abroad / विदेश में नागरिकों के अधिकार</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Part II deals with citizenship at commencement, migration, and continuance; citizenship by birth rules are provided later in statute (Citizenship Act).<br/> भाग II संविधान लागू होने पर नागरिकता और प्रवासियों से संबंधित है; जन्म से नागरिकता के विस्तृत नियमन नागरिकता अधिनियम में हैं।</p>"
+    },
+    {
+      "sr_no": 56,
+      "question": "<p> <b>Who can recommend reorganisation of states?<br/> </b>राज्यों के पुनर्गठन की सिफारिश कौन करता है<b>?</b></p>",
+      "option1": "<p> Parliament / संसद</p>",
+      "option2": "<p> President / राष्ट्रपति</p>",
+      "option3": "<p> Governor / राज्यपाल</p>",
+      "option4": "<p> Chief Minister / मुख्यमंत्री</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Parliament passes reorganisation laws, but Article 3 requires the President to refer the bill to the concerned state legislature for opinion — hence President’s reference/recommendation feature.<br/> पुनर्गठन कानून संसद बनाती है, पर अनु.3 के तहत राष्ट्रपति को राज्य विधानमंडल से राय हेतु बिल भेजना होता है — इसलिए राष्ट्रपति की सिफारिश/संदर्भ का प्रावधान है।</p>"
+    },
+    {
+      "sr_no": 57,
+      "question": "<p> <b>Which Article defines “State” for Fundamental Rights?<br/> </b>मौलिक अधिकारों हेतु “<b>State” </b>किस अनुच्छेद में परिभाषित है<b>?</b></p>",
+      "option1": "<p> Article 12 / अनुच्छेद 12</p>",
+      "option2": "<p> Article 13 / अनुच्छेद 13</p>",
+      "option3": "<p> Article 14 / अनुच्छेद 14</p>",
+      "option4": "<p> Article 32 / अनुच्छेद 32</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 12 defines “State” for the purposes of Part III (Fundamental Rights), including government and instrumentalities.<br/> अनुच्छेद 12 भाग III के लिए “राज्य” की परिभाषा देता है, जिसमें सरकारी संस्थाएँ व उपकरण शामिल हैं।</p>"
+    },
+    {
+      "sr_no": 58,
+      "question": "<p> <b>Which of the following is NOT mentioned in Article 1?<br/> </b>अनुच्छेद <b>1 </b>में इनमें से कौन<b>-</b>सा उल्लेख नहीं है<b>?</b></p>",
+      "option1": "<p> India shall be a Union of States</p>",
+      "option2": "<p> Territories of States</p>",
+      "option3": "<p> Union Territories</p>",
+      "option4": "<p> Citizenship definition</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 1 states India’s nature, territories and union territories; it does not define citizenship.<br/> अनुच्छेद 1 संघ का स्वरूप, राज्य/केंद्रशासित प्रदेश बताता है; नागरिकता की परिभाषा इसमें नहीं है।</p>"
+    },
+    {
+      "sr_no": 59,
+      "question": "<p> <b>Article 8 deals with—<br/> </b>अनुच्छेद <b>8 </b>किससे संबंधित है<b>?</b></p>",
+      "option1": "<p> Citizenship of persons of Indian origin outside India भारत के बाहर भारतीय मूल के व्यक्तियों की नागरिकता</p>",
+      "option2": "<p> Migrants from Pakistan पाकिस्तानी प्रवासी</p>",
+      "option3": "<p> Termination of citizenship नागरिकता समाप्ति</p>",
+      "option4": "<p> New citizens by registration पंजीकरण से नागरिकता</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 8 deals with persons of Indian origin residing outside India and their citizenship rights.<br/> अनुच्छेद 8 भारत के बाहर रह रहे भारतीय मूल के व्यक्तियों की नागरिकता से संबंधित है।</p>"
+    },
+    {
+      "sr_no": 60,
+      "question": "<p> <b>Indian citizenship provisions after 1950 are governed by—<br/> 1950 </b>के बाद नागरिकता के प्रावधान किससे संचालित होते हैं<b>?</b></p>",
+      "option1": "<p> Citizenship Act, 1955 / नागरिकता अधिनियम 1955</p>",
+      "option2": "<p> Constitutional Amendments / संवैधानिक संशोधन</p>",
+      "option3": "<p> Parliamentary rules / संसदीय नियम</p>",
+      "option4": "<p> Supreme Court directives / सर्वोच्च न्यायालय निर्देश</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Citizenship Act, 1955 (and subsequent amendments) governs citizenship matters after 1950.<br/> 1950 के बाद नागरिकता के नियम नागरिकता अधिनियम, 1955 और उसके संशोधनों द्वारा संचालित होते हैं।</p>"
+    },
+    {
+      "sr_no": 61,
+      "question": "<p> <b>Fundamental Rights are enshrined in—<br/> </b>मौलिक अधिकार कहाँ दिए गए हैं<b>?</b></p>",
+      "option1": "<p> Part II / भाग II</p>",
+      "option2": "<p> Part III / भाग III</p>",
+      "option3": "<p> Part IV / भाग IV</p>",
+      "option4": "<p> Part V / भाग V</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Fundamental Rights are enshrined in Part III of the Constitution (Articles 12–35).<br/> मौलिक अधिकार संविधान के भाग III (अनु. 12–35) में दिए गए हैं।</p>"
+    },
+    {
+      "sr_no": 62,
+      "question": "<p> <b>Right to Equality is provided under—<br/> </b>समानता का अधिकार कहाँ दिया गया है<b>?</b></p>",
+      "option1": "<p> Articles 14–18 / अनु. 14–18</p>",
+      "option2": "<p> Articles 19–22 / अनु. 19–22</p>",
+      "option3": "<p> Articles 23–24 / अनु. 23–24</p>",
+      "option4": "<p> Articles 25–28 / अनु. 25–28</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Right to Equality is contained in Articles 14–18 (equal protection, non-discrimination, abolition of titles, etc.).<br/> समानता का अधिकार अनु.14–18 में है (कानून के समक्ष समानता, भेदभाव निषेध, उपाधियाँ समाप्त करना आदि)।</p>"
+    },
+    {
+      "sr_no": 63,
+      "question": "<p> <b>Which is NOT a Fundamental Right?<br/> </b>निम्न में से कौन मौलिक अधिकार नहीं है<b>?</b></p>",
+      "option1": "<p> Right to Equality / समानता का अधिकार</p>",
+      "option2": "<p> Right to Property / संपत्ति का अधिकार</p>",
+      "option3": "<p> Right to Freedom / स्वतंत्रता का अधिकार</p>",
+      "option4": "<p> Right to Constitutional Remedies / संवैधानिक उपचार का अधिकार</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Right to Property ceased to be a Fundamental Right by the 44th Amendment (now a legal right under statute).<br/> संपत्ति का अधिकार अब मौलिक अधिकार नहीं है; 44वें संशोधन से यह संवैधानिक अधिकार नहीं रहा और अधिनियम के तहत शासी अधिकार बना।</p>"
+    },
+    {
+      "sr_no": 64,
+      "question": "<p> <b>Article 19 does NOT include—<br/> </b>अनुच्छेद <b>19 </b>में इनमें से कौन सम्मिलित नहीं है<b>?</b></p>",
+      "option1": "<p> Freedom of speech / अभिव्यक्ति की स्वतंत्रता</p>",
+      "option2": "<p> Freedom of movement / आवागमन की स्वतंत्रता</p>",
+      "option3": "<p> Freedom of residence / निवास की स्वतंत्रता</p>",
+      "option4": "<p> Right to education / शिक्षा का अधिकार</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 19 lists freedoms like speech, movement, residence etc.; Right to Education is not in Article 19 (it is a Directive/Statutory right).<br/> अनुच्छेद 19 अभिव्यक्ति, आवागमन, निवास आदि का प्रावधान करता है; शिक्षा का अधिकार अनु.19 का भाग नहीं है।</p>"
+    },
+    {
+      "sr_no": 65,
+      "question": "<p> <b>Protection against self-incrimination is given under—<br/> </b>स्वयं<b>-</b>अभियोजन के खिलाफ सुरक्षा किस अनुच्छेद में है<b>?</b></p>",
+      "option1": "<p> Article 20(2) / अनु. 20(2)</p>",
+      "option2": "<p> Article 20(3) / अनु. 20(3)</p>",
+      "option3": "<p> Article 22 / अनु. 22</p>",
+      "option4": "<p> Article 19 / अनु. 19</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 20(3) protects accused persons from being compelled to be witnesses against themselves (protection against self-incrimination).<br/> अनुच्छेद 20(3) स्वयं-अभियोजन के खिलाफ सुरक्षा देता है — स्वयं के विरुद्ध गवाह बनने के लिए बाध्य नहीं किया जा सकता।</p>"
+    },
+    {
+      "sr_no": 66,
+      "question": "<p> <b>Article 17 abolishes—<br/> </b>अनुच्छेद <b>17 </b>किसे समाप्त करता है<b>?</b></p>",
+      "option1": "<p> Child labour / बाल श्रम</p>",
+      "option2": "<p> Untouchability / अस्पृश्यता</p>",
+      "option3": "<p> Begar / बेगर</p>",
+      "option4": "<p> Trafficking / तस्करी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 17 abolishes untouchability and forbids its practice in any form.<br/> अनुच्छेद 17 अस्पृश्यता को समाप्त करता है और किसी भी रूप में उसके अभ्यास पर प्रतिबंध लगाता है।</p>"
+    },
+    {
+      "sr_no": 67,
+      "question": "<p> <b>Article 18 abolishes—<br/> </b>अनुच्छेद <b>18 </b>किसे समाप्त करता है<b>?</b></p>",
+      "option1": "<p> Titles / उपाधियाँ</p>",
+      "option2": "<p> Trafficking / तस्करी</p>",
+      "option3": "<p> Forced labour / जबरन श्रम</p>",
+      "option4": "<p> Bonded labour / बंधुआ मजदूरी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 18 abolishes titles (except military/honorary), prohibiting state conferred titles that create hierarchy.<br/> अनुच्छेद 18 उपाधियों को समाप्त करता है और ऐसे राज्य द्वारा प्रदत्त उच्चता-वाले खिताबों पर रोक लगाता है।</p>"
+    },
+    {
+      "sr_no": 68,
+      "question": "<p> <b>Cultural and Educational Rights are in—<br/> </b>सांस्कृतिक एवं शैक्षिक अधिकार किसमें हैं<b>?</b></p>",
+      "option1": "<p> Articles 29–30 / अनु. 29–30</p>",
+      "option2": "<p> Articles 32–35 / अनु. 32–35</p>",
+      "option3": "<p> Articles 23–24 / अनु. 23–24</p>",
+      "option4": "<p> Articles 14–18 / अनु. 14–18</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Cultural and Educational Rights are provided under Articles 29–30 (rights of minorities to conserve language, establish institutions).<br/> सांस्कृतिक व शैक्षिक अधिकार अनु.29–30 में हैं (भाषा/संस्कृति संरक्षण एवं संस्थाएँ स्थापित करने के अधिकार)।</p>"
+    },
+    {
+      "sr_no": 69,
+      "question": "<p> <b>Which is enforceable in the Supreme Court directly?<br/> </b>कौन<b>-</b>सा अधिकार सीधे सर्वोच्च न्यायालय में लागू किया जा सकता है<b>?</b></p>",
+      "option1": "<p> Article 19 / अनु. 19</p>",
+      "option2": "<p> Article 21 / अनु. 21</p>",
+      "option3": "<p> Article 32 / अनु. 32</p>",
+      "option4": "<p> Article 29 / अनु. 29</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 32 gives the right to move the Supreme Court directly for enforcement of Fundamental Rights (writ jurisdiction).<br/> अनुच्छेद 32 मौलिक अधिकारों की रक्षा हेतु सीधे सर्वोच्च न्यायालय में याचिका दायर करने का अधिकार देता है।</p>"
+    },
+    {
+      "sr_no": 70,
+      "question": "<p> <b>Article 21 guarantees—<br/> </b>अनुच्छेद <b>21 </b>किस अधिकार की गारंटी देता है<b>?</b></p>",
+      "option1": "<p> Right to life and personal liberty / जीवन एवं व्यक्तिगत स्वतंत्रता</p>",
+      "option2": "<p> Freedom of religion / धर्म की स्वतंत्रता</p>",
+      "option3": "<p> Equality before law / कानून के समक्ष समानता</p>",
+      "option4": "<p> Right to property / संपत्ति का अधिकार</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 21 guarantees protection of life and personal liberty — life, liberty, and due process.<br/> अनुच्छेद 21 जीवन एवं व्यक्तिगत स्वतंत्रता की सुरक्षा देता है — जीवन, स्वतंत्रता तथा उचित प्रक्रिया का अधिकार।</p>"
+    },
+    {
+      "sr_no": 71,
+      "question": "<p> <b>Freedom of religion is guaranteed under—<br/> </b>धर्म की स्वतंत्रता किसमें है<b>?</b></p>",
+      "option1": "<p> Articles 25–28 / अनु. 25–28</p>",
+      "option2": "<p> Articles 14–18 / अनु. 14–18</p>",
+      "option3": "<p> Articles 19–22 / अनु. 19–22</p>",
+      "option4": "<p> Articles 32–35 / अनु. 32–35</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Articles 25–28 guarantee freedom of religion: worship, practice, propagation, and institutional freedoms.<br/> अनु.25–28 धर्म की स्वतंत्रता: उपासना, आचरण, प्रचार और धार्मिक संस्थाओं के अधिकार सुनिश्चित करते हैं।</p>"
+    },
+    {
+      "sr_no": 72,
+      "question": "<p> <b>Preventive detention is mentioned in—<br/> </b>निरोधात्मक नजरबंदी किसमें दी गई है<b>?</b></p>",
+      "option1": "<p> Article 22 / अनु. 22</p>",
+      "option2": "<p> Article 21 / अनु. 21</p>",
+      "option3": "<p> Article 20 / अनु. 20</p>",
+      "option4": "<p> Article 18 / अनु. 18</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Preventive detention provisions and safeguards are provided under Article 22 (rights of arrested/detained persons).<br/> अनुच्छेद 22 रोक-टोक नजरबंदी (निरोधात्मक) के प्रावधान और गिरफ्तारी/निगरानी से संबंधित सुरक्षा देता है।</p>"
+    },
+    {
+      "sr_no": 73,
+      "question": "<p> <b>Prohibition of traffic in human beings is given under—<br/> </b>मानव तस्करी पर प्रतिबंध किस अनुच्छेद में है<b>?</b></p>",
+      "option1": "<p> Article 19 / अनु. 19</p>",
+      "option2": "<p> Article 22 / अनु. 22</p>",
+      "option3": "<p> Article 23 / अनु. 23</p>",
+      "option4": "<p> Article 24 / अनु. 24</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 23 prohibits trafficking in human beings and forced labour — part of Rights against Exploitation.<br/> अनुच्छेद 23 मानव तस्करी और जबरन श्रम पर प्रतिबंध लगाता है — शोषण के विरुद्ध अधिकार का अंग।</p>"
+    },
+    {
+      "sr_no": 74,
+      "question": "<p> <b>Right against exploitation includes—<br/> </b>शोषण के विरुद्ध अधिकार में क्या शामिल है<b>?</b></p>",
+      "option1": "<p> Prohibition of child labour / बाल श्रम निषेध</p>",
+      "option2": "<p> Freedom of religion / धर्म स्वतंत्रता</p>",
+      "option3": "<p> Equality before law / कानून के समक्ष समानता</p>",
+      "option4": "<p> Right to vote / मतदान अधिकार</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Right against exploitation includes prohibition of child labour and trafficking (Articles 23–24).<br/> शोषण के विरुद्ध अधिकार में बालश्रम और मानव तस्करी का निषेध शामिल है (अनु.23–24)।</p>"
+    },
+    {
+      "sr_no": 75,
+      "question": "<p> <b>Writ of Habeas Corpus means—<br/> </b>हेबियस कॉर्पस रिट का अर्थ है—</p>",
+      "option1": "<p> To produce the body / शरीर प्रस्तुत करो</p>",
+      "option2": "<p> By what authority / किस अधिकार से</p>",
+      "option3": "<p> To prohibit / निषेध</p>",
+      "option4": "<p> To command / आदेश देना</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Habeas Corpus is a writ that orders the authority to produce the detained person before the court. It protects against illegal detention.<br/> हेबियस कॉर्पस वह रिट है जिसमें अदालत किसी प्राधिकरण को अवैध रूप से निरुद्ध व्यक्ति को तुरंत न्यायालय के सामने प्रस्तुत करने का आदेश देती है। यह अवैध हिरासत से सुरक्षा प्रदान करती है।</p>"
+    },
+    {
+      "sr_no": 76,
+      "question": "<p> <b>DPSPs are contained in—<br/> </b>राज्य के नीति निदेशक तत्व कहाँ हैं<b>?</b></p>",
+      "option1": "<p> Part IV / भाग IV</p>",
+      "option2": "<p> Part III / भाग III</p>",
+      "option3": "<p> Part V / भाग V</p>",
+      "option4": "<p> Part IX / भाग IX</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Directive Principles of State Policy (DPSP) are contained in Part IV (Articles 36–51).<br/> राज्य के नीति-निर्देशक तत्व भाग IV (अनु.36–51) में दिए गए हैं।</p>"
+    },
+    {
+      "sr_no": 77,
+      "question": "<p> <b>Fundamental Duties are in—<br/> </b>मूल कर्तव्य किसमें हैं<b>?</b></p>",
+      "option1": "<p> Article 51A / अनुच्छेद 51A</p>",
+      "option2": "<p> Article 50 / अनुच्छेद 50</p>",
+      "option3": "<p> Article 48 / अनुच्छेद 48</p>",
+      "option4": "<p> Article 52 / अनुच्छेद 52</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Fundamental Duties are enshrined in Article 51A (inserted by the 42nd Amendment).<br/> मूल कर्तव्य अनु.51A में हैं (42वें संशोधन से जोड़े गए)।</p>"
+    },
+    {
+      "sr_no": 78,
+      "question": "<p> <b>DPSPs are—<br/> </b>नीति निदेशक तत्व—</p>",
+      "option1": "<p> Non-justiciable / न्यायालय में प्रवर्तनीय नहीं</p>",
+      "option2": "<p> Justiciable / प्रवर्तनीय</p>",
+      "option3": "<p> Federal in nature / संघीय स्वरूप</p>",
+      "option4": "<p> Absolute rights / पूर्ण अधिकार</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> DPSPs are non-justiciable in court (they guide the state policy but are not enforceable as rights).<br/> DPSP न्यायालय में प्रवर्तनीय नहीं हैं — वे राज्य की नीतियों का मार्गदर्शन करते हैं न कि न्यायाधिकृत अधिकार।</p>"
+    },
+    {
+      "sr_no": 79,
+      "question": "<p> <b>Fundamental Duties were added by—<br/> </b>मूल कर्तव्य किस संशोधन से जोड़े गए<b>?</b></p>",
+      "option1": "<p> 42nd Amendment / 42वाँ संशोधन</p>",
+      "option2": "<p> 44th Amendment / 44वाँ संशोधन</p>",
+      "option3": "<p> 24th Amendment / 24वाँ संशोधन</p>",
+      "option4": "<p> 52nd Amendment / 52वाँ संशोधन</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Fundamental Duties were added by the 42nd Amendment (1976) as Article 51A.<br/> मूल कर्तव्य 42वें संशोधन (1976) द्वारा अनु.51A के रूप में जोड़े गए थे।</p>"
+    },
+    {
+      "sr_no": 80,
+      "question": "<p> <b>DPSPs are inspired from—<br/> DPSP </b>किससे प्रेरित हैं<b>?</b></p>",
+      "option1": "<p> Irish Constitution / आयरिश संविधान</p>",
+      "option2": "<p> U.S. Constitution / अमेरिकी संविधान</p>",
+      "option3": "<p> Canadian Constitution / कनाडाई संविधान</p>",
+      "option4": "<p> French Constitution / फ्रांसीसी संविधान</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> DPSPs are inspired largely by the Irish Constitution (Directive Principles concept).<br/> DPSP की अवधारणा मुख्यतः आयरिश संविधान से प्रेरित है।</p>"
+    },
+    {
+      "sr_no": 81,
+      "question": "<p> <b>Article 40 relates to—<br/> </b>अनुच्छेद <b>40 </b>संबंधित है—</p>",
+      "option1": "<p> Panchayats / पंचायती राज</p>",
+      "option2": "<p> Judiciary separation / न्यायपालिका पृथक्करण</p>",
+      "option3": "<p> Cow protection / गौ-सुरक्षा</p>",
+      "option4": "<p> Environment protection / पर्यावरण संरक्षण</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 40 directs the state to organize village panchayats and promote local self-government.<br/> अनुच्छेद 40 राज्य को गाँव पंचायतो को संगठित करने व स्थानीय स्वशासन बढ़ाने का निर्देश देता है।</p>"
+    },
+    {
+      "sr_no": 82,
+      "question": "<p> <b>Separation of judiciary from executive is under—<br/> </b>कार्यपालिका से न्यायपालिका पृथक करने का प्रावधान किस अनुच्छेद में है<b>?</b></p>",
+      "option1": "<p> Article 50 / अनु. 50</p>",
+      "option2": "<p> Article 52 / अनु. 52</p>",
+      "option3": "<p> Article 48A / अनु. 48A</p>",
+      "option4": "<p> Article 51 / अनु. 51</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 50 directs separation of judiciary from the executive in public services — a DPSP.<br/> अनु.50 कार्यपालिका से न्यायपालिका के पृथक्करण का निर्देश देता है — यह एक नीति-निर्देशक तत्व है।</p>"
+    },
+    {
+      "sr_no": 83,
+      "question": "<p> <b>Protection of environment is given under—<br/> </b>पर्यावरण संरक्षण किस अनुच्छेद में है<b>?</b></p>",
+      "option1": "<p> Article 48A / अनु. 48A</p>",
+      "option2": "<p> Article 47 / अनु. 47</p>",
+      "option3": "<p> Article 50 / अनु. 50</p>",
+      "option4": "<p> Article 46 / अनु. 46</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 48A directs the State to protect and improve the environment and safeguard forests and wildlife.<br/> अनु.48A राज्य को पर्यावरण संरक्षण व वन/वन्यजीव संरक्षण हेतु निर्देशित करता है।</p>"
+    },
+    {
+      "sr_no": 84,
+      "question": "<p> <b>Promotion of international peace is in—<br/> </b>अंतरराष्ट्रीय शांति को बढ़ावा किसमें है<b>?</b></p>",
+      "option1": "<p> Article 51 / अनु. 51</p>",
+      "option2": "<p> Article 48 / अनु. 48</p>",
+      "option3": "<p> Article 47 / अनु. 47</p>",
+      "option4": "<p> Article 49 / अनु. 49</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Article 51 (DPSP) promotes international peace and security and respect for international law.<br/> अनु.51 अंतरराष्ट्रीय शांति व सुरक्षा और अंतरराष्ट्रीय कानून का सम्मान बढ़ाने का लक्ष्य रखता है।</p>"
+    },
+    {
+      "sr_no": 85,
+      "question": "<p> <b>Which duty was added after 42nd Amendment?<br/> 42</b>वें संशोधन के बाद कौन<b>-</b>सा कर्तव्य जोड़ा गया<b>?</b></p>",
+      "option1": "<p> Duty to protect environment / पर्यावरण संरक्षण</p>",
+      "option2": "<p> Duty to pay taxes / कर देना</p>",
+      "option3": "<p> Duty to vote / मतदान करना</p>",
+      "option4": "<p> Duty to respect Constitution / संविधान का सम्मान</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The duty to protect and improve the environment (Article 51A(g)) is included in the Fundamental Duties introduced by the 42nd Amendment.<br/> पर्यावरण की सुरक्षा व सुधार का कर्तव्य (अनु.51A(g)) मूल कर्तव्यों में 42वें संशोधन के साथ शामिल किया गया था।</p>"
+    },
+    {
+      "sr_no": 86,
+      "question": "<p> <b>Fundamental Duties are inspired from—<br/> </b>मूल कर्तव्य किससे प्रेरित हैं<b>?</b></p>",
+      "option1": "<p> USSR Constitution / सोवियत संघ का संविधान</p>",
+      "option2": "<p> Irish Constitution / आयरिश संविधान</p>",
+      "option3": "<p> U.S. Constitution / अमेरिकी संविधान</p>",
+      "option4": "<p> Japan Constitution / जापानी संविधान</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Fundamental Duties were inspired by the USSR (Soviet) Constitution which contained duties of citizens.<br/> मूल कर्तव्य सोवियत संघ के (USSR) संविधान से प्रेरित थे, जिसमें नागरिकों के कर्तव्य बताए गए थे।</p>"
+    },
+    {
+      "sr_no": 87,
+      "question": "<p> <b>DPSPs aim to establish—<br/> </b>नीति निदेशक तत्व किसकी स्थापना का लक्ष्य रखते हैं<b>?</b></p>",
+      "option1": "<p> Welfare state / कल्याणकारी राज्य</p>",
+      "option2": "<p> Police state / पुलिस राज्य</p>",
+      "option3": "<p> Socialist monarchy / समाजवादी राजतंत्र</p>",
+      "option4": "<p> Market-driven state / बाज़ार आधारित राज्य</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> DPSPs aim to establish a welfare state by guiding the state’s policy and law-making for social welfare.<br/> DPSP का उद्देश्य कल्याणकारी राज्य की स्थापना हेतु राज्य की नीतियों व कानूनों का मार्गदर्शन करना है।</p>"
+    },
+    {
+      "sr_no": 88,
+      "question": "<p> <b>Total Fundamental Duties are—<br/> </b>कुल मूल कर्तव्य कितने हैं<b>?</b></p>",
+      "option1": "<p> 10</p>",
+      "option2": "<p> 11</p>",
+      "option3": "<p> 12</p>",
+      "option4": "<p> 9</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> There are currently 11 Fundamental Duties listed under Article 51A (clauses a–k).<br/> वर्तमान में अनु.51A के तहत कुल 11 मूल कर्तव्य (क्लॉज़ a–k) हैं।</p>"
+    },
+    {
+      "sr_no": 89,
+      "question": "<p> <b>Uniform Civil Code is mentioned in—<br/> </b>समान नागरिक संहिता किसमें है<b>?</b></p>",
+      "option1": "<p> Article 44 / अनु. 44</p>",
+      "option2": "<p> Article 48 / अनु. 48</p>",
+      "option3": "<p> Article 50 / अनु. 50</p>",
+      "option4": "<p> Article 46 / अनु. 46</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Uniform Civil Code is mentioned as a Directive Principle under Article 44.<br/> समान नागरिक संहिता को अनु.44 के तहत नीति-निर्देशक तत्व के रूप में उल्लेख किया गया है।</p>"
+    },
+    {
+      "sr_no": 90,
+      "question": "<p> <b>Duty to safeguard public property relates to—<br/> </b>सार्वजनिक संपत्ति की सुरक्षा का कर्तव्य—</p>",
+      "option1": "<p> Article 51A(i) / अनु. 51A(i)</p>",
+      "option2": "<p> Article 51A(g) / अनु. 51A(g)</p>",
+      "option3": "<p> Article 51A(h) / अनु. 51A(h)</p>",
+      "option4": "<p> Article 51A(j) / अनु. 51A(j)</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Duty to safeguard public property is in Article 51A(i) — citizens must protect public property and abjure violence.<br/> सार्वजनिक संपत्ति की सुरक्षा का कर्तव्य अनु.51A(i) में है — नागरिकों को सार्वजनिक संपत्ति की रक्षा करनी चाहिए और हिंसा से परहेज़ करना चाहिए।</p>"
+    }
+  ]
+};
+
+// Extract questions and time from new structure
+const questions = quizData.questions;
+const totalTimeMinutes = quizData.time_minutes;
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = totalTimeMinutes * 60;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape') {
+      if (isPaletteOpen) {
+        closePalette();
+      }
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimer();
+    
+    // Auto-submit when time runs out
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      alert('Time is up! Submitting quiz automatically.');
+      submitQuiz();
+      return;
+    }
+    
+    if (timerSeconds <= 120) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    questionText.innerHTML = '';
+    const questionContent = createOptionContent(q.question);
+    questionText.appendChild(questionContent);
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message = `You have ${unattempted} unanswered questions. ${message}`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  const timeTaken = (totalTimeMinutes * 60) - timerSeconds;
+  const minutesTaken = Math.floor(timeTaken / 60);
+  const secondsTaken = timeTaken % 60;
+  const timeTakenText = `${minutesTaken}m ${secondsTaken}s`;
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeTakenText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    let questionDisplay = '';
+    if (isImageURL(q.question)) {
+      questionDisplay = `<img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`;
+    } else {
+      questionDisplay = q.question;
+    }
+    html += `<div class="question-review">
+      <h4>Q${q.sr_no}: ${questionDisplay}</h4>`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution && q.solution.trim() !== '') {
+      let solutionDisplay = '';
+      if (isImageURL(q.solution)) {
+        solutionDisplay = `<img src="${q.solution}" class="solution-image" alt="Solution" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">`;
+      } else {
+        solutionDisplay = q.solution;
+      }
+      
+      html += `<div class="solution-section" style="margin-top: 15px; padding: 15px; background: #f0f8ff; border-left: 4px solid #007bff; border-radius: 8px;">
+        <strong style="color: #007bff;">💡 Solution:</strong>
+        <div style="margin-top: 8px; color: #333;">${solutionDisplay}</div>
+      </div>`;
+    }
+    
+    html += `</div>`;
+  });
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https')) &&
+    (str.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i));
+}
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = totalTimeMinutes * 60;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    updateTimer();
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POLITY TEST - 1</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">MOTION 3.0 - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem('quizState', JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem('quizState');
+    if (saved) {
+      const state = JSON.parse(saved);
+      if (Date.now() - state.timestamp < 24 * 60 * 60 * 1000) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || (totalTimeMinutes * 60); // MODIFIED
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem('quizState');
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

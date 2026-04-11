@@ -1,0 +1,2915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>CHEMISTRY FULL TEST</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.question-image, .option-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: block;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎯 CHEMISTRY FULL TEST</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color)"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color)"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color)"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color)"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">Clear</button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">Submit Quiz</button>
+</div>
+
+<script>
+// MODIFIED: Quiz data structure with time_minutes
+const quizData = {
+  "time_minutes": 50,
+  "questions": [
+    {
+      "sr_no": 1,
+      "question": "<p> <b>Consider the following statements regarding Isotopes:<br/> </b>समस्थानिकों <b>(Isotopes) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) They have the same atomic number but different mass numbers. / </b>उनका परमाणु क्रमांक समान होता है लेकिन द्रव्यमान संख्या भिन्न होती है।<b><br/> (b) They have different chemical properties due to different neutron counts. / </b>न्यूट्रॉन की संख्या भिन्न होने के कारण उनके रासायनिक गुण भिन्न होते हैं।<b><br/> (c) Radioactive isotopes are used in medical treatments like cancer therapy. / </b>रेडियोधर्मी समस्थानिकों का उपयोग कैंसर जैसी चिकित्सा में किया जाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Isotopes have the same chemical properties because they have the same number of electrons. Statements (a) and (c) are correct.<br/> समस्थानिकों के रासायनिक गुण समान होते हैं क्योंकि उनमें इलेक्ट्रॉनों की संख्या समान होती है। कथन (a) और (c) सही हैं।</p>"
+    },
+    {
+      "sr_no": 2,
+      "question": "<p> <b>Which of the following is correct about 'Aqua Regia'?<br/> '</b>एक्वा रेजिया<b>' (Aqua Regia) </b>के बारे में निम्नलिखित में से कौन सा सही है<b>?</b></p>",
+      "option1": "<p> It is a mixture of conc. HCl and conc. HNO₃ in 1:3 ratio. / यह 1:3 के अनुपात में सांद्र HCl और सांद्र HNO₃ का मिश्रण है।</p>",
+      "option2": "<p> It is a mixture of conc. HCl and conc. HNO₃ in 3:1 ratio. / यह 3:1 के अनुपात में सांद्र HCl और सांद्र HNO₃ का मिश्रण है।</p>",
+      "option3": "<p> It can dissolve all metals except gold. / यह सोने को छोड़कर सभी धातुओं को घोल सकता है।</p>",
+      "option4": "<p> It is used as a preservative for food. / इसका उपयोग खाद्य परिरक्षक के रूप में किया जाता है।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Aqua Regia is a highly corrosive mixture of concentrated Hydrochloric acid and Nitric acid in a 3:1 molar ratio, capable of dissolving noble metals like gold and platinum.<br/> एक्वा रेजिया सांद्र हाइड्रोक्लोरिक एसिड और नाइट्रिक एसिड का 3:1 के अनुपात में एक अत्यधिक संक्षारक मिश्रण है, जो सोना और प्लेटिनम जैसी उत्कृष्ट धातुओं को घोलने में सक्षम है।</p>"
+    },
+    {
+      "sr_no": 3,
+      "question": "<p> <b>Consider the following statements about the Periodic Table:<br/> </b>आवर्त सारणी के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Electronegativity generally increases from left to right across a period. / </b>एक आवर्त में बाएं से दाएं जाने पर विद्युत ऋणात्मकता आम तौर पर बढ़ती है।<b><br/> (b) Atomic radius increases from top to bottom in a group. / </b>एक समूह में ऊपर से नीचे जाने पर परमाणु त्रिज्या बढ़ती है।<b><br/> (c) Noble gases have the highest electron affinity in their respective periods. / </b>उत्कृष्ट गैसों की अपने संबंधित आवर्त में इलेक्ट्रॉन बंधुता सबसे अधिक होती है।<b><br/> Which of the statements given above is/are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Noble gases have zero or positive electron affinity because of their stable configuration. Statements (a) and (b) are correct.<br/> स्थिर विन्यास के कारण उत्कृष्ट गैसों की इलेक्ट्रॉन बंधुता शून्य या धनात्मक होती है। कथन (a) और (b) सही हैं।</p>"
+    },
+    {
+      "sr_no": 4,
+      "question": "<p> <b>Which of the following statements about 'Hard Water' is correct?<br/> '</b>कठोर जल<b>' </b>के बारे में निम्नलिखित में से कौन सा कथन सही है<b>?</b></p>",
+      "option1": "<p> Temporary hardness is due to Chlorides of Magnesium. / अस्थायी कठोरता मैग्नीशियम के क्लोराइड के कारण होती है।</p>",
+      "option2": "<p> Permanent hardness can be removed by boiling. / स्थायी कठोरता को उबालकर दूर किया जा सकता है।</p>",
+      "option3": "<p> Temporary hardness is caused by Bicarbonates of Calcium and Magnesium. / अस्थायी कठोरता कैल्शियम और मैग्नीशियम के बाइकार्बोनेट के कारण होती है।</p>",
+      "option4": "<p> Hard water forms lather easily with soap. / कठोर जल साबुन के साथ आसानी से झाग बनाता है।</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Temporary hardness is due to dissolved bicarbonates of Ca and Mg, which can be removed by boiling or Clark's method.<br/> अस्थायी कठोरता Ca और Mg के घुले हुए बाइकार्बोनेट के कारण होती है, जिसे उबालकर या क्लार्क की विधि द्वारा दूर किया जा सकता है।</p>"
+    },
+    {
+      "sr_no": 5,
+      "question": "<p> <b>Consider the following regarding 'Allotropes of Carbon':<br/> '</b>कार्बन के अपरूपों<b>' </b>के संबंध में निम्नलिखित पर विचार करें<b>:<br/> (a) Diamond is a good conductor of electricity due to free electrons. / </b>मुक्त इलेक्ट्रॉनों के कारण हीरा बिजली का अच्छा सुचालक है।<b><br/> (b) Graphite is used as a dry lubricant in machines. / </b>ग्रेफाइट का उपयोग मशीनों में शुष्क स्नेहक के रूप में किया जाता है।<b><br/> (c) Fullerene C</b><b>₆₀</b><b> has a soccer-ball like structure. / </b>फुलेरीन <b>C</b><b>₆₀</b><b> </b>की संरचना सॉकर<b>-</b>बॉल जैसी होती है।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Diamond is an insulator because it has no free electrons; Graphite is a conductor. Statements (b) and (c) are correct.<br/> हीरा एक कुचालक है क्योंकि इसमें कोई मुक्त इलेक्ट्रॉन नहीं होता है; ग्रेफाइट एक सुचालक है। कथन (b) और (c) सही हैं।</p>"
+    },
+    {
+      "sr_no": 6,
+      "question": "<p> <b>Which of the following is the correct order of the 'Discovery of Subatomic Particles'?<br/> </b>निम्नलिखित में से <b>'</b>उप<b>-</b>परमाणु कणों की खोज<b>' </b>का सही क्रम कौन सा है<b>?</b></p>",
+      "option1": "<p> Electron &gt; Proton &gt; Neutron / इलेक्ट्रॉन &gt; प्रोटॉन &gt; न्यूट्रॉन</p>",
+      "option2": "<p> Proton &gt; Electron &gt; Neutron / प्रोटॉन &gt; इलेक्ट्रॉन &gt; न्यूट्रॉन</p>",
+      "option3": "<p> Neutron &gt; Proton &gt; Electron / न्यूट्रॉन &gt; प्रोटॉन &gt; इलेक्ट्रॉन</p>",
+      "option4": "<p> Electron &gt; Neutron &gt; Proton / इलेक्ट्रॉन &gt; न्यूट्रॉन &gt; प्रोटॉन</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Electrons were discovered first (1897), then Protons (1917-1920), and finally Neutrons (1932).<br/> इलेक्ट्रॉनों की खोज सबसे पहले (1897), फिर प्रोटॉन (1917-1920), और अंत में न्यूट्रॉन (1932) की गई थी।</p>"
+    },
+    {
+      "sr_no": 7,
+      "question": "<p> <b>Consider the following statements about 'Oxidation and Reduction':<br/> '</b>ऑक्सीकरण और अपचयन<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Oxidation involves the loss of electrons. / </b>ऑक्सीकरण में इलेक्ट्रॉनों की हानि होती है।<b><br/> (b) Reduction involves the addition of Hydrogen. / </b>अपचयन में हाइड्रोजन का जुड़ना शामिल है।<b><br/> (c) A reducing agent itself gets reduced in a reaction. / </b>एक अपचायक कारक स्वयं एक प्रतिक्रिया में अपचयित हो जाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> A reducing agent itself gets oxidized because it loses electrons to reduce another substance.<br/> एक अपचायक कारक स्वयं ऑक्सीकृत हो जाता है क्योंकि यह दूसरे पदार्थ को अपचयित करने के लिए इलेक्ट्रॉनों का त्याग करता है।</p>"
+    },
+    {
+      "sr_no": 8,
+      "question": "<p> <b>Which gas is primarily responsible for the 'Browning of Fruits' when cut?<br/> </b>फलों को काटने पर उनके <b>'</b>भूरा होने<b>' </b>के लिए मुख्य रूप से कौन सी गैस जिम्मेदार है<b>?</b></p>",
+      "option1": "<p> Nitrogen / नाइट्रोजन</p>",
+      "option2": "<p> Oxygen / ऑक्सीजन</p>",
+      "option3": "<p> Carbon Dioxide / कार्बन डाइऑक्साइड</p>",
+      "option4": "<p> Hydrogen / हाइड्रोजन</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Enzymatic browning occurs when the enzyme polyphenol oxidase in fruit reacts with oxygen in the air.<br/> एंजाइमी ब्राउनिंग तब होती है जब फल में मौजूद एंजाइम पॉलीफेनोल ऑक्सीडेज हवा में ऑक्सीजन के साथ प्रतिक्रिया करता है।</p>"
+    },
+    {
+      "sr_no": 9,
+      "question": "<p> <b>Consider the following statements regarding 'Glass':<br/> '</b>कांच<b>' (Glass) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Glass is a supercooled liquid. / </b>कांच एक अतिशीतित द्रव है।<b><br/> (b) Pyrex glass is used for making laboratory equipment. / </b>पाइरेक्स कांच का उपयोग प्रयोगशाला उपकरण बनाने के लिए किया जाता है।<b><br/> (c) Addition of Cobalt Oxide gives a yellow color to glass. / </b>कोबाल्ट ऑक्साइड मिलाने से कांच को पीला रंग मिलता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Cobalt oxide gives a deep blue color to glass, not yellow.<br/> कोबाल्ट ऑक्साइड कांच को गहरा नीला रंग देता है, पीला नहीं।</p>"
+    },
+    {
+      "sr_no": 10,
+      "question": "<p> <b>Which of the following is correct about 'Galvanization'?<br/> '</b>गैल्वेनाइजेशन<b>' (Galvanization) </b>के बारे में निम्नलिखित में से कौन सा सही है<b>?</b></p>",
+      "option1": "<p> Coating of Tin on Iron / लोहे पर टिन का लेप</p>",
+      "option2": "<p> Coating of Zinc on Iron / लोहे पर जस्ते का लेप</p>",
+      "option3": "<p> Coating of Copper on Aluminum / एल्युमीनियम पर तांबे का लेप</p>",
+      "option4": "<p> Coating of Chromium on Iron / लोहे पर क्रोमियम का लेप</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Galvanization is the process of applying a protective zinc coating to steel or iron to prevent rusting.<br/> गैल्वेनाइजेशन जंग को रोकने के लिए स्टील या लोहे पर सुरक्षात्मक जस्ता लेप लगाने की प्रक्रिया है।</p>"
+    },
+    {
+      "sr_no": 11,
+      "question": "<p> <b>Consider the following statements about 'Radioactivity':<br/> '</b>रेडियोधर्मिता<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Alpha particles have a positive charge. / </b>अल्फा कणों पर धनात्मक आवेश होता है।<b><br/> (b) Gamma rays have the highest penetrating power. / </b>गामा किरणों में सबसे अधिक भेदन क्षमता होती है।<b><br/> (c) Beta particles are identical to Helium nuclei. / </b>बीटा कण हीलियम नाभिक के समान होते हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Alpha particles are identical to Helium nuclei, whereas Beta particles are fast-moving electrons.<br/> अल्फा कण हीलियम नाभिक के समान होते हैं, जबकि बीटा कण तीव्र गति से चलने वाले इलेक्ट्रॉन होते हैं।</p>"
+    },
+    {
+      "sr_no": 12,
+      "question": "<p> <b>Which of the following is 'Dry Ice'?<br/> </b>निम्नलिखित में से <b>'</b>शुष्क बर्फ<b>' (Dry Ice) </b>कौन सी है<b>?</b></p>",
+      "option1": "<p> Solid Nitrogen / ठोस नाइट्रोजन</p>",
+      "option2": "<p> Solid Carbon Dioxide / ठोस कार्बन डाइऑक्साइड</p>",
+      "option3": "<p> Frozen Water / जमी हुई बर्फ</p>",
+      "option4": "<p> Solid Sulfur Dioxide / ठोस सल्फर डाइऑक्साइड</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Dry ice is the solid form of Carbon Dioxide, used primarily as a cooling agent.<br/> शुष्क बर्फ कार्बन डाइऑक्साइड का ठोस रूप है, जिसका उपयोग मुख्य रूप से शीतलन एजेंट के रूप में किया जाता है।</p>"
+    },
+    {
+      "sr_no": 13,
+      "question": "<p> <b>Consider the following regarding 'Acid Rain':<br/> '</b>अम्ल वर्षा<b>' </b>के संबंध में निम्नलिखित पर विचार करें<b>:<br/> (a) It is mainly caused by oxides of Nitrogen and Sulfur. / </b>यह मुख्य रूप से नाइट्रोजन और सल्फर के ऑक्साइड के कारण होता है।<b><br/> (b) It has a pH value generally above 7. / </b>इसका <b>pH </b>मान आम तौर पर <b>7 </b>से ऊपर होता है।<b><br/> (c) It can cause damage to monuments made of marble. / </b>यह संगमरमर से बने स्मारकों को नुकसान पहुँचा सकता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and c / a और c</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Acid rain has a pH value below 5.6. It reacts with calcium carbonate in marble (Taj Mahal) causing \"Stone Cancer\".<br/> अम्ल वर्षा का pH मान 5.6 से कम होता है। यह संगमरमर (ताजमहल) में कैल्शियम कार्बोनेट के साथ प्रतिक्रिया करता है जिससे \"स्टोन कैंसर\" होता है।</p>"
+    },
+    {
+      "sr_no": 14,
+      "question": "<p> <b>The gas used for 'Artificial Ripening' of green fruits is:<br/> </b>हरे फलों को <b>'</b>कृत्रिम रूप से पकाने<b>' </b>के लिए उपयोग की जाने वाली गैस है<b>:</b></p>",
+      "option1": "<p> Ethane / एथेन</p>",
+      "option2": "<p> Acetylene / एसिटिलीन</p>",
+      "option3": "<p> Methane / मीथेन</p>",
+      "option4": "<p> Carbon Monoxide / कार्बन मोनोऑक्साइड</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Acetylene gas (produced from calcium carbide) is used for ripening, though Ethylene is the natural ripening hormone.<br/> एसिटिलीन गैस (कैल्शियम कार्बाइड से उत्पादित) का उपयोग पकाने के लिए किया जाता है, हालाँकि एथिलीन प्राकृतिक पकने वाला हार्मोन है।</p>"
+    },
+    {
+      "sr_no": 15,
+      "question": "<p> <b>Consider the following statements about 'Catalysts':<br/> '</b>उत्प्रेरक<b>' (Catalysts) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) A catalyst increases the speed of a reaction by lowering activation energy. / </b>एक उत्प्रेरक सक्रियण ऊर्जा को कम करके प्रतिक्रिया की गति को बढ़ाता है।<b><br/> (b) It is consumed completely during the chemical reaction. / </b>यह रासायनिक प्रतिक्रिया के दौरान पूरी तरह से समाप्त हो जाता है।<b><br/> (c) Enzymes are biological catalysts. / </b>एंजाइम जैविक उत्प्रेरक हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> A catalyst is not consumed in a reaction; it remains chemically unchanged at the end.<br/> प्रतिक्रिया में उत्प्रेरक का उपभोग नहीं किया जाता है; यह अंत में रासायनिक रूप से अपरिवर्तित रहता है।</p>"
+    },
+    {
+      "sr_no": 16,
+      "question": "<p> <b>Consider the following statements regarding Mendeleev's Periodic Table:<br/> </b>मेंडेलीव की आवर्त सारणी के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Elements were arranged in the increasing order of their atomic numbers. / </b>तत्वों को उनके परमाणु क्रमांक के बढ़ते क्रम में व्यवस्थित किया गया था।<b><br/> (b) He left gaps for elements like Gallium and Germanium which were not discovered at that time. / </b>उन्होंने गैलियम और जर्मेनियम जैसे तत्वों के लिए खाली स्थान छोड़े जो उस समय खोजे नहीं गए थे।<b><br/> (c) He could not provide a fixed position for Hydrogen. / </b>वह हाइड्रोजन के लिए एक निश्चित स्थान प्रदान नहीं कर सके।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Mendeleev arranged elements based on atomic mass, not atomic number (Moseley did that later). He correctly predicted elements like Eka-Aluminium (Gallium).<br/> मेंडेलीव ने तत्वों को परमाणु द्रव्यमान के आधार पर व्यवस्थित किया था, न कि परमाणु क्रमांक के आधार पर (मोजले ने बाद में ऐसा किया)। उन्होंने एका-एल्यूमीनियम (गैलियम) जैसे तत्वों की सही भविष्यवाणी की थी।</p>"
+    },
+    {
+      "sr_no": 17,
+      "question": "<p> <b>Which of the following statements about 'Ionic Compounds' is correct?<br/> '</b>आयनिक यौगिकों<b>' </b>के बारे में निम्नलिखित में से कौन सा कथन सही है<b>?</b></p>",
+      "option1": "<p> They have low melting and boiling points. / उनके गलनांक और क्वथनांक कम होते हैं।</p>",
+      "option2": "<p> They conduct electricity in the solid state. / वे ठोस अवस्था में विद्युत का चालन करते हैं।</p>",
+      "option3": "<p> They are generally soluble in water but insoluble in petrol. / वे आम तौर पर पानी में घुलनशील होते हैं लेकिन पेट्रोल में अघुलनशील होते हैं।</p>",
+      "option4": "<p> They are formed by the sharing of electrons. / वे इलेक्ट्रॉनों के साझाकरण से बनते हैं।</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Ionic compounds have high melting points and conduct electricity only in molten or aqueous states. They are polar and dissolve in polar solvents like water.<br/> आयनिक यौगिकों का गलनांक उच्च होता है और वे केवल गलित या जलीय अवस्था में ही विद्युत का चालन करते हैं। वे ध्रुवीय होते हैं और पानी जैसे ध्रुवीय विलायकों में घुल जाते हैं।</p>"
+    },
+    {
+      "sr_no": 18,
+      "question": "<p> <b>Consider the following statements regarding 'Boyle’s Law':<br/> '</b>बॉयल के नियम<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) At constant temperature, the volume of a gas is inversely proportional to its pressure. / </b>स्थिर तापमान पर<b>, </b>गैस का आयतन उसके दबाव के व्युत्क्रमानुपाती होता है।<b><br/> (b) It explains why air bubbles expand as they rise from the bottom of a lake. / </b>यह बताता है कि झील के तल से ऊपर उठने पर हवा के बुलबुले क्यों फैलते हैं।<b><br/> (c) This law is applicable only to ideal gases. / </b>यह नियम केवल आदर्श गैसों पर लागू होता है।<b><br/> Which of the statements given above is/are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> According to P ∝ 1/V as a bubble rises, pressure decreases and volume increases. While primarily for ideal gases, real gases follow it at low pressure.<br/> P ∝ 1/V के अनुसार, जैसे-जैसे बुलबुला ऊपर उठता है, दबाव कम होता है और आयतन बढ़ता है। हालांकि यह मुख्य रूप से आदर्श गैसों के लिए है, वास्तविक गैसें कम दबाव पर इसका पालन करती हैं।</p>"
+    },
+    {
+      "sr_no": 19,
+      "question": "<p> <b>Which of the following chemicals is used as 'Rat Poison'?<br/> </b>चूहे मारने के जहर <b>(Rat Poison) </b>के रूप में निम्नलिखित में से किस रसायन का उपयोग किया जाता है<b>?</b></p>",
+      "option1": "<p> Zinc Phosphide / जिंक फास्फाइड</p>",
+      "option2": "<p> Zinc Oxide / जिंक ऑक्साइड</p>",
+      "option3": "<p> Calcium Carbonate / कैल्शियम कार्बोनेट</p>",
+      "option4": "<p> Potassium Permanganate / पोटैशियम परमैंगनेट</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Zinc Phosphide (Zn₃P₂) is a common rodenticide. When ingested, it reacts with stomach acid to release toxic phosphine gas.<br/> जिंक फास्फाइड (Zn₃P₂) एक सामान्य कृंतकनाशी है। निगलने पर, यह पेट के एसिड के साथ प्रतिक्रिया करके जहरीली फास्फीन गैस छोड़ता है।</p>"
+    },
+    {
+      "sr_no": 20,
+      "question": "<p> <b>Consider the following statements regarding 'Acids':<br/> '</b>अम्ल<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Mineral acids like HCl and H</b><b>₂</b><b>SO</b><b>₄</b><b> are strong acids. / HCl </b>और <b>H</b><b>₂</b><b>SO</b><b>₄</b><b> </b>जैसे खनिज अम्ल प्रबल अम्ल होते हैं।<b><br/> (b) They turn red litmus paper blue. / </b>वे लाल लिटमस पेपर को नीला कर देते हैं।<b><br/> (c) Organic acids like Citric acid are generally weak. / </b>साइट्रिक एसिड जैसे कार्बनिक अम्ल आम तौर पर दुर्बल होते हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> a and c / a और c</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Acids turn blue litmus red. Bases turn red litmus blue. Statements (a) and (c) are correct.<br/> अम्ल नीले लिटमस को लाल कर देते हैं। क्षार लाल लिटमस को नीला कर देते हैं। कथन (a) और (c) सही हैं।</p>"
+    },
+    {
+      "sr_no": 21,
+      "question": "<p> <b>'Washing Soda' is the common name for which chemical compound?<br/> '</b>धावन सोडा<b>' (Washing Soda) </b>किस रासायनिक यौगिक का सामान्य नाम है<b>?</b></p>",
+      "option1": "<p> Sodium Carbonate / सोडियम कार्बोनेट</p>",
+      "option2": "<p> Sodium Bicarbonate / सोडियम बाइकार्बोनेट</p>",
+      "option3": "<p> Calcium Hydroxide / कैल्शियम हाइड्रोक्साइड</p>",
+      "option4": "<p> Sodium Chloride / सोडियम क्लोराइड</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Washing soda is Sodium Carbonate (Na₂CO₂ ·10H₂O), whereas Baking soda is Sodium Bicarbonate (NaHCO₃).<br/> धावन सोडा सोडियम कार्बोनेट (Na₂CO₂ ·10H₂O) है, जबकि बेकिंग सोडा सोडियम बाइकार्बोनेट (NaHCO₃) है।</p>"
+    },
+    {
+      "sr_no": 22,
+      "question": "<p> <b>Consider the following statements about 'Amalgam':<br/> '</b>अमलगम<b>' (Amalgam) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is an alloy in which one of the metals is always Mercury. / </b>यह एक मिश्र धातु है जिसमें एक धातु हमेशा पारा <b>(Mercury) </b>होती है।<b><br/> (b) Iron is used to store Mercury because it does not form an amalgam. / </b>लोहे का उपयोग पारे को स्टोर करने के लिए किया जाता है क्योंकि यह अमलगम नहीं बनाता है।<b><br/> (c) Silver-Tin amalgams are used in dental fillings. / </b>चांदी<b>-</b>टिन अमलगम का उपयोग दंत भराव <b>(</b>डेंटल फिलिंग<b>) </b>में किया जाता है।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Mercury forms alloys with almost all metals except iron, platinum, tungsten, and tantalum. All statements are factually correct.<br/> पारा लोहा, प्लैटिनम, टंगस्टन और टैंटलम को छोड़कर लगभग सभी धातुओं के साथ मिश्र धातु बनाता है। सभी कथन तथ्यात्मक रूप से सही हैं।</p>"
+    },
+    {
+      "sr_no": 23,
+      "question": "<p> <b>Which of the following pairs is NOT correctly matched?<br/> </b>निम्नलिखित में से कौन सा जोड़ा सही सुमेलित नहीं है<b>?</b></p>",
+      "option1": "<p> Vinegar : Acetic Acid / सिरका : एसिटिक एसिड</p>",
+      "option2": "<p> Curd : Lactic Acid / दही : लैक्टिक एसिड</p>",
+      "option3": "<p> Tamarind : Tartaric Acid / इमली : टार्टरिक एसिड</p>",
+      "option4": "<p> Tomato : Citric Acid / टमाटर : साइट्रिक एसिड</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Tomatoes primarily contain Oxalic Acid. Lemons and oranges contain Citric Acid.<br/> टमाटर में मुख्य रूप से ऑक्सालिक एसिड होता है। नींबू और संतरे में साइट्रिक एसिड होता है।</p>"
+    },
+    {
+      "sr_no": 24,
+      "question": "<p> <b>Consider the following regarding 'Hydrogen Gas':<br/> '</b>हाइड्रोजन गैस<b>' </b>के संबंध में निम्नलिखित पर विचार करें<b>:<br/> (a) It is the lightest element in the periodic table. / </b>यह आवर्त सारणी का सबसे हल्का तत्व है।<b><br/> (b) It burns with a pop sound. / </b>यह <b>'</b>पॉप<b>' </b>ध्वनि के साथ जलता है।<b><br/> (c) It is used in the hydrogenation of vegetable oils. / </b>इसका उपयोग वनस्पति तेलों के हाइड्रोजनीकरण में किया जाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and c / a और c</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and b / a और b</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Hydrogen is the lightest, combustible with a pop sound, and used to convert oil into solid fat (Vanaspati Ghee) via hydrogenation.<br/> हाइड्रोजन सबसे हल्का, पॉप ध्वनि के साथ दहनशील है, और हाइड्रोजनीकरण के माध्यम से तेल को ठोस वसा (वनस्पति घी) में बदलने के लिए उपयोग किया जाता है।</p>"
+    },
+    {
+      "sr_no": 25,
+      "question": "<p> <b>Which acid is present in the 'Sting of an Ant'?<br/> '</b>चींटी के डंक<b>' </b>में कौन सा अम्ल मौजूद होता है<b>?</b></p>",
+      "option1": "<p> Formic Acid / फॉर्मिक एसिड</p>",
+      "option2": "<p> Malic Acid / मैलिक एसिड</p>",
+      "option3": "<p> Oxalic Acid / ऑक्सालिक एसिड</p>",
+      "option4": "<p> Nitric Acid / नाइट्रिक एसिड</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Ant stings contain Formic acid (also known as Methanoic acid), which causes the burning sensation.<br/> चींटी के डंक में फॉर्मिक एसिड (जिसे मेथेनोइक एसिड भी कहा जाता है) होता है, जिससे जलन महसूस होती है।</p>"
+    },
+    {
+      "sr_no": 26,
+      "question": "<p> <b>Consider the following statements about 'Noble Gases':<br/> '</b>उत्कृष्ट गैसों<b>' (Noble Gases) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) They are monoatomic and chemically inert. / </b>वे एकपरमाणुक और रासायनिक रूप से निष्क्रिय होती हैं।<b><br/> (b) Radon is the only noble gas not found in the atmosphere. / </b>रेडॉन एकमात्र उत्कृष्ट गैस है जो वायुमंडल में नहीं पाई जाती है।<b><br/> (c) Argon is used in electric bulbs to prevent oxidation of the filament. / </b>फिलामेंट के ऑक्सीकरण को रोकने के लिए बिजली के बल्बों में आर्गन का उपयोग किया जाता है।<b><br/> Which of the statements given above is/are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Radon is radioactive and produced from soil/rocks; it's rare in the air. Argon is used to prolong bulb life. All are correct.<br/> रेडॉन रेडियोधर्मी है और मिट्टी/चट्टानों से उत्पन्न होता है; यह हवा में दुर्लभ है। आर्गन का उपयोग बल्ब के जीवन को बढ़ाने के लिए किया जाता है। सभी सही हैं।</p>"
+    },
+    {
+      "sr_no": 27,
+      "question": "<p> <b>'Bleaching Powder' is produced by the action of chlorine on:<br/> '</b>ब्लीचिंग पाउडर<b>' </b>क्लोरीन की किस पर क्रिया द्वारा निर्मित होता है<b>?</b></p>",
+      "option1": "<p> Slaked Lime / बुझा हुआ चूना</p>",
+      "option2": "<p> Dry Lime / बिना बुझा चूना</p>",
+      "option3": "<p> Limestone / चूना पत्थर</p>",
+      "option4": "<p> Soda Ash / सोडा ऐश</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Bleaching powder (CaOCl₂) is produced by passing chlorine gas over dry slaked lime [Ca(OH)₂].<br/> ब्लीचिंग पाउडर (CaOCl₂) सूखे बुझे हुए चूने [Ca(OH)₂] पर क्लोरीन गैस प्रवाहित करके तैयार किया जाता है।</p>"
+    },
+    {
+      "sr_no": 28,
+      "question": "<p> <b>Consider the following regarding 'Heavy Water':<br/> '</b>भारी जल<b>' (Heavy Water) </b>के संबंध में निम्नलिखित पर विचार करें<b>:<br/> (a) It is used as a moderator in nuclear reactors. / </b>इसका उपयोग परमाणु रिएक्टरों में मंदक <b>(Moderator) </b>के रूप में किया जाता है।<b><br/> (b) Its formula is D</b><b>₂</b><b>O. / </b>इसका सूत्र <b>D</b><b>₂</b><b>O </b>है।<b><br/> (c) It has a lower freezing point than ordinary water. / </b>इसका हिमांक साधारण पानी की तुलना में कम होता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Heavy water has a slightly higher freezing point (3.82°C) and boiling point (101.4°C) than normal water.<br/> भारी जल का हिमांक (3.82°C) और क्वथनांक (101.4°C) सामान्य पानी की तुलना में थोड़ा अधिक होता है।</p>"
+    },
+    {
+      "sr_no": 29,
+      "question": "<p> <b>Which of the following is the 'Purest form of Iron'?<br/> </b>निम्नलिखित में से कौन सा <b>'</b>लोहे का सबसे शुद्ध रूप<b>' </b>है<b>?</b></p>",
+      "option1": "<p> Cast Iron / कच्चा लोहा</p>",
+      "option2": "<p> Steel / इस्पात</p>",
+      "option3": "<p> Wrought Iron / पिटवा लोहा</p>",
+      "option4": "<p> Pig Iron / पिग आयरन</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Wrought iron contains less than 0.1% carbon, making it the purest commercial form of iron.<br/> पिटवा लोहे में 0.1% से कम कार्बन होता है, जो इसे लोहे का सबसे शुद्ध व्यावसायिक रूप बनाता है।</p>"
+    },
+    {
+      "sr_no": 30,
+      "question": "<p> <b>Consider the following statements about 'Covalent Bonding':<br/> '</b>सहसंयोजक बंधन<b>' (Covalent Bonding) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It involves the complete transfer of electrons. / </b>इसमें इलेक्ट्रॉनों का पूर्ण स्थानांतरण शामिल है।<b><br/> (b) It usually occurs between two non-metals. / </b>यह आमतौर पर दो अधातुओं के बीच होता है।<b><br/> (c) Water (H</b><b>₂</b><b>O) and Methane (CH</b><b>₄</b><b>) are examples of covalent compounds. / </b>पानी <b>(H</b><b>₂</b><b>O) </b>और मीथेन <b>(CH</b><b>₄</b><b>) </b>सहसंयोजक यौगिकों के उदाहरण हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Covalent bonds are formed by sharing electrons, not transfer (which is ionic). Statements (b) and (c) are correct.<br/> सहसंयोजक बंधन इलेक्ट्रॉनों को साझा करने से बनते हैं, स्थानांतरण से नहीं (जो कि आयनिक है)। कथन (b) और (c) सही हैं।</p>"
+    },
+    {
+      "sr_no": 31,
+      "question": "<p> <b>Consider the following statements regarding 'Metals':<br/> '</b>धातुओं<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Silver is the best conductor of electricity. / </b>चांदी बिजली का सबसे अच्छा सुचालक है।<b><br/> (b) Mercury is the only metal that remains liquid at room temperature. / </b>पारा एकमात्र ऐसी धातु है जो कमरे के तापमान पर तरल रहती है।<b><br/> (c) Sodium and Potassium are so soft that they can be cut with a knife. / </b>सोडियम और पोटैशियम इतने नरम होते हैं कि उन्हें चाकू से काटा जा सकता है।<b><br/> Which of the above statements is/are correct? / </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct characteristics of metals. Silver has the highest electrical conductivity, while alkali metals like Na and K are unusually soft.<br/> धातुओं के संबंध में सभी कथन सही हैं। चांदी की विद्युत चालकता सबसे अधिक होती है, जबकि Na और K जैसी क्षार धातुएं असामान्य रूप से नरम होती हैं।</p>"
+    },
+    {
+      "sr_no": 32,
+      "question": "<p> <b>Which of the following is the 'Ore of Aluminum'?<br/> </b>निम्नलिखित में से कौन सा <b>'</b>एल्युमीनियम का अयस्क<b>' </b>है<b>?</b></p>",
+      "option1": "<p> Hematite / हेमेटाइट</p>",
+      "option2": "<p> Bauxite / बॉक्साइट</p>",
+      "option3": "<p> Galena / गैलेना</p>",
+      "option4": "<p> Cinnabar / सिनाबार</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Bauxite (Al₂O₃ · 2H₂O) is the primary ore of aluminum. Hematite is for Iron, Galena for Lead, and Cinnabar for Mercury.<br/> बॉक्साइट (Al₂O₃ · 2H₂O) एल्युमीनियम का प्राथमिक अयस्क है। हेमेटाइट लोहे के लिए, गैलेना सीसे के लिए और सिनाबार पारे के लिए है।</p>"
+    },
+    {
+      "sr_no": 33,
+      "question": "<p> <b>Consider the following statements about 'Alloys':<br/> '</b>मिश्र धातुओं<b>' (Alloys) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Brass is an alloy of Copper and Zinc. / </b>पीतल तांबे और जस्ते की एक मिश्र धातु है।<b><br/> (b) Bronze consists of Copper and Tin. / </b>कांसा तांबे और टिन से बना होता है।<b><br/> (c) Solder is an alloy of Lead and Tin used for welding electrical wires. / </b>सोल्डर सीसा और टिन की एक मिश्र धातु है जिसका उपयोग बिजली के तारों को जोड़ने के लिए किया जाता है।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All given pairs are correct. Solder has a low melting point, making it ideal for electrical connections.<br/> दिए गए सभी जोड़े सही हैं। सोल्डर का गलनांक कम होता है, जो इसे विद्युत कनेक्शन के लिए आदर्श बनाता है।</p>"
+    },
+    {
+      "sr_no": 34,
+      "question": "<p> <b>Which of the following non-metals is 'Lustrous' in appearance?<br/> </b>निम्नलिखित में से कौन सी अधातु दिखने में <b>'</b>चमकदार<b>' (Lustrous) </b>होती है<b>?</b></p>",
+      "option1": "<p> Sulfur / सल्फर</p>",
+      "option2": "<p> Phosphorus / फास्फोरस</p>",
+      "option3": "<p> Iodine / आयोडीन</p>",
+      "option4": "<p> Nitrogen / नाइट्रोजन</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Generally, non-metals are dull, but Iodine is an exception as it has a shiny, metallic-like luster.<br/> आम तौर पर अधातुएं सुस्त (Dull) होती हैं, लेकिन आयोडीन एक अपवाद है क्योंकि इसमें धातु जैसी चमक होती है।</p>"
+    },
+    {
+      "sr_no": 35,
+      "question": "<p> <b>Consider the following statements regarding 'Nitrogen Gas':<br/> '</b>नाइट्रोजन गैस<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It makes up about 78% of the Earth's atmosphere. / </b>यह पृथ्वी के वायुमंडल का लगभग <b>78% </b>हिस्सा बनाती है।<b><br/> (b) It is used in food packaging to prevent rancidity. / </b>इसका उपयोग भोजन की पैकिंग में विकृति <b>(Rancidity) </b>को रोकने के लिए किया जाता है।<b><br/> (c) Liquid nitrogen is used as a refrigerant for preserving biological samples. / </b>तरल नाइट्रोजन का उपयोग जैविक नमूनों को संरक्षित करने के लिए रेफ्रिजरेंट के रूप में किया जाता है।<b><br/> Which of the above statements is/are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Nitrogen is chemically inert, which is why it replaces oxygen in chip packets to prevent oxidation (rancidity).<br/> नाइट्रोजन रासायनिक रूप से निष्क्रिय है, यही कारण है कि यह ऑक्सीकरण (विकृति) को रोकने के लिए चिप्स के पैकेट में ऑक्सीजन की जगह लेती है।</p>"
+    },
+    {
+      "sr_no": 36,
+      "question": "<p> <b>Which of the following is used in the 'Vulcanization of Rubber'?<br/> </b>रबड़ के <b>'</b>वल्कनीकरण<b>' (Vulcanization) </b>में निम्नलिखित में से किसका उपयोग किया जाता है<b>?</b></p>",
+      "option1": "<p> Phosphorus / फास्फोरस</p>",
+      "option2": "<p> Sulfur / सल्फर</p>",
+      "option3": "<p> Carbon / कार्बन</p>",
+      "option4": "<p> Silicon / सिलिकॉन</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Vulcanization is the process of heating natural rubber with sulfur to improve its elasticity and strength.<br/> वल्कनीकरण प्राकृतिक रबड़ को सल्फर के साथ गर्म करने की प्रक्रिया है ताकि इसकी लोच और मजबूती में सुधार किया जा सके।</p>"
+    },
+    {
+      "sr_no": 37,
+      "question": "<p> <b>Consider the following statements about 'Graphite':<br/> '</b>ग्रेफाइट<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is an allotrope of carbon with a hexagonal layered structure. / </b>यह षट्कोणीय स्तरित संरचना वाला कार्बन का एक अपरूप है।<b><br/> (b) It is used as a moderator in nuclear reactors. / </b>इसका उपयोग परमाणु रिएक्टरों में मंदक के रूप में किया जाता है।<b><br/> (c) It is the hardest known natural substance. / </b>यह ज्ञात सबसे कठोर प्राकृतिक पदार्थ है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Diamond is the hardest natural substance, not graphite. Graphite is soft and slippery. Statements (a) and (b) are correct.<br/> हीरा सबसे कठोर प्राकृतिक पदार्थ है, ग्रेफाइट नहीं। ग्रेफाइट नरम और फिसलन भरा होता है। कथन (a) और (b) सही हैं।</p>"
+    },
+    {
+      "sr_no": 38,
+      "question": "<p> <b>'Cinnabar' is an ore of which of the following metals?<br/> '</b>सिनाबार<b>' </b>निम्नलिखित में से किस धातु का अयस्क है<b>?</b></p>",
+      "option1": "<p> Lead / सीसा</p>",
+      "option2": "<p> Mercury / पारा</p>",
+      "option3": "<p> Copper / तांबा</p>",
+      "option4": "<p> Magnesium / मैग्नीशियम</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Cinnabar (HgS) is the most common ore of Mercury.<br/> सिनाबार (HgS) पारे का सबसे सामान्य अयस्क है।</p>"
+    },
+    {
+      "sr_no": 39,
+      "question": "<p> <b>Consider the following regarding 'Hydrogen Sulfide (H</b><b>₂</b><b>S)':<br/> '</b>हाइड्रोजन सल्फाइड <b>(H</b><b>₂</b><b>S)' </b>के संबंध में निम्नलिखित पर विचार करें<b>:<br/> (a) It has a smell like rotten eggs. / </b>इसमें सड़े हुए अंडों जैसी गंध आती है।<b><br/> (b) It is responsible for the tarnishing of silver articles. / </b>यह चांदी की वस्तुओं के काला पड़ने <b>(Tarnishing) </b>के लिए जिम्मेदार है।<b><br/> (c) It is highly acidic in nature. / </b>यह प्रकृति में अत्यधिक अम्लीय है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> H₂S is a weak acid, not highly acidic. It reacts with silver to form black Silver Sulfide (Ag₂S).<br/> H₂S एक कमजोर अम्ल है, न कि अत्यधिक अम्लीय। यह चांदी के साथ प्रतिक्रिया करके काला सिल्वर सल्फाइड (Ag₂S) बनाता है।</p>"
+    },
+    {
+      "sr_no": 40,
+      "question": "<p> <b>Which gas is known as the 'Laughing Gas'?<br/> </b>किस गैस को <b>'</b>लाफिंग गैस<b>' </b>के रूप में जाना जाता है<b>?</b></p>",
+      "option1": "<p> Nitric Oxide / नाइट्रिक ऑक्साइड</p>",
+      "option2": "<p> Nitrous Oxide / नाइट्रस ऑक्साइड</p>",
+      "option3": "<p> Nitrogen Dioxide / नाइट्रोजन डाइऑक्साइड</p>",
+      "option4": "<p> Nitrogen Pentoxide / नाइट्रोजन पेंटाऑक्साइड</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Nitrous oxide (N₂O) is known as laughing gas and is used in dentistry and surgery for its anesthetic effects.<br/> नाइट्रस ऑक्साइड (N₂O) को लाफिंग गैस के रूप में जाना जाता है और इसका उपयोग दंत चिकित्सा और सर्जरी में इसके संवेदनाहारी (Anesthetic) प्रभावों के लिए किया जाता है।</p>"
+    },
+    {
+      "sr_no": 41,
+      "question": "<p> <b>Consider the following statements about 'LPG (Liquefied Petroleum Gas)':<br/> 'LPG (</b>तरलीकृत पेट्रोलियम गैस<b>)' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It primarily consists of Methane and Ethane. / </b>इसमें मुख्य रूप से मीथेन और एथेन होते हैं।<b><br/> (b) Ethyl Mercaptan is added to it to detect leakages. / </b>रिसाव का पता लगाने के लिए इसमें एथिल मर्केप्टन मिलाया जाता है।<b><br/> (c) It is stored under high pressure as a liquid. / </b>इसे तरल के रूप में उच्च दबाव में संग्रहित किया जाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> LPG primarily consists of Butane and Propane. Ethyl Mercaptan provides the distinct smell for safety.<br/> LPG में मुख्य रूप से ब्यूटेन और प्रोपेन होते हैं। सुरक्षा के लिए एथिल मर्केप्टन विशिष्ट गंध प्रदान करता है।</p>"
+    },
+    {
+      "sr_no": 42,
+      "question": "<p> <b>Which metal is used for making the 'Filament of an Electric Bulb'?<br/> </b>बिजली के बल्ब का <b>'</b>फिलामेंट<b>' </b>बनाने के लिए किस धातु का उपयोग किया जाता है<b>?</b></p>",
+      "option1": "<p> Copper / तांबा</p>",
+      "option2": "<p> Aluminum / एल्युमीनियम</p>",
+      "option3": "<p> Tungsten / टंगस्टन</p>",
+      "option4": "<p> Iron / लोहा</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Tungsten (W) is used because it has a very high melting point (approx 3422°C), preventing it from melting at high temperatures.<br/> टंगस्टन (W) का उपयोग किया जाता है क्योंकि इसका गलनांक बहुत अधिक (लगभग 3422°C) होता है, जो इसे उच्च तापमान पर पिघलने से रोकता है।</p>"
+    },
+    {
+      "sr_no": 43,
+      "question": "<p> <b>Consider the following regarding 'Bakelite':<br/> '</b>बेकेलाइट<b>' </b>के संबंध में निम्नलिखित पर विचार करें<b>:<br/> (a) It is a thermosetting plastic. / </b>यह एक थर्मोसेटिंग प्लास्टिक है।<b><br/> (b) It is a poor conductor of heat and electricity. / </b>यह गर्मी और बिजली का कुचालक है।<b><br/> (c) It is used for making electrical switches and handles of utensils. / </b>इसका उपयोग बिजली के स्विच और बर्तनों के हैंडल बनाने के लिए किया जाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and c / a और c</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and b / a और b</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Bakelite is a pioneer thermosetting plastic that does not soften on heating. Its insulating properties make it ideal for electrical and kitchenware.<br/> बेकेलाइट एक अग्रणी थर्मोसेटिंग प्लास्टिक है जो गर्म करने पर नरम नहीं होता है। इसके इन्सुलेटिंग गुण इसे इलेक्ट्रिकल और किचनवेयर के लिए आदर्श बनाते हैं।</p>"
+    },
+    {
+      "sr_no": 44,
+      "question": "<p> <b>'Galvanization' is a method to protect iron from rusting by coating it with a thin layer of:<br/> '</b>गैल्वेनाइजेशन<b>' </b>लोहे को जंग से बचाने की एक विधि है<b>, </b>जिसमें उस पर किसकी पतली परत चढ़ाई जाती है<b>?</b></p>",
+      "option1": "<p> Gallium / गैलियम</p>",
+      "option2": "<p> Aluminum / एल्युमीनियम</p>",
+      "option3": "<p> Zinc / जस्ता</p>",
+      "option4": "<p> Silver / चांदी</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> A thin layer of Zinc protects iron because Zinc is more reactive and oxidizes first (sacrificial protection).<br/> जस्ता की एक पतली परत लोहे की रक्षा करती है क्योंकि जस्ता अधिक क्रियाशील होता है और पहले ऑक्सीकृत होता है (बलिदान सुरक्षा)।</p>"
+    },
+    {
+      "sr_no": 45,
+      "question": "<p> <b>Consider the following statements about 'Plaster of Paris (POP)':<br/> '</b>प्लास्टर ऑफ पेरिस <b>(POP)' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is obtained by heating Gypsum at 373 K. / </b>यह जिप्सम को <b>373 K </b>पर गर्म करके प्राप्त किया जाता है।<b><br/> (b) Chemically, it is Calcium Sulfate Hemihydrate (CaSO</b><b>₄</b><b> · ½H</b><b>₂</b><b>O). / </b>रासायनिक रूप से<b>, </b>यह कैल्शियम सल्फेट हेमीहाइड्रेट <b>(CaSO</b><b>₄</b><b> · ½H</b><b>₂</b><b>O) </b>है।<b><br/> (c) On mixing with water, it changes back to Gypsum and becomes hard. / </b>पानी के साथ मिलाने पर<b>, </b>यह वापस जिप्सम में बदल जाता है और कठोर हो जाता है।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. Excessive heating above 373K leads to \"dead burnt plaster\" (CaSO₄) which loses the setting property.<br/> सभी कथन सही हैं। 373K से ऊपर अत्यधिक गर्म करने पर \"डेड बर्न्ट प्लास्टर\" (CaSO₄) बनता है जो जमने के गुण को खो देता है।</p>"
+    },
+    {
+      "sr_no": 46,
+      "question": "<p> <b>Consider the following statements regarding 'Soaps and Detergents':<br/> '</b>साबुन और डिटर्जेंट<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Soaps are sodium or potassium salts of long-chain fatty acids. / </b>साबुन लंबी श्रृंखला वाले वसा अम्लों के सोडियम या पोटैशियम लवण होते हैं।<b><br/> (b) Detergents can be used in hard water, whereas soaps cannot. / </b>डिटर्जेंट का उपयोग कठोर जल में किया जा सकता है<b>, </b>जबकि साबुन का नहीं।<b><br/> (c) Soap molecules form micelles to trap dirt and grease. / </b>साबुन के अणु गंदगी और ग्रीस को फंसाने के लिए <b>'</b>मिसेल<b>' (micelles) </b>बनाते हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Soaps react with Ca/Mg ions in hard water to form scum, making them ineffective. Detergents do not form scum. Micelle formation is the mechanism for cleaning in both.<br/> साबुन कठोर जल में Ca/Mg आयनों के साथ प्रतिक्रिया करके 'स्कम' बनाते हैं, जिससे वे अप्रभावी हो जाते हैं। डिटर्जेंट स्कम नहीं बनाते हैं। दोनों में सफाई के लिए मिसेल निर्माण की प्रक्रिया होती है।</p>"
+    },
+    {
+      "sr_no": 47,
+      "question": "<p> <b>Which of the following is known as 'Wood Spirit' or 'Wood Alcohol'?<br/> </b>निम्नलिखित में से किसे <b>'</b>वुड स्पिरिट<b>' </b>या <b>'</b>वुड अल्कोहल<b>' </b>के रूप में जाना जाता है<b>?</b></p>",
+      "option1": "<p> Ethanol / इथेनॉल</p>",
+      "option2": "<p> Methanol / मेथेनॉल</p>",
+      "option3": "<p> Propanol / प्रोपेनॉल</p>",
+      "option4": "<p> Glycerol / ग्लिसरॉल</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Methanol (CH₃OH) was originally produced by the destructive distillation of wood, hence the name Wood Spirit. It is highly toxic.<br/> मेथेनॉल (CH₃OH) मूल रूप से लकड़ी के विनाशकारी आसवन द्वारा निर्मित किया गया था, इसलिए इसका नाम वुड स्पिरिट पड़ा। यह अत्यधिक विषैला होता है।</p>"
+    },
+    {
+      "sr_no": 48,
+      "question": "<p> <b>Consider the following statements about 'Octane Number':<br/> '</b>ऑक्टेन संख्या<b>' (Octane Number) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is a measure of the quality of Petrol (Gasoline). / </b>यह पेट्रोल <b>(</b>गैसोलीन<b>) </b>की गुणवत्ता का माप है।<b><br/> (b) Higher octane number indicates better anti-knock properties. / </b>उच्च ऑक्टेन संख्या बेहतर एंटी<b>-</b>नॉक गुणों को इंगित करती है।<b><br/> (c) Cetane number is used to measure the quality of Diesel. / </b>सीटेन संख्या का उपयोग डीजल की गुणवत्ता मापने के लिए किया जाता है।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Octane rating is for petrol engines to prevent premature ignition (knocking). Cetane rating is the equivalent for diesel fuel quality.<br/> पेट्रोल इंजन में समय से पहले दहन (नॉकिंग) को रोकने के लिए ऑक्टेन रेटिंग का उपयोग किया जाता है। डीजल ईंधन की गुणवत्ता के लिए सीटेन रेटिंग का उपयोग होता है।</p>"
+    },
+    {
+      "sr_no": 49,
+      "question": "<p> <b>Which of the following chemicals is used to make 'Non-stick Cookware'?<br/> '</b>नॉन<b>-</b>स्टिक कुकवेयर<b>' </b>बनाने के लिए निम्नलिखित में से किस रसायन का उपयोग किया जाता है<b>?</b></p>",
+      "option1": "<p> PVC / पीवीसी</p>",
+      "option2": "<p> Polystyrene / पॉलीस्टाइरीन</p>",
+      "option3": "<p> Teflon (PTFE) / टेफ्लॉन (PTFE)</p>",
+      "option4": "<p> Bakelite / बेकेलाइट</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Teflon or Polytetrafluoroethylene (PTFE) has high heat resistance and low friction, preventing food from sticking.<br/> टेफ्लॉन या पॉलीटेट्राफ्लुओरोएथिलीन (PTFE) में उच्च ताप प्रतिरोध और कम घर्षण होता है, जो भोजन को चिपकने से रोकता है।</p>"
+    },
+    {
+      "sr_no": 50,
+      "question": "<p> <b>Consider the following regarding 'Coal Varieties':<br/> '</b>कोयले की किस्मों<b>' </b>के संबंध में निम्नलिखित पर विचार करें<b>:<br/> (a) Anthracite is the highest quality coal with the highest carbon content. / </b>एन्थ्रेसाइट उच्चतम कार्बन सामग्री वाला उच्चतम गुणवत्ता वाला कोयला है।<b><br/> (b) Peat is the first stage of coal formation and has low heating capacity. / </b>पीट कोयला निर्माण का पहला चरण है और इसकी तापीय क्षमता कम होती है।<b><br/> (c) Bituminous is the most common variety of coal used in industries. / </b>बिटुमिनस उद्योगों में उपयोग की जाने वाली कोयले की सबसे सामान्य किस्म है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Anthracite (&gt;90% carbon) burns with little smoke. Lignite is known as brown coal. Bituminous is widely used for power generation.<br/> एन्थ्रेसाइट (&gt;90% कार्बन) कम धुएं के साथ जलता है। लिग्नाइट को भूरा कोयला कहा जाता है। बिजली उत्पादन के लिए बिटुमिनस का व्यापक रूप से उपयोग किया जाता है।</p>"
+    },
+    {
+      "sr_no": 51,
+      "question": "<p> <b>What is the chemical name of 'Aspirin'?<br/> '</b>एस्पिरिन<b>' (Aspirin) </b>का रासायनिक नाम क्या है<b>?</b></p>",
+      "option1": "<p> Methyl Salicylate / मिथाइल सैलिसिलेट</p>",
+      "option2": "<p> Acetylsalicylic Acid / एसिटाइलसैलिसिलिक एसिड</p>",
+      "option3": "<p> Sodium Salicylate / सोडियम सैलिसिलेट</p>",
+      "option4": "<p> Ethyl Salicylate / एथिल सैलिसिलेट</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Aspirin is an analgesic (painkiller) and antipyretic (fever reducer). Its chemical name is Acetylsalicylic acid.<br/> एस्पिरिन एक एनाल्जेसिक (दर्द निवारक) और एंटीपायरेटिक (बुखार कम करने वाली दवा) है। इसका रासायनिक नाम एसिटाइलसैलिसिलिक एसिड है।</p>"
+    },
+    {
+      "sr_no": 52,
+      "question": "<p> <b>Consider the following statements about 'Natural Gas':<br/> '</b>प्राकृतिक गैस<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Methane is the major component of natural gas. / </b>मीथेन प्राकृतिक गैस का प्रमुख घटक है।<b><br/> (b) CNG (Compressed Natural Gas) is considered an eco-friendly fuel. / CNG (</b>संपीड़ित प्राकृतिक गैस<b>) </b>को पर्यावरण के अनुकूल ईंधन माना जाता है।<b><br/> (c) It is found associated with petroleum deposits. / </b>यह पेट्रोलियम निक्षेपों <b>(deposits) </b>के साथ पाया जाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> a and c / a और c</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Natural gas consists of about 85-95% Methane. It produces less pollution than petrol/diesel because it burns more completely.<br/> प्राकृतिक गैस में लगभग 85-95% मीथेन होती है। यह पेट्रोल/डीजल की तुलना में कम प्रदूषण पैदा करती है क्योंकि इसका दहन अधिक पूर्ण होता है।</p>"
+    },
+    {
+      "sr_no": 53,
+      "question": "<p> <b>Which of the following is used as an 'Antacid' to get relief from acidity?<br/> </b>एसिडिटी से राहत पाने के लिए <b>'</b>एंटासिड<b>' (Antacid) </b>के रूप में निम्नलिखित में से किसका उपयोग किया जाता है<b>?</b></p>",
+      "option1": "<p> Sodium Hydroxide / सोडियम हाइड्रोक्साइड</p>",
+      "option2": "<p> Magnesium Hydroxide / मैग्नीशियम हाइड्रोक्साइड</p>",
+      "option3": "<p> Calcium Chloride / कैल्शियम क्लोराइड</p>",
+      "option4": "<p> Potassium Nitrate / पोटैशियम नाइट्रेट</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Magnesium Hydroxide [Mg(OH)₂], also known as 'Milk of Magnesia', is a mild base used to neutralize excess stomach acid.<br/> मैग्नीशियम हाइड्रोक्साइड [Mg(OH)₂], जिसे 'मिल्क ऑफ मैग्नीशिया' भी कहा जाता है, एक हल्का क्षार है जिसका उपयोग पेट के अतिरिक्त एसिड को बेअसर करने के लिए किया जाता है।</p>"
+    },
+    {
+      "sr_no": 54,
+      "question": "<p> <b>Consider the following regarding 'Explosives':<br/> '</b>विस्फोटकों<b>' </b>के संबंध में निम्नलिखित पर विचार करें<b>:<br/> (a) TNT stands for Trinitrotoluene. / TNT </b>का अर्थ ट्राइनाइट्रोटोलुइन है।<b><br/> (b) RDX is also known as 'Cyclonite'. / RDX </b>को <b>'</b>साइक्लोनाइट<b>' </b>के रूप में भी जाना जाता है।<b><br/> (c) Alfred Nobel invented Dynamite using Nitroglycerin. / </b>अल्फ्रेड नोबेल ने नाइट्रोग्लिसरीन का उपयोग करके डायनामाइट का आविष्कार किया था।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and c / a और c</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. RDX (Research Department Explosive) is a powerful nitroamine explosive.<br/> सभी कथन सही हैं। RDX (रिसर्च डिपार्टमेंट एक्सप्लोसिव) एक शक्तिशाली नाइट्रोमाइन विस्फोटक है।</p>"
+    },
+    {
+      "sr_no": 55,
+      "question": "<p> <b>The gas responsible for the 'Swell and Softness of Bread' is:<br/> </b>ब्रेड के <b>'</b>फूलने और कोमलता<b>' </b>के लिए जिम्मेदार गैस है<b>:</b></p>",
+      "option1": "<p> Oxygen / ऑक्सीजन</p>",
+      "option2": "<p> Nitrogen / नाइट्रोजन</p>",
+      "option3": "<p> Carbon Dioxide / कार्बन डाइऑक्साइड</p>",
+      "option4": "<p> Carbon Monoxide / कार्बन मोनोऑक्साइड</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> During fermentation by yeast, CO₂ is released, which creates pockets in the dough, making the bread soft and spongy.<br/> यीस्ट द्वारा किण्वन के दौरान CO₂ निकलती है, जो गूँथे हुए आटे में पॉकेट बनाती है, जिससे ब्रेड नरम और स्पंजी हो जाती है।</p>"
+    },
+    {
+      "sr_no": 56,
+      "question": "<p> <b>Consider the following statements regarding 'Ozone Layer':<br/> '</b>ओजोन परत<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is found in the Stratosphere. / </b>यह समताप मंडल <b>(Stratosphere) </b>में पाई जाती है<b><br/> (b) Chlorofluorocarbons (CFCs) are primarily responsible for its depletion. / </b>इसके क्षरण के लिए मुख्य रूप से क्लोरोफ्लोरोकार्बन <b>(CFCs) </b>जिम्मेदार हैं।<b><br/> (c) It protects the earth from harmful Infrared radiations. / </b>यह पृथ्वी को हानिकारक इन्फ्रारेड विकिरणों से बचाती है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Ozone protects the earth from Ultraviolet (UV) radiations, not Infrared. Statements (a) and (b) are correct.<br/> ओजोन पृथ्वी को पराबैंगनी (UV) विकिरणों से बचाती है, इन्फ्रारेड से नहीं। कथन (a) और (b) सही हैं।</p>"
+    },
+    {
+      "sr_no": 57,
+      "question": "<p> <b>Which of the following is used as 'Artificial Sweetener' for diabetic patients?<br/> </b>मधुमेह के रोगियों के लिए <b>'</b>कृत्रिम स्वीटनर<b>' </b>के रूप में निम्नलिखित में से किसका उपयोग किया जाता है<b>?</b></p>",
+      "option1": "<p> Sucrose / सुक्रोज</p>",
+      "option2": "<p> Aspartame / एस्पार्टेम</p>",
+      "option3": "<p> Fructose / फ्रुक्टोज</p>",
+      "option4": "<p> Glucose / ग्लूकोज</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Aspartame is an artificial non-saccharide sweetener used as a sugar substitute in foods and drinks.<br/> एस्पार्टेम एक कृत्रिम गैर-सैकेराइड स्वीटनर है जिसका उपयोग खाद्य पदार्थों और पेय पदार्थों में चीनी के विकल्प के रूप में किया जाता है।</p>"
+    },
+    {
+      "sr_no": 58,
+      "question": "<p> <b>Consider the following regarding 'Polymers':<br/> '</b>पॉलिमर<b>' (Polymers) </b>के संबंध में निम्नलिखित पर विचार करें<b>:<br/> (a) Polyethene is used for making carry bags. / </b>पॉलीथीन का उपयोग कैरी बैग बनाने के लिए किया जाता है।<b><br/> (b) Nylon is the first fully synthetic fiber. / </b>नायलॉन पहला पूर्णतः संश्लेषित रेशा है।<b><br/> (c) Natural rubber is a polymer of Isoprene. / </b>प्राकृतिक रबर आइसोप्रीन का एक बहुलक है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. Nylon was first developed in 1935. Natural rubber is cis-1,4-polyisoprene.<br/> सभी कथन सही हैं। नायलॉन पहली बार 1935 में विकसित किया गया था। प्राकृतिक रबर सिस-1,4-पॉलीआइसोप्रीन है।</p>"
+    },
+    {
+      "sr_no": 59,
+      "question": "<p> <b>'Tear Gas' used by police to disperse crowds is chemically:<br/> </b>भीड़ को तितर<b>-</b>बितर करने के लिए पुलिस द्वारा इस्तेमाल की जाने वाली <b>'</b>आंसू गैस<b>' </b>रासायनिक रूप से है<b>:</b></p>",
+      "option1": "<p> Chloroacetophenone / क्लोरोएसेटोफेनोन</p>",
+      "option2": "<p> Nitrous Oxide / नाइट्रस ऑक्साइड</p>",
+      "option3": "<p> Carbon Tetrachloride / कार्बन टेट्राक्लोराइड</p>",
+      "option4": "<p> Ethylene Glycol / एथिलीन ग्लाइकॉल</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Chloroacetophenone (CN gas) or CS gas are common types of lachrymatory agents used in riot control.<br/> क्लोरोएसेटोफेनोन (CN गैस) या CS गैस दंगा नियंत्रण में उपयोग किए जाने वाले सामान्य प्रकार के अश्रुकारी एजेंट (lachrymatory agents) हैं।</p>"
+    },
+    {
+      "sr_no": 60,
+      "question": "<p> <b>Consider the following statements about 'Hardness of Diamond and Softness of Graphite':<br/> '</b>हीरे की कठोरता और ग्रेफाइट की कोमलता<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) In diamond, each carbon atom is bonded to 4 others in a tetrahedral structure. / </b>हीरे में<b>, </b>प्रत्येक कार्बन परमाणु एक चतुष्फलकीय संरचना में <b>4 </b>अन्य से जुड़ा होता है।<b><br/> (b) In graphite, atoms are arranged in layers held by weak Van der Waals forces. / </b>ग्रेफाइट में<b>, </b>परमाणु कमजोर वैन डेर वाल्स बलों द्वारा परतों में व्यवस्थित होते हैं।<b><br/> (c) Diamond has free electrons, making it harder than graphite. / </b>हीरे में मुक्त इलेक्ट्रॉन होते हैं<b>, </b>जो इसे ग्रेफाइट से अधिक कठोर बनाते हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Diamond does not have free electrons; its hardness is due to strong 3D covalent bonding. Graphite’s layers can slide over each other due to weak forces.<br/> हीरे में मुक्त इलेक्ट्रॉन नहीं होते हैं; इसकी कठोरता मजबूत 3D सहसंयोजक बंधन के कारण होती है। कमजोर बलों के कारण ग्रेफाइट की परतें एक-दूसरे के ऊपर फिसल सकती हैं।</p>"
+    },
+    {
+      "sr_no": 61,
+      "question": "<p> <b>Consider the following statements regarding 'Bohr’s Model of Atom':<br/> '</b>बोहर के परमाणु मॉडल<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Electrons revolve around the nucleus in fixed circular orbits called shells. / </b>इलेक्ट्रॉन निश्चित वृत्ताकार कक्षाओं में नाभिक के चारों ओर घूमते हैं जिन्हें <b>'</b>शेल<b>' </b>कहा जाता है।<b><br/> (b) Energy is emitted or absorbed only when an electron jumps from one orbit to another. / </b>ऊर्जा तभी उत्सर्जित या अवशोषित होती है जब एक इलेक्ट्रॉन एक कक्षा से दूसरी कक्षा में कूदता है।<b><br/> (c) This model could successfully explain the spectra of multi-electron atoms like Oxygen. / </b>यह मॉडल ऑक्सीजन जैसे बहु<b>-</b>इलेक्ट्रॉन परमाणुओं के स्पेक्ट्रा को सफलतापूर्वक समझा सका।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Bohr's model was applicable only to hydrogen-like species (single electron). It failed to explain the spectra of atoms with more than one electron.<br/> बोहर का मॉडल केवल हाइड्रोजन जैसी प्रजातियों (एकल इलेक्ट्रॉन) के लिए लागू था। यह एक से अधिक इलेक्ट्रॉन वाले परमाणुओं के स्पेक्ट्रा की व्याख्या करने में विफल रहा।</p>"
+    },
+    {
+      "sr_no": 62,
+      "question": "<p> <b>Which of the following is the main component of 'Bio-gas' and 'CNG'?<br/> </b>निम्नलिखित में से कौन सा <b>'</b>बायो<b>-</b>गैस<b>' </b>और <b>'CNG' </b>का मुख्य घटक है<b>?</b></p>",
+      "option1": "<p> Propane / प्रोपेन</p>",
+      "option2": "<p> Butane / ब्यूटेन</p>",
+      "option3": "<p> Methane / मीथेन</p>",
+      "option4": "<p> Ethane / एथेन</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Methane (CH₄) is the primary component of both Bio-gas (produced by anaerobic decomposition) and CNG.<br/> मीथेन (CH₄) बायो-गैस (अवायवीय अपघटन द्वारा निर्मित) और CNG दोनों का प्राथमिक घटक है।</p>"
+    },
+    {
+      "sr_no": 63,
+      "question": "<p> <b>Consider the following statements about 'Radioactive Dating':<br/> '</b>रेडियोधर्मी डेटिंग<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Carbon-14 dating is used to determine the age of fossils and organic remains. / </b>कार्बन<b>-14 </b>डेटिंग का उपयोग जीवाश्मों और कार्बनिक अवशेषों की आयु निर्धारित करने के लिए किया जाता है।<b><br/> (b) Uranium-Lead dating is used to estimate the age of rocks and the Earth. / </b>यूरेनियम<b>-</b>लेड डेटिंग का उपयोग चट्टानों और पृथ्वी की आयु का अनुमान लगाने के लिए किया जाता है।<b><br/> (c) Carbon-14 has a half-life of about 5,730 years. / </b>कार्बन<b>-14 </b>का आधा जीवन लगभग <b>5,730 </b>वर्ष है।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Different isotopes are used based on the expected age. C-14 is for recent organic material, while Uranium/Potassium isotopes are for geological time scales.<br/> अपेक्षित आयु के आधार पर विभिन्न समस्थानिकों का उपयोग किया जाता है। C-14 हाल की कार्बनिक सामग्री के लिए है, जबकि यूरेनियम/पोटैशियम समस्थानिक भूगर्भीय समय मापन के लिए हैं।</p>"
+    },
+    {
+      "sr_no": 64,
+      "question": "<p> <b>Which chemical is used in 'Cloud Seeding' to induce artificial rain?<br/> </b>कृत्रिम वर्षा कराने के लिए <b>'</b>क्लाउड सीडिंग<b>' </b>में किस रसायन का उपयोग किया जाता है<b>?</b></p>",
+      "option1": "<p> Silver Iodide / सिल्वर आयोडाइड</p>",
+      "option2": "<p> Potassium Chlorate / पोटैशियम क्लोरेट</p>",
+      "option3": "<p> Sodium Carbonate / सोडियम कार्बोनेट</p>",
+      "option4": "<p> Magnesium Chloride / मैग्नीशियम क्लोराइड</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Silver Iodide (AgI) or Dry Ice (solid CO₂) is sprayed into clouds to act as ice nuclei for rain formation.<br/> सिल्वर आयोडाइड (AgI) या शुष्क बर्फ (ठोस CO₂) को वर्षा निर्माण के लिए बर्फ के नाभिक के रूप में कार्य करने हेतु बादलों में छिड़का जाता है।</p>"
+    },
+    {
+      "sr_no": 65,
+      "question": "<p> <b>Consider the following regarding 'Electrolysis of Water':<br/> '</b>जल के विद्युत अपघटन<b>' </b>के संबंध में निम्नलिखित पर विचार करें<b>:<br/> (a) Hydrogen gas is collected at the Cathode. / </b>हाइड्रोजन गैस कैथोड पर एकत्रित होती है।<b><br/> (b) Oxygen gas is collected at the Anode. / </b>ऑक्सीजन गैस एनोड पर एकत्रित होती है।<b><br/> (c) The volume of Hydrogen collected is twice the volume of Oxygen. / </b>एकत्रित हाइड्रोजन का आयतन ऑक्सीजन के आयतन का दोगुना होता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Water (H₂O) breaks into 2 parts of H₂ and 1 part of O₂ by volume. Since H⁺ is positive, it moves to the negative electrode (Cathode).<br/> जल (H₂O) आयतन के अनुसार H₂ के 2 भागों और O₂ के 1 भाग में टूटता है। चूंकि H⁺ धनात्मक है, यह ऋणात्मक इलेक्ट्रोड (कैथोड) की ओर बढ़ता है।</p>"
+    },
+    {
+      "sr_no": 66,
+      "question": "<p> <b>'Yellow Phosphorus' is generally stored in which of the following?<br/> '</b>पीला फास्फोरस<b>' </b>आमतौर पर निम्नलिखित में से किसमें संग्रहित किया जाता है<b>?</b></p>",
+      "option1": "<p> Kerosene / मिट्टी का तेल</p>",
+      "option2": "<p> Alcohol / अल्कोहल</p>",
+      "option3": "<p> Water / पानी</p>",
+      "option4": "<p> Liquid Ammonia / तरल अमोनिया</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> White/Yellow phosphorus is highly reactive and catches fire spontaneously in air, but it does not react with water. Sodium is stored in kerosene.<br/> सफेद/पीला फास्फोरस अत्यधिक क्रियाशील होता है और हवा में स्वतः आग पकड़ लेता है, लेकिन यह पानी के साथ प्रतिक्रिया नहीं करता है। सोडियम को मिट्टी के तेल में रखा जाता है।</p>"
+    },
+    {
+      "sr_no": 67,
+      "question": "<p> <b>Consider the following statements about 'Hard and Soft Acids/Bases (HSAB)':<br/> '</b>कठोर और नरम अम्ल<b>/</b>क्षार <b>(HSAB)' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Hard acids prefer to bind with hard bases. / </b>कठोर अम्ल कठोर क्षार के साथ जुड़ना पसंद करते हैं।<b><br/> (b) Li</b><b>⁺</b><b> and Mg²</b><b>⁺</b><b> are examples of hard acids. / Li</b><b>⁺</b><b> </b>और <b>Mg²</b><b>⁺</b><b> </b>कठोर अम्ल के उदाहरण हैं।<b><br/> (c) Soft acids are generally large in size and have low charge density. / </b>नरम अम्ल आम तौर पर आकार में बड़े होते हैं और उनका आवेश घनत्व कम होता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> a and c / a और c</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Pearson's HSAB principle states that \"Hard likes Hard\" and \"Soft likes Soft\" for stable complex formation.<br/> पियर्सन का HSAB सिद्धांत कहता है कि स्थिर संकुल (complex) निर्माण के लिए \"हार्ड को हार्ड\" और \"सॉफ्ट को सॉफ्ट\" पसंद होता है।</p>"
+    },
+    {
+      "sr_no": 68,
+      "question": "<p> <b>Which of the following is used as a 'Food Preservative'?<br/> </b>निम्नलिखित में से किसका उपयोग <b>'</b>खाद्य परिरक्षक<b>' </b>के रूप में किया जाता है<b>?</b></p>",
+      "option1": "<p> Sodium Benzoate / सोडियम बेंजोएट</p>",
+      "option2": "<p> Sodium Thiosulfate / सोडियम थायोसल्फेट</p>",
+      "option3": "<p> Magnesium Sulfate / मैग्नीशियम सल्फेट</p>",
+      "option4": "<p> Copper Sulfate / कॉपर सल्फेट</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Sodium benzoate inhibits the growth of bacteria, mold, and yeast in acidic foods like fruit juices and pickles.<br/> सोडियम बेंजोएट फलों के रस और अचार जैसे अम्लीय खाद्य पदार्थों में बैक्टीरिया, मोल्ड और यीस्ट के विकास को रोकता है।</p>"
+    },
+    {
+      "sr_no": 69,
+      "question": "<p> <b>Consider the following statements regarding 'Endothermic Reactions':<br/> '</b>ऊष्माशोषी अभिक्रियाओं<b>' (Endothermic Reactions) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Heat is absorbed from the surroundings. / </b>परिवेश से ऊष्मा अवशोषित की जाती है।<b><br/> (b) Photosynthesis is an example of an endothermic process. / </b>प्रकाश संश्लेषण ऊष्माशोषी प्रक्रिया का एक उदाहरण है।<b><br/> (c) The temperature of the surroundings increases during the reaction. / </b>अभिक्रिया के दौरान परिवेश का तापमान बढ़ जाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> In endothermic reactions, heat is taken from the surroundings, causing the surrounding temperature to decrease.<br/> ऊष्माशोषी अभिक्रियाओं में, परिवेश से ऊष्मा ली जाती है, जिससे परिवेश का तापमान कम हो जाता है।</p>"
+    },
+    {
+      "sr_no": 70,
+      "question": "<p> <b>Which element is present in 'Chlorophyll'?<br/> '</b>क्लोरोफिल<b>' </b>में कौन सा तत्व मौजूद होता है<b>?</b></p>",
+      "option1": "<p> Iron / लोहा</p>",
+      "option2": "<p> Magnesium / मैग्नीशियम</p>",
+      "option3": "<p> Manganese / मैंगनीज</p>",
+      "option4": "<p> Copper / तांबा</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Magnesium is the central metal ion in the chlorophyll molecule, essential for photosynthesis. Hemoglobin contains Iron.<br/> मैग्नीशियम क्लोरोफिल अणु में केंद्रीय धातु आयन है, जो प्रकाश संश्लेषण के लिए आवश्यक है। हीमोग्लोबिन में लोहा होता है।</p>"
+    },
+    {
+      "sr_no": 71,
+      "question": "<p> <b>Consider the following statements about 'Colloids':<br/> '</b>कोलाइड<b>' (Colloids) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) They show Tyndall effect. / </b>वे टिंडल प्रभाव दिखाते हैं।<b><br/> (b) Milk is an example of an emulsion. / </b>दूध इमल्शन <b>(</b>पायस<b>) </b>का एक उदाहरण है।<b><br/> (c) The particle size in a colloid is larger than in a true solution. / </b>कोलाइड में कणों का आकार वास्तविक विलयन की तुलना में बड़ा होता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Colloids scatter light (Tyndall effect). Particle size ranges between 1nm to 1000nm. Milk is liquid-in-liquid colloid (emulsion).<br/> कोलाइड प्रकाश को बिखेरते हैं (टिंडल प्रभाव)। कणों का आकार 1nm से 1000nm के बीच होता है। दूध तरल-में-तरल कोलाइड (इमल्शन) है।</p>"
+    },
+    {
+      "sr_no": 72,
+      "question": "<p> <b>Which of the following is used in 'Matchsticks'?<br/> '</b>माचिस की तीलियों<b>' </b>में निम्नलिखित में से किसका उपयोग किया जाता है<b>?</b></p>",
+      "option1": "<p> White Phosphorus / सफेद फास्फोरस</p>",
+      "option2": "<p> Red Phosphorus / लाल फास्फोरस</p>",
+      "option3": "<p> Black Phosphorus / काला फास्फोरस</p>",
+      "option4": "<p> Yellow Phosphorus / पीला फास्फोरस</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Red phosphorus is used on the striking surface of matchboxes because it is less volatile and safer than white phosphorus.<br/> माचिस की डिब्बों की रगड़ने वाली सतह पर लाल फास्फोरस का उपयोग किया जाता है क्योंकि यह सफेद फास्फोरस की तुलना में कम अस्थिर और सुरक्षित होता है।</p>"
+    },
+    {
+      "sr_no": 73,
+      "question": "<p> <b>Consider the following regarding 'Vitamins':<br/> '</b>विटामिन<b>' </b>के संबंध में निम्नलिखित पर विचार करें<b>:<br/> (a) Vitamin B and C are water-soluble. / </b>विटामिन <b>B </b>और <b>C </b>पानी में घुलनशील हैं।<b><br/> (b) Vitamin A, D, E, and K are fat-soluble. / </b>विटामिन <b>A, D, E </b>और <b>K </b>वसा में घुलनशील हैं।<b><br/> (c) Cobalt is a constituent of Vitamin B12. / </b>कोबाल्ट विटामिन <b>B12 </b>का एक घटक है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. Vitamin B12 is also known as Cyanocobalamin because of the presence of Cobalt.<br/> सभी कथन सही हैं। कोबाल्ट की उपस्थिति के कारण विटामिन B12 को सायनोकोबालमिन के रूप में भी जाना जाता है।</p>"
+    },
+    {
+      "sr_no": 74,
+      "question": "<p> <b>Which of the following is the 'Lighest Metal' and 'Heaviest Metal' respectively?<br/> </b>निम्नलिखित में से कौन क्रमशः <b>'</b>सबसे हल्की धातु<b>' </b>और <b>'</b>सबसे भारी धातु<b>' </b>है<b>?</b></p>",
+      "option1": "<p> Lithium &amp; Osmium / लिथियम और ओस्मियम</p>",
+      "option2": "<p> Hydrogen &amp; Uranium / हाइड्रोजन और यूरेनियम</p>",
+      "option3": "<p> Lithium &amp; Lead / लिथियम और सीसा</p>",
+      "option4": "<p> Sodium &amp; Osmium / सोडियम और ओस्मियम</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Lithium is the lightest solid element/metal, while Osmium has the highest density (heaviest).<br/> लिथियम सबसे हल्का ठोस तत्व/धातु है, जबकि ओस्मियम का घनत्व सबसे अधिक (सबसे भारी) है।</p>"
+    },
+    {
+      "sr_no": 75,
+      "question": "<p> <b>Consider the following statements about 'Catalytic Converters' in cars:<br/> </b>कारों में <b>'</b>कैटेलिटिक कन्वर्टर्स<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) They reduce the emission of poisonous gases like CO and NOx. / </b>वे <b>CO </b>और <b>NOx </b>जैसी जहरीली गैसों के उत्सर्जन को कम करते हैं।<b><br/> (b) Metals like Platinum, Palladium, and Rhodium are used as catalysts. / </b>प्लैटिनम<b>, </b>पैलेडियम और रोडियम जैसी धातुओं का उपयोग उत्प्रेरक के रूप में किया जाता है।<b><br/> (c) They convert Nitrogen oxides into Nitrogen gas. / </b>वे नाइट्रोजन ऑक्साइड को नाइट्रोजन गैस में बदल देते हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Catalytic converters facilitate redox reactions to turn toxic pollutants into less harmful gases like CO₂, N₂, and water vapor.<br/> कैटेलिटिक कन्वर्टर्स जहरीले प्रदूषकों को कम हानिकारक गैसों जैसे CO₂, N₂ और जल वाष्प में बदलने के लिए रेडॉक्स प्रतिक्रियाओं को सुगम बनाते हैं।</p>"
+    }
+  ]
+};
+
+// Extract questions and time from new structure
+const questions = quizData.questions;
+const totalTimeMinutes = quizData.time_minutes;
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = totalTimeMinutes * 60;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape') {
+      if (isPaletteOpen) {
+        closePalette();
+      }
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimer();
+    
+    // Auto-submit when time runs out
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      alert('Time is up! Submitting quiz automatically.');
+      submitQuiz();
+      return;
+    }
+    
+    if (timerSeconds <= 120) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    questionText.innerHTML = '';
+    const questionContent = createOptionContent(q.question);
+    questionText.appendChild(questionContent);
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message = `You have ${unattempted} unanswered questions. ${message}`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  const timeTaken = (totalTimeMinutes * 60) - timerSeconds;
+  const minutesTaken = Math.floor(timeTaken / 60);
+  const secondsTaken = timeTaken % 60;
+  const timeTakenText = `${minutesTaken}m ${secondsTaken}s`;
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeTakenText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    let questionDisplay = '';
+    if (isImageURL(q.question)) {
+      questionDisplay = `<img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`;
+    } else {
+      questionDisplay = q.question;
+    }
+    html += `<div class="question-review">
+      <h4>Q${q.sr_no}: ${questionDisplay}</h4>`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution && q.solution.trim() !== '') {
+      let solutionDisplay = '';
+      if (isImageURL(q.solution)) {
+        solutionDisplay = `<img src="${q.solution}" class="solution-image" alt="Solution" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">`;
+      } else {
+        solutionDisplay = q.solution;
+      }
+      
+      html += `<div class="solution-section" style="margin-top: 15px; padding: 15px; background: #f0f8ff; border-left: 4px solid #007bff; border-radius: 8px;">
+        <strong style="color: #007bff;">💡 Solution:</strong>
+        <div style="margin-top: 8px; color: #333;">${solutionDisplay}</div>
+      </div>`;
+    }
+    
+    html += `</div>`;
+  });
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https')) &&
+    (str.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i));
+}
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = totalTimeMinutes * 60;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    updateTimer();
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHEMISTRY FULL TEST</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">MOTION 3.0 - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem('quizState', JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem('quizState');
+    if (saved) {
+      const state = JSON.parse(saved);
+      if (Date.now() - state.timestamp < 24 * 60 * 60 * 1000) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || (totalTimeMinutes * 60); // MODIFIED
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem('quizState');
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

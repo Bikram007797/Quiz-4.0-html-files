@@ -1,0 +1,2915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>PHYSICS FULL TEST</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.question-image, .option-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: block;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎯 PHYSICS FULL TEST</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color)"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color)"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color)"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color)"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">Clear</button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">Submit Quiz</button>
+</div>
+
+<script>
+// MODIFIED: Quiz data structure with time_minutes
+const quizData = {
+  "time_minutes": 50,
+  "questions": [
+    {
+      "sr_no": 1,
+      "question": "<p> <b>Consider the following statements regarding Newton’s Laws of Motion:<br/> </b>न्यूटन के गति के नियमों के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Newton’s first law defines the concept of inertia. / </b>न्यूटन का पहला नियम जड़त्व की अवधारणा को परिभाषित करता है।<b><br/> (b) Newton’s second law provides a measure of force. / </b>न्यूटन का दूसरा नियम बल का माप प्रदान करता है।<b><br/> (c) Newton’s third law states that action and reaction act on the same body. / </b>न्यूटन का तीसरा नियम कहता है कि क्रिया और प्रतिक्रिया एक ही वस्तु पर कार्य करते हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Action and reaction always act on two different bodies, not the same one.<br/> क्रिया और प्रतिक्रिया हमेशा दो अलग-अलग निकायों पर कार्य करते हैं, एक ही पर नहीं।</p>"
+    },
+    {
+      "sr_no": 2,
+      "question": "<p> <b>Which of the following statements about Surface Tension is correct?<br/> </b>पृष्ठ तनाव <b>(Surface Tension) </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> It increases with an increase in temperature. / तापमान में वृद्धि के साथ यह बढ़ता है।</p>",
+      "option2": "<p> It is responsible for the spherical shape of rain drops. / यह वर्षा की बूंदों के गोलाकार आकार के लिए जिम्मेदार है।</p>",
+      "option3": "<p> It is a molecular property of gases. / यह गैसों का एक आणविक गुण है।</p>",
+      "option4": "<p> Addition of detergents increases the surface tension of water. / डिटर्जेंट मिलाने से पानी का पृष्ठ तनाव बढ़ जाता है।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Surface tension acts to minimize the surface area, leading to spherical shapes. It decreases with temperature.<br/> पृष्ठ तनाव सतह क्षेत्र को कम करने का कार्य करता है, जिससे आकार गोलाकार हो जाता है। तापमान के साथ यह घटता है।</p>"
+    },
+    {
+      "sr_no": 3,
+      "question": "<p> <b>Consider the following statements regarding Sound Waves:<br/> </b>ध्वनि तरंगों के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Sound waves are longitudinal mechanical waves. / </b>ध्वनि तरंगें अनुदैर्ध्य यांत्रिक तरंगें हैं।<b><br/> (b) The speed of sound is maximum in vacuum. / </b>निर्वात में ध्वनि की गति अधिकतम होती है।<b><br/> (c) Speed of sound increases with increase in humidity. / </b>आर्द्रता बढ़ने के साथ ध्वनि की गति बढ़ जाती है।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Sound cannot travel in a vacuum. Speed of sound is higher in moist air because moist air is less dense than dry air.<br/> ध्वनि निर्वात में गमन नहीं कर सकती। नम हवा में ध्वनि की गति अधिक होती है क्योंकि नम हवा शुष्क हवा की तुलना में कम घनी होती है।</p>"
+    },
+    {
+      "sr_no": 4,
+      "question": "<p> <b>Total Internal Reflection (TIR) occurs when light travels from:<br/> </b>पूर्ण आंतरिक परावर्तन <b>(TIR) </b>तब होता है जब प्रकाश गमन करता है<b>:</b></p>",
+      "option1": "<p> Rarer medium to denser medium at any angle. / किसी भी कोण पर विरल माध्यम से सघन माध्यम में।</p>",
+      "option2": "<p> Denser medium to rarer medium with angle of incidence greater than critical angle. / क्रांतिक कोण से अधिक आपतन कोण के साथ सघन माध्यम से विरल माध्यम में।</p>",
+      "option3": "<p> Rarer medium to denser medium with angle of incidence less than critical angle. / क्रांतिक कोण से कम आपतन कोण के साथ विरल माध्यम से सघन माध्यम में।</p>",
+      "option4": "<p> One medium to another with the same refractive index. / समान अपवर्तनांक वाले एक माध्यम से दूसरे माध्यम में।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> For TIR, light must move from denser to rarer medium and the angle of incidence must exceed the critical angle.<br/> TIR के लिए, प्रकाश को सघन से विरल माध्यम में जाना चाहिए और आपतन कोण क्रांतिक कोण से अधिक होना चाहिए।</p>"
+    },
+    {
+      "sr_no": 5,
+      "question": "<p> <b>Consider the following statements regarding Archimedes' Principle:<br/> </b>आर्किमिडीज के सिद्धांत के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) The buoyant force depends on the density of the fluid. / </b>उत्प्लावक बल द्रव के घनत्व पर निर्भर करता है।<b><br/> (b) The buoyant force depends on the mass of the object submerged. / </b>उत्प्लावक बल डूबी हुई वस्तु के द्रव्यमान पर निर्भर करता है।<b><br/> (c) An object floats if it displaces a weight of fluid equal to its own weight. / </b>कोई वस्तु तैरती है यदि वह अपने स्वयं के वजन के बराबर द्रव के वजन को विस्थापित करती है।<b><br/> Which of the statements given above is/are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and c / a और c</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Buoyant force depends on the volume of the submerged part and density of the fluid, not the object's mass.<br/> उत्प्लावक बल डूबे हुए हिस्से के आयतन और द्रव के घनत्व पर निर्भर करता है, वस्तु के द्रव्यमान पर नहीं।</p>"
+    },
+    {
+      "sr_no": 6,
+      "question": "<p> <b>Which of the following is correct about the 'Critical Mass' in a nuclear reaction?<br/> </b>परमाणु प्रतिक्रिया में <b>'</b>क्रांतिक द्रव्यमान<b>' (Critical Mass) </b>के बारे में निम्नलिखित में से कौन<b>-</b>सा सही है<b>?</b></p>",
+      "option1": "<p> It is the minimum mass required for a self-sustained chain reaction. / यह स्व-स्थायी श्रृंखला प्रतिक्रिया के लिए आवश्यक न्यूनतम द्रव्यमान है।</p>",
+      "option2": "<p> It is the mass at which an element becomes stable. / यह वह द्रव्यमान है जिस पर कोई तत्व स्थिर हो जाता है।</p>",
+      "option3": "<p> It is the maximum mass a star can have before becoming a black hole. / यह वह अधिकतम द्रव्यमान है जो एक तारा ब्लैक होल बनने से पहले रख सकता है।</p>",
+      "option4": "<p> It is the mass of electrons in a neutral atom. / यह एक तटस्थ परमाणु में इलेक्ट्रॉनों का द्रव्यमान है।</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Critical mass is the smallest amount of fissile material needed for a sustained nuclear chain reaction.<br/> क्रांतिक द्रव्यमान निरंतर परमाणु श्रृंखला प्रतिक्रिया के लिए आवश्यक विखंडनीय सामग्री की न्यूनतम मात्रा है।</p>"
+    },
+    {
+      "sr_no": 7,
+      "question": "<p> <b>Consider the following statements about Viscosity:<br/> </b>श्यानता <b>(Viscosity) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Viscosity of liquids decreases with increase in temperature. / </b>तापमान बढ़ने के साथ द्रवों की श्यानता घटती है।<b><br/> (b) Viscosity of gases increases with increase in temperature. / </b>तापमान बढ़ने के साथ गैसों की श्यानता बढ़ती है।<b><br/> (c) It is the internal friction between layers of a fluid. / </b>यह किसी द्रव की परतों के बीच का आंतरिक घर्षण है।<b><br/> Which of the statements given above are correct? / </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Liquids lose viscosity when heated, while gas molecules collide more frequently, increasing their viscosity.<br/> गर्म करने पर द्रवों की श्यानता कम हो जाती है, जबकि गैस के अणु अधिक बार टकराते हैं, जिससे उनकी श्यानता बढ़ जाती है।</p>"
+    },
+    {
+      "sr_no": 8,
+      "question": "<p> <b>A person is sitting in a car which is at rest. The reaction from the road at each of the four wheels of the car is 'R'. When the car runs on a straight level road, how will the reaction at the front wheels change?<br/> </b>एक व्यक्ति कार में बैठा है जो स्थिर है। कार के चारों पहियों में से प्रत्येक पर सड़क से प्रतिक्रिया <b>'R' </b>है। जब कार एक सीधी समतल सड़क पर चलती है<b>, </b>तो अगले पहियों पर प्रतिक्रिया कैसे बदलेगी<b>?</b></p>",
+      "option1": "<p> It will be more than R / यह R से अधिक होगी</p>",
+      "option2": "<p> It will be less than R / यह R से कम होगी</p>",
+      "option3": "<p> It will remain equal to R / यह R के बराबर रहेगी</p>",
+      "option4": "<p> It depends on the speed of the car / यह कार की गति पर निर्भर करता है</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Due to the aerodynamic lift and shifting of weight during acceleration, the reaction at front wheels decreases.<br/> वायुगतिकीय उत्थान (aerodynamic lift) और त्वरण के दौरान वजन के स्थानांतरण के कारण, अगले पहियों पर प्रतिक्रिया कम हो जाती है।</p>"
+    },
+    {
+      "sr_no": 9,
+      "question": "<p> <b>Consider the following statements regarding Electromagnetic Waves:<br/> </b>विद्युत चुंबकीय तरंगों के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) They do not require a material medium for propagation. / </b>उन्हें संचरण के लिए किसी भौतिक माध्यम की आवश्यकता नहीं होती है।<b><br/> (b) They are longitudinal in nature. / </b>वे प्रकृति में अनुदैर्ध्य होती हैं।<b><br/> (c) X-rays have shorter wavelength than Radio waves. / </b>एक्स<b>-</b>रे की तरंग दैर्ध्य रेडियो तरंगों की तुलना में कम होती है।<b><br/> Which of the statements given above is/are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> a and c / a और c</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> c only / केवल c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> EM waves are transverse, not longitudinal. X-rays are high frequency and low wavelength compared to Radio waves.<br/> विद्युत चुंबकीय तरंगें अनुप्रस्थ होती हैं, अनुदैर्ध्य नहीं। रेडियो तरंगों की तुलना में एक्स-रे उच्च आवृत्ति और कम तरंग दैर्ध्य वाली होती हैं।</p>"
+    },
+    {
+      "sr_no": 10,
+      "question": "<p> <b>What happens to the centripetal force of an object moving in a circle if its velocity is doubled?<br/> </b>यदि किसी वृत्त में घूम रही वस्तु का वेग दोगुना कर दिया जाए तो उसके अभिकेंद्र बल <b>(Centripetal force) </b>का क्या होगा<b>?</b></p>",
+      "option1": "<p> It remains the same / यह समान रहता है</p>",
+      "option2": "<p> It becomes double / यह दोगुना हो जाता है</p>",
+      "option3": "<p> It becomes four times / यह चार गुना हो जाता है</p>",
+      "option4": "<p> It becomes half / यह आधा हो जाता है</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Centripetal force F = mv² / r. If v is doubled, v² becomes 4 times.<br/> अभिकेंद्र बल F = mv² / r। यदि v को दोगुना किया जाता है, तो v² 4 गुना हो जाता है।</p>"
+    },
+    {
+      "sr_no": 11,
+      "question": "<p> <b>Consider the following statements regarding Capillarity:<br/> </b>केशिकत्व <b>(Capillarity) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is caused by the combined effect of cohesion and adhesion. / </b>यह ससंजन और आसंजन के संयुक्त प्रभाव के कारण होता है।<b><br/> (b) If the contact angle is less than 90°, the liquid level rises in the tube. / </b>यदि संपर्क कोण <b>90° </b>से कम है<b>, </b>तो ट्यूब में द्रव का स्तर बढ़ जाता है।<b><br/> (c) Water in a capillary tube forms a convex meniscus. / </b>केशिकानली में पानी एक उत्तल मेनिस्कस <b>(convex meniscus) </b>बनाता है।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Water forms a concave meniscus because it wets the surface. Mercury forms a convex meniscus.<br/> पानी एक अवतल मेनिस्कस बनाता है क्योंकि यह सतह को भिगोता है। पारा उत्तल मेनिस्कस बनाता है।</p>"
+    },
+    {
+      "sr_no": 12,
+      "question": "<p> <b>Which of the following statements is correct regarding the 'Escape Velocity' of Earth?<br/> </b>पृथ्वी के <b>'</b>पलायन वेग<b>' (Escape Velocity) </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> It depends on the mass of the object being launched. / यह प्रक्षेपित की जा रही वस्तु के द्रव्यमान पर निर्भर करता है।</p>",
+      "option2": "<p> It is independent of the direction of projection. / यह प्रक्षेपण की दिशा से स्वतंत्र है।</p>",
+      "option3": "<p> It is approximately 9.8 km/s. / यह लगभग 9.8 किमी/सेकंड है।</p>",
+      "option4": "<p> It increases with the height of the launch station. / यह लॉन्च स्टेशन की ऊंचाई के साथ बढ़ता है।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Escape velocity ve = √ (2GM / R) is independent of the object's mass and direction. For Earth, it is 11.2 km/s.<br/> पलायन वेग ve = √ (2GM / R) वस्तु के द्रव्यमान और दिशा से स्वतंत्र है। पृथ्वी के लिए, यह 11.2 किमी/सेकंड है।</p>"
+    },
+    {
+      "sr_no": 13,
+      "question": "<p> <b>Consider the following statements regarding Convex Mirrors:<br/> </b>उत्तल दर्पणों के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) They always form a virtual and diminished image. / </b>वे हमेशा एक आभासी और छोटा प्रतिबिंब बनाते हैं।<b><br/> (b) They have a narrower field of view compared to plane mirrors. / </b>समतल दर्पणों की तुलना में उनका दृष्टि क्षेत्र संकरा होता है।<b><br/> (c) They are used as rear-view mirrors in vehicles. / </b>इनका उपयोग वाहनों में रियर<b>-</b>व्यू मिरर के रूप में किया जाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a only / केवल a</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Convex mirrors provide a wider field of view, which is why they are preferred for vehicles.<br/> उत्तल दर्पण व्यापक दृष्टि क्षेत्र प्रदान करते हैं, यही कारण है कि उन्हें वाहनों के लिए पसंद किया जाता है।</p>"
+    },
+    {
+      "sr_no": 14,
+      "question": "<p> <b>The phenomenon of 'Mirage' is a result of:<br/> '</b>मृगतृष्णा<b>' (Mirage) </b>की घटना किसका परिणाम है<b>?</b></p>",
+      "option1": "<p> Only Refraction of light / केवल प्रकाश का अपवर्तन</p>",
+      "option2": "<p> Only Total Internal Reflection / केवल पूर्ण आंतरिक परावर्तन</p>",
+      "option3": "<p> Refraction and Total Internal Reflection / अपवर्तन और पूर्ण आंतरिक परावर्तन</p>",
+      "option4": "<p> Diffraction of light / प्रकाश का विवर्तन</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Mirages occur due to the gradual refraction of light in air layers of different densities followed by TIR.<br/> मृगतृष्णा अलग-अलग घनत्व वाली हवा की परतों में प्रकाश के क्रमिक अपवर्तन और उसके बाद होने वाले TIR के कारण होती है।</p>"
+    },
+    {
+      "sr_no": 15,
+      "question": "<p> <b>Consider the following statements regarding Resistivity:<br/> </b>प्रतिरोधकता <b>(Resistivity) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It depends on the dimensions (length/area) of the material. / </b>यह सामग्री के आयामों <b>(</b>लंबाई<b>/</b>क्षेत्रफल<b>) </b>पर निर्भर करता है।<b><br/> (b) It depends on the nature of the material and temperature. / </b>यह सामग्री की प्रकृति और तापमान पर निर्भर करता है।<b><br/> (c) Its S.I. unit is Ohm-meter(</b>ִ<b>Ω⋅m). / </b>इसकी <b>S.I. </b>इकाई ओम<b>-</b>मीटर <b>(Ω⋅m) </b>है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Resistance depends on dimensions, but resistivity is an intrinsic property that depends only on material and temperature.<br/> प्रतिरोध आयामों पर निर्भर करता है, लेकिन प्रतिरोधकता एक आंतरिक गुण है जो केवल सामग्री और तापमान पर निर्भर करती है।</p>"
+    },
+    {
+      "sr_no": 16,
+      "question": "<p> <b>Consider the following statements regarding Gravitational Force:<br/> </b>गुरुत्वाकर्षण बल के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is always attractive in nature. / </b>यह प्रकृति में हमेशा आकर्षक होता है।<b><br/> (b) It is the strongest force in nature. / </b>यह प्रकृति का सबसे प्रबल बल है।<b><br/> (c) It follows the inverse square law. / </b>यह व्युत्क्रम वर्ग नियम <b>(inverse square law) </b>का पालन करता है।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Gravitational force is the weakest of the four fundamental forces. Strong Nuclear Force is the strongest.<br/> गुरुत्वाकर्षण बल चार मौलिक बलों में सबसे कमजोर है। प्रबल नाभिकीय बल सबसे मजबूत होता है।</p>"
+    },
+    {
+      "sr_no": 17,
+      "question": "<p> <b>Which of the following statements about 'Work' is correct?<br/> '</b>कार्य<b>' </b>के बारे में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> Work done is always positive. / किया गया कार्य हमेशा धनात्मक होता है।</p>",
+      "option2": "<p> It is a vector quantity. / यह एक सदिश राशि है।</p>",
+      "option3": "<p> No work is done when the force is perpendicular to the displacement. / जब बल विस्थापन के लंबवत होता है तो कोई कार्य नहीं होता है।</p>",
+      "option4": "<p> Its S.I. unit is Watt. / इसकी S.I. इकाई वाट (Watt) है।</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> W = Fd cos(θ). If θ = 90° (perpendicular), cos(90°) = 0, so work done is zero.<br/> W = Fd cos(θ)। यदि θ = 90° (लंबवत) है, तो cos(90°) = 0, इसलिए किया गया कार्य शून्य होता है।</p>"
+    },
+    {
+      "sr_no": 18,
+      "question": "<p> <b>Consider the following statements regarding a Simple Pendulum:<br/> </b>एक सरल लोलक <b>(Simple Pendulum) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Its time period depends on the mass of the bob. / </b>इसका आवर्तकाल गोलक <b>(bob) </b>के द्रव्यमान पर निर्भर करता है।<b><br/> (b) Its time period is directly proportional to the square root of its length. / </b>इसका आवर्तकाल इसकी लंबाई के वर्गमूल के सीधे आनुपातिक होता है।<b><br/> (c) If taken to the Moon, its time period will increase. / </b>यदि इसे चंद्रमा पर ले जाया जाए<b>, </b>तो इसका आवर्तकाल बढ़ जाएगा।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Time period T = 2π√(l/g). It is independent of mass. On the Moon, g decreases, so T increases.<br/> आवर्तकाल T = 2π√(l/g)। यह द्रव्यमान से स्वतंत्र है। चंद्रमा पर g कम हो जाता है, इसलिए T बढ़ जाता है।</p>"
+    },
+    {
+      "sr_no": 19,
+      "question": "<p> <b>At what temperature are the Celsius and Fahrenheit scales equal?<br/> </b>किस तापमान पर सेल्सियस और फारेनहाइट स्केल समान होते हैं<b>?</b></p>",
+      "option1": "<p> 40°</p>",
+      "option2": "<p> -40°</p>",
+      "option3": "<p> 37°</p>",
+      "option4": "<p> 0°</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Using the formula C/5 = (F - 32)/9, both scales meet at -40°.<br/> सूत्र C/5 = (F - 32)/9 का उपयोग करते हुए, दोनों स्केल -40° पर मिलते हैं।</p>"
+    },
+    {
+      "sr_no": 20,
+      "question": "<p> <b>Consider the following statements regarding Nuclear Fusion:<br/> </b>परमाणु संलयन <b>(Nuclear Fusion) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is the source of energy in the Sun and stars. / </b>यह सूर्य और तारों में ऊर्जा का स्रोत है।<b><br/> (b) It requires very high temperature and pressure. / </b>इसके लिए बहुत उच्च तापमान और दबाव की आवश्यकता होती है।<b><br/> (c) Hydrogen bomb is based on the principle of nuclear fusion. / </b>हाइड्रोजन बम परमाणु संलयन के सिद्धांत पर आधारित है।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / केवल a और b</p>",
+      "option2": "<p> b and c / केवल b और c</p>",
+      "option3": "<p> a and c / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. Fusion involves joining light nuclei like Hydrogen to form Helium.<br/> सभी कथन सही हैं। संलयन में हीलियम बनाने के लिए हाइड्रोजन जैसे हल्के नाभिकों को जोड़ना शामिल है।</p>"
+    },
+    {
+      "sr_no": 21,
+      "question": "<p> <b>Which of the following statements is INCORRECT regarding 'Ohm's Law'?<br/> '</b>ओम के नियम<b>' </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन गलत है<b>?</b></p>",
+      "option1": "<p> It states that V = IR. / यह बताता है कि V = IR।</p>",
+      "option2": "<p> It is applicable to all types of conductors including semiconductors. / यह अर्धचालकों (semiconductors) सहित सभी प्रकार के चालकों पर लागू होता है।</p>",
+      "option3": "<p> The V-I graph for an ohmic conductor is a straight line. / एक ओमीय चालक के लिए V-I ग्राफ एक सीधी रेखा होती है।</p>",
+      "option4": "<p> It relates potential difference, current, and resistance. / यह विभवांतर, धारा और प्रतिरोध के बीच संबंध बताता है।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Ohm's Law is not applicable to non-ohmic conductors like semiconductors, vacuum tubes, or transistors.<br/> ओम का नियम अर्धचालक, वैक्यूम ट्यूब या ट्रांजिस्टर जैसे गैर-ओमीय चालकों पर लागू नहीं होता है।</p>"
+    },
+    {
+      "sr_no": 22,
+      "question": "<p> <b>Consider the following statements regarding Transformers:<br/> </b>ट्रांसफॉर्मर के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) They work on the principle of Mutual Induction. / </b>वे अन्योन्य प्रेरण <b>(Mutual Induction) </b>के सिद्धांत पर कार्य करते हैं।<b><br/> (b) They can be used to step up or step down DC voltage. / </b>इनका उपयोग <b>DC </b>वोल्टेज को बढ़ाने या घटाने के लिए किया जा सकता है।<b><br/> (c) They are used to change the voltage of AC current. / </b>इनका उपयोग <b>AC </b>धारा के वोल्टेज को बदलने के लिए किया जाता है।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Transformers only work with Alternating Current (AC), not Direct Current (DC).<br/> ट्रांसफॉर्मर केवल प्रत्यावर्ती धारा (AC) के साथ काम करते हैं, दिष्ट धारा (DC) के साथ नहीं।</p>"
+    },
+    {
+      "sr_no": 23,
+      "question": "<p> <b>Which color of light deviates the most when passing through a prism?<br/> </b>प्रिज्म से गुजरते समय प्रकाश का कौन<b>-</b>सा रंग सबसे अधिक विचलित <b>(deviate) </b>होता है<b>?</b></p>",
+      "option1": "<p> Red / लाल</p>",
+      "option2": "<p> Yellow / पीला</p>",
+      "option3": "<p> Green / हरा</p>",
+      "option4": "<p> Violet / बैंगनी</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Violet light has the shortest wavelength and highest frequency, so it deviates the most. Red deviates the least.<br/> बैंगनी प्रकाश की तरंग दैर्ध्य सबसे कम और आवृत्ति सबसे अधिक होती है, इसलिए यह सबसे अधिक विचलित होता है। लाल सबसे कम विचलित होता है।</p>"
+    },
+    {
+      "sr_no": 24,
+      "question": "<p> <b>Consider the following statements regarding Friction:<br/> </b>घर्षण <b>(Friction) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Static friction is always greater than kinetic friction. / </b>स्थैतिक घर्षण हमेशा गतिज घर्षण से अधिक होता है।<b><br/> (b) Friction depends on the area of contact. / </b>घर्षण संपर्क के क्षेत्र <b>(area of contact) </b>पर निर्भर करता है।<b><br/> (c) Lubrication is used to reduce friction. / </b>घर्षण को कम करने के लिए स्नेहन <b>(Lubrication) </b>का उपयोग किया जाता है।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Friction is independent of the area of contact but depends on the nature of the surfaces.<br/> घर्षण संपर्क के क्षेत्र से स्वतंत्र होता है लेकिन सतहों की प्रकृति पर निर्भर करता है।</p>"
+    },
+    {
+      "sr_no": 25,
+      "question": "<p> <b>Which instrument is used to measure Atmospheric Pressure?\<br/> </b>वायुमंडलीय दाब मापने के लिए किस यंत्र का उपयोग किया जाता है<b>?</b></p>",
+      "option1": "<p> Hydrometer / हाइड्रोमीटर</p>",
+      "option2": "<p> Barometer / बैरोमीटर</p>",
+      "option3": "<p> Hygrometer / हाइग्रोमीटर</p>",
+      "option4": "<p> Altimeter / अल्टीमीटर</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Barometer is used for pressure. Hygrometer is for humidity, and Hydrometer is for relative density of liquids.<br/> बैरोमीटर का उपयोग दाब के लिए किया जाता है। हाइग्रोमीटर आर्द्रता के लिए है, और हाइड्रोमीटर तरल पदार्थों के सापेक्ष घनत्व के लिए है।</p>"
+    },
+    {
+      "sr_no": 26,
+      "question": "<p> <b>Consider the following statements regarding Ultrasound Waves:<br/> </b>अल्ट्रासाउंड तरंगों के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Their frequency is greater than 20,000 Hz. / </b>इनकी आवृत्ति <b>20,000 </b>हर्ट्ज से अधिक होती है।<b><br/> (b) They are used in SONAR to measure ocean depth. / </b>इनका उपयोग समुद्र की गहराई मापने के लिए सोनार <b>(SONAR) </b>में किया जाता है।<b><br/> (c) Bats use ultrasound for navigation. / </b>चमगादड़ नेविगेशन के लिए अल्ट्रासाउंड का उपयोग करते हैं।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> a, b and c / a, b और c</p>",
+      "option3": "<p> b and c only / केवल b और c</p>",
+      "option4": "<p> a and c only / केवल a और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct regarding ultrasonic waves.<br/> अल्ट्रासोनिक तरंगों के संबंध में सभी कथन सही हैं।</p>"
+    },
+    {
+      "sr_no": 27,
+      "question": "<p> <b>The working of a Rocket is based on the principle of conservation of:<br/> </b>रॉकेट का कार्य करना किसके संरक्षण के सिद्धांत पर आधारित है<b>?</b></p>",
+      "option1": "<p> Mass / द्रव्यमान</p>",
+      "option2": "<p> Charge / आवेश</p>",
+      "option3": "<p> Linear Momentum / रेखीय संवेग</p>",
+      "option4": "<p> Angular Momentum / कोणीय संवेग</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Rocket propulsion follows Newton's Third Law and the law of conservation of linear momentum.<br/> रॉकेट प्रणोदन न्यूटन के तीसरे नियम और रेखीय संवेग संरक्षण के नियम का पालन करता है।</p>"
+    },
+    {
+      "sr_no": 28,
+      "question": "<p> <b>Consider the following statements regarding Heat Transfer:<br/> </b>ऊष्मा स्थानांतरण <b>(Heat Transfer) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Conduction occurs mainly in solids. / </b>चालन <b>(Conduction) </b>मुख्य रूप से ठोस पदार्थों में होता है।<b><br/> (b) Convection requires a material medium. / </b>संवहन <b>(Convection) </b>के लिए भौतिक माध्यम की आवश्यकता होती है।<b><br/> (c) Radiation is the fastest mode of heat transfer and can occur in vacuum. / </b>विकिरण <b>(Radiation) </b>ऊष्मा स्थानांतरण का सबसे तेज़ तरीका है और निर्वात में हो सकता है।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a, b and c / a, b और c</p>",
+      "option4": "<p> a and c / a और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Conduction and convection need a medium, while radiation (EM waves) travels at the speed of light.<br/> चालन और संवहन के लिए माध्यम की आवश्यकता होती है, जबकि विकिरण (EM तरंगें) प्रकाश की गति से चलती हैं।</p>"
+    },
+    {
+      "sr_no": 29,
+      "question": "<p> <b>What happens to the weight of an object when it is taken from the Equator to the Poles?<br/> </b>जब किसी वस्तु को भूमध्य रेखा से ध्रुवों पर ले जाया जाता है तो उसके भार का क्या होता है<b>?</b></p>",
+      "option1": "<p> It decreases / यह घटता है</p>",
+      "option2": "<p> It increases / यह बढ़ता है</p>",
+      "option3": "<p> It remains the same / यह समान रहता है</p>",
+      "option4": "<p> It becomes zero / यह शून्य हो जाता है</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Acceleration due to gravity (g) is maximum at poles and minimum at the equator. Weight W = mg.<br/> गुरुत्वाकर्षण के कारण त्वरण (g) ध्रुवों पर अधिकतम और भूमध्य रेखा पर न्यूनतम होता है। भार W = mg।</p>"
+    },
+    {
+      "sr_no": 30,
+      "question": "<p> <b>Consider the following statements regarding Semiconductors:<br/> </b>अर्धचालकों <b>(Semiconductors) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Their conductivity increases with an increase in temperature. / </b>तापमान बढ़ने के साथ इनकी चालकता बढ़ती है।<b><br/> (b) Silicon and Germanium are examples of semiconductors. / </b>सिलिकॉन और जर्मेनियम अर्धचालकों के उदाहरण हैं।<b><br/> (c) Doping is the process of adding impurities to increase conductivity. / </b>डोपिंग चालकता बढ़ाने के लिए अशुद्धियाँ मिलाने की प्रक्रिया है।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Semiconductors have a negative temperature coefficient of resistance, meaning resistance decreases and conductivity increases with heat.<br/> अर्धचालकों में प्रतिरोध का ऋणात्मक तापमान गुणांक होता है, जिसका अर्थ है कि गर्मी के साथ प्रतिरोध घटता है और चालकता बढ़ती है।</p>"
+    },
+    {
+      "sr_no": 31,
+      "question": "<p> <b>Consider the following statements regarding Radioactivity:<br/> </b>रेडियोधर्मिता <b>(Radioactivity) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Alpha particles have the highest ionizing power. / </b>अल्फा कणों में सबसे अधिक आयनकारी शक्ति होती है।<b><br/> (b) Gamma rays have the highest penetrating power. / </b>गामा किरणों में सबसे अधिक भेदन क्षमता होती है।<b><br/> (c) Beta particles are positively charged. / </b>बीटा कण धनात्मक रूप से आवेशित होते हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Beta particles are fast-moving electrons, hence they are negatively charged.<br/> बीटा कण तेजी से चलने वाले इलेक्ट्रॉन होते हैं, इसलिए वे ऋणात्मक रूप से आवेशित होते हैं।</p>"
+    },
+    {
+      "sr_no": 32,
+      "question": "<p> <b>Which of the following is correct regarding the 'Power of a Lens'?<br/> '</b>लेंस की शक्ति<b>' </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा सही है<b>?</b></p>",
+      "option1": "<p> It is measured in Diopters. / इसे डायोप्टर में मापा जाता है।</p>",
+      "option2": "<p> It is directly proportional to the focal length. / यह फोकल लंबाई के सीधे आनुपातिक है।</p>",
+      "option3": "<p> Concave lenses have positive power. / अवतल लेंस में धनात्मक शक्ति होती है।</p>",
+      "option4": "<p> Convex lenses have negative power. / उत्तल लेंस में ऋणात्मक शक्ति होती है।</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Power P = 1/f. It is inversely proportional to focal length. Convex lenses have positive power, and concave lenses have negative power.<br/> शक्ति P = 1/f । यह फोकल लंबाई के व्युत्क्रमानुपाती है। उत्तल लेंस में धनात्मक शक्ति और अवतल लेंस में ऋणात्मक शक्ति होती है।</p>"
+    },
+    {
+      "sr_no": 33,
+      "question": "<p> <b>Consider the following statements about Magnetic Lines of Force:<br/> </b>चुंबकीय बल रेखाओं के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) They form closed continuous loops. / </b>वे बंद निरंतर लूप बनाते हैं।<b><br/> (b) They intersect each other at the poles. / </b>वे ध्रुवों पर एक<b>-</b>दूसरे को काटते हैं।<b><br/> (c) Outside the magnet, they move from North pole to South pole. / </b>चुंबक के बाहर<b>, </b>वे उत्तरी ध्रुव से दक्षिणी ध्रुव की ओर चलते हैं।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Magnetic field lines never intersect each other at any point.<br/> चुंबकीय क्षेत्र रेखाएं कभी भी किसी बिंदु पर एक-दूसरे को नहीं काटती हैं।</p>"
+    },
+    {
+      "sr_no": 34,
+      "question": "<p> <b>Which of the following statements about 'Isotopes' is correct?<br/> '</b>समस्थानिक<b>' (Isotopes) </b>के बारे में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> They have the same number of neutrons but different atomic numbers. / उनमें न्यूट्रॉन की संख्या समान लेकिन परमाणु क्रमांक भिन्न होते हैं।</p>",
+      "option2": "<p> They have the same atomic number but different mass numbers. / उनका परमाणु क्रमांक समान लेकिन द्रव्यमान संख्या भिन्न होती है।</p>",
+      "option3": "<p> They have different chemical properties. / उनके रासायनिक गुण भिन्न होते हैं।</p>",
+      "option4": "<p> Carbon-12 and Carbon-14 are not isotopes. / कार्बन-12 और कार्बन-14 समस्थानिक नहीं हैं।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Isotopes have the same number of protons (atomic number) but different number of neutrons, leading to different mass numbers.<br/> समस्थानिकों में प्रोटॉन की संख्या (परमाणु क्रमांक) समान होती है लेकिन न्यूट्रॉन की संख्या भिन्न होती है, जिससे द्रव्यमान संख्या भिन्न हो जाती है।</p>"
+    },
+    {
+      "sr_no": 35,
+      "question": "<p> <b>Consider the following statements regarding Bernoulli's Principle:<br/> </b>बरनौली के सिद्धांत के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is based on the law of conservation of energy. / </b>यह ऊर्जा संरक्षण के नियम पर आधारित है<b><br/> (b) As the speed of a moving fluid increases, its pressure decreases. / </b>जैसे<b>-</b>जैसे गतिमान द्रव की गति बढ़ती है<b>, </b>उसका दाब घटता है।<b><br/> (c) It explains the 'lift' of an airplane wing. / </b>यह हवाई जहाज के पंख के <b>'</b>लिफ्ट<b>' </b>की व्याख्या करता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / केवल a और b</p>",
+      "option2": "<p> b and c / केवल b और c</p>",
+      "option3": "<p> a, b and c / a, b और c</p>",
+      "option4": "<p> c only / केवल c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Bernoulli's principle states that for an incompressible fluid, an increase in velocity occurs simultaneously with a decrease in pressure.<br/> बरनौली का सिद्धांत बताता है कि एक असम्पीडित द्रव के लिए, वेग में वृद्धि दबाव में कमी के साथ-साथ होती है।</p>"
+    },
+    {
+      "sr_no": 36,
+      "question": "<p> <b>Which of the following is correct regarding 'Myopia' (Short-sightedness)?<br/> '</b>मायोपिया<b>' (</b>निकट दृष्टिदोष<b>) </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा सही है<b>?</b></p>",
+      "option1": "<p> The person cannot see nearby objects clearly. / व्यक्ति पास की वस्तुओं को स्पष्ट रूप से नहीं देख सकता है।</p>",
+      "option2": "<p> The image is formed behind the retina. / प्रतिबिंब रेटिना के पीछे बनता है।</p>",
+      "option3": "<p> It is corrected using a Concave lens. / इसे अवतल लेंस का उपयोग करके ठीक किया जाता है।</p>",
+      "option4": "<p> It is corrected using a Convex lens. / इसे उत्तल लेंस का उपयोग करके ठीक किया जाता है।</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> In myopia, the eyeball is elongated and the image forms in front of the retina. A diverging (concave) lens is needed for correction.<br/> मायोपिया में, नेत्रगोलक लंबा हो जाता है और प्रतिबिंब रेटिना के सामने बनता है। सुधार के लिए अपसारी (अवतल) लेंस की आवश्यकता होती है।</p>"
+    },
+    {
+      "sr_no": 37,
+      "question": "<p> <b>Consider the following statements regarding Heat and Temperature:<br/> </b>ऊष्मा और तापमान के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Heat is a form of energy. / </b>ऊष्मा ऊर्जा का एक रूप है।<b><br/> (b) Temperature is the degree of hotness or coldness. / </b>तापमान गर्मी या ठंडक का स्तर है।<b><br/> (c) Heat flows from a body at lower temperature to a body at higher temperature spontaneously. / </b>ऊष्मा कम तापमान वाले शरीर से उच्च तापमान वाले शरीर की ओर स्वतः प्रवाहित होती है।<b><br/> Which of the statements given above is/are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> a and c only / केवल a और c</p>",
+      "option3": "<p> a, b and c / a, b और c</p>",
+      "option4": "<p> b only / केवल b</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> According to the Second Law of Thermodynamics, heat always flows from a higher temperature to a lower temperature spontaneously.<br/> ऊष्मागतिकी के दूसरे नियम के अनुसार, ऊष्मा हमेशा उच्च तापमान से निम्न तापमान की ओर स्वतः प्रवाहित होती है।</p>"
+    },
+    {
+      "sr_no": 38,
+      "question": "<p> <b>In which medium does light travel the slowest?<br/> </b>प्रकाश किस माध्यम में सबसे धीमी गति से गमन करता है<b>?</b></p>",
+      "option1": "<p> Vacuum / निर्वात</p>",
+      "option2": "<p> Air / हवा</p>",
+      "option3": "<p> Water / पानी</p>",
+      "option4": "<p> Diamond / हीरा</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Speed of light is inversely proportional to the refractive index. Diamond has the highest refractive index (≈ 2.42), so speed is minimum.<br/> प्रकाश की गति अपवर्तनांक के व्युत्क्रमानुपाती होती है। हीरे का अपवर्तनांक सबसे अधिक (≈ 2.42) होता है, इसलिए गति न्यूनतम होती है।</p>"
+    },
+    {
+      "sr_no": 39,
+      "question": "<p> <b>Consider the following statements regarding Kepler’s Laws:<br/> </b>केपलर के नियमों के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Planets move in elliptical orbits with the Sun at one focus. / </b>ग्रह सूर्य के चारों ओर दीर्घवृत्ताकार कक्षाओं में घूमते हैं।<b><br/> (b) The square of the time period of a planet is proportional to the cube of its semi-major axis (T² ∝ R³). / </b>ग्रह के आवर्तकाल का वर्ग उसके अर्ध<b>-</b>दीर्घ अक्ष के घन के आनुपातिक होता है।<b><br/> (c) A planet moves faster when it is closer to the Sun. / </b>जब कोई ग्रह सूर्य के करीब होता है तो वह तेजी से चलता है।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / केवल a और b</p>",
+      "option2": "<p> b and c / केवल b और c</p>",
+      "option3": "<p> a and c / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. These are Kepler's three laws of planetary motion.<br/> सभी कथन सही हैं। ये ग्रहों की गति के केपलर के तीन नियम हैं।</p>"
+    },
+    {
+      "sr_no": 40,
+      "question": "<p> <b>Which property of light causes the 'Blue color of the sky'?<br/> </b>प्रकाश का कौन<b>-</b>सा गुण <b>'</b>आकाश के नीले रंग<b>' </b>का कारण बनता है<b>?</b></p>",
+      "option1": "<p> Dispersion / विक्षेपण</p>",
+      "option2": "<p> Reflection / परावर्तन</p>",
+      "option3": "<p> Scattering / प्रकीर्णन</p>",
+      "option4": "<p> Refraction / अपवर्तन</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Rayleigh scattering causes shorter wavelengths (blue) to scatter more than longer wavelengths (red).<br/> रेले प्रकीर्णन के कारण लंबी तरंग दैर्ध्य (लाल) की तुलना में छोटी तरंग दैर्ध्य (नीला) अधिक प्रकीर्णित होती है।</p>"
+    },
+    {
+      "sr_no": 41,
+      "question": "<p> <b>Consider the following statements regarding Photoelectric Effect:<br/> </b>प्रकाश विद्युत प्रभाव <b>(Photoelectric Effect) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It demonstrates the particle nature of light. / </b>यह प्रकाश की कण प्रकृति को प्रदर्शित करता है।<b><br/> (b) Kinetic energy of emitted electrons depends on the intensity of light. / </b>उत्सर्जित इलेक्ट्रॉनों की गतिज ऊर्जा प्रकाश की तीव्रता पर निर्भर करती है।<b><br/> (c) It was explained by Albert Einstein using the concept of Photons. / </b>अल्बर्ट आइंस्टीन ने फोटॉन की अवधारणा का उपयोग करके इसकी व्याख्या की थी।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / केवल a और b</p>",
+      "option2": "<p> a and c / केवल a और c</p>",
+      "option3": "<p> b and c / केवल b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Kinetic energy of photoelectrons depends on the frequency of light, while the number of electrons (current) depends on intensity.<br/> फोटोइलेक्ट्रॉनों की गतिज ऊर्जा प्रकाश की आवृत्ति पर निर्भर करती है, जबकि इलेक्ट्रॉनों की संख्या (धारा) तीव्रता पर निर्भर करती है।</p>"
+    },
+    {
+      "sr_no": 42,
+      "question": "<p> <b>Which of the following is an example of an 'Inelastic Collision'?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा <b>'</b>अप्रत्यास्थ टक्कर<b>' (Inelastic Collision) </b>का उदाहरण है<b>?</b></p>",
+      "option1": "<p> Collision between two billiard balls. / दो बिलियर्ड गेंदों के बीच टक्कर।</p>",
+      "option2": "<p> A mud ball sticking to a wall after hitting it. / दीवार से टकराने के बाद मिट्टी की गेंद का उस पर चिपक जाना।</p>",
+      "option3": "<p> Collision between gas molecules. / गैस के अणुओं के बीच टक्कर।</p>",
+      "option4": "<p> None of the above. / उपरोक्त में से कोई नहीं।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> In a perfectly inelastic collision, kinetic energy is not conserved and the objects stick together.<br/> एक पूर्णतः अप्रत्यास्थ टक्कर में, गतिज ऊर्जा संरक्षित नहीं रहती है और वस्तुएं आपस में चिपक जाती हैं।</p>"
+    },
+    {
+      "sr_no": 43,
+      "question": "<p> <b>Consider the following statements regarding Surface Tension and Capillarity:<br/> </b>पृष्ठ तनाव और केशिकत्व के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Insects can walk on water due to surface tension. / </b>कीट पृष्ठ तनाव के कारण पानी पर चल सकते हैं।<b><br/> (b) Capillary rise is zero in space (weightlessness). / </b>अंतरिक्ष <b>(</b>भारहीनता<b>) </b>में केशिकत्व उत्थान शून्य होता है।<b><br/> (c) Hot soup is tastier because it has lower surface tension. / </b>गर्म सूप अधिक स्वादिष्ट होता है क्योंकि इसका पृष्ठ तनाव कम होता है।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / केवल a और b</p>",
+      "option2": "<p> a and c / केवल a और c</p>",
+      "option3": "<p> b and c / केवल b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> In weightlessness, g=0. Since capillary rise h = (2T cosθ) / (rρg), if g=0, h becomes infinite (the liquid fills the tube completely), not zero.<br/> भारहीनता में, g=0। चूँकि केशिकत्व उत्थान h = (2T cosθ) / (rρg) है, यदि g=0 है, तो h अनंत हो जाता है (तरल ट्यूब को पूरी तरह भर देता है), शून्य नहीं।</p>"
+    },
+    {
+      "sr_no": 44,
+      "question": "<p> <b>The resistance of an ideal Ammeter and an ideal Voltmeter should be:<br/> </b>एक आदर्श एमीटर <b>(Ammeter) </b>और एक आदर्श वोल्टमीटर <b>(Voltmeter) </b>का प्रतिरोध होना चाहिए<b>:</b></p>",
+      "option1": "<p> Zero and Infinite respectively. / क्रमशः शून्य और अनंत।</p>",
+      "option2": "<p> Infinite and Zero respectively. / क्रमशः अनंत और शून्य।</p>",
+      "option3": "<p> Zero and Zero. / शून्य और शून्य।</p>",
+      "option4": "<p> Infinite and Infinite. / अनंत और अनंत।</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> An ideal ammeter should have zero resistance to not affect current, while a voltmeter should have infinite resistance to not draw any current.<br/> एक आदर्श एमीटर में धारा को प्रभावित न करने के लिए शून्य प्रतिरोध होना चाहिए, जबकि वोल्टमीटर में कोई धारा न खींचने के लिए अनंत प्रतिरोध होना चाहिए।</p>"
+    },
+    {
+      "sr_no": 45,
+      "question": "<p> <b>Consider the following statements about Primary Colors of Light:<br/> </b>प्रकाश के प्राथमिक रंगों <b>(Primary Colors) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) The primary colors are Red, Green, and Blue. / </b>प्राथमिक रंग लाल<b>, </b>हरा और नीला हैं।<b><br/> (b) Mixing all three primary colors of light produces Black. / </b>प्रकाश के तीनों प्राथमिक रंगों को मिलाने से काला रंग बनता है।<b><br/> (c) Secondary colors are formed by mixing two primary colors. / </b>दो प्राथमिक रंगों को मिलाने से द्वितीयक रंग बनते हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / केवल a और b</p>",
+      "option2": "<p> a and c / केवल a और c</p>",
+      "option3": "<p> b and c / केवल b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Mixing the three primary colors of light (Additive mixing) produces White light, not Black.<br/> प्रकाश के तीन प्राथमिक रंगों को मिलाने (योगात्मक मिश्रण) से सफेद प्रकाश बनता है, काला नहीं।</p>"
+    },
+    {
+      "sr_no": 46,
+      "question": "<p> <b>Consider the following statements regarding Ideal Gases:<br/> </b>आदर्श गैसों <b>(Ideal Gases) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) There are no intermolecular forces of attraction between gas molecules. / </b>गैस के अणुओं के बीच कोई अंतर<b>-</b>आणविक आकर्षण बल नहीं होता है।<b><br/> (b) The volume of the molecules is negligible compared to the total volume of the gas. / </b>गैस के कुल आयतन की तुलना में अणुओं का आयतन नगण्य होता है।<b><br/> (c) Ideal gas behavior is observed at low temperature and high pressure. / </b>निम्न तापमान और उच्च दबाव पर आदर्श गैस व्यवहार देखा जाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Real gases behave ideally at <b>high temperature and low pressure</b>.<br/> वास्तविक गैसें उच्च तापमान और निम्न दबाव पर आदर्श रूप से व्यवहार करती हैं।</p>"
+    },
+    {
+      "sr_no": 47,
+      "question": "<p> <b>Which of the following is correct regarding a 'Fuse Wire' used in domestic circuits?<br/> </b>घरेलू सर्किट में उपयोग किए जाने वाले <b>'</b>फ्यूज वायर<b>' </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा सही है<b>?</b></p>",
+      "option1": "<p> It has high melting point and high resistance. / इसमें उच्च गलनांक और उच्च प्रतिरोध होता है।</p>",
+      "option2": "<p> It has low melting point and high resistance. / इसमें निम्न गलनांक और उच्च प्रतिरोध होता है।</p>",
+      "option3": "<p> It is connected in parallel to the circuit. / यह सर्किट के समानांतर (parallel) जुड़ा होता है।</p>",
+      "option4": "<p> It is made of pure copper. / यह शुद्ध तांबे का बना होता है।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> A fuse wire must have a low melting point so that it melts during overcurrent. It has high resistance to produce sufficient heat.<br/> फ्यूज तार का गलनांक कम होना चाहिए ताकि अत्यधिक धारा के दौरान वह पिघल जाए। पर्याप्त गर्मी पैदा करने के लिए इसमें उच्च प्रतिरोध होता है।</p>"
+    },
+    {
+      "sr_no": 48,
+      "question": "<p> <b>Consider the following statements regarding Heat Engines:<br/> </b>ऊष्मा इंजनों <b>(Heat Engines) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) No heat engine can have 100% efficiency. / </b>किसी भी ऊष्मा इंजन की दक्षता <b>100% </b>नहीं हो सकती।<b><br/> (b) Efficiency of a Carnot engine depends on the nature of the working substance. / </b>कार्नोट इंजन की दक्षता कार्यकारी पदार्थ की प्रकृति पर निर्भर करती है।<b><br/> (c) Efficiency increases if the temperature of the sink is decreased. / </b>सिंक <b>(sink) </b>का तापमान कम करने पर दक्षता बढ़ जाती है।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Efficiency η = 1 - T(sink) / T(source). It is independent of the working substance and depends only on temperatures.<br/> दक्षता η = 1 - T(sink) / T(source)। यह कार्यकारी पदार्थ से स्वतंत्र है और केवल तापमान पर निर्भर करती है।</p>"
+    },
+    {
+      "sr_no": 49,
+      "question": "<p> <b>Which phenomenon is responsible for the 'Twinkling of Stars'?<br/> '</b>तारों के टिमटिमाने<b>' </b>के लिए कौन<b>-</b>सी घटना जिम्मेदार है<b>?</b></p>",
+      "option1": "<p> Atmospheric Reflection / वायुमंडलीय परावर्तन</p>",
+      "option2": "<p> Atmospheric Refraction / वायुमंडलीय अपवर्तन</p>",
+      "option3": "<p> Dispersion of light / प्रकाश का विक्षेपण</p>",
+      "option4": "<p> Internal Reflection / आंतरिक परावर्तन</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Stars twinkle due to continuous refraction of starlight as it passes through different layers of the atmosphere with varying densities.<br/> वायुमंडल की विभिन्न घनत्व वाली परतों से गुजरते समय तारों के प्रकाश के निरंतर अपवर्तन के कारण तारे टिमटिमाते हैं।</p>"
+    },
+    {
+      "sr_no": 50,
+      "question": "<p> <b>Consider the following statements regarding X-Rays:<br/> </b>एक्स<b>-</b>रे <b>(X-Rays) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) They are deflected by electric and magnetic fields. / </b>वे विद्युत और चुंबकीय क्षेत्रों द्वारा विक्षेपित होते हैं।<b><br/> (b) They travel at the speed of light. / </b>वे प्रकाश की गति से यात्रा करते हैं।<b><br/> (c) They can pass through human flesh but are absorbed by bones. / </b>वे मानव मांस से गुजर सकते हैं लेकिन हड्डियों द्वारा अवशोषित कर लिए जाते हैं।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> X-rays are electromagnetic waves (neutral) and are not deflected by electric or magnetic fields.<br/> एक्स-रे विद्युत चुंबकीय तरंगें (तटस्थ) हैं और विद्युत या चुंबकीय क्षेत्रों द्वारा विक्षेपित नहीं होती हैं।</p>"
+    },
+    {
+      "sr_no": 51,
+      "question": "<p> <b>Which of the following is correct regarding 'Latent Heat'?<br/> '</b>गुप्त ऊष्मा<b>' (Latent Heat) </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा सही है<b>?</b></p>",
+      "option1": "<p> It causes an increase in temperature of the substance. / यह पदार्थ के तापमान में वृद्धि का कारण बनता है।</p>",
+      "option2": "<p> It is the heat required for a change of state without changing the temperature. / यह तापमान बदले बिना अवस्था परिवर्तन के लिए आवश्यक ऊष्मा है।</p>",
+      "option3": "<p> Latent heat of vaporization of water is less than latent heat of fusion. / पानी के वाष्पीकरण की गुप्त ऊष्मा संलयन की गुप्त ऊष्मा से कम होती है।</p>",
+      "option4": "<p> Its S.I. unit is Joule/Kelvin. / इसकी S.I. इकाई जूल/केल्विन है।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Latent heat is used to break/form molecular bonds during phase change at constant temperature.<br/> गुप्त ऊष्मा का उपयोग स्थिर तापमान पर अवस्था परिवर्तन के दौरान आणविक बंधों को तोड़ने/बनाने के लिए किया जाता है।</p>"
+    },
+    {
+      "sr_no": 52,
+      "question": "<p> <b>Consider the following statements regarding simple harmonic motion (SHM):<br/> </b>सरल आवर्त गति <b>(SHM) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Acceleration is always proportional to the displacement from mean position. / </b>त्वरण हमेशा माध्य स्थिति से विस्थापन के आनुपातिक होता है।<b><br/> (b) Velocity is maximum at the extreme positions. / </b>चरम स्थितियों <b>(extreme positions) </b>पर वेग अधिकतम होता है।<b><br/> (c) Kinetic energy is maximum at the mean position. / </b>माध्य स्थिति पर गतिज ऊर्जा अधिकतम होती है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a only / केवल a</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> In SHM, velocity is zero at extreme positions and maximum at the mean position.<br/> SHM में, चरम स्थितियों पर वेग शून्य और माध्य स्थिति पर अधिकतम होता है।</p>"
+    },
+    {
+      "sr_no": 53,
+      "question": "<p> <b>Which of the following is an 'Ohmic Conductor'?<br/> </b>निम्नलिखित में से कौन<b>-</b>सा एक <b>'</b>ओमीय चालक<b>' (Ohmic Conductor) </b>है<b>?</b></p>",
+      "option1": "<p> Transistor / ट्रांजिस्टर</p>",
+      "option2": "<p> Silver wire / चांदी का तार</p>",
+      "option3": "<p> LED / एल.ई.डी.</p>",
+      "option4": "<p> Diode / डायोड</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Metals like silver and copper obey Ohm's law (V ∝ I) at constant temperature. Others listed are semiconductor devices (non-ohmic).<br/> चांदी और तांबे जैसी धातुएं स्थिर तापमान पर ओम के नियम (V ∝ I) का पालन करती हैं। सूचीबद्ध अन्य अर्धचालक उपकरण (गैर-ओमीय) हैं।</p>"
+    },
+    {
+      "sr_no": 54,
+      "question": "<p> <b>Consider the following statements regarding Centrifugal Force:<br/> </b>अपकेन्द्री बल <b>(Centrifugal Force) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is a pseudo-force observed in non-inertial frames. / </b>यह गैर<b>-</b>जड़त्वीय फ्रेम में देखा जाने वाला एक छद्म बल <b>(pseudo-force) </b>है।<b><br/> (b) It acts towards the center of the circular path. / </b>यह वृत्ताकार पथ के केंद्र की ओर कार्य करता है।<b><br/> (c) It is used in cream separators to separate cream from milk. / </b>इसका उपयोग दूध से क्रीम अलग करने के लिए क्रीम सेपरेटर में किया जाता है।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Centrifugal force acts <b>away</b> from the center. Centripetal force acts towards the center.<br/> अपकेन्द्री बल केंद्र से दूर कार्य करता है। अभिकेंद्र बल केंद्र की ओर कार्य करता है।</p>"
+    },
+    {
+      "sr_no": 55,
+      "question": "<p> <b>In a step-up transformer, which of the following increases in the secondary coil?<br/> </b>स्टेप<b>-</b>अप ट्रांसफॉर्मर में<b>, </b>द्वितीयक कुंडली <b>(secondary coil) </b>में निम्नलिखित में से क्या बढ़ता है<b>?</b></p>",
+      "option1": "<p> Voltage / वोल्टेज</p>",
+      "option2": "<p> Current / धारा</p>",
+      "option3": "<p> Frequency / आवृत्ति</p>",
+      "option4": "<p> Power / शक्ति</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> A step-up transformer increases voltage while decreasing current to keep power constant (ideally). Frequency remains unchanged.<br/> स्टेप-अप ट्रांसफॉर्मर वोल्टेज बढ़ाता है जबकि शक्ति को स्थिर रखने के लिए धारा को कम करता है। आवृत्ति अपरिवर्तित रहती है।</p>"
+    },
+    {
+      "sr_no": 56,
+      "question": "<p> <b>Consider the following statements regarding Longitudinal Waves:<br/> </b>अनुदैर्ध्य तरंगों <b>(Longitudinal Waves) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Particle vibration is parallel to the direction of wave propagation. / </b>कणों का कंपन तरंग संचरण की दिशा के समानांतर होता है।<b><br/> (b) They can be polarized. / </b>उन्हें ध्रुवित <b>(polarized) </b>किया जा सकता है।<b><br/> (c) Sound waves in air are longitudinal waves. / </b>हवा में ध्वनि तरंगें अनुदैर्ध्य तरंगें होती हैं।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> a and c / a और c</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Only transverse waves (like light) can be polarized. Longitudinal waves cannot be polarized.<br/> केवल अनुप्रस्थ तरंगों (जैसे प्रकाश) को ध्रुवित किया जा सकता है। अनुदैर्ध्य तरंगों को ध्रुवित नहीं किया जा सकता।</p>"
+    },
+    {
+      "sr_no": 57,
+      "question": "<p> <b>Which color of light is least scattered by fog or smoke?<br/> </b>कोहरे या धुएं से प्रकाश का कौन<b>-</b>सा रंग सबसे कम प्रकीर्णित <b>(scattered) </b>होता है<b>?</b></p>",
+      "option1": "<p> Blue / नीला</p>",
+      "option2": "<p> Yellow / पीला</p>",
+      "option3": "<p> Red / लाल</p>",
+      "option4": "<p> Violet / बैंगनी</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Red has the longest wavelength, so it is scattered the least. That's why danger signals are red.<br/> लाल रंग की तरंग दैर्ध्य सबसे लंबी होती है, इसलिए यह सबसे कम प्रकीर्णित होता है। इसीलिए खतरे के संकेत लाल होते हैं।</p>"
+    },
+    {
+      "sr_no": 58,
+      "question": "<p> <b>Consider the following statements regarding Mass and Weight:<br/> </b>द्रव्यमान और भार के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Mass is a scalar quantity while weight is a vector quantity. / </b>द्रव्यमान एक अदिश राशि है जबकि भार एक सदिश राशि है।<b><br/> (b) Mass of an object remains constant everywhere. / </b>किसी वस्तु का द्रव्यमान हर जगह स्थिर रहता है।<b><br/> (c) Weight of an object becomes zero at the center of the Earth. / </b>पृथ्वी के केंद्र पर किसी वस्तु का भार शून्य हो जाता है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a, b and c / a, b और c</p>",
+      "option4": "<p> c only / केवल c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. Weight W = mg. At the center of Earth, g = 0, so W = 0.<br/> सभी कथन सही हैं। भार W = mg। पृथ्वी के केंद्र पर g = 0, इसलिए W = 0</p>"
+    },
+    {
+      "sr_no": 59,
+      "question": "<p> <b>The magnetic field inside a long current-carrying solenoid is:<br/> </b>धारा प्रवाहित करने वाले एक लंबे सोलेनोइड <b>(solenoid) </b>के अंदर चुंबकीय क्षेत्र होता है<b>:</b></p>",
+      "option1": "<p> Zero / शून्य</p>",
+      "option2": "<p> Decreases towards the ends / सिरों की ओर घटता है</p>",
+      "option3": "<p> Uniform at all points / सभी बिंदुओं पर एकसमान</p>",
+      "option4": "<p> Varies with distance from the axis / अक्ष से दूरी के साथ बदलता है</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Inside a solenoid, the magnetic field lines are parallel and uniform.<br/> एक सोलेनोइड के अंदर, चुंबकीय क्षेत्र रेखाएं समानांतर और एकसमान होती हैं।</p>"
+    },
+    {
+      "sr_no": 60,
+      "question": "<p> <b>Which of the following is correct regarding 'Kirchhoff's First Law' (Junction Rule)?<br/> '</b>किरचॉफ के पहले नियम<b>' (</b>जंक्शन नियम<b>) </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा सही है<b>?</b></p>",
+      "option1": "<p> It is based on the conservation of energy. / यह ऊर्जा संरक्षण पर आधारित है।</p>",
+      "option2": "<p> It states that the algebraic sum of currents at a junction is zero. / यह बताता है कि एक जंक्शन पर धाराओं का बीजगणितीय योग शून्य होता है।</p>",
+      "option3": "<p> It is based on the conservation of mass. / यह द्रव्यमान संरक्षण पर आधारित है।</p>",
+      "option4": "<p> It is used to find the voltage in a closed loop. / इसका उपयोग बंद लूप में वोल्टेज खोजने के लिए किया जाता है।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Kirchhoff's First Law is based on the <b>conservation of charge</b>.<br/> किरचॉफ का पहला नियम आवेश के संरक्षण पर आधारित है।</p>"
+    },
+    {
+      "sr_no": 61,
+      "question": "<p> <b>Consider the following statements regarding Radioactivity and Nuclear Energy:<br/> </b>रेडियोधर्मिता और परमाणु ऊर्जा के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Nuclear Fission is used in Nuclear Reactors for electricity generation. / </b>परमाणु रिएक्टरों में बिजली उत्पादन के लिए परमाणु विखंडन <b>(Fission) </b>का उपयोग किया जाता है।<b><br/> (b) Control rods in nuclear reactors are made of materials like Boron or Cadmium. / </b>परमाणु रिएक्टरों में नियंत्रण छड़ें बोरोन या कैडमियम जैसी सामग्री से बनी होती हैं।<b><br/> (c) Heavy water (D₂O) is used as a fuel in nuclear reactors. / </b>परमाणु रिएक्टरों में भारी जल <b>(D₂O) </b>का उपयोग ईंधन के रूप में किया जाता है।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Heavy water is used as a <b>moderator</b> or coolant to slow down neutrons, not as a fuel. Uranium or Plutonium are used as fuels.<br/> भारी जल का उपयोग न्यूट्रॉन को धीमा करने के लिए मंदक <b>(moderator)</b> या शीतलक के रूप में किया जाता है, ईंधन के रूप में नहीं। यूरेनियम या प्लूटोनियम का उपयोग ईंधन के रूप में किया जाता है।</p>"
+    },
+    {
+      "sr_no": 62,
+      "question": "<p> <b>Which of the following statements about 'Optical Fibers' is correct?<br/> '</b>ऑप्टिकल फाइबर<b>' </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> They work on the principle of Refraction. / वे अपवर्तन के सिद्धांत पर कार्य करते हैं।</p>",
+      "option2": "<p> They work on the principle of Total Internal Reflection. / वे पूर्ण आंतरिक परावर्तन के सिद्धांत पर कार्य करते हैं।</p>",
+      "option3": "<p> They are used for generating electricity. / इनका उपयोग बिजली पैदा करने के लिए किया जाता है।</p>",
+      "option4": "<p> Information is transmitted in the form of sound waves. / सूचना का प्रसारण ध्वनि तरंगों के रूप में किया जाता है।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Optical fibers transmit data as light pulses using the principle of Total Internal Reflection (TIR) with minimal energy loss.<br/> ऑप्टिकल फाइबर न्यूनतम ऊर्जा हानि के साथ पूर्ण आंतरिक परावर्तन (TIR) के सिद्धांत का उपयोग करके प्रकाश दालों के रूप में डेटा संचारित करते हैं।</p>"
+    },
+    {
+      "sr_no": 63,
+      "question": "<p> <b>Consider the following statements regarding Surface Tension:<br/> </b>पृष्ठ तनाव के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Surface tension is a scalar quantity. / </b>पृष्ठ तनाव एक अदिश राशि है।<b><br/> (b) It is defined as force per unit length. / </b>इसे प्रति इकाई लंबाई बल के रूप में परिभाषित किया गया है।<b><br/> (c) The S.I. unit of surface tension is Newton-meter (N·m). / </b>पृष्ठ तनाव की <b>S.I. </b>इकाई न्यूटन<b>-</b>मीटर <b>(N·m) </b>है।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The S.I. unit of surface tension is Newton per meter (N/m), not Newton-meter.<br/> पृष्ठ तनाव की S.I. इकाई न्यूटन प्रति मीटर (N/m) है, न कि न्यूटन-मीटर।</p>"
+    },
+    {
+      "sr_no": 64,
+      "question": "<p> <b>Which of the following correctly describes 'Dispersion of Light'?<br/> </b>निम्नलिखित में से कौन <b>'</b>प्रकाश के विक्षेपण<b>' (Dispersion of Light) </b>का सही वर्णन करता है<b>?</b></p>",
+      "option1": "<p> Bending of light when it enters from one medium to another. / प्रकाश का एक माध्यम से दूसरे माध्यम में प्रवेश करते समय मुड़ना।</p>",
+      "option2": "<p> Bending of light around the corners of an obstacle. / किसी बाधा के कोनों पर प्रकाश का मुड़ना।</p>",
+      "option3": "<p> Splitting of white light into its constituent colors. / श्वेत प्रकाश का अपने घटक रंगों में विभाजित होना।</p>",
+      "option4": "<p> Bouncing back of light from a polished surface. / पॉलिश की हुई सतह से प्रकाश का वापस लौटना।</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Dispersion is the splitting of white light into VIBGYOR when passing through a prism due to different speeds of different colors.<br/> विक्षेपण, विभिन्न रंगों की अलग-अलग गति के कारण प्रिज्म से गुजरते समय श्वेत प्रकाश का VIBGYOR में विभाजित होना है।</p>"
+    },
+    {
+      "sr_no": 65,
+      "question": "<p> <b>Consider the following statements regarding Semiconductors and Doping:<br/> </b>अर्धचालकों और डोपिंग के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) P-type semiconductors are formed by adding pentavalent impurities. / </b>पेंटावेलेंट अशुद्धियाँ मिलाने से <b>P-</b>प्रकार के अर्धचालक बनते हैं।<b><br/> (b) N-type semiconductors are formed by adding pentavalent impurities like Phosphorus. / </b>फास्फोरस जैसी पेंटावेलेंट अशुद्धियाँ मिलाने से <b>N-</b>प्रकार के अर्धचालक बनते हैं।<b><br/> (c) In P-type semiconductors, holes are the majority charge carriers. / P-</b>प्रकार के अर्धचालकों में<b>, </b>होल <b>(holes) </b>बहुसंख्यक आवेश वाहक होते हैं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> P-type semiconductors are formed by adding <b>trivalent</b> impurities (like Boron or Aluminum), not pentavalent.<br/> P-प्रकार के अर्धचालक ट्राइवेलेंट अशुद्धियों (जैसे बोरोन या एल्युमिनियम) को मिलाने से बनते हैं, पेंटावेलेंट नहीं।</p>"
+    },
+    {
+      "sr_no": 66,
+      "question": "<p> <b>The stars appear to move from East to West because:<br/> </b>तारे पूर्व से पश्चिम की ओर चलते हुए प्रतीत होते हैं क्योंकि<b>:</b></p>",
+      "option1": "<p> All stars move from East to West. / सभी तारे पूर्व से पश्चिम की ओर चलते हैं।</p>",
+      "option2": "<p> The Earth rotates from West to East on its axis. / पृथ्वी अपनी धुरी पर पश्चिम से पूर्व की ओर घूमती है।</p>",
+      "option3": "<p> The Earth rotates from East to West on its axis. / पृथ्वी अपनी धुरी पर पूर्व से पश्चिम की ओर घूमती है।</p>",
+      "option4": "<p> The background of the universe moves. / ब्रह्मांड की पृष्ठभूमि चलती है।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The apparent motion of celestial bodies is due to the Earth's rotation from West to East.<br/> आकाशीय पिंडों की स्पष्ट गति पृथ्वी के पश्चिम से पूर्व की ओर घूमने के कारण होती है।</p>"
+    },
+    {
+      "sr_no": 67,
+      "question": "<p> <b>Consider the following statements regarding the Heating Effect of Electric Current:<br/> </b>विद्युत धारा के तापीय प्रभाव के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It is also known as Joule's heating. / </b>इसे जूल हीटिंग के रूप में भी जाना जाता है।<b><br/> (b) Heat produced is directly proportional to the square of the current (H ∝ I²). / </b>उत्पन्न ऊष्मा धारा के वर्ग के सीधे आनुपातिक होती है <b>(H ∝ I²)</b>।<b><br/> (c) Electric heaters and toasters work on this principle. / </b>इलेक्ट्रिक हीटर और टोस्टर इसी सिद्धांत पर काम करते हैं।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements correctly describe Joule's Law of Heating, where H = I²Rt.<br/> सभी कथन जूल के तापन नियम का सही वर्णन करते हैं, जहाँ H = I²Rt है।</p>"
+    },
+    {
+      "sr_no": 68,
+      "question": "<p> <b>Which of the following is correct regarding 'Inertia'?<br/> '</b>जड़त्व<b>' (Inertia) </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा सही है<b>?</b></p>",
+      "option1": "<p> It is the ability of a body to change its state of rest. / यह किसी पिंड की अपनी विश्राम की स्थिति को बदलने की क्षमता है।</p>",
+      "option2": "<p> Inertia is directly proportional to the mass of the object. / जड़त्व वस्तु के द्रव्यमान के सीधे आनुपातिक होता है।</p>",
+      "option3": "<p> Only moving objects have inertia. / केवल गतिमान वस्तुओं में ही जड़त्व होता है।</p>",
+      "option4": "<p> It is measured in Newtons. / इसे न्यूटन में मापा जाता है।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Inertia is the resistance of an object to any change in its motion. Mass is the measure of inertia.<br/> जड़त्व किसी वस्तु की अपनी गति में किसी भी परिवर्तन के प्रति प्रतिरोध है। द्रव्यमान जड़त्व का माप है।</p>"
+    },
+    {
+      "sr_no": 69,
+      "question": "<p> <b>Consider the following statements regarding Electromagnetic Spectrum:<br/> </b>विद्युत चुंबकीय स्पेक्ट्रम के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Gamma rays have the minimum wavelength. / </b>गामा किरणों की तरंग दैर्ध्य न्यूनतम होती है।<b><br/> (b) Radio waves have the maximum wavelength. / </b>रेडियो तरंगों की तरंग दैर्ध्य अधिकतम होती है।<b><br/> (c) Infrared waves are used in night vision goggles. / </b>इन्फ्रारेड तरंगों का उपयोग नाइट विजन गॉगल्स में किया जाता है।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b / केवल a और b</p>",
+      "option2": "<p> b and c / केवल b और c</p>",
+      "option3": "<p> a and c / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. The order of wavelength is Radio &gt; Microwave &gt; Infrared &gt; Visible &gt; UV &gt; X-ray &gt; Gamma.<br/> सभी कथन सही हैं। तरंग दैर्ध्य का क्रम है: रेडियो &gt; माइक्रोवेव &gt; इन्फ्रारेड &gt; दृश्य &gt; यूवी &gt; एक्स-रे &gt; गामा।</p>"
+    },
+    {
+      "sr_no": 70,
+      "question": "<p> <b>Which of the following is correct regarding the 'Magnifying Glass' (Simple Microscope)?<br/> '</b>आवर्धक कांच<b>' (Magnifying Glass) </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा सही है<b>?</b></p>",
+      "option1": "<p> It is a Concave lens. / यह एक अवतल लेंस है।</p>",
+      "option2": "<p> It is a Convex lens used for viewing objects at a distance. / यह दूर की वस्तुओं को देखने के लिए उपयोग किया जाने वाला उत्तल लेंस है।</p>",
+      "option3": "<p> It is a Convex lens of short focal length. / यह कम फोकल लंबाई वाला एक उत्तल लेंस है।</p>",
+      "option4": "<p> It always forms a real and inverted image. / यह हमेशा वास्तविक और उल्टा प्रतिबिंब बनाता है।</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> A magnifying glass is a convex lens that produces a virtual, erect, and magnified image when the object is placed within its focal length.<br/> आवर्धक कांच एक उत्तल लेंस है जो फोकल लंबाई के भीतर वस्तु रखे जाने पर आभासी, सीधा और बड़ा प्रतिबिंब बनाता है।</p>"
+    },
+    {
+      "sr_no": 71,
+      "question": "<p> <b>Consider the following statements regarding Heat Radiation:<br/> </b>ऊष्मा विकिरण के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Dark surfaces are better absorbers of heat than light surfaces. / </b>गहरी सतहें हल्की सतहों की तुलना में ऊष्मा की बेहतर अवशोषक होती हैं।<b><br/> (b) Rough surfaces are better emitters of heat than polished surfaces. / </b>खुरदरी सतहें पॉलिश की हुई सतहों की तुलना में ऊष्मा की बेहतर उत्सर्जक होती हैं।<b><br/> (c) Vacuum is necessary for heat transfer by radiation. / </b>विकिरण द्वारा ऊष्मा स्थानांतरण के लिए निर्वात आवश्यक है।<b><br/> Which of the statements given above is/are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a, b and c / a, b और c</p>",
+      "option4": "<p> a only / केवल a</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Vacuum is not <i>necessary</i> for radiation, though radiation can occur through it. Radiation can also travel through transparent media.<br/> विकिरण के लिए निर्वात आवश्यक नहीं है, हालांकि इसके माध्यम से विकिरण हो सकता है। विकिरण पारदर्शी माध्यमों से भी यात्रा कर सकता है।</p>"
+    },
+    {
+      "sr_no": 72,
+      "question": "<p> <b>Which of the following is correct regarding 'Capacitance'?<br/> '</b>धारिता<b>' (Capacitance) </b>के संबंध में निम्नलिखित में से कौन<b>-</b>सा सही है<b>?</b></p>",
+      "option1": "<p> Its S.I. unit is Farad. / इसकी S.I. इकाई फैराड (Farad) है।</p>",
+      "option2": "<p> It is the ability to store magnetic energy. / यह चुंबकीय ऊर्जा को संग्रहीत करने की क्षमता है।</p>",
+      "option3": "<p> It is defined as C = V/Q. / इसे C = V/Q के रूप में परिभाषित किया गया है।</p>",
+      "option4": "<p> It increases if the distance between plates of a parallel plate capacitor is increased. / यदि समानांतर प्लेट कैपेसिटर की प्लेटों के बीच की दूरी बढ़ाई जाती है तो यह बढ़ जाती है।</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Capacitance is the ability to store electric charge (C = Q/V). For a parallel plate capacitor, C = ∈₀ A / d, so it decreases if distance d increases.<br/> धारिता विद्युत आवेश को संग्रहीत करने की क्षमता है (C = Q/V)। समानांतर प्लेट कैपेसिटर के लिए, C = ∈₀ A / d है, इसलिए दूरी d बढ़ने पर यह घट जाती है।</p>"
+    },
+    {
+      "sr_no": 73,
+      "question": "<p> <b>Consider the following statements regarding 'Sound Pitch' and 'Loudness':<br/> '</b>ध्वनि के तारत्व<b>' (Pitch) </b>और <b>'</b>प्रबलता<b>' (Loudness) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Pitch of sound depends on the frequency of vibration. / </b>ध्वनि का तारत्व कंपन की आवृत्ति पर निर्भर करता है।<b><br/> (b) Loudness of sound depends on the amplitude of vibration. / </b>ध्वनि की प्रबलता कंपन के आयाम <b>(amplitude) </b>पर निर्भर करती है।<b><br/> (c) Loudness is measured in Hertz. / </b>प्रबलता को हर्ट्ज में मापा जाता है।<b><br/> Which of the statements given above are correct? <br/> </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Loudness is measured in Decibels (dB). Hertz (Hz) is the unit of frequency.<br/> प्रबलता को डेसिबल (dB) में मापा जाता है। हर्ट्ज (Hz) आवृत्ति की इकाई है।</p>"
+    },
+    {
+      "sr_no": 74,
+      "question": "<p> <b>Which property of a liquid is used in the working of a hydraulic lift?<br/> </b>हाइड्रोलिक लिफ्ट के कार्य करने में द्रव के किस गुण का उपयोग किया जाता है<b>?</b></p>",
+      "option1": "<p> Bernoulli's Principle / बरनौली का सिद्धांत</p>",
+      "option2": "<p> Pascal's Law / पास्कल का नियम</p>",
+      "option3": "<p> Archimedes' Principle / आर्किमिडीज का सिद्धांत</p>",
+      "option4": "<p> Newton's Law of Cooling / न्यूटन का शीतलन नियम</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Pascal’s law states that pressure applied to an enclosed fluid is transmitted undiminished to every portion of the fluid.<br/> पास्कल का नियम कहता है कि एक बंद द्रव पर लगाया गया दबाव द्रव के प्रत्येक भाग में बिना कम हुए संचरित होता है।</p>"
+    },
+    {
+      "sr_no": 75,
+      "question": "<p> <b>Consider the following statements regarding G.P.S. (Global Positioning System):<br/> G.P.S. (</b>ग्लोबल पोजिशनिंग सिस्टम<b>) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It uses a constellation of satellites to provide location data. / </b>यह स्थान डेटा प्रदान करने के लिए उपग्रहों के एक समूह का उपयोग करता है।<b><br/> (b) It works using radio waves. / </b>यह रेडियो तरंगों का उपयोग करके काम करता है।<b><br/> (c) It requires at least 10 satellites to determine a position on Earth. / </b>पृथ्वी पर स्थिति निर्धारित करने के लिए कम से कम <b>10 </b>उपग्रहों की आवश्यकता होती है।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> GPS requires a minimum of <b>4 satellites</b> to accurately determine a user's 3D position (latitude, longitude, altitude) and time.<br/> सटीक रूप से उपयोगकर्ता की 3D स्थिति (अक्षांश, देशांतर, ऊंचाई) और समय निर्धारित करने के लिए GPS को कम से कम <b>4 </b>उपग्रहों की आवश्यकता होती है।</p>"
+    }
+  ]
+};
+
+// Extract questions and time from new structure
+const questions = quizData.questions;
+const totalTimeMinutes = quizData.time_minutes;
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = totalTimeMinutes * 60;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape') {
+      if (isPaletteOpen) {
+        closePalette();
+      }
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimer();
+    
+    // Auto-submit when time runs out
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      alert('Time is up! Submitting quiz automatically.');
+      submitQuiz();
+      return;
+    }
+    
+    if (timerSeconds <= 120) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    questionText.innerHTML = '';
+    const questionContent = createOptionContent(q.question);
+    questionText.appendChild(questionContent);
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message = `You have ${unattempted} unanswered questions. ${message}`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  const timeTaken = (totalTimeMinutes * 60) - timerSeconds;
+  const minutesTaken = Math.floor(timeTaken / 60);
+  const secondsTaken = timeTaken % 60;
+  const timeTakenText = `${minutesTaken}m ${secondsTaken}s`;
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeTakenText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    let questionDisplay = '';
+    if (isImageURL(q.question)) {
+      questionDisplay = `<img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`;
+    } else {
+      questionDisplay = q.question;
+    }
+    html += `<div class="question-review">
+      <h4>Q${q.sr_no}: ${questionDisplay}</h4>`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution && q.solution.trim() !== '') {
+      let solutionDisplay = '';
+      if (isImageURL(q.solution)) {
+        solutionDisplay = `<img src="${q.solution}" class="solution-image" alt="Solution" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">`;
+      } else {
+        solutionDisplay = q.solution;
+      }
+      
+      html += `<div class="solution-section" style="margin-top: 15px; padding: 15px; background: #f0f8ff; border-left: 4px solid #007bff; border-radius: 8px;">
+        <strong style="color: #007bff;">💡 Solution:</strong>
+        <div style="margin-top: 8px; color: #333;">${solutionDisplay}</div>
+      </div>`;
+    }
+    
+    html += `</div>`;
+  });
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https')) &&
+    (str.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i));
+}
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = totalTimeMinutes * 60;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    updateTimer();
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHYSICS FULL TEST</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">MOTION 3.0 - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem('quizState', JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem('quizState');
+    if (saved) {
+      const state = JSON.parse(saved);
+      if (Date.now() - state.timestamp < 24 * 60 * 60 * 1000) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || (totalTimeMinutes * 60); // MODIFIED
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem('quizState');
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

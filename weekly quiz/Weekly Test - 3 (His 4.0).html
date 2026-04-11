@@ -1,0 +1,2735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>HISTORY TEST - 3</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.question-image, .option-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: block;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎯 HISTORY TEST - 3</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color)"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color)"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color)"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color)"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">Clear</button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">Submit Quiz</button>
+</div>
+
+<script>
+// MODIFIED: Quiz data structure with time_minutes
+const quizData = {
+  "time_minutes": 40,
+  "questions": [
+    {
+      "sr_no": 1,
+      "question": "<p> <b>Consider the following statements about the 'Chalisa' or 'Turkan-i-Chahalgani': <br/> '</b>चालीसा<b>' </b>या <b>'</b>तुर्कान<b>-</b>ए<b>-</b>चहलगानी<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It was a group of 40 loyal slave commanders created by Iltutmish. / </b>यह इल्तुतमिश द्वारा बनाए गए <b>40 </b>वफादार गुलाम कमांडरों का एक समूह था।<b><br/> (b) They were all Afghans. / </b>वे सभी अफगान थे।<b><br/> (c) It played a crucial role in the administration but later became a threat to the crown. / </b>इसने प्रशासन में महत्वपूर्ण भूमिका निभाई लेकिन बाद में ताज <b>(</b>सुल्तान<b>) </b>के लिए खतरा बन गया।<b><br/> Which of the above statements is/are correct? / </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> Only a / केवल a</p>",
+      "option2": "<p> a and c only / केवल a और c</p>",
+      "option3": "<p> b and c only / केवल b और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Turkan-i-Chahalgani were mostly Turkish slaves (Turks), not Afghans. They were created by Iltutmish and destroyed by Balban.<br/> तुर्कान-ए-चहलगानी मुख्य रूप से तुर्की गुलाम (तुर्क) थे, अफगान नहीं। इन्हें इल्तुतमिश ने बनाया था और बलबन ने नष्ट कर दिया था।</p>"
+    },
+    {
+      "sr_no": 2,
+      "question": "<p> <b>Who wrote the famous book 'Madura Vijayam', describing the conquest of Madurai by the Vijayanagar Empire? <br/> </b>विजयनगर साम्राज्य द्वारा मदुरै की विजय का वर्णन करने वाली प्रसिद्ध पुस्तक <b>'</b>मधुरा विजयम<b>' </b>किसने लिखी थी<b>?</b></p>",
+      "option1": "<p> Hannamma / हन्नम्मा</p>",
+      "option2": "<p> Gangadevi / गंगादेवी</p>",
+      "option3": "<p> Tirumalamba / तिरुमलाम्बा</p>",
+      "option4": "<p> Molla / मोल्ला</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Gangadevi, the wife of Kumara Kampana (son of Bukka I), wrote 'Madura Vijayam' in Sanskrit.<br/> कुमार कम्पाना (बुक्का प्रथम के पुत्र) की पत्नी गंगादेवी ने संस्कृत में 'मधुरा विजयम' लिखी थी।</p>"
+    },
+    {
+      "sr_no": 3,
+      "question": "<p> <b>With reference to the 'Mansabdari System' introduced by Akbar, consider the following statements: <br/> </b>अकबर द्वारा शुरू की गई <b>'</b>मनसबदारी प्रणाली<b>' </b>के संदर्भ में<b>, </b>निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) The rank was divided into two parts: 'Zat' and 'Sawar'. / </b>पद को दो भागों में विभाजित किया गया था<b>: '</b>जात<b>' </b>और <b>'</b>सवार<b>'</b>।<b><br/> (b) 'Zat' indicated the personal status and salary of the officer. / '</b>जात<b>' </b>अधिकारी की व्यक्तिगत स्थिति और वेतन का संकेत देता था।<b><br/> (c) 'Sawar' indicated the number of cavalrymen (horsemen) the officer was required to maintain. / '</b>सवार<b>' </b>उन घुड़सवारों की संख्या को दर्शाता था जिन्हें बनाए रखना अधिकारी के लिए आवश्यक था।<b><br/> Which of the above statements is/are correct? / </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> c only / केवल c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. The Mansabdari system was the administrative framework where Zat fixed the rank and Sawar fixed the military contingent.<br/> सभी कथन सही हैं। मनसबदारी प्रणाली प्रशासनिक ढांचा थी जहाँ जात से पद और सवार से सैन्य दल की संख्या तय होती थी।</p>"
+    },
+    {
+      "sr_no": 4,
+      "question": "<p> <b>Arrange the following experiments of Muhammad Bin Tughlaq in chronological order: <br/> </b>मुहम्मद बिन तुगलक के निम्नलिखित प्रयोगों को कालानुक्रमिक क्रम में व्यवस्थित करें<b>:<br/> (a) Transfer of Capital / </b>राजधानी का स्थानांतरण<b><br/> (b) Introduction of Token Currency / </b>सांकेतिक मुद्रा का प्रचलन<b><br/> (c) Taxation in Doab / </b>दोआब में कराधान<b><br/> (d) Khurasan Expedition / </b>खुरासान अभियान<b><br/> Select the correct option: / </b>सही विकल्प चुनें<b>:</b></p>",
+      "option1": "<p> a - c - b - d</p>",
+      "option2": "<p> c - a - b - d</p>",
+      "option3": "<p> c - b - a - d</p>",
+      "option4": "<p> a - b - c - d</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Taxation in Doab (1326), Transfer of Capital (1327), Token Currency (1329), Khurasan Expedition (later).<br/> दोआब में कराधान (1326), राजधानी स्थानांतरण (1327), सांकेतिक मुद्रा (1329), खुरासान अभियान (बाद में)।</p>"
+    },
+    {
+      "sr_no": 5,
+      "question": "<p> <b>The 'Gol Gumbaz', famous for its whispering gallery, is the mausoleum of: <br/> '</b>गोल गुम्बज<b>', </b>जो अपनी विस्फरिंग गैलरी के लिए प्रसिद्ध है<b>, </b>किसका मकबरा है<b>?</b></p>",
+      "option1": "<p> Muhammad Quli Qutb Shah / मुहम्मद कुली कुतुब शाह</p>",
+      "option2": "<p> Muhammad Adil Shah / मुहम्मद आदिल शाह</p>",
+      "option3": "<p> Ibrahim Adil Shah II / इब्राहिम आदिल शाह द्वितीय</p>",
+      "option4": "<p> Malik Ambar / मलिक अंबर</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Gol Gumbaz is the mausoleum of Muhammad Adil Shah (Bijapur). It has one of the largest domes in the world.<br/> गोल गुम्बज मुहम्मद आदिल शाह (बीजापुर) का मकबरा है। इसमें दुनिया के सबसे बड़े गुंबदों में से एक है।</p>"
+    },
+    {
+      "sr_no": 6,
+      "question": "<p> <b>Consider the following statements regarding the 'Battle of Khanwa' (1527): <br/> '</b>खानवा के युद्ध<b>' (1527) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It was fought between Babur and Rana Sanga of Mewar. / </b>यह बाबर और मेवाड़ के राणा सांगा के बीच लड़ा गया था।<b><br/> (b) Babur declared 'Jihad' and took the title of 'Ghazi' after this battle. / </b>बाबर ने <b>'</b>जिहाद<b>' </b>की घोषणा की और इस युद्ध के बाद <b>'</b>गाजी<b>' </b>की उपाधि धारण की।<b><br/> (c) This battle established the Mughal rule in India more firmly than the First Battle of Panipat. / </b>इस युद्ध ने पानीपत के प्रथम युद्ध की तुलना में भारत में मुगल शासन को अधिक मजबूती से स्थापित किया।<b><br/> Which of the statements given above are correct? / </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> a and c only / केवल a और c</p>",
+      "option3": "<p> b and c only / केवल b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. Khanwa was a decisive battle that crushed the Rajput confederacy.<br/> सभी कथन सही हैं। खानवा एक निर्णायक युद्ध था जिसने राजपूत संघ को कुचल दिया था।</p>"
+    },
+    {
+      "sr_no": 7,
+      "question": "<p> <b>Which Sultan of Delhi died while playing 'Chaugan' (Polo)? <br/> </b>दिल्ली के किस सुल्तान की मृत्यु <b>'</b>चौगान<b>' (</b>पोलो<b>) </b>खेलते समय हुई थी<b>?</b></p>",
+      "option1": "<p> Iltutmish / इल्तुतमिश</p>",
+      "option2": "<p> Qutbuddin Aibak / कुतुबुद्दीन ऐबक</p>",
+      "option3": "<p> Balban / बलबन</p>",
+      "option4": "<p> Sikandar Lodi / सिकंदर लोदी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Qutbuddin Aibak died in 1210 AD in Lahore while playing Chaugan.<br/> कुतुबुद्दीन ऐबक की मृत्यु 1210 ईस्वी में लाहौर में चौगान खेलते समय हुई थी।</p>"
+    },
+    {
+      "sr_no": 8,
+      "question": "<p> <b>The term 'Ghaz-i-Sikandari' introduced by Sikandar Lodi was related to: <br/> </b>सिकंदर लोदी द्वारा शुरू किया गया शब्द <b>'</b>गज<b>-</b>ए<b>-</b>सिकंदरी<b>' </b>किससे संबंधित था<b>?</b></p>",
+      "option1": "<p> A unit of land measurement / भूमि माप की एक इकाई</p>",
+      "option2": "<p> A military rank / एक सैन्य पद</p>",
+      "option3": "<p> A tax on non-Muslims / गैर-मुस्लिमों पर कर</p>",
+      "option4": "<p> A type of gold coin / एक प्रकार का सोने का सिक्का</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Ghaz-i-Sikandari was a unit of land measurement (32 digits) introduced by Sikandar Lodi.<br/> गज-ए-सिकंदरी सिकंदर लोदी द्वारा शुरू की गई भूमि माप की एक इकाई (32 अंक) थी।</p>"
+    },
+    {
+      "sr_no": 9,
+      "question": "<p> <b>Consider the following pairs of Departments and their functions during the Delhi Sultanate: <br/> </b>दिल्ली सल्तनत के दौरान विभागों और उनके कार्यों के निम्नलिखित युग्मों पर विचार करें<b>:<br/> (a) Diwan-i-Arz : Department of Military / </b>दीवान<b>-</b>ए<b>-</b>अर्ज <b>: </b>सैन्य विभाग<b><br/> (b) Diwan-i-Risalat : Department of Correspondence / </b>दीवान<b>-</b>ए<b>-</b>रिसालत <b>: </b>पत्राचार विभाग<b><br/> (c) Diwan-i-Bandagan : Department of Slaves / </b>दीवान<b>-</b>ए<b>-</b>बंदगान <b>: </b>दासों का विभाग<b><br/> (d) Diwan-i-Mustakhraj : Department of Arrears / </b>दीवान<b>-</b>ए<b>-</b>मुस्तखराज <b>: </b>बकाया विभाग<b><br/> How many of the above pairs are correctly matched? / </b>उपरोक्त में से कितने युग्म सही सुमेलित हैं<b>?</b></p>",
+      "option1": "<p> Only one pair / केवल एक युग्म</p>",
+      "option2": "<p> Only two pairs / केवल दो युग्म</p>",
+      "option3": "<p> Only three pairs / केवल तीन युग्म</p>",
+      "option4": "<p> All four pairs / सभी चार युग्म</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Diwan-i-Risalat was the Department of Religious/Foreign Affairs, not Correspondence (which was Diwan-i-Insha).<br/> दीवान-ए-रिसालत धार्मिक/विदेशी मामलों का विभाग था, न कि पत्राचार (जो दीवान-ए-इंशा था)।</p>"
+    },
+    {
+      "sr_no": 10,
+      "question": "<p> <b>Who was the famous musician in the court of Akbar, originally known as Ramtanu Pandey? <br/> </b>अकबर के दरबार में प्रसिद्ध संगीतकार कौन था<b>, </b>जिसे मूल रूप से रामतनु पांडे के नाम से जाना जाता था<b>?</b></p>",
+      "option1": "<p> Baiju Bawra / बैजू बावरा</p>",
+      "option2": "<p> Tansen / तानसेन</p>",
+      "option3": "<p> Baz Bahadur / बाज बहादुर</p>",
+      "option4": "<p> Baba Ramdas / बाबा रामदास</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Tansen was born as Ramtanu Pandey and became one of Akbar's Navratnas.<br/> तानसेन का जन्म रामतनु पांडे के रूप में हुआ था और वे अकबर के नवरत्नों में से एक बने।</p>"
+    },
+    {
+      "sr_no": 11,
+      "question": "<p> <b>The 'Battle of Talikota' (1565) was fought between: <br/> '</b>तालीकोटा का युद्ध<b>' (1565) </b>किनके बीच लड़ा गया था<b>?</b></p>",
+      "option1": "<p> Rama Raya and a confederacy of Deccan Sultanates / राम राय और दक्कन सल्तनतों का एक संघ</p>",
+      "option2": "<p> Krishnadeva Raya and the Bahmani Sultan / कृष्णदेव राय और बहमनी सुल्तान</p>",
+      "option3": "<p> Harihara II and the Gajapatis / हरिहर द्वितीय और गजपति</p>",
+      "option4": "<p> Tirumala and the Portuguese / तिरुमला और पुर्तगाली</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Fought between Aliya Rama Raya and the combined forces of Bijapur, Ahmadnagar, Golconda, and Bidar.<br/> यह आलिया राम राय और बीजापुर, अहमदनगर, गोलकुंडा और बीदर की संयुक्त सेनाओं के बीच लड़ा गया था।</p>"
+    },
+    {
+      "sr_no": 12,
+      "question": "<p> <b>Which Mughal Emperor prohibited the use of tobacco? <br/> </b>किस मुगल सम्राट ने तंबाकू के सेवन पर प्रतिबंध लगा दिया था<b>?</b></p>",
+      "option1": "<p> Akbar / अकबर</p>",
+      "option2": "<p> Shah Jahan / शाहजहाँ</p>",
+      "option3": "<p> Jahangir / जहाँगीर</p>",
+      "option4": "<p> Aurangzeb / औरंगजेब</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Jahangir prohibited the use of tobacco in 1617.<br/> जहाँगीर ने 1617 में तंबाकू के उपयोग पर प्रतिबंध लगा दिया था।</p>"
+    },
+    {
+      "sr_no": 13,
+      "question": "<p> <b>Consider the following statements regarding Razia Sultan: <br/> </b>रजिया सुल्तान के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) She was the first and only female Muslim ruler of medieval India. / </b>वह मध्यकालीन भारत की पहली और एकमात्र महिला मुस्लिम शासक थीं।<b><br/> (b) She discarded the 'Purdah' system. / </b>उसने <b>'</b>पर्दा<b>' </b>प्रथा को त्याग दिया।<b><br/> (c) Her downfall was due to her preference for an Abyssinian slave, Yaqut. / </b>उनके पतन का कारण एक एबिसिनियन गुलाम<b>, </b>याकूत के प्रति उनकी वरीयता थी।<b><br/> Which of the statements given above are correct? / </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> All of the above / उपरोक्त सभी</p>",
+      "option4": "<p> a and c only / केवल a और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All factors contributed to her downfall along with the resentment of Turkish nobles.<br/> तुर्की अमीरों की नाराजगी के साथ-साथ सभी कारकों ने उनके पतन में योगदान दिया।</p>"
+    },
+    {
+      "sr_no": 14,
+      "question": "<p> <b>The standard gold coin of the Vijayanagar Empire was known as: <br/> </b>विजयनगर साम्राज्य का मानक सोने का सिक्का किस नाम से जाना जाता था<b>?</b></p>",
+      "option1": "<p> Tanka / टंका</p>",
+      "option2": "<p> Varaha / वराह</p>",
+      "option3": "<p> Pannya / पन्ना</p>",
+      "option4": "<p> Kalsu / कलसू</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The gold coin was called Varaha or Pagoda.<br/> सोने के सिक्के को वराह या पगोडा कहा जाता था।</p>"
+    },
+    {
+      "sr_no": 15,
+      "question": "<p> <b>Which Sultan of Delhi established the 'Diwan-i-Kohi'? <br/> </b>निम्नलिखित में से किस सुल्तान ने <b>'</b>दीवान<b>-</b>ए<b>-</b>कोही<b>' </b>की स्थापना की थी<b>?</b></p>",
+      "option1": "<p> Alauddin Khilji / अलाउद्दीन खिलजी</p>",
+      "option2": "<p> Firoz Shah Tughlaq / फिरोज शाह तुगलक</p>",
+      "option3": "<p> Muhammad Bin Tughlaq / मुहम्मद बिन तुगलक</p>",
+      "option4": "<p> Sikandar Lodi / सिकंदर लोदी</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Diwan-i-Kohi was the Department of Agriculture established by Muhammad Bin Tughlaq.<br/> दीवान-ए-कोही कृषि विभाग था जिसकी स्थापना मुहम्मद बिन तुगलक ने की थी।</p>"
+    },
+    {
+      "sr_no": 16,
+      "question": "<p> <b>Consider the following statements regarding the 'Iqta System' under the Delhi Sultanate:<br/> </b>दिल्ली सल्तनत के तहत <b>'</b>इक्ता प्रणाली<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It was introduced by Iltutmish. / </b>इसे इल्तुतमिश द्वारा शुरू किया गया था।<b><br/> (b) The holder of the Iqta had hereditary rights over the land. / </b>इक्ता धारक का भूमि पर वंशानुगत अधिकार होता था।<b><br/> (c) It was a system of land assignment to civil and military officers. / </b>यह नागरिक और सैन्य अधिकारियों को भूमि आवंटन की एक प्रणाली थी।<b><br/> Which of the above statements is/are correct? / </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Iqtadars were transferred regularly and had no hereditary rights over the land during the Sultanate period.<br/> सल्तनत काल के दौरान इक्तादारों का नियमित स्थानांतरण किया जाता था और भूमि पर उनका कोई वंशानुगत अधिकार नहीं था।</p>"
+    },
+    {
+      "sr_no": 17,
+      "question": "<p> <b>Which of the following temples is famous for its 'Musical Pillars' that emit musical notes when tapped?<br/> </b>निम्नलिखित में से कौन सा मंदिर अपने <b>'</b>संगीत में स्तंभों<b>' </b>के लिए प्रसिद्ध है जो थपथपाने पर संगीत के स्वर निकालते हैं<b>?</b></p>",
+      "option1": "<p> Hazara Rama Temple / हजारा राम मंदिर</p>",
+      "option2": "<p> Vittala Temple / विट्ठल मंदिर</p>",
+      "option3": "<p> Virupaksha Temple / विरुपाक्ष मंदिर</p>",
+      "option4": "<p> Meenakshi Temple / मीनाक्षी मंदिर</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Vittala Temple in Hampi is famous for its 56 musical pillars and the iconic stone chariot.<br/> हम्पी का विट्ठल मंदिर अपने 56 संगीत स्तंभों और प्रतिष्ठित पत्थर के रथ के लिए प्रसिद्ध है।</p>"
+    },
+    {
+      "sr_no": 18,
+      "question": "<p> <b>\"He was the first Sultan to audit the accounts of the iqtadars and paid his soldiers in cash.\" Identify the Sultan.<br/> \"</b>वह इक्तादारों के खातों का ऑडिट करने वाला और अपने सैनिकों को नकद वेतन देने वाला पहला सुल्तान था।<b>\" </b>सुल्तान की पहचान करें।</p>",
+      "option1": "<p> Muhammad Bin Tughlaq / मुहम्मद बिन तुगलक</p>",
+      "option2": "<p> Balban / बलबन</p>",
+      "option3": "<p> Alauddin Khilji / अलाउद्दीन खिलजी</p>",
+      "option4": "<p> Sikandar Lodi / सिकंदर लोदी</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Alauddin Khilji introduced cash payments and strict auditing to prevent corruption.<br/> अलाउद्दीन खिलजी ने भ्रष्टाचार रोकने के लिए नकद भुगतान और सख्त ऑडिटिंग की शुरुआत की थी।</p>"
+    },
+    {
+      "sr_no": 19,
+      "question": "<p> <b>With reference to Krishnadeva Raya, consider the following statements:<br/> </b>कृष्णदेव राय के संदर्भ में<b>, </b>निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) He belonged to the Tuluva dynasty. / </b>वह तुलुव वंश के थे।<b><br/> (b) He composed 'Amuktamalyada' in Telugu. / </b>उन्होंने तेलुगु में <b>'</b>अमुक्तमाल्यद<b>' </b>की रचना की।<b><br/> (c) He was a contemporary of the Mughal Emperor Babur. / </b>वह मुगल सम्राट बाबर के समकालीन थे।<b><br/> Which of the above statements is/are correct? / </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b only / केवल a और b</p>",
+      "option3": "<p> All of the above / उपरोक्त सभी</p>",
+      "option4": "<p> b and c only / केवल b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. Babur mentions Krishnadeva Raya as the most powerful ruler of India in his memoirs.<br/> सभी कथन सही हैं। बाबर ने अपने संस्मरणों में कृष्णदेव राय का उल्लेख भारत के सबसे शक्तिशाली शासक के रूप में किया है।</p>"
+    },
+    {
+      "sr_no": 20,
+      "question": "<p> <b>Match List-I (Mughal Ruler) with List-II (Tomb Location):<br/> </b>सूची<b>-I (</b>मुगल शासक<b>) </b>को सूची<b>-II (</b>मकबरे का स्थान<b>) </b>से सुमेलित करें<b>:<br/> Code:</b></p>",
+      "option1": "<p> A-2, B-1, C-4, D-3</p>",
+      "option2": "<p> A-1, B-2, C-3, D-4</p>",
+      "option3": "<p> A-2, B-4, C-1, D-3</p>",
+      "option4": "<p> A-3, B-1, C-4, D-2</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Babur (Kabul), Humayun (Delhi), Akbar (Sikandra), Jahangir (Lahore).<br/> बाबर (काबुल), हुमायूँ (दिल्ली), अकबर (सिकंदरा), जहाँगीर (लाहौर)।</p>"
+    },
+    {
+      "sr_no": 21,
+      "question": "<p> <b>The 'Battle of Amroha' (1305) was significant because:<br/> '</b>अमरोहा का युद्ध<b>' (1305) </b>महत्वपूर्ण था क्योंकि<b>:</b></p>",
+      "option1": "<p> It marked the defeat of the Mongols by Alauddin Khilji's forces. / इसमें अलाउद्दीन खिलजी की सेना ने मंगोलों को हराया था।</p>",
+      "option2": "<p> It led to the foundation of the Lodi Dynasty. / इसके कारण लोदी वंश की नींव पड़ी।</p>",
+      "option3": "<p> It was the last battle of Prithviraj Chauhan. / यह पृथ्वीराज चौहान का अंतिम युद्ध था।</p>",
+      "option4": "<p> It marked the beginning of the Khilji Revolution. / यह खिलजी क्रांति की शुरुआत थी।</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The battle effectively checked the Mongol threat during Alauddin Khilji's reign.<br/> इस युद्ध ने अलाउद्दीन खिलजी के शासनकाल के दौरान मंगोल खतरे को प्रभावी ढंग से रोक दिया था।</p>"
+    },
+    {
+      "sr_no": 22,
+      "question": "<p> <b>Consider the following statements about Firoz Shah Tughlaq:<br/> </b>फिरोज शाह तुगलक के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) He imposed Jizya on Brahmins. / </b>उसने ब्राह्मणों पर जजिया लगाया।<b><br/> (b) He established the department 'Diwan-i-Khairat'. / </b>उसने <b>'</b>दीवान<b>-</b>ए<b>-</b>खैरात<b>' </b>विभाग की स्थापना की।<b><br/> (c) He repaired the Qutub Minar. / </b>उसने कुतुब मीनार की मरम्मत करवाई।<b><br/> Which of the above statements is/are correct? / </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> All of the above / उपरोक्त सभी</p>",
+      "option3": "<p> b and c only / केवल b और c</p>",
+      "option4": "<p> a and c only / केवल a और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Firoz Shah Tughlaq was known for public welfare works and strict religious policies.<br/> फिरोज शाह तुगलक को लोक कल्याणकारी कार्यों और सख्त धार्मिक नीतियों के लिए जाना जाता था।</p>"
+    },
+    {
+      "sr_no": 23,
+      "question": "<p> <b>Which Mughal Prince translated the Upanishads into Persian under the title 'Sirr-i-Akbar'?<br/> </b>किस मुगल राजकुमार ने <b>'</b>सिर्र<b>-</b>ए<b>-</b>अकबर<b>' </b>शीर्षक के तहत उपनिषदों का फारसी में अनुवाद किया था<b>?</b></p>",
+      "option1": "<p> Prince Murad / राजकुमार मुराद</p>",
+      "option2": "<p> Prince Khusrau / राजकुमार खुसरो</p>",
+      "option3": "<p> Dara Shikoh / दारा शिकोह</p>",
+      "option4": "<p> Prince Shuja / राजकुमार शुजा</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Dara Shikoh was a great scholar who aimed to bridge Islam and Hinduism.<br/> दारा शिकोह एक महान विद्वान थे जिनका उद्देश्य इस्लाम और हिंदू धर्म के बीच की दूरी को कम करना था।</p>"
+    },
+    {
+      "sr_no": 24,
+      "question": "<p> <b>Consider the following statements regarding the taxation system of the Delhi Sultanate:<br/> </b>दिल्ली सल्तनत की कराधान प्रणाली के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) 'Kharaj' was a land tax. / '</b>खराज<b>' </b>एक भू<b>-</b>कर था।<b><br/> (b) 'Zakat' was a tax on non-Muslims. / '</b>जकात<b>' </b>गैर<b>-</b>मुस्लिमों पर लगने वाला कर था।<b><br/> (c) 'Khams' was the state's share in war booty. / '</b>खम्स<b>' </b>युद्ध की लूट में राज्य का हिस्सा था।<b><br/> Which of the above statements are correct? / </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Zakat was a religious tax on wealthy Muslims. Jizya was the tax on non-Muslims.<br/> जकात अमीर मुसलमानों पर एक धार्मिक कर था। गैर-मुस्लिमों पर लगने वाला कर जजिया था।</p>"
+    },
+    {
+      "sr_no": 25,
+      "question": "<p> <b>Regarding the status of women in Vijayanagar society, consider the following statements:<br/> </b>विजयनगर समाज में महिलाओं की स्थिति के संबंध में<b>, </b>निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Women were trained in wrestling and music. / </b>महिलाओं को कुश्ती और संगीत में प्रशिक्षित किया जाता था।<b><br/> (b) Sati was completely absent in the empire. / </b>साम्राज्य में सती प्रथा पूरी तरह से अनुपस्थित थी।<b><br/> (c) Women held administrative posts in the palace. / </b>महिलाओं ने महल में प्रशासनिक पदों पर कार्य किया।<b><br/> Which of the above statements is/are correct? / </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and c only / केवल a और c</p>",
+      "option2": "<p> a and b only / केवल a और b</p>",
+      "option3": "<p> b and c only / केवल b और c</p>",
+      "option4": "<p> a only / केवल a</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> While women were active in various fields, Sati (Sahagamana) was prevalent and noted by foreign travelers.<br/> जबकि महिलाएं विभिन्न क्षेत्रों में सक्रिय थीं, सती प्रथा (सहगमन) प्रचलित थी और विदेशी यात्रियों द्वारा इसका उल्लेख किया गया है।</p>"
+    },
+    {
+      "sr_no": 26,
+      "question": "<p> <b>Match the following foreign travelers with the country they came from:<br/> </b>निम्नलिखित विदेशी यात्रियों को उनके मूल देश के साथ सुमेलित करें<b>:<br/> Code:</b></p>",
+      "option1": "<p> A-1, B-2, C-3, D-4</p>",
+      "option2": "<p> A-2, B-1, C-4, D-3</p>",
+      "option3": "<p> A-2, B-4, C-1, D-3</p>",
+      "option4": "<p> A-3, B-1, C-4, D-2</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Nicolo Conti (Italy), Abdur Razzaq (Persia), Domingo Paes (Portugal), Nikitin (Russia).<br/> निकोलो कोंटी (इटली), अब्दुर रज्जाक (फारस), डोमिंगो पेस (पुर्तगाल), निकितिन (रूस)।</p>"
+    },
+    {
+      "sr_no": 27,
+      "question": "<p> <b>The 'Dahsala System' of land revenue was developed by:<br/> </b>भू<b>-</b>राजस्व की <b>'</b>दहशाला प्रणाली<b>' </b>किसके द्वारा विकसित की गई थी<b>?</b></p>",
+      "option1": "<p> Birbal / बीरबल</p>",
+      "option2": "<p> Raja Man Singh / राजा मान सिंह</p>",
+      "option3": "<p> Raja Todar Mal / राजा टोडरमल</p>",
+      "option4": "<p> Bairam Khan / बैरम खान</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Raja Todar Mal introduced this system based on the average of ten years' produce.<br/> राजा टोडरमल ने दस वर्षों की औसत उपज के आधार पर इस प्रणाली की शुरुआत की थी।</p>"
+    },
+    {
+      "sr_no": 28,
+      "question": "<p> <b>Consider the following statements regarding the Bahmani Kingdom:<br/> </b>बहमनी साम्राज्य के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It was founded by Alauddin Hasan Bahman Shah. / </b>इसकी स्थापना अलाउद्दीन हसन बहमन शाह ने की थी।<b><br/> (b) The capital was initially at Bidar. / </b>राजधानी शुरू में बीदर में थी।<b><br/> (c) Mahmud Gawan was its famous Prime Minister. / </b>महमूद गवां इसके प्रसिद्ध प्रधानमंत्री थे।<b><br/> Which of the above statements are correct? / </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> a and c only / केवल a और c</p>",
+      "option3": "<p> b and c only / केवल b और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The capital was initially at Gulbarga and later shifted to Bidar.<br/> राजधानी शुरू में गुलबर्गा में थी और बाद में बीदर स्थानांतरित कर दी गई।</p>"
+    },
+    {
+      "sr_no": 29,
+      "question": "<p> <b>Which battle marked the end of the Delhi Sultanate and the beginning of the Mughal Empire?<br/> </b>किस युद्ध ने दिल्ली सल्तनत के अंत और मुगल साम्राज्य की शुरुआत को चिह्नित किया<b>?</b></p>",
+      "option1": "<p> Second Battle of Panipat / पानीपत का दूसरा युद्ध</p>",
+      "option2": "<p> Battle of Khanwa / खानवा का युद्ध</p>",
+      "option3": "<p> First Battle of Panipat / पानीपत का पहला युद्ध</p>",
+      "option4": "<p> Battle of Ghaghra / घाघरा का युद्ध</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Babur defeated Ibrahim Lodi in 1526 at Panipat to establish the Mughal Empire.<br/> बाबर ने 1526 में पानीपत में इब्राहिम लोदी को हराकर मुगल साम्राज्य की स्थापना की थी।</p>"
+    },
+    {
+      "sr_no": 30,
+      "question": "<p> <b>Captain William Hawkins and Sir Thomas Roe visited the Mughal court during the reign of:<br/> </b>कैप्टन विलियम हॉकिन्स और सर थॉमस रो ने किसके शासनकाल के दौरान मुगल दरबार का दौरा किया था<b>?</b></p>",
+      "option1": "<p> Akbar / अकबर</p>",
+      "option2": "<p> Shah Jahan / शाहजहाँ</p>",
+      "option3": "<p> Jahangir / जहाँगीर</p>",
+      "option4": "<p> Aurangzeb / औरंगजेब</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> They visited Jahangir's court to secure trade privileges for the British East India Company.<br/> उन्होंने ब्रिटिश ईस्ट इंडिया कंपनी के लिए व्यापारिक विशेषाधिकार प्राप्त करने के लिए जहाँगीर के दरबार का दौरा किया था।</p>"
+    },
+    {
+      "sr_no": 31,
+      "question": "<p> <b>Consider the following statements regarding the foundation of the Vijayanagar Empire:<br/> </b>विजयनगर साम्राज्य की स्थापना के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It was founded by Harihara and Bukka in 1336 AD. / </b>इसकी स्थापना <b>1336 </b>ईस्वी में हरिहर और बुक्का ने की थी।<b><br/> (b) They were originally serving the Kakatiyas of Warangal. / </b>वे मूल रूप से वारंगल के काकतीयों की सेवा कर रहे थे।<b><br/> (c) They were converted back to Hinduism by Saint Vidyaranya. / </b>उन्हें संत विद्यारण्य द्वारा वापस हिंदू धर्म में परिवर्तित किया गया था।<b><br/> Which of the statements given above are correct? / </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. They established the Sangama dynasty and founded Vijayanagar on the banks of the Tungabhadra river.<br/> सभी कथन सही हैं। उन्होंने संगम वंश की स्थापना की और तुंगभद्रा नदी के तट पर विजयनगर की नींव रखी।</p>"
+    },
+    {
+      "sr_no": 32,
+      "question": "<p> <b>Who among the following Sultans of Delhi was known as 'Lakh Baksh' for his generosity?<br/> </b>दिल्ली के निम्नलिखित सुल्तानों में से किसे उसकी उदारता के लिए <b>'</b>लाख बख्श<b>' </b>के रूप में जाना जाता था<b>?</b></p>",
+      "option1": "<p> Iltutmish / इल्तुतमिश</p>",
+      "option2": "<p> Qutbuddin Aibak / कुतुबुद्दीन ऐबक</p>",
+      "option3": "<p> Balban / बलबन</p>",
+      "option4": "<p> Nasiruddin Mahmud / नासिरुद्दीन महमूद</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Qutbuddin Aibak was given this title because of his liberal donations to the poor and needy.<br/> कुतुबुद्दीन ऐबक को यह उपाधि गरीबों और जरूरतमंदों को उदारतापूर्वक दान देने के कारण दी गई थी।</p>"
+    },
+    {
+      "sr_no": 33,
+      "question": "<p> <b>Consider the following statements regarding the Mughal architecture:<br/> </b>मुगल वास्तुकला के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Buland Darwaza was built at Fatehpur Sikri to commemorate Akbar's victory over Gujarat. / </b>बुलंद दरवाजा फतेहपुर सीकरी में अकबर की गुजरात विजय की याद में बनाया गया था।<b><br/> (b) Humayun's Tomb is considered the precursor to the Taj Mahal. / </b>हुमायूँ के मकबरे को ताजमहल का पूर्वगामी माना जाता है।<b><br/> (c) The Red Fort of Delhi was built by Akbar. / </b>दिल्ली का लाल किला अकबर द्वारा बनाया गया था।<b><br/> Which of the above statements is/are correct? / </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Red Fort of Delhi was built by Shah Jahan, not Akbar. Akbar built the Agra Fort.<br/> दिल्ली का लाल किला शाहजहाँ द्वारा बनाया गया था, न कि अकबर द्वारा। अकबर ने आगरा का किला बनवाया था।</p>"
+    },
+    {
+      "sr_no": 34,
+      "question": "<p> <b>Arrange the following dynasties of the Delhi Sultanate in the correct chronological order:<br/> </b>दिल्ली सल्तनत के निम्नलिखित राजवंशों को सही कालानुक्रमिक क्रम में व्यवस्थित करें<b>:<br/> (a) Sayyid Dynasty / </b>सैय्यद वंश<b><br/> (b) Khilji Dynasty / </b>खिलजी वंश<b><br/> (c) Lodi Dynasty / </b>लोदी वंश<b><br/> (d) Tughlaq Dynasty / </b>तुगलक वंश<b><br/> Select the correct option: / </b>सही विकल्प चुनें<b>:</b></p>",
+      "option1": "<p> b - d - a - c</p>",
+      "option2": "<p> b - a - d - c</p>",
+      "option3": "<p> d - b - a - c</p>",
+      "option4": "<p> a - b - d - c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The sequence is: Slave (not listed), Khilji, Tughlaq, Sayyid, and Lodi.<br/> क्रम है: गुलाम (सूचीबद्ध नहीं), खिलजी, तुगलक, सैय्यद और लोदी।</p>"
+    },
+    {
+      "sr_no": 35,
+      "question": "<p> <b>Which Sultan of Delhi introduced the Persian customs of 'Sijda' and 'Paibos' in the court?<br/> </b>दिल्ली के किस सुल्तान ने दरबार में <b>'</b>सिजदा<b>' </b>और <b>'</b>पैबोस<b>' </b>की फारसी प्रथाओं की शुरुआत की<b>?</b></p>",
+      "option1": "<p> Iltutmish / इल्तुतमिश</p>",
+      "option2": "<p> Balban / बलबन</p>",
+      "option3": "<p> Alauddin Khilji / अलाउद्दीन खिलजी</p>",
+      "option4": "<p> Muhammad Bin Tughlaq / मुहम्मद बिन तुगलक</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Balban introduced these to establish the superiority of the Sultan over the nobility.<br/> बलबन ने अमीरों पर सुल्तान की श्रेष्ठता स्थापित करने के लिए इन्हें शुरू किया था।</p>"
+    },
+    {
+      "sr_no": 36,
+      "question": "<p> <b>Consider the following statements about Amir Khusrau:<br/> </b>अमीर खुसरो के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) He is regarded as the \"Father of Qawwali\". / </b>उन्हें <b>\"</b>कव्वाली का जनक<b>\" </b>माना जाता है।<b><br/> (b) He was a disciple of Nizamuddin Auliya. / </b>वह निजामुद्दीन औलिया के शिष्य थे।<b><br/> (c) He served under only one Sultan. / </b>उन्होंने केवल एक सुल्तान के अधीन सेवा की।<b><br/> Which of the statements given above is/are correct? / </b>ऊपर दिए गए कथनों में से कौन<b>-</b>सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> All of the above / उपरोक्त सभी</p>",
+      "option4": "<p> a and c only / केवल a और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Amir Khusrau served under multiple Sultans (around 7-8) from Balban to Ghiyasuddin Tughlaq.<br/> अमीर खुसरो ने बलबन से लेकर गयासुद्दीन तुगलक तक कई सुल्तानों (लगभग 7-8) के अधीन सेवा की थी।</p>"
+    },
+    {
+      "sr_no": 37,
+      "question": "<p> <b>The 'Nayankara System' of the Vijayanagar Empire was related to:<br/> </b>विजयनगर साम्राज्य की <b>'</b>नायंकारा प्रणाली<b>' </b>किससे संबंधित थी<b>?</b></p>",
+      "option1": "<p> Village administration / ग्राम प्रशासन</p>",
+      "option2": "<p> Military and land assignment / सैन्य और भूमि आवंटन</p>",
+      "option3": "<p> Religious endowment / धार्मिक बंदोबस्त</p>",
+      "option4": "<p> Judicial system / न्यायिक प्रणाली</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> It was a military-feudal system where 'Nayakas' were granted lands (Amaram) in return for military service.<br/> यह एक सैन्य-सामंती प्रणाली थी जहाँ 'नायकों' को सैन्य सेवा के बदले भूमि (अमरम) दी जाती थी।</p>"
+    },
+    {
+      "sr_no": 38,
+      "question": "<p> <b>Match the following terms with their meanings in the Delhi Sultanate:<br/> </b>दिल्ली सल्तनत में निम्नलिखित शब्दों को उनके अर्थों के साथ सुमेलित करें<b>:<br/> Code:</b></p>",
+      "option1": "<p> A-1, B-2, C-3, D-4</p>",
+      "option2": "<p> A-2, B-1, C-4, D-3</p>",
+      "option3": "<p> A-4, B-3, C-2, D-1</p>",
+      "option4": "<p> A-1, B-4, C-3, D-2</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All pairs are correctly matched as per the Sultanate administrative terminology.<br/> सल्तनत की प्रशासनिक शब्दावली के अनुसार सभी युग्म सही सुमेलित हैं।</p>"
+    },
+    {
+      "sr_no": 39,
+      "question": "<p> <b>Consider the following statements regarding Alauddin Khilji's market reforms:<br/> </b>अलाउद्दीन खिलजी के बाजार सुधारों के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) He set up separate markets for food grains, clothes, and cattle. / </b>उसने खाद्यान्न<b>, </b>कपड़े और मवेशियों के लिए अलग<b>-</b>अलग बाजार स्थापित किए।<b><br/> (b) The prices were fixed by the Sultan. / </b>कीमतें सुल्तान द्वारा तय की गई थीं।<b><br/> (c) He introduced the 'Dahsala' system. / </b>उसने <b>'</b>दहशाला<b>' </b>प्रणाली शुरू की।<b><br/> Which of the above statements is/are correct? / </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b only / केवल a और b</p>",
+      "option3": "<p> b and c only / केवल b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The 'Dahsala' system was introduced by Akbar, not Alauddin Khilji. Alauddin's reforms were aimed at maintaining a large army.<br/> 'दहशाला' प्रणाली अकबर द्वारा शुरू की गई थी, न कि अलाउद्दीन खिलजी द्वारा। अलाउद्दीन के सुधारों का उद्देश्य एक बड़ी सेना का रखरखाव करना था।</p>"
+    },
+    {
+      "sr_no": 40,
+      "question": "<p> <b>Who wrote 'Humayun-nama'?<br/> '</b>हुमायूँ<b>-</b>नामा<b>' </b>किसने लिखा था<b>?</b></p>",
+      "option1": "<p> Humayun / हुमायूँ</p>",
+      "option2": "<p> Gulbadan Begum / गुलबदन बेगम</p>",
+      "option3": "<p> Abul Fazl / अबुल फजल</p>",
+      "option4": "<p> Badauni / बदायुनी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Gulbadan Begum was the sister of Humayun who wrote his biography at the request of Akbar.<br/> गुलबदन बेगम हुमायूँ की बहन थीं जिन्होंने अकबर के अनुरोध पर उनकी जीवनी लिखी थी।</p>"
+    },
+    {
+      "sr_no": 41,
+      "question": "<p> <b>Consider the following statements about the city of Hyderabad:<br/> </b>हैदराबाद शहर के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> 1. It was built by Muhammad Quli Qutb Shah. / </b>इसका निर्माण मुहम्मद कुली कुतुब शाह ने करवाया था।<b><br/> 2. The Charminar was built to commemorate the victory over the Mughals. / </b>चारमीनार का निर्माण मुगलों पर विजय की याद में किया गया था।<b><br/> 3. It was the capital of the Qutb Shahi dynasty. / </b>यह कुतुब शाही वंश की राजधानी थी।<b><br/> Which of the statements given above is/are correct? / </b>ऊपर दिए गए कथनों में से कौन<b>-</b>सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> 1 only / केवल 1</p>",
+      "option2": "<p> 1 and 3 only / केवल 1 और 3</p>",
+      "option3": "<p> 2 and 3 only / केवल 2 और 3</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Charminar was built to commemorate the eradication of the plague, not victory over Mughals.<br/> चारमीनार का निर्माण प्लेग के उन्मूलन की याद में किया गया था, न कि मुगलों पर विजय की याद में।</p>"
+    },
+    {
+      "sr_no": 42,
+      "question": "<p> <b>Which of the following pairs of 'Successor States of Bahmani' and their 'Founders' is NOT correctly matched?<br/> '</b>बहमनी के उत्तराधिकारी राज्यों<b>' </b>और उनके <b>'</b>संस्थापकों<b>' </b>के निम्नलिखित युग्मों में से कौन<b>-</b>सा सही सुमेलित नहीं है<b>?</b></p>",
+      "option1": "<p> Bijapur - Yusuf Adil Shah / बीजापुर - यूसुफ आदिल शाह</p>",
+      "option2": "<p> Ahmednagar - Malik Ahmad / अहमदनगर - मलिक अहमद</p>",
+      "option3": "<p> Berar - Fathullah Imad Shah / बरार - फतुल्लाह इमाद शाह</p>",
+      "option4": "<p> Golconda - Amir Ali Barid / गोलकुंडा - अमीर अली बरीद</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Golconda was founded by Quli Qutb Shah. Amir Ali Barid was the founder of Bidar.<br/> गोलकुंडा की स्थापना कुली कुतुब शाह ने की थी। अमीर अली बरीद बीदर के संस्थापक थे।</p>"
+    },
+    {
+      "sr_no": 43,
+      "question": "<p> <b>The 'Battle of Chausa' (1539) was fought between:<br/> '</b>चौसा का युद्ध<b>' (1539) </b>किनके बीच लड़ा गया था<b>?</b></p>",
+      "option1": "<p> Babur and Rana Sanga / बाबर और राणा सांगा</p>",
+      "option2": "<p> Akbar and Hemu / अकबर और हेमू</p>",
+      "option3": "<p> Humayun and Sher Shah Suri / हुमायूँ और शेर शाह सूरी</p>",
+      "option4": "<p> Shah Jahan and Dara Shikoh / शाहजहाँ और दारा शिकोह</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Sher Shah Suri defeated Humayun in the Battle of Chausa, forcing him to flee.<br/> शेर शाह सूरी ने चौसा के युद्ध में हुमायूँ को हराया था, जिससे उसे भागने पर मजबूर होना पड़ा।</p>"
+    },
+    {
+      "sr_no": 44,
+      "question": "<p> <b>Consider the following statements regarding the 'Ibadat Khana':<br/> '</b>इबादत खाना<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It was built by Akbar at Fatehpur Sikri. / </b>इसे अकबर ने फतेहपुर सीकरी में बनवाया था।<b><br/> (b) Only Muslim scholars were allowed initially. / </b>शुरू में केवल मुस्लिम विद्वानों को ही अनुमति थी।<b><br/> (c) It led to the foundation of Din-i-Ilahi. / </b>इसके कारण दीन<b>-</b>ए<b>-</b>इलाही की नींव पड़ी।<b><br/> Which of the above statements are correct? / </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> All of the above / उपरोक्त सभी</p>",
+      "option4": "<p> a and c only / केवल a और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Akbar started it for religious discussions, which eventually led him to formulate a syncretic set of beliefs.<br/> अकबर ने इसे धार्मिक चर्चाओं के लिए शुरू किया था, जिसने अंततः उसे विश्वासों के एक संश्लेषित सेट को तैयार करने के लिए प्रेरित किया।</p>"
+    },
+    {
+      "sr_no": 45,
+      "question": "<p> <b>Which Sultan of Delhi was the first to start the construction of canals for irrigation?<br/> </b>दिल्ली के किस सुल्तान ने सबसे पहले सिंचाई के लिए नहरों का निर्माण शुरू किया था<b>?</b></p>",
+      "option1": "<p> Ghiyasuddin Tughlaq / गयासुद्दीन तुगलक</p>",
+      "option2": "<p> Firoz Shah Tughlaq / फिरोज शाह तुगलक</p>",
+      "option3": "<p> Alauddin Khilji / अलाउद्दीन खिलजी</p>",
+      "option4": "<p> Muhammad Bin Tughlaq / मुहम्मद बिन तुगलक</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Ghiyasuddin Tughlaq was the first to start, though Firoz Shah Tughlaq expanded the network significantly.<br/> गयासुद्दीन तुगलक शुरू करने वाले पहले व्यक्ति थे, हालांकि फिरोज शाह तुगलक ने इस नेटवर्क का काफी विस्तार किया था।</p>"
+    },
+    {
+      "sr_no": 46,
+      "question": "<p> <b>Consider the following statements about Sher Shah Suri:<br/> </b>शेर शाह सूरी के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) He built the 'Grand Trunk Road'. / </b>उसने <b>'</b>ग्रैंड ट्रंक रोड<b>' </b>का निर्माण करवाया।<b><br/> (b) He introduced the silver 'Rupiya'. / </b>उसने चांदी का <b>'</b>रुपया<b>' </b>चलाया।<b><br/> (c) He died during the siege of Kalinjar. / </b>कालिंजर की घेराबंदी के दौरान उसकी मृत्यु हुई।<b><br/> Which of the above statements are correct? / </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> All of the above / उपरोक्त सभी</p>",
+      "option4": "<p> a and c only / केवल a और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Sher Shah was a brilliant administrator. He died in 1545 due to a gunpowder explosion during the siege of Kalinjar fort.<br/> शेर शाह एक शानदार प्रशासक था। 1545 में कालिंजर किले की घेराबंदी के दौरान बारूद विस्फोट के कारण उसकी मृत्यु हो गई थी।</p>"
+    },
+    {
+      "sr_no": 47,
+      "question": "<p> <b>Consider the following statements regarding the administration of Sher Shah Suri: <br/> </b>शेरशाह सूरी के प्रशासन के संबंध में निम्नलिखित कथनों पर विचार कीजिए<b>:<br/> (a) He introduced the silver coin called 'Rupiya' and the copper coin called 'Dam', which served as the basis for the Mughal coinage system. </b>उन्होंने <b>'</b>रुपिया<b>' </b>नामक चांदी का सिक्का और <b>'</b>दाम<b>' </b>नामक तांबे का सिक्का चलाया<b>, </b>जिसने मुगल मुद्रा प्रणाली के आधार के रूप में कार्य किया।<b><br/> (b) In his land revenue system, the state's share was generally fixed at one-fourth (1/4) of the average produce. </b>उनकी भू<b>-</b>राजस्व प्रणाली में<b>, </b>राज्य का हिस्सा आमतौर पर औसत उपज का एक<b>-</b>चौथाई <b>(1/4) </b>निर्धारित किया गया था।<b><br/> (c) He revived the military practices of 'Dagh' (branding of horses) and 'Chehra' (descriptive roll of soldiers) to prevent corruption. </b>उन्होंने भ्रष्टाचार को रोकने के लिए <b>'</b>दाग<b>' (</b>घोड़ों को दागना<b>) </b>और <b>'</b>चेहरा<b>' (</b>सैनिकों का वर्णनात्मक रोल<b>) </b>की सैन्य प्रथाओं को पुनर्जीवित किया।<b><br/> Which of the statements given above are correct? </b>ऊपर दिए गए कथनों में से कौन सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> a and c only / केवल a और c</p>",
+      "option3": "<p> b and c only / केवल b और c</p>",
+      "option4": "<p> a, b, and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Statement 2 is Incorrect: Under his revenue system, the state's share was fixed at one-third (1/3) of the produce, not one-fourth. Only in the territory of Multan was it 1/4th.<br/> कथन 2 गलत है: उनकी राजस्व प्रणाली के तहत, राज्य का हिस्सा उपज का एक-तिहाई (1/3) तय किया गया था, न कि एक-चौथाई। केवल मुल्तान के क्षेत्र में यह 1/4 था।</p>"
+    },
+    {
+      "sr_no": 48,
+      "question": "<p> <b>The famous 'Quwwat-ul-Islam' mosque in Delhi was built by:<br/> </b>दिल्ली में प्रसिद्ध <b>'</b>कुव्वत<b>-</b>उल<b>-</b>इस्लाम<b>' </b>मस्जिद किसके द्वारा बनाई गई थी<b>?</b></p>",
+      "option1": "<p> Iltutmish / इल्तुतमिश</p>",
+      "option2": "<p> Qutbuddin Aibak / कुतुबुद्दीन ऐबक</p>",
+      "option3": "<p> Alauddin Khilji / अलाउद्दीन खिलजी</p>",
+      "option4": "<p> Firoz Shah Tughlaq / फिरोज शाह तुगलक</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> It was the first mosque built in Delhi after the Islamic conquest, using materials from demolished Hindu and Jain temples.<br/> यह इस्लामी विजय के बाद दिल्ली में निर्मित पहली मस्जिद थी।</p>"
+    },
+    {
+      "sr_no": 49,
+      "question": "<p> <b>Consider the following statements about the 'Din-i-Ilahi':<br/> '</b>दीन<b>-</b>ए<b>-</b>इलाही<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) It was a religious code of conduct. / </b>यह एक धार्मिक आचार संहिता थी।<b><br/> (b) Birbal was the only Hindu to accept it. / </b>बीरबल इसे स्वीकार करने वाले एकमात्र हिंदू थे।<b><br/> (c) It was founded in 1582. / </b>इसकी स्थापना <b>1582 </b>में हुई थी।<b><br/> Which of the above are correct? / </b>उपरोक्त में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> All of the above / उपरोक्त सभी</p>",
+      "option3": "<p> b and c only / केवल b और c</p>",
+      "option4": "<p> a and c only / केवल a और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. It was more of an ethical system than a traditional religion.<br/> सभी कथन सही हैं। यह एक पारंपरिक धर्म की तुलना में एक नैतिक प्रणाली अधिक थी।</p>"
+    },
+    {
+      "sr_no": 50,
+      "question": "<p> <b>Which Sultanate ruler was the first to construct a tomb for himself in India?<br/> </b>किस सल्तनत शासक ने भारत में अपने लिए मकबरा बनाने की शुरुआत की थी<b>?</b></p>",
+      "option1": "<p> Iltutmish / इल्तुतमिश</p>",
+      "option2": "<p> Balban / बलबन</p>",
+      "option3": "<p> Qutbuddin Aibak / कुतुबुद्दीन ऐबक</p>",
+      "option4": "<p> Razia Sultan / रजिया सुल्तान</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Iltutmish built his own tomb in the Qutub Minar complex. He is also known as the \"Father of Tomb Building\" in India (Sultan Ghari was the first tomb built by him for his son).<br/> इल्तुतमिश ने कुतुब मीनार परिसर में अपना मकबरा बनवाया था। उन्हें भारत में \"मकबरा निर्माण का जनक\" भी कहा जाता है।</p>"
+    },
+    {
+      "sr_no": 51,
+      "question": "<p> <b>The 'Battle of Khanwa' (1527) was fought between Babur and:<br/> '</b>खानवा का युद्ध<b>' (1527) </b>बाबर और किसके बीच लड़ा गया था<b>?</b></p>",
+      "option1": "<p> Ibrahim Lodi / इब्राहिम लोदी</p>",
+      "option2": "<p> Rana Sanga / राणा सांगा</p>",
+      "option3": "<p> Medini Rai / मेदिनी राय</p>",
+      "option4": "<p> Hemu / हेमू</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Babur defeated the Rajput confederacy led by Rana Sanga of Mewar.<br/> बाबर ने मेवाड़ के राणा सांगा के नेतृत्व वाले राजपूत संघ को हराया था।</p>"
+    },
+    {
+      "sr_no": 52,
+      "question": "<p> <b>Match the following administrative departments of the Vijayanagar Empire:<br/> </b>विजयनगर साम्राज्य के निम्नलिखित प्रशासनिक विभागों को सुमेलित करें<b>:<br/> Code:</b></p>",
+      "option1": "<p> A-1, B-2, C-3, D-4</p>",
+      "option2": "<p> A-2, B-1, C-4, D-3</p>",
+      "option3": "<p> A-3, B-1, C-2, D-4</p>",
+      "option4": "<p> A-1, B-3, C-4, D-2</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All pairs are correctly matched as per Vijayanagar administration.<br/> विजयनगर प्रशासन के अनुसार सभी युग्म सही सुमेलित हैं।</p>"
+    },
+    {
+      "sr_no": 53,
+      "question": "<p> <b>Consider the following statements regarding the Mongol invasions during the Delhi Sultanate:<br/> </b>दिल्ली सल्तनत के दौरान मंगोल आक्रमणों के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Chengiz Khan reached India's border during Iltutmish's reign. / </b>चंगेज खान इल्तुतमिश के शासनकाल में भारत की सीमा तक पहुँचा था।<b><br/> (b) Alauddin Khilji built the Siri Fort as a defense against Mongols. / </b>अलाउद्दीन खिलजी ने मंगोलों के खिलाफ रक्षा के रूप में सीरी का किला बनवाया था।<b><br/> (c) Taimur (Timur) invaded India in 1398 AD. / </b>तैमूर ने <b>1398 </b>ईस्वी में भारत पर आक्रमण किया था।<b><br/> Which of the statements given above are correct? / </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> All of the above / उपरोक्त सभी</p>",
+      "option4": "<p> a and c only / केवल a और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All are historical facts related to the northern frontier defense of the Sultanate.<br/> ये सभी सल्तनत की उत्तरी सीमा रक्षा से संबंधित ऐतिहासिक तथ्य हैं।</p>"
+    },
+    {
+      "sr_no": 54,
+      "question": "<p> <b>Which of the following Bhakti Saints was a contemporary of the Sultanate period and said, \"People should not be asked about their caste\"?<br/> </b>निम्नलिखित में से कौन सा भक्ति संत सल्तनत काल का समकालीन था और उसने कहा था<b>, \"</b>लोगों से उनकी जाति नहीं पूछी जानी चाहिए<b>\"?</b></p>",
+      "option1": "<p> Ramananda / रामानंद</p>",
+      "option2": "<p> Kabir / कबीर</p>",
+      "option3": "<p> Chaitanya / चैतन्य</p>",
+      "option4": "<p> Namdev / नामदेव</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Ramananda was the first to preach in Hindi and simplify Bhakti for all castes.<br/> रामानंद पहले व्यक्ति थे जिन्होंने हिंदी में प्रचार किया और सभी जातियों के लिए भक्ति को सरल बनाया।</p>"
+    },
+    {
+      "sr_no": 55,
+      "question": "<p> <b>Consider the following statements about the currency of the Delhi Sultanate:<br/> </b>दिल्ली सल्तनत की मुद्रा के बारे में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) Iltutmish introduced the Silver Tanka. / </b>इल्तुतमिश ने चांदी का टंका चलाया।<b><br/> (b) Muhammad Bin Tughlaq introduced Token Currency. / </b>मुहम्मद बिन तुगलक ने सांकेतिक मुद्रा पेश की।<b><br/> (c) The Jital was a gold coin. / </b>जीतल एक सोने का सिक्का था।<b><br/> Which of the above is/are correct? / </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b only / केवल a और b</p>",
+      "option3": "<p> b and c only / केवल b और c</p>",
+      "option4": "<p> All of the above / उपरोक्त सभी</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Jital was a copper coin, not gold. Tanka was silver.<br/> जीतल तांबे का सिक्का था, सोने का नहीं। टंका चांदी का था।</p>"
+    },
+    {
+      "sr_no": 56,
+      "question": "<p> <b>Who was the founder of the 'Saluva' dynasty of the Vijayanagar Empire?<br/> </b>विजयनगर साम्राज्य के <b>'</b>सालुव<b>' </b>वंश का संस्थापक कौन था<b>?</b></p>",
+      "option1": "<p> Saluva Narasimha / सालुव नरसिंह</p>",
+      "option2": "<p> Vira Narasimha / वीर नरसिंह</p>",
+      "option3": "<p> Tirumala / तिरुमला</p>",
+      "option4": "<p> Harihara / हरिहर</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Saluva Narasimha founded the second dynasty of Vijayanagar after the fall of the Sangama dynasty.<br/> सालुव नरसिंह ने संगम वंश के पतन के बाद विजयनगर के दूसरे वंश की स्थापना की थी।</p>"
+    },
+    {
+      "sr_no": 57,
+      "question": "<p> <b>The 'Pietra Dura' technique in architecture reached its peak during the reign of:<br/> </b>वास्तुकला में <b>'</b>पित्रा ड्यूरा<b>' </b>तकनीक किसके शासनकाल में अपने चरमोत्कर्ष पर पहुँची<b>?</b></p>",
+      "option1": "<p> Akbar / अकबर</p>",
+      "option2": "<p> Jahangir / जहाँगीर</p>",
+      "option3": "<p> Shah Jahan / शाहजहाँ</p>",
+      "option4": "<p> Aurangzeb / औरंगजेब</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Shah Jahan used it extensively in the Taj Mahal and the Red Fort.<br/> शाहजहाँ ने ताजमहल और लाल किले में इसका व्यापक रूप से उपयोग किया था।</p>"
+    },
+    {
+      "sr_no": 58,
+      "question": "<p> <b>Consider the following statements regarding Alauddin Khilji's taxation policy:<br/> </b>अलाउद्दीन खिलजी की कराधान नीति के संबंध में निम्नलिखित कथनों पर विचार करें<b>:<br/> (a) He raised land revenue to 50% of the produce. / </b>उसने भू<b>-</b>राजस्व बढ़ाकर उपज का <b>50% </b>कर दिया।<b><br/> (b) He introduced 'Ghari' (house tax). / </b>उसने <b>'</b>घरी<b>' (</b>गृह कर<b>) </b>की शुरुआत की।<b><br/> (c) He introduced 'Chari' (pasture tax). / </b>उसने <b>'</b>चरी<b>' (</b>चरागाह कर<b>) </b>की शुरुआत की।<b><br/> Which of the statements given above are correct? / </b>ऊपर दिए गए कथनों में से कौन<b>-</b>से सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> All of the above / उपरोक्त सभी</p>",
+      "option4": "<p> a and c only / केवल a और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> His taxation was heavy to support a massive standing army.<br/> एक विशाल स्थायी सेना का समर्थन करने के लिए उसका कराधान भारी था।</p>"
+    },
+    {
+      "sr_no": 59,
+      "question": "<p> <b>The 'Ashtadiggajas' were a group of eight poets in the court of:<br/> '</b>अष्टदिग्गज<b>' </b>किसके दरबार में आठ कवियों का एक समूह था<b>?</b></p>",
+      "option1": "<p> Devaraya II / देवराय द्वितीय</p>",
+      "option2": "<p> Krishnadeva Raya / कृष्णदेव राय</p>",
+      "option3": "<p> Harihara II / हरिहर द्वितीय</p>",
+      "option4": "<p> Rama Raya / राम राय</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> They were eight great Telugu poets, including Peddana and Tenali Ramakrishna.<br/> वे पेद्दन और तेनाली रामकृष्ण सहित आठ महान तेलुगु कवि थे।</p>"
+    },
+    {
+      "sr_no": 60,
+      "question": "<p> <b>Which Sultan of Delhi was the first to establish a separate department for slaves (Diwan-i-Bandagan)?<br/> </b>दासों के लिए एक अलग विभाग <b>(</b>दीवान<b>-</b>ए<b>-</b>बंदगान<b>) </b>स्थापित करने वाला दिल्ली का पहला सुल्तान कौन था<b>?</b></p>",
+      "option1": "<p> Alauddin Khilji / अलाउद्दीन खिलजी</p>",
+      "option2": "<p> Muhammad Bin Tughlaq / मुहम्मद बिन तुगलक</p>",
+      "option3": "<p> Firoz Shah Tughlaq / फिरोज शाह तुगलक</p>",
+      "option4": "<p> Balban / बलबन</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Firoz Shah Tughlaq had a great fondness for slaves and maintained about 1.8 lakh slaves.<br/> फिरोज शाह तुगलक को दासों का बहुत शौक था और उसने लगभग 1.8 लाख दास रखे थे।</p>"
+    }
+  ]
+};
+
+// Extract questions and time from new structure
+const questions = quizData.questions;
+const totalTimeMinutes = quizData.time_minutes;
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = totalTimeMinutes * 60;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape') {
+      if (isPaletteOpen) {
+        closePalette();
+      }
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimer();
+    
+    // Auto-submit when time runs out
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      alert('Time is up! Submitting quiz automatically.');
+      submitQuiz();
+      return;
+    }
+    
+    if (timerSeconds <= 120) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    questionText.innerHTML = '';
+    const questionContent = createOptionContent(q.question);
+    questionText.appendChild(questionContent);
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message = `You have ${unattempted} unanswered questions. ${message}`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  const timeTaken = (totalTimeMinutes * 60) - timerSeconds;
+  const minutesTaken = Math.floor(timeTaken / 60);
+  const secondsTaken = timeTaken % 60;
+  const timeTakenText = `${minutesTaken}m ${secondsTaken}s`;
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeTakenText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    let questionDisplay = '';
+    if (isImageURL(q.question)) {
+      questionDisplay = `<img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`;
+    } else {
+      questionDisplay = q.question;
+    }
+    html += `<div class="question-review">
+      <h4>Q${q.sr_no}: ${questionDisplay}</h4>`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution && q.solution.trim() !== '') {
+      let solutionDisplay = '';
+      if (isImageURL(q.solution)) {
+        solutionDisplay = `<img src="${q.solution}" class="solution-image" alt="Solution" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">`;
+      } else {
+        solutionDisplay = q.solution;
+      }
+      
+      html += `<div class="solution-section" style="margin-top: 15px; padding: 15px; background: #f0f8ff; border-left: 4px solid #007bff; border-radius: 8px;">
+        <strong style="color: #007bff;">💡 Solution:</strong>
+        <div style="margin-top: 8px; color: #333;">${solutionDisplay}</div>
+      </div>`;
+    }
+    
+    html += `</div>`;
+  });
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https')) &&
+    (str.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i));
+}
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = totalTimeMinutes * 60;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    updateTimer();
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HISTORY TEST - 3</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">MOTION 3.0 - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem('quizState', JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem('quizState');
+    if (saved) {
+      const state = JSON.parse(saved);
+      if (Date.now() - state.timestamp < 24 * 60 * 60 * 1000) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || (totalTimeMinutes * 60); // MODIFIED
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem('quizState');
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

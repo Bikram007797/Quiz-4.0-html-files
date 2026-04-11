@@ -1,0 +1,2915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>FULL POLITY TEST</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.question-image, .option-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: block;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎯 FULL POLITY TEST</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color)"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color)"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color)"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color)"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">Clear</button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">Submit Quiz</button>
+</div>
+
+<script>
+// MODIFIED: Quiz data structure with time_minutes
+const quizData = {
+  "time_minutes": 50,
+  "questions": [
+    {
+      "sr_no": 1,
+      "question": "<p>Consider the following statements regarding Fundamental Rights:<br/>मौलिक अधिकारों के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) They can be enforced against both the State and private individuals.<br/> (a) इन्हें राज्य व निजी व्यक्तियों दोनों के विरुद्ध लागू किया जा सकता है।<br/>(b) Article 32 is itself a Fundamental Right.<br/> (b) अनुच्छेद 32 स्वयं एक मौलिक अधिकार है।<br/>(c) All Fundamental Rights are available to both citizens and non-citizens.<br/> (c) सभी मौलिक अधिकार नागरिकों व गैर-नागरिकों दोनों को प्राप्त हैं।<br/>Which of the above statements are correct? / उपरोक्त में से कौन-से कथन सही हैं?</p>",
+      "option1": "<p>Only b / केवल b</p>",
+      "option2": "<p>a and b</p>",
+      "option3": "<p>b and c</p>",
+      "option4": "<p>a and c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Article 32 is indeed a Fundamental Right. Some rights can be enforced against private individuals. However, not all rights extend to non-citizens.<br/>अनुच्छेद 32 एक मौलिक अधिकार है और कुछ अधिकार निजी व्यक्तियों पर भी लागू होते हैं। सभी मौलिक अधिकार गैर-नागरिकों को नहीं मिलते।</p>"
+    },
+    {
+      "sr_no": 2,
+      "question": "<p>Which Schedule of the Constitution deals with Anti-defection law?<br/>संविधान की किस अनुसूची में दलबदल विरोधी कानून का प्रावधान है?</p>",
+      "option1": "<p>Fifth Schedule / पांचवीं अनुसूची</p>",
+      "option2": "<p>Seventh Schedule / सातवीं अनुसूची</p>",
+      "option3": "<p>Tenth Schedule / दसवीं अनुसूची</p>",
+      "option4": "<p>Ninth Schedule / नौवीं अनुसूची</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>The Tenth Schedule, added by the 52nd Constitutional Amendment (1985), contains provisions against defection.<br/>दसवीं अनुसूची, जिसे 52वें संशोधन द्वारा जोड़ा गया, दलबदल विरोधी प्रावधानों को निर्दिष्ट करती है।</p>"
+    },
+    {
+      "sr_no": 3,
+      "question": "<p>Consider the following statements regarding the Vice-President of India:<br/>भारत के उपराष्ट्रपति के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) He is the ex-officio Chairman of the Rajya Sabha.<br/> (a) वह राज्यसभा के पदेन सभापति होते हैं।<br/>(b) He must be a member of either House of Parliament at the time of election.<br/> (b) चुनाव के समय उनका संसद के किसी सदन का सदस्य होना अनिवार्य है।<br/>(c) His removal requires an absolute majority of the Lok Sabha.<br/> (c) उनके हटाने के लिए लोकसभा में पूर्ण बहुमत आवश्यक होता है।<br/>Which statements are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a only</p>",
+      "option2": "<p>a and c</p>",
+      "option3": "<p>a and b</p>",
+      "option4": "<p>b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>VP is ex-officio Chairman of Rajya Sabha. He need not be an MP at election, and removal is initiated in RS, not LS.<br/>उपराष्ट्रपति को चुनाव के समय सांसद होना जरूरी नहीं है; हटाने की प्रक्रिया राज्यसभा में आरंभ होती है।</p>"
+    },
+    {
+      "sr_no": 4,
+      "question": "<p>The minimum age to become a member of the Rajya Sabha is:<br/>राज्यसभा का सदस्य बनने की न्यूनतम आयु कितनी है?</p>",
+      "option1": "<p>25 years / 25 वर्ष</p>",
+      "option2": "<p>30 years / 30 वर्ष</p>",
+      "option3": "<p>35 years / 35 वर्ष</p>",
+      "option4": "<p>21 years / 21 वर्ष</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>As per Article 84, a Rajya Sabha member must be at least 30 years old.<br/>अनुच्छेद 84 के अनुसार राज्यसभा सदस्य की न्यूनतम आयु 30 वर्ष है।</p>"
+    },
+    {
+      "sr_no": 5,
+      "question": "<p>Consider the following statements regarding Money Bills:<br/>मनी बिल के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) Only the Lok Sabha can introduce a Money Bill.<br/> (a) मनी बिल केवल लोकसभा में प्रस्तुत किया जा सकता है।<br/>(b) Rajya Sabha can reject a Money Bill.<br/> (b) राज्यसभा मनी बिल को अस्वीकार कर सकती है।<br/>(c) Speaker’s decision on Money Bill classification is final.<br/> (c) मनी बिल के वर्गीकरण पर स्पीकर का निर्णय अंतिम होता है।<br/>Which of the statements are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>Only c</p>",
+      "option4": "<p>a and c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Money Bills originate only in Lok Sabha; RS cannot reject it. Speaker's decision is final.<br/>मनी बिल केवल लोकसभा में आता है; राज्यसभा उसे अस्वीकार नहीं कर सकती। स्पीकर का निर्णय अंतिम होता है।</p>"
+    },
+    {
+      "sr_no": 6,
+      "question": "<p>Which Article deals with the impeachment of the President?<br/>राष्ट्रपति के महाभियोग से संबंधित अनुच्छेद कौन-सा है?</p>",
+      "option1": "<p>Article 61</p>",
+      "option2": "<p>Article 356</p>",
+      "option3": "<p>Article 63</p>",
+      "option4": "<p>Article 75</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Article 61 specifies the impeachment procedure of the President.<br/>अनुच्छेद 61 में राष्ट्रपति के महाभियोग की प्रक्रिया का उल्लेख है।</p>"
+    },
+    {
+      "sr_no": 7,
+      "question": "<p>Consider the following statements regarding the Attorney General of India:<br/>भारत के महाधिवक्ता के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) He is part of the Union Executive.<br/> (a) वे संघ कार्यपालिका का हिस्सा होते हैं।<br/>(b) He must have the qualifications to be a Supreme Court judge.<br/> (b) उनके पास सुप्रीम कोर्ट के न्यायाधीश बनने की योग्यता होनी चाहिए।<br/>(c) He is a full-time government employee.<br/> (c) वे पूर्णकालिक सरकारी कर्मचारी होते हैं।<br/>Which are correct? / कौन-से सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>a only</p>",
+      "option4": "<p>a and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>AGI must have SC judge qualifications and is part of Union Executive, but not a full-time employee.<br/>महाधिवक्ता पूर्णकालिक सरकारी कर्मचारी नहीं होते, पर वे सुप्रीम कोर्ट न्यायाधीश की योग्यता रखते हैं।</p>"
+    },
+    {
+      "sr_no": 8,
+      "question": "<p>Under which Article can the President declare a National Emergency?<br/>राष्ट्रपति किस अनुच्छेद के तहत राष्ट्रीय आपात घोषित कर सकते हैं?</p>",
+      "option1": "<p>Article 350</p>",
+      "option2": "<p>Article 352</p>",
+      "option3": "<p>Article 360</p>",
+      "option4": "<p>Article 356</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Article 352 provides for National Emergency based on war, external aggression or armed rebellion.<br/>अनुच्छेद 352 युद्ध, बाह्य आक्रमण या सशस्त्र विद्रोह के आधार पर राष्ट्रीय आपात की अनुमति देता है।</p>"
+    },
+    {
+      "sr_no": 9,
+      "question": "<p>Which of the following is NOT a feature of the Parliamentary system of India?<br/>निम्नलिखित में से कौन-सा भारत की संसदीय प्रणाली की विशेषता नहीं है?</p>",
+      "option1": "<p>Collective responsibility / सामूहिक उत्तरदायित्व</p>",
+      "option2": "<p>Nominal executive / औपचारिक कार्यपालिका</p>",
+      "option3": "<p>Fixed tenure of the executive / कार्यपालिका का निश्चित कार्यकाल</p>",
+      "option4": "<p>Real executive is the Council of Ministers / वास्तविक कार्यपालिका मंत्रिपरिषद</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Executive tenure in parliamentary systems depends on majority support, not fixed term.<br/>संसदीय प्रणाली में कार्यपालिका का कार्यकाल निश्चित नहीं होता; बहुमत पर निर्भर होता है।</p>"
+    },
+    {
+      "sr_no": 10,
+      "question": "<p><strong>Consider the following regarding the Election Commission of India:</strong><br/> <strong>भारत के चुनाव आयोग के संबंध में निम्नलिखित पर विचार करें:</strong><br/> <strong>(a) It is a constitutional body. / यह एक संवैधानिक निकाय है।</strong><br/> <strong>(b) Chief Election Commissioner has a tenure of 6 years or up to age 65. / सीईसी का कार्यकाल 6 वर्ष या 65 वर्ष आयु तक होता है।</strong><br/> <strong>(c) Removal of CEC is similar to removal of a Supreme Court Judge. / सीईसी को हटाने की प्रक्रिया सुप्रीम कोर्ट के न्यायाधीश जैसी होती है।</strong><br/> <strong>Which are correct? / कौन-से कथन सही हैं?</strong></p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>a and c</p>",
+      "option3": "<p>b and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>ECI is a constitutional body, and the CEC’s removal is like that of an SC Judge.The old “6 years or 65 years” tenure rule is no longer valid after the 2023 Act.<br/> चुनाव आयोग संवैधानिक है और CEC को हटाना सुप्रीम कोर्ट न्यायाधीश जैसा होता है।2023 कानून के बाद 6 वर्ष/65 वर्ष वाला कार्यकाल नियम मान्य नहीं है।</p>"
+    },
+    {
+      "sr_no": 11,
+      "question": "<p>Which Amendment lowered the voting age from 21 to 18?<br/>किस संशोधन ने मतदान आयु 21 से घटाकर 18 वर्ष की?</p>",
+      "option1": "<p>44th Amendment</p>",
+      "option2": "<p>42nd Amendment</p>",
+      "option3": "<p>61st Amendment</p>",
+      "option4": "<p>52nd Amendment</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>The 61st Constitutional Amendment (1988) reduced the voting age to 18.<br/>61वें संशोधन ने मतदान आयु 18 वर्ष की।</p>"
+    },
+    {
+      "sr_no": 12,
+      "question": "<p>Which Article provides for the Parliamentary Privileges?<br/>संसदीय विशेषाधिकार किस अनुच्छेद में दिए गए हैं?</p>",
+      "option1": "<p>Article 105</p>",
+      "option2": "<p>Article 110</p>",
+      "option3": "<p>Article 112</p>",
+      "option4": "<p>Article 123</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Article 105 deals with powers, privileges and immunities of Parliament and its members.<br/>अनुच्छेद 105 संसद व उसके सदस्यों के विशेषाधिकारों से संबंधित है।</p>"
+    },
+    {
+      "sr_no": 13,
+      "question": "<p>Consider the following regarding the Governor’s powers:<br/>राज्यपाल की शक्तियों के संबंध में निम्नलिखित पर विचार करें:<br/>(a) He can reserve a bill for the consideration of the President.<br/> (a) वह किसी विधेयक को राष्ट्रपति के विचारार्थ आरक्षित कर सकता है।<br/>(b) He can dismiss the Chief Minister at his discretion.<br/> (b) वह अपने विवेक से मुख्यमंत्री को हटा सकता है।<br/>(c) He is the constitutional head of the state.<br/> (c) वह राज्य का संवैधानिक मुखिया होता है।<br/>Which are correct? / कौन-से सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Governor can reserve bills and is state’s constitutional head; CM dismissal is not discretionary.<br/>राज्यपाल मुख्यमंत्री को मनमाने ढंग से नहीं हटा सकते।</p>"
+    },
+    {
+      "sr_no": 14,
+      "question": "<p>The office of CAG is mentioned in which Article?<br/>सीएजी का कार्यालय किस अनुच्छेद में वर्णित है?</p>",
+      "option1": "<p>Article 148</p>",
+      "option2": "<p>Article 280</p>",
+      "option3": "<p>Article 300</p>",
+      "option4": "<p>Article 263</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Article 148 establishes the office of the Comptroller and Auditor General of India.<br/>अनुच्छेद 148 में भारत के नियंत्रक एवं महालेखापरीक्षक का प्रावधान है।</p>"
+    },
+    {
+      "sr_no": 15,
+      "question": "<p><strong>Consider the following statements regarding the Union Public Service Commission (UPSC):</strong><br/> <strong>संघ लोक सेवा आयोग (UPSC) के संबंध में निम्नलिखित कथनों पर विचार करें:</strong><br/> <strong>(a) It is a statutory body.</strong><br/> <strong>(a) यह एक वैधानिक निकाय है।</strong><br/> <strong>(b) Its members are appointed by the President.</strong><br/> <strong>(b) इसके सदस्य राष्ट्रपति द्वारा नियुक्त किए जाते हैं।</strong><br/> <strong>(c) The removal of its members is similar to that of High Court judges.</strong><br/> <strong>(c) इसके सदस्यों को हटाने की प्रक्रिया उच्च न्यायालय के न्यायाधीशों जैसी है।</strong><br/> <strong>Which are correct? / कौन-से सही हैं?</strong></p>",
+      "option1": "<p>b only</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>a and b</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>UPSC is constitutional, not statutory; members appointed by President; removal mirrors HC judge removal.<br/> यूपीएससी संवैधानिक निकाय है, वैधानिक नहीं; सदस्य राष्ट्रपति नियुक्त करते हैं; हटाने की प्रक्रिया उच्च न्यायालय न्यायाधीश जैसी है।</p>"
+    },
+    {
+      "sr_no": 16,
+      "question": "<p>Consider the following statements regarding Fundamental Duties:<br/>मौलिक कर्तव्यों के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) They were added by the 42nd Constitutional Amendment.<br/> (a) इन्हें 42वें संविधान संशोधन द्वारा जोड़ा गया था।<br/>(b) They are non-justiciable in nature.<br/> (b) इनका स्वरूप अजस्टiciable (न्यायालय में प्रवर्तनीय नहीं) है।<br/>(c) The Parliament may impose penalties for violation of these duties.<br/> (c) संसद इन कर्तव्यों के उल्लंघन पर दंड निर्धारित कर सकती है।<br/>Which of the above statements are correct? / उपरोक्त में से कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Fundamental Duties added via 42nd Amendment, are non-justiciable, and Parliament can prescribe penalties.<br/>मौलिक कर्तव्य 42वें संशोधन से जोड़े गए, ये न्यायालय में प्रवर्तनीय नहीं हैं और संसद इनके उल्लंघन पर दंड तय कर सकती है।</p>"
+    },
+    {
+      "sr_no": 17,
+      "question": "<p>The concept of Judicial Review in India is borrowed from which country?<br/>भारत में न्यायिक पुनरावलोकन की अवधारणा किस देश से ली गई है?</p>",
+      "option1": "<p>USA / अमेरिका</p>",
+      "option2": "<p>UK / ब्रिटेन</p>",
+      "option3": "<p>Canada / कनाडा</p>",
+      "option4": "<p>Ireland / आयरलैंड</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Judicial Review is inspired from the U.S. Constitution and its landmark Marbury vs. Madison ruling.<br/>न्यायिक पुनरावलोकन की अवधारणा अमेरिका से ली गई है।</p>"
+    },
+    {
+      "sr_no": 18,
+      "question": "<p>Consider the following statements regarding the Pardoning Powers of the President:<br/>राष्ट्रपति की क्षमादान शक्ति के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) He can grant pardon in cases of court-martial.<br/> (a) वह सैन्य अदालतों के मामलों में क्षमादान दे सकते हैं।<br/>(b) He can pardon a death sentence.<br/> (b) वह मृत्युदंड को भी माफ कर सकते हैं।<br/>(c) His pardoning power is subject to judicial review.<br/> (c) उनकी क्षमादान शक्ति न्यायिक पुनरावलोकन के अधीन होती है।<br/>Which statements are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>The President can pardon in court-martial cases, can pardon a death sentence, and courts may review the decision on limited grounds.<br/>राष्ट्रपति सैन्य अदालत मामलों में क्षमादान दे सकते हैं, मृत्युदंड माफ कर सकते हैं और उनकी शक्ति सीमित न्यायिक समीक्षा के अधीन होती है।</p>"
+    },
+    {
+      "sr_no": 19,
+      "question": "<p>Which Article deals with the Writ Jurisdiction of the Supreme Court?<br/>सुप्रीम कोर्ट की रिट अधिकारिता किस अनुच्छेद में दी गई है?</p>",
+      "option1": "<p>Article 32</p>",
+      "option2": "<p>Article 226</p>",
+      "option3": "<p>Article 131</p>",
+      "option4": "<p>Article 136</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Article 32 empowers the Supreme Court to issue writs for enforcement of Fundamental Rights.<br/>अनुच्छेद 32 सुप्रीम कोर्ट को रिट जारी करने की शक्ति देता है।</p>"
+    },
+    {
+      "sr_no": 20,
+      "question": "<p>Consider the following statements about the Finance Commission:<br/>वित्त आयोग के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) It is a constitutional body under Article 280.<br/> (a) यह अनुच्छेद 280 के अंतर्गत एक संवैधानिक निकाय है।<br/>(b) Its recommendations are binding on the government.<br/> (b) इसकी सिफारिशें सरकार पर बाध्यकारी होती हैं।<br/>(c) It is constituted every five years or earlier.<br/> (c) इसे हर पाँच वर्ष में या उससे पहले गठित किया जाता है।<br/>Which statements are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and c</p>",
+      "option2": "<p>a and b</p>",
+      "option3": "<p>b and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Finance Commission is constitutional and formed every 5 years, but its recommendations are advisory, not binding.<br/>वित्त आयोग संवैधानिक है और हर पाँच वर्ष में बनता है, पर इसकी सिफारिशें बाध्यकारी नहीं होतीं।</p>"
+    },
+    {
+      "sr_no": 21,
+      "question": "<p>The provision for Tribunals was inserted in the Constitution by which Amendment?<br/>संविधान में अधिकरणों के प्रावधान को किस संशोधन द्वारा जोड़ा गया था?</p>",
+      "option1": "<p>42nd Amendment</p>",
+      "option2": "<p>44th Amendment</p>",
+      "option3": "<p>52nd Amendment</p>",
+      "option4": "<p>73rd Amendment</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Tribunals were added through the 42nd Amendment Act, 1976 (Part XIV-A).<br/>अधिकरणों का प्रावधान 42वें संशोधन द्वारा जोड़ा गया था।</p>"
+    },
+    {
+      "sr_no": 22,
+      "question": "<p>Consider the following regarding the Directive Principles of State Policy (DPSPs):<br/>राज्य के नीति निदेशक तत्वों (DPSP) के संबंध में निम्नलिखित पर विचार करें:<br/>(a) They are fundamental in governance.<br/> (a) शासन में ये अत्यंत महत्वपूर्ण माने जाते हैं।<br/>(b) They are enforceable by the courts.<br/> (b) ये न्यायालय द्वारा प्रवर्तनीय होते हैं।<br/>(c) They promote social and economic democracy.<br/> (c) ये सामाजिक और आर्थिक लोकतंत्र को बढ़ावा देते हैं।<br/>Which are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and c</p>",
+      "option2": "<p>a and b</p>",
+      "option3": "<p>b and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>DPSPs are fundamental in governance and promote socio-economic democracy; they are non-justiciable.<br/>DPSPs शासन में महत्वपूर्ण हैं और सामाजिक-आर्थिक लोकतंत्र को बढ़ावा देते हैं; ये न्यायालय में प्रवर्तनीय नहीं हैं।</p>"
+    },
+    {
+      "sr_no": 23,
+      "question": "<p>In which case did the Supreme Court propound the “Basic Structure Doctrine”?<br/>किस मामले में सुप्रीम कोर्ट ने “मूल संरचना सिद्धांत” प्रतिपादित किया था?</p>",
+      "option1": "<p>Golaknath Case</p>",
+      "option2": "<p>Kesavananda Bharati Case</p>",
+      "option3": "<p>Minerva Mills Case</p>",
+      "option4": "<p>S.R. Bommai Case</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>The Basic Structure Doctrine was laid down in the 1973 Kesavananda Bharati judgment.<br/>मूल संरचना सिद्धांत 1973 के केशवानंद भारती मामले में प्रतिपादित किया गया था।</p>"
+    },
+    {
+      "sr_no": 24,
+      "question": "<p>Which of the following is NOT a writ issued by Indian courts?<br/>निम्नलिखित में से कौन-सी रिट भारतीय न्यायालयों द्वारा जारी नहीं की जाती?</p>",
+      "option1": "<p>Mandamus / मेंडेमस</p>",
+      "option2": "<p>Certiorari / सर्टियोरारी</p>",
+      "option3": "<p>Injunction / इंजंक्शन</p>",
+      "option4": "<p>Quo Warranto / को-वारंटो</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Injunction is a civil remedy, not a constitutional writ.<br/>इंजंक्शन एक सिविल उपाय है, रिट नहीं।</p>"
+    },
+    {
+      "sr_no": 25,
+      "question": "<p>Consider the following statements about the Speaker of Lok Sabha:<br/>लोकसभा अध्यक्ष के बारे में निम्नलिखित कथनों पर विचार करें:<br/>(a) He continues in office even after Lok Sabha is dissolved.<br/> (a) लोकसभा भंग होने के बाद भी वे पद पर बने रहते हैं।<br/>(b) His decision on anti-defection is subject to judicial review.<br/> (b) दलबदल पर उनका निर्णय न्यायिक समीक्षा के अधीन होता है।<br/>(c) He must resign if he wishes to vote in the House.<br/> (c) यदि उन्हें सदन में मतदान करना हो, तो उन्हें पद से इस्तीफा देना पड़ता है।<br/>Which statements are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Speaker remains even after dissolution and his anti-defection rulings are reviewable. He can vote via casting vote; resignation unnecessary.<br/>स्पीकर भंग होने के बाद भी बने रहते हैं; दलबदल पर उनका निर्णय न्यायिक समीक्षा योग्य है; मतदान हेतु इस्तीफा आवश्यक नहीं।</p>"
+    },
+    {
+      "sr_no": 26,
+      "question": "<p>Which Article deals with the formation of new states and alteration of areas?<br/>नए राज्यों के गठन व क्षेत्रों में परिवर्तन किस अनुच्छेद में उल्लेखित है?</p>",
+      "option1": "<p>Article 2</p>",
+      "option2": "<p>Article 3</p>",
+      "option3": "<p>Article 4</p>",
+      "option4": "<p>Article 5</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Article 3 empowers Parliament to form new states or alter existing ones.<br/>अनुच्छेद 3 संसद को नए राज्य बनाने व क्षेत्रों में परिवर्तन करने का अधिकार देता है।</p>"
+    },
+    {
+      "sr_no": 27,
+      "question": "<p>Consider the following statements regarding Ordinance-making power of the President:<br/>राष्ट्रपति की अध्यादेश जारी करने की शक्ति के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) Ordinance can be issued only when Parliament is not in session.<br/> (a) अध्यादेश केवल तब जारी किया जा सकता है जब संसद सत्र में न हो।<br/>(b) It has the same force as an Act of Parliament.<br/> (b) इसकी शक्ति संसद के अधिनियम के समान होती है।<br/>(c) It must be approved by both Houses within six weeks of reassembly.<br/> (c) संसद के पुनःएकत्र होने के छह सप्ताह के भीतर इसे दोनों सदनों से मंजूरी मिलनी चाहिए।<br/>Which are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>All three statements are correct as per Article 123.<br/>अनुच्छेद 123 के अनुसार तीनों कथन सही हैं।</p>"
+    },
+    {
+      "sr_no": 28,
+      "question": "<p>The concept of a Nominal and Real Executive in India is borrowed from which country?<br/>भारत में औपचारिक और वास्तविक कार्यपालिका की अवधारणा किस देश से ली गई है?</p>",
+      "option1": "<p>Ireland</p>",
+      "option2": "<p>USA</p>",
+      "option3": "<p>UK</p>",
+      "option4": "<p>Canada</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>India’s parliamentary executive structure, including nominal and real executive distinction, comes from the UK.<br/>भारत की कार्यपालिका की अवधारणा ब्रिटेन से ली गई है।</p>"
+    },
+    {
+      "sr_no": 29,
+      "question": "<p>Which of the following is NOT a Fundamental Right?<br/>निम्नलिखित में से कौन-सा मौलिक अधिकार नहीं है?</p>",
+      "option1": "<p>Right to Equality / समानता का अधिकार</p>",
+      "option2": "<p>Right to Property / संपत्ति का अधिकार</p>",
+      "option3": "<p>Right to Freedom / स्वतंत्रता का अधिकार</p>",
+      "option4": "<p>Right against Exploitation / शोषण के विरुद्ध अधिकार</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Right to Property was removed from FRs by the 44th Amendment and made a legal right.<br/>44वें संशोधन द्वारा संपत्ति का अधिकार मौलिक अधिकार से हटाकर वैधानिक अधिकार बनाया गया।</p>"
+    },
+    {
+      "sr_no": 30,
+      "question": "<p>Consider the following statements regarding the Comptroller and Auditor General (CAG):<br/>नियंत्रक एवं महालेखापरीक्षक (CAG) के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) He audits the accounts of both Union and State Governments.<br/> (a) वह केंद्र और राज्य सरकारों दोनों के लेखों का लेखा परीक्षण करता है।<br/>(b) His removal is like that of a Supreme Court Judge.<br/> (b) उनका हटाना सुप्रीम कोर्ट के न्यायाधीश जैसा है।<br/>(c) He is eligible for further office after retirement.<br/> (c) सेवानिवृत्ति के बाद वे किसी अन्य सरकारी पद के लिए योग्य होते हैं।<br/>Which are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>CAG audits both Union and State finances; his removal mirrors SC judge removal. He is NOT eligible for further office.<br/>CAG केंद्र-राज्य दोनों का लेखा परीक्षण करता है; हटाने की प्रक्रिया सुप्रीम कोर्ट न्यायाधीश जैसी है।</p>"
+    },
+    {
+      "sr_no": 31,
+      "question": "<p>Consider the following statements regarding Constitutional Amendments:<br/>संवैधानिक संशोधनों के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) Some Constitutional Amendments require ratification by at least half of the State Legislatures.<br/> (a) कुछ संवैधानिक संशोधनों के लिए कम से कम आधे राज्यों की विधानसभाओं की पुष्टि आवश्यक होती है।<br/>(b) Amendments under Article 368 cannot be challenged in courts.<br/> (b) अनुच्छेद 368 के अंतर्गत संशोधन न्यायालयों में चुनौती नहीं दिए जा सकते।<br/>(c) Parliament cannot amend the Basic Structure of the Constitution.<br/> (c) संसद संविधान की मूल संरचना में संशोधन नहीं कर सकती।<br/>Which of the above statements are correct? / उपरोक्त में से कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and c</p>",
+      "option2": "<p>a only</p>",
+      "option3": "<p>b and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Some amendments need state ratification; amendments can be challenged, and Parliament can amend but not destroy the Basic Structure.<br/>कुछ संशोधनों के लिए राज्यों की पुष्टि आवश्यक है; संशोधनों को चुनौती दी जा सकती है; संसद मूल संरचना को नष्ट नहीं कर सकती।</p>"
+    },
+    {
+      "sr_no": 32,
+      "question": "<p>The maximum gap between two sessions of Parliament must not exceed:<br/>संसद के दो सत्रों के बीच अधिकतम अंतराल कितना हो सकता है?</p>",
+      "option1": "<p>3 months / 3 महीने</p>",
+      "option2": "<p>6 months / 6 महीने</p>",
+      "option3": "<p>9 months / 9 महीने</p>",
+      "option4": "<p>1 year / 1 वर्ष</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>The Constitution mandates that the gap between two sessions cannot exceed six months.<br/>संविधान के अनुसार दो सत्रों के बीच 6 महीने से अधिक का अंतर नहीं हो सकता।</p>"
+    },
+    {
+      "sr_no": 33,
+      "question": "<p>Consider the following statements regarding the National Emergency (Article 352):<br/>राष्ट्रीय आपात (अनुच्छेद 352) के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) It can be proclaimed on the grounds of war, external aggression, or armed rebellion.<br/> (a) इसे युद्ध, बाह्य आक्रमण या सशस्त्र विद्रोह के आधार पर लगाया जा सकता है।<br/>(b) It requires written recommendation of the Cabinet.<br/> (b) इसके लिए मंत्रिमंडल की लिखित सिफारिश आवश्यक है।<br/>(c) Lok Sabha can revoke the proclamation by a simple majority.<br/> (c) लोकसभा साधारण बहुमत से इसे रद्द कर सकती है।<br/>Which statements are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Grounds include war, external aggression, armed rebellion; written Cabinet recommendation is mandatory; LS revokes by special majority— not simple majority.<br/>आपात युद्ध/बाहरी आक्रमण/सशस्त्र विद्रोह पर लगती है; मंत्रिमंडल की लिखित सिफारिश अनिवार्य है; रद्द करने हेतु विशेष बहुमत चाहिए।</p>"
+    },
+    {
+      "sr_no": 34,
+      "question": "<p>Who decides on the question of disqualification of MPs under Tenth Schedule?<br/>दसवीं अनुसूची के अंतर्गत सांसदों की अयोग्यता का निर्णय कौन करता है?</p>",
+      "option1": "<p>President / राष्ट्रपति</p>",
+      "option2": "<p>Supreme Court / सुप्रीम कोर्ट</p>",
+      "option3": "<p>Speaker / स्पीकर</p>",
+      "option4": "<p>Election Commission / चुनाव आयोग</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Under Anti-defection law, the Speaker decides disqualification; decision subject to judicial review.<br/>दलबदल कानून में अयोग्यता पर निर्णय स्पीकर करता है; निर्णय न्यायिक समीक्षा योग्य है।</p>"
+    },
+    {
+      "sr_no": 35,
+      "question": "<p>Consider the following about quasi-judicial bodies:<br/>अर्ध-न्यायिक निकायों के संबंध में निम्नलिखित पर विचार करें:<br/>(a) They follow principles of natural justice.<br/> (a) ये प्राकृतिक न्याय के सिद्धांतों का पालन करते हैं।<br/>(b) Their decisions are always final and cannot be appealed.<br/> (b) इनके निर्णय हमेशा अंतिम होते हैं और अपील नहीं की जा सकती।<br/>(c) They discharge functions similar to courts.<br/> (c) इनके कार्य न्यायालयों जैसे होते हैं।<br/>Which are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and c</p>",
+      "option2": "<p>a only</p>",
+      "option3": "<p>a, b and c</p>",
+      "option4": "<p>b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Quasi-judicial bodies follow natural justice and act somewhat like courts; their decisions are appealable.<br/>ये प्राकृतिक न्याय का पालन करते हैं, न्यायालय जैसे कार्य करते हैं, पर निर्णय अंतिम नहीं होते।</p>"
+    },
+    {
+      "sr_no": 36,
+      "question": "<p>Which Article deals with the ordinance-making power of the Governor?<br/>राज्यपाल की अध्यादेश जारी करने की शक्ति किस अनुच्छेद में दी गई है?</p>",
+      "option1": "<p>Article 123</p>",
+      "option2": "<p>Article 212</p>",
+      "option3": "<p>Article 213</p>",
+      "option4": "<p>Article 356</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Article 213 grants Governor the power to issue ordinances when legislature is not in session.<br/>अनुच्छेद 213 राज्यपाल को अध्यादेश जारी करने की शक्ति देता है।</p>"
+    },
+    {
+      "sr_no": 37,
+      "question": "<p>Consider the following statements about the Basic Structure Doctrine:<br/>मूल संरचना सिद्धांत के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) It limits Parliament’s amending power.<br/> (a) यह संसद की संशोधन शक्ति को सीमित करता है।<br/>(b) It was affirmed again in the Minerva Mills Case.<br/> (b) इसे मिनर्वा मिल्स मामले में पुनः पुष्टि मिली।<br/>(c) It includes supremacy of Parliament as a basic feature.<br/> (c) संसद की सर्वोच्चता को इसमें मूल विशेषता माना गया है।<br/>Which statements are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Basic Structure limits Parliament, reaffirmed in Minerva Mills; parliamentary supremacy is not part of Basic Structure.<br/>मूल संरचना संसद की शक्ति सीमित करता है; मिनर्वा मिल्स में पुष्टि हुई; संसद सर्वोच्चता मूल विशेषता नहीं है।</p>"
+    },
+    {
+      "sr_no": 38,
+      "question": "<p>In which Article is the post of Chief Minister mentioned?<br/>मुख्यमंत्री के पद का उल्लेख किस अनुच्छेद में है?</p>",
+      "option1": "<p>Article 153</p>",
+      "option2": "<p>Article 154</p>",
+      "option3": "<p>Article 163</p>",
+      "option4": "<p>Article 164</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Article 164 deals with appointment of Chief Minister and other ministers.<br/>अनुच्छेद 164 मुख्यमंत्री व मंत्रियों की नियुक्ति से संबंधित है।</p>"
+    },
+    {
+      "sr_no": 39,
+      "question": "<p>The minimum number of judges required for a Constitutional Bench of the Supreme Court is:<br/>सुप्रीम कोर्ट की संवैधानिक पीठ के लिए न्यूनतम न्यायाधीशों की संख्या कितनी होती है?</p>",
+      "option1": "<p>Three / तीन</p>",
+      "option2": "<p>Seven / सात</p>",
+      "option3": "<p>Five / पाँच</p>",
+      "option4": "<p>Nine / नौ</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Any case involving substantial constitutional interpretation requires a minimum 5-judge bench.<br/>संवैधानिक व्याख्या वाले मामलों में न्यूनतम 5 न्यायाधीशों की पीठ होती है।</p>"
+    },
+    {
+      "sr_no": 40,
+      "question": "<p>Consider the following regarding the Public Accounts Committee (PAC):<br/>लोक लेखा समिति (PAC) के संबंध में निम्नलिखित पर विचार करें:<br/>(a) It examines the audited accounts of the government.<br/> (a) यह सरकार के लेखापरीक्षित खातों की जांच करती है।<br/>(b) Its chairman is always from the ruling party.<br/> (b) इसका अध्यक्ष हमेशा सत्तारूढ़ दल से होता है।<br/>(c) CAG acts as a guide, friend and philosopher to the committee.<br/> (c) सीएजी समिति के मार्गदर्शक के रूप में कार्य करता है।<br/>Which are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and c</p>",
+      "option2": "<p>a only</p>",
+      "option3": "<p>b and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>PAC examines audited accounts; CAG assists it; chairperson is usually from opposition, not ruling party.<br/>PAC लेखापरीक्षित खातों की जांच करती है; CAG सहयोग करता है; अध्यक्ष प्रायः विपक्ष से होता है।</p>"
+    },
+    {
+      "sr_no": 41,
+      "question": "<p>Which of the following is NOT an All-India Service?<br/>निम्नलिखित में से कौन-सी अखिल भारतीय सेवा नहीं है?</p>",
+      "option1": "<p>IAS</p>",
+      "option2": "<p>IPS</p>",
+      "option3": "<p>IFS (Indian Foreign Service)</p>",
+      "option4": "<p>IFoS (Indian Forest Service)</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Indian Foreign Service is a Central Service, not an All-India Service.<br/>विदेश सेवा अखिल भारतीय सेवा नहीं, बल्कि केंद्रीय सेवा है।</p>"
+    },
+    {
+      "sr_no": 42,
+      "question": "<p>Consider the following statements regarding the election of the President of India:<br/>भारत के राष्ट्रपति के चुनाव के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) Value of MP's vote is uniform.<br/> (a) सांसद के मत का मूल्य समान होता है।<br/>(b) Value of MLA's vote varies from state to state.<br/> (b) विधायक के मत का मूल्य राज्य के अनुसार बदलता है।<br/>(c) Nominated members cannot vote in the election.<br/> (c) मनोनीत सदस्य चुनाव में मतदान नहीं कर सकते।<br/>Which statements are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>All three are correct: MP vote value is uniform; MLA vote value differs; nominated members are excluded.<br/>तीनों कथन सही: सांसद के मत समान मूल्य के, विधायकों के मत राज्य के अनुसार अलग, मनोनीत सदस्य मतदान नहीं करते।</p>"
+    },
+    {
+      "sr_no": 43,
+      "question": "<p>Which Article deals with the original jurisdiction of the Supreme Court?<br/>सुप्रीम कोर्ट की मूल अधिकारिता किस अनुच्छेद में दी गई है?</p>",
+      "option1": "<p>Article 131</p>",
+      "option2": "<p>Article 132</p>",
+      "option3": "<p>Article 136</p>",
+      "option4": "<p>Article 137</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Article 131 grants Supreme Court exclusive original jurisdiction in Centre-State and inter-State disputes.<br/>अनुच्छेद 131 केंद्र-राज्य तथा राज्यों के बीच विवादों में मूल अधिकारिता देता है।</p>"
+    },
+    {
+      "sr_no": 44,
+      "question": "<p>Consider the following statements regarding the Union Council of Ministers:<br/>केंद्रीय मंत्रिपरिषद के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) It is collectively responsible to the Lok Sabha.<br/> (a) यह लोकसभा के प्रति सामूहिक रूप से उत्तरदायी होती है।<br/>(b) Ministers must be MPs at the time of their appointment.<br/> (b) मंत्रियों का नियुक्ति के समय सांसद होना अनिवार्य है।<br/>(c) A minister who is not an MP must get elected within six months.<br/> (c) जो मंत्री सांसद नहीं है, उसे छह महीने के भीतर निर्वाचित होना होता है।<br/>Which statements are correct? / कौन-से सही हैं?</p>",
+      "option1": "<p>a and c</p>",
+      "option2": "<p>a and b</p>",
+      "option3": "<p>b and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Council is collectively responsible to Lok Sabha; minister need not be MP at appointment but must become MP within 6 months.<br/>लोकसभा के प्रति सामूहिक उत्तरदायित्व; मंत्री नियुक्ति के समय सांसद नहीं भी हो सकता, पर 6 महीने में बनना पड़ता है।</p>"
+    },
+    {
+      "sr_no": 45,
+      "question": "<p>The Inter-State Council is constituted under which Article?<br/>अंतर-राज्य परिषद किस अनुच्छेद के तहत गठित की जाती है?</p>",
+      "option1": "<p>Article 262</p>",
+      "option2": "<p>Article 263</p>",
+      "option3": "<p>Article 280</p>",
+      "option4": "<p>Article 312</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Article 263 provides for Inter-State Council to improve Centre-State coordination.<br/>अनुच्छेद 263 केंद्र-राज्य समन्वय सुधार हेतु अंतर-राज्य परिषद का प्रावधान करता है।</p>"
+    },
+    {
+      "sr_no": 46,
+      "question": "<p>Consider the following statements regarding the Preamble:<br/>उद्घोषिका (Preamble) के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) It is a part of the Constitution.<br/> (a) यह संविधान का हिस्सा है।<br/>(b) It can be amended under Article 368.<br/> (b) इसे अनुच्छेद 368 के तहत संशोधित किया जा सकता है।<br/>(c) It is enforceable in courts.<br/> (c) यह न्यायालयों में प्रवर्तनीय है।<br/>Which of the above statements are correct? / उपरोक्त में से कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>a and c</p>",
+      "option3": "<p>b and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Preamble is part of the Constitution and can be amended; however, it is not enforceable in courts.<br/>उद्घोषिका संविधान का हिस्सा है और संशोधित की जा सकती है, पर यह न्यायालय में प्रवर्तनीय नहीं है।</p>"
+    },
+    {
+      "sr_no": 47,
+      "question": "<p>Which Constitutional Amendment introduced the Anti-defection law?<br/>किस संविधान संशोधन ने दलबदल विरोधी कानून को जोड़ा?</p>",
+      "option1": "<p>44th Amendment</p>",
+      "option2": "<p>52nd Amendment</p>",
+      "option3": "<p>42nd Amendment</p>",
+      "option4": "<p>61st Amendment</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Anti-defection provisions were added by the 52nd Constitutional Amendment, 1985.<br/>दलबदल प्रावधान 1985 के 52वें संशोधन द्वारा जोड़े गए थे।</p>"
+    },
+    {
+      "sr_no": 48,
+      "question": "<p>Consider the following statements about the Union List:<br/>संघ सूची के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) It contains subjects of national importance.<br/> (a) इसमें राष्ट्रीय महत्व के विषय शामिल होते हैं।<br/>(b) Parliament has exclusive power to legislate on these subjects.<br/> (b) इन विषयों पर विधि बनाने का पूर्ण अधिकार संसद का होता है।<br/>(c) States can legislate on Union List subjects with President’s permission.<br/> (c) राष्ट्रपति की अनुमति से राज्य संघ सूची पर विधि बना सकते हैं।<br/>Which statements are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Union List contains national subjects and Parliament alone legislates; states cannot make laws even with Presidential approval.<br/>संघ सूची में राष्ट्रीय विषय होते हैं और केवल संसद legislates करती है; राज्य राष्ट्रपति की अनुमति से भी कानून नहीं बना सकते।</p>"
+    },
+    {
+      "sr_no": 49,
+      "question": "<p>Under which Article can the Supreme Court issue writs for purposes other than Fundamental Rights?<br/>सुप्रीम कोर्ट मौलिक अधिकारों के अतिरिक्त अन्य कारणों के लिए किस अनुच्छेद के तहत रिट जारी कर सकता है?</p>",
+      "option1": "<p>Article 32</p>",
+      "option2": "<p>Article 136</p>",
+      "option3": "<p>Article 139</p>",
+      "option4": "<p>Article 142</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Article 139 empowers Parliament to extend writ jurisdiction of Supreme Court beyond Fundamental Rights.<br/>अनुच्छेद 139 सुप्रीम कोर्ट की रिट अधिकारिता को मौलिक अधिकारों से परे बढ़ाने की अनुमति देता है।</p>"
+    },
+    {
+      "sr_no": 50,
+      "question": "<p>Consider the following statements regarding the Supreme Court:<br/>सुप्रीम कोर्ट के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) It is a court of record.<br/> (a) यह अभिलेखीय न्यायालय है।<br/>(b) It has original, appellate, and advisory jurisdiction.<br/> (b) इसके पास मूल, अपीलीय व परामर्शी अधिकारिता होती है।<br/>(c) Its decisions are binding on all courts except High Courts.<br/> (c) इसके निर्णय उच्च न्यायालयों को छोड़कर सभी न्यायालयों पर बाध्यकारी होते हैं।<br/>Which statements are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Supreme Court is a court of record and has all three jurisdictions; its decisions bind all courts including High Courts.<br/>सुप्रीम कोर्ट अभिलेखीय न्यायालय है और तीनों अधिकारिताएँ रखता है; इसके निर्णय उच्च न्यायालयों पर भी बाध्यकारी हैं।</p>"
+    },
+    {
+      "sr_no": 51,
+      "question": "<p>Which Constitutional Amendment made Right to Education a Fundamental Right?<br/>किस संविधान संशोधन ने शिक्षा के अधिकार को मौलिक अधिकार बनाया?</p>",
+      "option1": "<p>73rd Amendment</p>",
+      "option2": "<p>86th Amendment</p>",
+      "option3": "<p>61st Amendment</p>",
+      "option4": "<p>44th Amendment</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>The 86th Amendment (2002) inserted Article 21A making education a Fundamental Right.<br/>86वें संशोधन ने अनुच्छेद 21A जोड़कर शिक्षा को मौलिक अधिकार बनाया।</p>"
+    },
+    {
+      "sr_no": 52,
+      "question": "<p>Consider the following statements regarding the Rajya Sabha:<br/>राज्यसभा के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) It is a permanent house.<br/> (a) यह एक स्थायी सदन है।<br/>(b) One-third of its members retire every second year.<br/> (b) इसके एक-तिहाई सदस्य हर दो वर्ष में सेवानिवृत्त होते हैं।<br/>(c) The Vice-President is its ex-officio Chairman.<br/> (c) उपराष्ट्रपति इसके पदेन सभापति होते हैं।<br/>Which statements are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>a and c</p>",
+      "option3": "<p>b and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>All three are correct: Rajya Sabha is permanent, one-third members retire biannually, VP is Chairman.<br/>तीनों कथन सही हैं — राज्यसभा स्थायी सदन है, एक-तिहाई सदस्य हर दो वर्ष में सेवानिवृत्त होते हैं, और उपराष्ट्रपति इसके सभापति हैं।</p>"
+    },
+    {
+      "sr_no": 53,
+      "question": "<p>Appointment of the Chief Election Commissioner (CEC) is made by:<br/>मुख्य चुनाव आयुक्त (CEC) की नियुक्ति कौन करता है?</p>",
+      "option1": "<p>Prime Minister / प्रधानमंत्री</p>",
+      "option2": "<p>President / राष्ट्रपति</p>",
+      "option3": "<p>Parliament / संसद</p>",
+      "option4": "<p>Supreme Court / सुप्रीम कोर्ट</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>CEC is appointed by the President under Article 324.<br/>अनुच्छेद 324 के अनुसार CEC की नियुक्ति राष्ट्रपति करते हैं।</p>"
+    },
+    {
+      "sr_no": 54,
+      "question": "<p>Consider the following statements about Pardoning Powers of Governor:<br/>राज्यपाल की क्षमादान शक्ति के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) He cannot pardon a death sentence.<br/> (a) वे मृत्युदंड को माफ नहीं कर सकते।<br/>(b) He can suspend, remit, or commute sentences under state laws.<br/> (b) वे राज्य कानूनों के अंतर्गत दंड को स्थगित, लघु या परिवर्तित कर सकते हैं।<br/>(c) His pardoning power is wider than the President.<br/> (c) उनकी क्षमादान शक्ति राष्ट्रपति से अधिक व्यापक है।<br/>Which statements are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b only</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Governor cannot pardon death penalty but can alter sentences under state laws; President has broader powers.<br/>राज्यपाल मृत्युदंड माफ नहीं कर सकते पर राज्य कानूनों के तहत दंड में बदलाव कर सकते हैं; राष्ट्रपति की शक्ति अधिक व्यापक है।</p>"
+    },
+    {
+      "sr_no": 55,
+      "question": "<p>Which Article deals with the establishment of High Courts?<br/>उच्च न्यायालयों की स्थापना किस अनुच्छेद में दी गई है?</p>",
+      "option1": "<p>Article 214</p>",
+      "option2": "<p>Article 224</p>",
+      "option3": "<p>Article 230</p>",
+      "option4": "<p>Article 233</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Article 214 states that every state shall have a High Court.<br/>अनुच्छेद 214 में प्रत्येक राज्य में उच्च न्यायालय की व्यवस्था का उल्लेख है।</p>"
+    },
+    {
+      "sr_no": 56,
+      "question": "<p>Consider the following about the Constitutional position of the Governor:<br/>राज्यपाल की संवैधानिक स्थिति के संबंध में निम्नलिखित पर विचार करें:<br/>(a) He is an agent of the Centre.<br/> (a) वे केंद्र के एजेंट होते हैं।<br/>(b) He is a nominal head of the State.<br/> (b) वे राज्य के औपचारिक प्रमुख होते हैं।<br/>(c) He must act on the aid and advice of the Council of Ministers.<br/> (c) उन्हें मंत्रिपरिषद की सलाह पर कार्य करना अनिवार्य है।<br/>Which statements are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>b and c</p>",
+      "option2": "<p>a and b</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Governor is nominal head and acts on ministerial advice; he is not constitutionally an agent of the Centre.<br/>राज्यपाल औपचारिक प्रमुख होते हैं और मंत्रिपरिषद की सलाह पर कार्य करते हैं; वे संवैधानिक रूप से केंद्र के एजेंट नहीं हैं।</p>"
+    },
+    {
+      "sr_no": 57,
+      "question": "<p>Which body recommends the distribution of taxes between Union and States?<br/>केंद्र और राज्यों के बीच कर-वितरण की सिफारिश कौन करता है?</p>",
+      "option1": "<p>Planning Commission / योजना आयोग</p>",
+      "option2": "<p>NITI Aayog / नीति आयोग</p>",
+      "option3": "<p>Finance Commission / वित्त आयोग</p>",
+      "option4": "<p>GST Council / जीएसटी परिषद</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Finance Commission recommends tax distribution and grants-in-aid under Article 280.<br/>अनुच्छेद 280 के तहत वित्त आयोग कर-वितरण की सिफारिश करता है।</p>"
+    },
+    {
+      "sr_no": 58,
+      "question": "<p>Consider the following statements about the Lok Sabha:<br/>लोकसभा के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) It is also known as the House of the People.<br/> (a) इसे जनता का सदन कहा जाता है।<br/>(b) Its members are elected by proportional representation.<br/> (b) इसके सदस्य आनुपातिक प्रतिनिधित्व से चुने जाते हैं।<br/>(c) Money Bills can be introduced only in this House.<br/> (c) मनी बिल केवल इसी सदन में प्रस्तुत किए जा सकते हैं।<br/>Which statements are correct? / कौन-से सही हैं?</p>",
+      "option1": "<p>a and c</p>",
+      "option2": "<p>a only</p>",
+      "option3": "<p>b and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Lok Sabha members are elected by FPTP, not proportional representation; Money Bills originate here.<br/>लोकसभा का चुनाव FPTP प्रणाली से होता है; मनी बिल केवल लोकसभा में प्रस्तुत किए जाते हैं।</p>"
+    },
+    {
+      "sr_no": 59,
+      "question": "<p>Who appoints the judges of the Supreme Court?<br/>सुप्रीम कोर्ट के न्यायाधीशों की नियुक्ति कौन करता है?</p>",
+      "option1": "<p>Prime Minister / प्रधानमंत्री</p>",
+      "option2": "<p>President / राष्ट्रपति</p>",
+      "option3": "<p>Chief Justice alone / केवल मुख्य न्यायाधीश</p>",
+      "option4": "<p>Parliament / संसद</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Supreme Court judges are appointed by the President, generally following Collegium recommendation.<br/>सुप्रीम कोर्ट न्यायाधीशों की नियुक्ति राष्ट्रपति करते हैं, प्रायः कॉलेजियम की सिफारिश के आधार पर।</p>"
+    },
+    {
+      "sr_no": 60,
+      "question": "<p>Consider the following statements regarding the 73rd Constitutional Amendment:<br/>73वें संविधान संशोधन के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) It granted constitutional status to Panchayati Raj Institutions.<br/> (a) इसने पंचायती राज संस्थाओं को संवैधानिक दर्जा प्रदान किया।<br/>(b) It added the Eleventh Schedule to the Constitution.<br/> (b) इसने संविधान में ग्यारहवीं अनुसूची जोड़ी।<br/>(c) It mandates reservation for women in Panchayats.<br/> (c) यह पंचायतों में महिलाओं के लिए आरक्षण अनिवार्य करता है।<br/>Which statements are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>All three statements are correct—constitutional status, 11th Schedule, and 1/3rd reservation for women.<br/>तीनों कथन सही हैं—संवैधानिक दर्जा, 11वीं अनुसूची और महिलाओं के लिए आरक्षण।</p>"
+    },
+    {
+      "sr_no": 61,
+      "question": "<p>Consider the following statements regarding the National Commission for Scheduled Castes (NCSC):<br/>अनुसूचित जाति आयोग (NCSC) के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) It was created by the 89th Constitutional Amendment Act.<br/> (a) इसे 89वें संविधान संशोधन अधिनियम द्वारा बनाया गया था।<br/>(b) It investigates all matters relating to safeguards of SCs.<br/> (b) यह अनुसूचित जातियों से संबंधित सभी संरक्षण उपायों की जांच करता है।<br/>(c) Its chairperson has the rank of a Union Cabinet Minister.<br/> (c) इसके अध्यक्ष का दर्जा केंद्रीय मंत्रिमंडल मंत्री के समान होता है।<br/>Which statements are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Established/restructured by the 89th Amendment; investigates SC safeguards; Chairperson has Cabinet-Minister status.<br/>89वें संशोधन से स्थापित; एससी सुरक्षा उपायों की जांच करता है; अध्यक्ष का दर्जा कैबिनेट मंत्री के समान है।</p>"
+    },
+    {
+      "sr_no": 62,
+      "question": "<p>Which Article deals with the definition of ‘Money Bill’?<br/>‘मनी बिल’ की परिभाषा किस अनुच्छेद में दी गई है?</p>",
+      "option1": "<p>Article 110</p>",
+      "option2": "<p>Article 111</p>",
+      "option3": "<p>Article 112</p>",
+      "option4": "<p>Article 113</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Article 110 defines a Money Bill and lists its features.<br/>अनुच्छेद 110 में मनी बिल की परिभाषा दी गई है।</p>"
+    },
+    {
+      "sr_no": 63,
+      "question": "<p>Consider the following about the National Human Rights Commission (NHRC):<br/>राष्ट्रीय मानवाधिकार आयोग (NHRC) के संबंध में निम्नलिखित पर विचार करें:<br/>(a) It is a constitutional body.<br/> (a) यह एक संवैधानिक निकाय है।<br/>(b) It is headed by a former Chief Justice of India.<br/> (b) इसका अध्यक्ष पूर्व मुख्य न्यायाधीश होता है।<br/>(c) It can inquire into violation of human rights by public servants.<br/> (c) यह लोक सेवकों द्वारा मानवाधिकार उल्लंघन की जांच कर सकता है।<br/>Which are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>b and c</p>",
+      "option2": "<p>a and b</p>",
+      "option3": "<p>c only</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>NHRC is a statutory body (Protection of Human Rights Act, 1993), headed by former CJI, and investigates violations.<br/>NHRC वैधानिक निकाय है; इसके अध्यक्ष पूर्व CJI होते हैं; यह मानवाधिकार उल्लंघन की जांच करता है।</p>"
+    },
+    {
+      "sr_no": 64,
+      "question": "<p>Which Schedule contains provisions for administration of tribal areas in the Northeast?<br/>उत्तर-पूर्व में जनजातीय क्षेत्रों के प्रशासन के प्रावधान किस अनुसूची में हैं?</p>",
+      "option1": "<p>Fifth Schedule / पाँचवीं अनुसूची</p>",
+      "option2": "<p>Sixth Schedule / छठी अनुसूची</p>",
+      "option3": "<p>Seventh Schedule / सातवीं अनुसूची</p>",
+      "option4": "<p>Ninth Schedule / नौवीं अनुसूची</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Sixth Schedule provides for autonomous tribal districts in the Northeast.<br/>छठी अनुसूची उत्तर-पूर्व के स्वायत्त जनजातीय क्षेत्रों के लिए है।</p>"
+    },
+    {
+      "sr_no": 65,
+      "question": "<p>Consider the following statements regarding Fundamental Rights:<br/>मौलिक अधिकारों के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) Article 20 and 21 cannot be suspended even during National Emergency.<br/> (a) अनुच्छेद 20 और 21 राष्ट्रीय आपात के दौरान भी निलंबित नहीं किए जा सकते।<br/>(b) Article 19 is suspended automatically during National Emergency on grounds of war or aggression.<br/> (b) युद्ध या बाहरी आक्रमण आधारित राष्ट्रीय आपात में अनुच्छेद 19 स्वतः निलंबित हो जाता है।<br/>(c) Article 32 can be suspended only by Constitutional Amendment.<br/> (c) अनुच्छेद 32 केवल संविधान संशोधन द्वारा निलंबित किया जा सकता है।<br/>Which statements are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Articles 20 &amp; 21 remain valid during emergency; Article 19 auto-suspends under war/aggression emergency; Article 32 can be suspended by Presidential order under Article 359, not amendment.<br/>20 और 21 आपात में भी निलंबित नहीं; 19 युद्ध/आक्रमण आपात में स्वतः निलंबित; 32 को अनुच्छेद 359 के तहत निलंबित किया जा सकता है।</p>"
+    },
+    {
+      "sr_no": 66,
+      "question": "<p>Which of the following is NOT a feature of the Indian Federation?<br/>निम्नलिखित में से कौन-सा भारतीय संघीय व्यवस्था की विशेषता नहीं है?</p>",
+      "option1": "<p>Rigid Constitution / कठोर संविधान</p>",
+      "option2": "<p>Dual Polity / द्वैध शासन</p>",
+      "option3": "<p>Equal powers to Centre and States / केंद्र और राज्यों को समान शक्तियाँ</p>",
+      "option4": "<p>Independent Judiciary / स्वतंत्र न्यायपालिका</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Centre has more powers in Indian federalism; power distribution is not equal.<br/>भारतीय संघीय व्यवस्था में केंद्र को अधिक अधिकार हैं; शक्तियाँ समान नहीं।</p>"
+    },
+    {
+      "sr_no": 67,
+      "question": "<p>Consider the following statements regarding the Public Interest Litigation (PIL):<br/>लोक हित याचिका (PIL) के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) It allows any person to approach courts for public welfare.<br/> (a) यह किसी भी व्यक्ति को लोक-हित के मामलों में न्यायालय जाने की अनुमति देता है।<br/>(b) It was introduced by the Supreme Court in the 1980s.<br/> (b) इसे 1980 के दशक में सुप्रीम कोर्ट द्वारा विकसित किया गया।<br/>(c) It is explicitly defined in the Constitution.<br/> (c) इसका स्पष्ट उल्लेख संविधान में किया गया है।<br/>Which statements are correct? / कौन-से सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>PIL evolved through judicial activism in 1980s; not explicitly mentioned in Constitution.<br/>PIL 1980 के दशक में न्यायिक सक्रियता से विकसित हुई; संविधान में स्पष्ट उल्लेख नहीं।</p>"
+    },
+    {
+      "sr_no": 68,
+      "question": "<p>Which body recommends Minimum Support Prices (MSP) in India?<br/>भारत में न्यूनतम समर्थन मूल्य (MSP) की सिफारिश कौन करता है?</p>",
+      "option1": "<p>NITI Aayog / नीति आयोग</p>",
+      "option2": "<p>Commission for Agricultural Costs and Prices (CACP)</p>",
+      "option3": "<p>Ministry of Agriculture / कृषि मंत्रालय</p>",
+      "option4": "<p>Finance Commission / वित्त आयोग</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>CACP recommends MSP; government announces the final price.<br/>MSP की सिफारिश CACP करता है; अंतिम मूल्य सरकार घोषित करती है।</p>"
+    },
+    {
+      "sr_no": 69,
+      "question": "<p><strong>Consider the following statements regarding the Speaker of Lok Sabha:</strong><br/> <strong>लोकसभा अध्यक्ष के संबंध में निम्नलिखित कथनों पर विचार करें:</strong><br/> <strong>(a) He presides over joint sittings of Parliament.</strong><br/> <strong>(a) वे संसद के संयुक्त सत्रों की अध्यक्षता करते हैं।</strong><br/> <strong>(b) He is the final interpreter of parliamentary rules.</strong><br/> <strong>(b) वे संसदीय नियमों के अंतिम व्याख्याता होते हैं।</strong><br/> <strong>(c) He is removed by a simple majority of members present and voting.</strong><br/> <strong>(c) उन्हें उपस्थित और मतदान करने वाले सदस्यों के साधारण बहुमत से हटाया जा सकता है।</strong><br/> <strong>Which statements are correct? / कौन-से सही हैं?</strong></p>",
+      "option1": "<p>b and c</p>",
+      "option2": "<p>a and b</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Speaker presides over joint sittings; Speaker is final interpreter of parliamentary rules; removal is by a simple majority.<br/> स्पीकर संयुक्त सत्र की अध्यक्षता करते हैं; संसदीय नियमों की अंतिम व्याख्या उन्हीं की होती है; हटाना साधारण बहुमत से होता है।</p>"
+    },
+    {
+      "sr_no": 70,
+      "question": "<p>The ‘Right to Constitutional Remedies’ is given under which Article?<br/>‘संवैधानिक उपचार का अधिकार’ किस अनुच्छेद में दिया गया है?</p>",
+      "option1": "<p>Article 19</p>",
+      "option2": "<p>Article 21</p>",
+      "option3": "<p>Article 32</p>",
+      "option4": "<p>Article 226</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Article 32 allows individuals to approach Supreme Court for enforcement of Fundamental Rights.<br/>अनुच्छेद 32 से व्यक्ति सुप्रीम कोर्ट में अपने मौलिक अधिकारों की रक्षा हेतु जा सकता है।</p>"
+    },
+    {
+      "sr_no": 71,
+      "question": "<p>Consider the following statements regarding the 74th Constitutional Amendment:<br/>74वें संविधान संशोधन के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) It granted constitutional status to Urban Local Bodies.<br/> (a) इसने शहरी स्थानीय निकायों को संवैधानिक दर्जा प्रदान किया।<br/>(b) It introduced the Twelfth Schedule.<br/> (b) इसने बारहवीं अनुसूची जोड़ी।<br/>(c) It made District Planning Committees mandatory.<br/> (c) इसने जिला योजना समितियों को अनिवार्य किया।<br/>Which statements are correct? / कौन-से सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>All three are correct: ULBs got constitutional status, 12th Schedule inserted, DPCs mandated.<br/>तीनों कथन सही—ULBs को दर्जा मिला, 12वीं अनुसूची जोड़ी गई, DPC अनिवार्य हुए।</p>"
+    },
+    {
+      "sr_no": 72,
+      "question": "<p>Who administers the oath of office to the Governor?<br/>राज्यपाल को पद की शपथ कौन दिलाता है?</p>",
+      "option1": "<p>Chief Justice of India / भारत के मुख्य न्यायाधीश</p>",
+      "option2": "<p>President / राष्ट्रपति</p>",
+      "option3": "<p>Chief Justice of the High Court / उच्च न्यायालय के मुख्य न्यायाधीश</p>",
+      "option4": "<p>Speaker of the Legislative Assembly / विधानसभा अध्यक्ष</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>The Governor is administered oath by the Chief Justice of the State High Court.<br/>राज्यपाल को शपथ उच्च न्यायालय के मुख्य न्यायाधीश दिलाते हैं।</p>"
+    },
+    {
+      "sr_no": 73,
+      "question": "<p>Consider the following regarding the Election Commission of India:<br/>भारत के चुनाव आयोग के संबंध में निम्नलिखित पर विचार करें:<br/>(a) It conducts elections to Parliament, State Legislatures, and local bodies.<br/> (a) यह संसद, राज्य विधानसभाओं और स्थानीय निकायों के चुनाव कराता है।<br/>(b) It consists of the CEC and other Election Commissioners.<br/> (b) यह मुख्य चुनाव आयुक्त और अन्य आयुक्तों से मिलकर बनता है।<br/>(c) It is an independent constitutional body.<br/> (c) यह एक स्वतंत्र संवैधानिक निकाय है।<br/>Which of the statements are correct? / कौन-से कथन सही हैं?</p>",
+      "option1": "<p>b and c</p>",
+      "option2": "<p>a and b</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>ECI does not conduct local body elections (State Election Commissions do). It is independent and includes CEC + ECs.<br/>ECI स्थानीय निकाय चुनाव नहीं कराता; यह स्वतंत्र संवैधानिक निकाय है और CEC + आयुक्तों से मिलकर बनता है।</p>"
+    },
+    {
+      "sr_no": 74,
+      "question": "<p>Which Article provides for the establishment of the Finance Commission?<br/>वित्त आयोग की स्थापना किस अनुच्छेद में की गई है?</p>",
+      "option1": "<p>Article 275</p>",
+      "option2": "<p>Article 280</p>",
+      "option3": "<p>Article 282</p>",
+      "option4": "<p>Article 293</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>Article 280 establishes the Finance Commission and outlines its duties.<br/>अनुच्छेद 280 वित्त आयोग की स्थापना करता है।</p>"
+    },
+    {
+      "sr_no": 75,
+      "question": "<p>Consider the following statements regarding the High Courts:<br/>उच्च न्यायालयों के संबंध में निम्नलिखित कथनों पर विचार करें:<br/>(a) They can issue writs for both Fundamental Rights and other legal rights.<br/> (a) वे मौलिक अधिकारों तथा अन्य कानूनी अधिकारों दोनों के लिए रिट जारी कर सकते हैं।<br/>(b) They have supervisory jurisdiction over subordinate courts.<br/> (b) इनकी अधीनस्थ न्यायालयों पर पर्यवेक्षी अधिकारिता होती है।<br/>(c) Their jurisdiction is uniform throughout India.<br/> (c) इनकी अधिकारिता पूरे भारत में समान होती है।<br/>Which statements are correct? / कौन-से सही हैं?</p>",
+      "option1": "<p>a and b</p>",
+      "option2": "<p>b and c</p>",
+      "option3": "<p>a and c</p>",
+      "option4": "<p>a, b and c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p>High Courts issue writs for FRs and legal rights and supervise subordinate courts; jurisdiction differs across states.<br/>उच्च न्यायालय मौलिक व कानूनी अधिकारों के लिए रिट जारी कर सकते हैं और अधीनस्थ न्यायालयों पर पर्यवेक्षी अधिकारिता रखते हैं; अधिकारिता पूरे देश में समान नहीं होती।</p>"
+    }
+  ]
+};
+
+// Extract questions and time from new structure
+const questions = quizData.questions;
+const totalTimeMinutes = quizData.time_minutes;
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = totalTimeMinutes * 60;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape') {
+      if (isPaletteOpen) {
+        closePalette();
+      }
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimer();
+    
+    // Auto-submit when time runs out
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      alert('Time is up! Submitting quiz automatically.');
+      submitQuiz();
+      return;
+    }
+    
+    if (timerSeconds <= 120) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    questionText.innerHTML = '';
+    const questionContent = createOptionContent(q.question);
+    questionText.appendChild(questionContent);
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message = `You have ${unattempted} unanswered questions. ${message}`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  const timeTaken = (totalTimeMinutes * 60) - timerSeconds;
+  const minutesTaken = Math.floor(timeTaken / 60);
+  const secondsTaken = timeTaken % 60;
+  const timeTakenText = `${minutesTaken}m ${secondsTaken}s`;
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeTakenText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    let questionDisplay = '';
+    if (isImageURL(q.question)) {
+      questionDisplay = `<img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`;
+    } else {
+      questionDisplay = q.question;
+    }
+    html += `<div class="question-review">
+      <h4>Q${q.sr_no}: ${questionDisplay}</h4>`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution && q.solution.trim() !== '') {
+      let solutionDisplay = '';
+      if (isImageURL(q.solution)) {
+        solutionDisplay = `<img src="${q.solution}" class="solution-image" alt="Solution" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">`;
+      } else {
+        solutionDisplay = q.solution;
+      }
+      
+      html += `<div class="solution-section" style="margin-top: 15px; padding: 15px; background: #f0f8ff; border-left: 4px solid #007bff; border-radius: 8px;">
+        <strong style="color: #007bff;">💡 Solution:</strong>
+        <div style="margin-top: 8px; color: #333;">${solutionDisplay}</div>
+      </div>`;
+    }
+    
+    html += `</div>`;
+  });
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https')) &&
+    (str.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i));
+}
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = totalTimeMinutes * 60;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    updateTimer();
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FULL POLITY TEST</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">MOTION 3.0 - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem('quizState', JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem('quizState');
+    if (saved) {
+      const state = JSON.parse(saved);
+      if (Date.now() - state.timestamp < 24 * 60 * 60 * 1000) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || (totalTimeMinutes * 60); // MODIFIED
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem('quizState');
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>

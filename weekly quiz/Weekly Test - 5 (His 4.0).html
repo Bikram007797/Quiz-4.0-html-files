@@ -1,0 +1,2915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>HISTORY TEST - 5</title>
+<style>
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0069d9;
+  --success-color: #28a745;
+  --success-hover: #218838;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --secondary-color: #6c757d;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+  --overlay: rgba(0,0,0,0.5);
+  --nav-height: 80px;
+}
+
+[data-theme="dark"] {
+  --primary-color: #4dabf7;
+  --primary-hover: #339af0;
+  --success-color: #51cf66;
+  --success-hover: #40c057;
+  --danger-color: #ff6b6b;
+  --warning-color: #ffd43b;
+  --secondary-color: #868e96;
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: #495057;
+  --shadow: 0 4px 6px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+  --overlay: rgba(0,0,0,0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+  position: relative;
+  padding-bottom: var(--nav-height);
+}
+
+body.palette-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 20px 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: 700;
+  user-select: none;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle, .fullscreen-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+}
+
+.theme-toggle:active, .fullscreen-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle:hover, .fullscreen-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.timer {
+  background: var(--warning-color);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  min-width: 100px;
+  text-align: center;
+  user-select: none;
+}
+
+.timer.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.palette-fab {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  transition: all 0.3s ease;
+  z-index: 998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-fab:active {
+  transform: scale(0.9);
+}
+
+.palette-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,123,255,0.6);
+}
+
+.palette-fab.active {
+  background: var(--danger-color);
+}
+
+.palette-fab .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-secondary);
+  pointer-events: none;
+}
+
+.palette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  touch-action: none;
+}
+
+.palette-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.question-palette {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-primary);
+  box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.question-palette.active {
+  right: 0;
+}
+
+.palette-header {
+  padding: 20px;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.palette-header h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.palette-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+  touch-action: manipulation;
+}
+
+.palette-close:active {
+  transform: scale(0.9);
+}
+
+.palette-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.palette-stats {
+  padding: 15px 20px;
+  background: var(--bg-tertiary);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-size: 13px;
+  text-align: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.palette-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.palette-stat .number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.palette-stat.answered .number { color: var(--success-color); }
+.palette-stat.unanswered .number { color: var(--secondary-color); }
+.palette-stat.bookmarked .number { color: var(--warning-color); }
+
+.palette-search {
+  padding: 15px 20px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.palette-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.palette-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.palette-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+}
+
+.palette-btn {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+  min-width: 40px;
+  min-height: 40px;
+  color: var(--text-primary);
+  position: relative;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.palette-btn:active {
+  transform: scale(0.9);
+}
+
+.palette-btn:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+.palette-btn.current {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  animation: currentPulse 2s infinite;
+}
+
+@keyframes currentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,123,255,0.7); }
+  50% { box-shadow: 0 0 0 8px rgba(0,123,255,0); }
+}
+
+.palette-btn.answered {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.palette-btn.bookmarked::after {
+  content: '🔖';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.palette-btn.bookmarked.answered {
+  background: var(--success-color);
+}
+
+.palette-legend {
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 13px;
+  background: var(--bg-secondary);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.question-image, .option-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: block;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-container {
+  background: var(--bg-primary);
+  border-radius: 15px;
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  scroll-margin-top: 20px;
+}
+
+.quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.marking-info {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-section {
+  margin-bottom: 25px;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.progress-bar-container {
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  transition: width 0.4s ease;
+  border-radius: 12px;
+}
+
+.question-section {
+  min-height: 300px;
+  scroll-margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  user-select: none;
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.bookmark-btn:active {
+  transform: scale(0.95);
+}
+
+.bookmark-btn.active {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+  color: #000;
+}
+
+.question {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  user-select: text;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--bg-secondary);
+  min-height: 60px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.option-label:active {
+  transform: scale(0.98);
+}
+
+.option-label:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+.option-label.selected {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.option-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--bg-primary);
+  padding: 10px;
+}
+
+.option-label.selected .option-image {
+  background: rgba(255,255,255,0.1);
+}
+
+.navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-top: 2px solid var(--border-color);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  z-index: 997;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.nav-btn {
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.nav-btn:active {
+  transform: scale(0.97);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-btn.prev {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.nav-btn.prev:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.nav-btn.next {
+  background: var(--primary-color);
+  color: white;
+}
+
+.nav-btn.next:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.nav-btn.clear {
+  background: var(--danger-color);
+  color: white;
+}
+
+.nav-btn.clear:hover {
+  background: #c82333;
+}
+
+.nav-btn.submit {
+  background: var(--success-color);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.nav-btn.submit:hover {
+  background: var(--success-hover);
+}
+
+.result-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.score-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  user-select: none;
+}
+
+.score-card h2 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  user-select: none;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card.correct h3 { color: var(--success-color); }
+.stat-card.wrong h3 { color: var(--danger-color); }
+.stat-card.unattempted h3 { color: var(--secondary-color); }
+
+.question-review {
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background: var(--bg-secondary);
+}
+
+.question-review h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-option {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-option .option-image {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.review-option.correct {
+  background: #d4edda;
+  border-color: var(--success-color);
+  color: #155724;
+}
+
+.review-option.wrong {
+  background: #f8d7da;
+  border-color: var(--danger-color);
+  color: #721c24;
+}
+
+.review-option.user-selected {
+  border-width: 3px;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  min-width: 150px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.restart {
+  background: var(--danger-color);
+  color: white;
+}
+
+.action-btn.restart:hover {
+  background: #c82333;
+}
+
+.action-btn.download {
+  background: var(--primary-color);
+  color: white;
+}
+
+.action-btn.download:hover {
+  background: var(--primary-hover);
+}
+
+.action-btn.print {
+  background: var(--secondary-color);
+  color: white;
+}
+
+.action-btn.print:hover {
+  background: #5a6268;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.palette-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.palette-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.palette-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+.palette-content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 140px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .quiz-container {
+    padding: 20px 15px;
+  }
+
+  .question-palette {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .palette-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+
+  .palette-btn {
+    font-size: 13px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 10px);
+    right: 15px;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .navigation {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+
+  .nav-btn {
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .nav-btn.clear {
+    order: 3;
+  }
+
+  .nav-btn.submit {
+    grid-column: auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .legend-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question {
+    font-size: 16px;
+  }
+
+  .option-label {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-image {
+    max-height: 150px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .palette-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .palette-btn {
+    font-size: 12px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .timer {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .option-image {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .palette-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media print {
+  .header-controls, .navigation, .palette-fab, .palette-overlay, .question-palette, .action-buttons, .bookmark-btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    padding-bottom: 0;
+  }
+
+  .container {
+    padding-bottom: 20px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .palette-fab {
+    bottom: calc(var(--nav-height) + 5px);
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .palette-fab .badge {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🎯 HISTORY TEST - 5</h1>
+    <div class="header-controls">
+      <div class="timer" id="timer">00:00</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle Theme">🌙</button>
+      <button class="fullscreen-btn" id="fullscreenBtn" aria-label="Toggle fullscreen" title="Fullscreen">⛶</button>
+    </div>
+  </div>
+
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-header">
+      <div class="marking-info" id="markingInfo">Marking: +1, -0</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-stats">
+        <span>Progress: <strong id="progressText">1/2</strong></span>
+        <span>Attempted: <strong id="attemptedText">0</strong></span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <div class="question-section" id="questionSection">
+      <div class="question-header">
+        <div class="question-number" id="questionNumber">Question 1 of 2</div>
+        <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark question">
+          <span>🔖</span> <span>Bookmark</span>
+        </button>
+      </div>
+      
+      <div class="question" id="questionText"></div>
+      
+      <div class="options" id="optionsContainer"></div>
+    </div>
+
+    <div class="result-section hidden" id="resultSection"></div>
+  </div>
+</div>
+
+<button class="palette-fab" id="paletteFab" aria-label="Toggle question palette" title="Question Palette">
+  📋
+  <span class="badge" id="answeredBadge">0</span>
+</button>
+
+<div class="palette-overlay" id="paletteOverlay"></div>
+
+<div class="question-palette" id="questionPalette">
+  <div class="palette-header">
+    <h3>Question Palette</h3>
+    <button class="palette-close" id="paletteClose" aria-label="Close palette">×</button>
+  </div>
+
+  <div class="palette-stats">
+    <div class="palette-stat answered">
+      <div class="number" id="paletteAnswered">0</div>
+      <div>Answered</div>
+    </div>
+    <div class="palette-stat unanswered">
+      <div class="number" id="paletteUnanswered">2</div>
+      <div>Not Answered</div>
+    </div>
+    <div class="palette-stat bookmarked">
+      <div class="number" id="paletteBookmarked">0</div>
+      <div>Bookmarked</div>
+    </div>
+  </div>
+
+  <div class="palette-search">
+    <input type="number" id="paletteSearch" placeholder="Jump to question number..." aria-label="Search questions" inputmode="numeric" pattern="[0-9]*">
+  </div>
+
+  <div class="palette-content">
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <div class="palette-legend">
+    <div class="legend-grid">
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--success-color)"></div>
+        <span>Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--bg-secondary); border: 2px solid var(--border-color)"></div>
+        <span>Not Answered</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--primary-color)"></div>
+        <span>Current Question</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: var(--warning-color)"></div>
+        <span>🔖 Bookmarked</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="navigation" id="navigation">
+  <button class="nav-btn prev" id="prevBtn" aria-label="Previous question">
+    <span>←</span> Previous
+  </button>
+  <button class="nav-btn clear" id="clearBtn" aria-label="Clear answer">Clear</button>
+  <button class="nav-btn next" id="nextBtn" aria-label="Next question">
+    Next <span>→</span>
+  </button>
+  <button class="nav-btn submit hidden" id="submitBtn" aria-label="Submit quiz">Submit Quiz</button>
+</div>
+
+<script>
+// MODIFIED: Quiz data structure with time_minutes
+const quizData = {
+  "time_minutes": 50,
+  "questions": [
+    {
+      "sr_no": 1,
+      "question": "<p> <b>Consider the following statements regarding the Revolt of 1857: <br/> 1857 </b>के विद्रोह के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) The revolt started from Meerut on May 10, 1857. / </b>विद्रोह <b>10 </b>मई<b>, 1857 </b>को मेरठ से शुरू हुआ था। <b><br/> (b) Lord Dalhousie was the Governor-General of India during the revolt. / </b>विद्रोह के दौरान लॉर्ड डलहौजी भारत के गवर्नर<b>-</b>जनरल थे। <b><br/> (c) The revolt was completely ignored by the sepoys in the Bombay and Madras presidencies. / </b>बॉम्बे और मद्रास प्रेसीडेंसी के सिपाहियों ने विद्रोह को पूरी तरह से नजरअंदाज कर दिया था।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and c / a और c</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Lord Canning was the Governor-General during the revolt, not Dalhousie. While the revolt was intense in Northern India, the Madras and Bombay armies largely remained loyal to the British.<br/> विद्रोह के दौरान लॉर्ड कैनिंग गवर्नर-जनरल थे, डलहौजी नहीं। जबकि उत्तर भारत में विद्रोह तीव्र था, मद्रास और बॉम्बे की सेनाएं काफी हद तक अंग्रेजों के प्रति वफादार रहीं।</p>"
+    },
+    {
+      "sr_no": 2,
+      "question": "<p> <b>Which of the following statements about the Indian National Congress (INC) is correct? <br/> </b>भारतीय राष्ट्रीय कांग्रेस <b>(INC) </b>के बारे में निम्नलिखित में से कौन<b>-</b>सा कथन सही है<b>?</b></p>",
+      "option1": "<p> The first session was held in Calcutta in 1885. / प्रथम अधिवेशन 1885 में कलकत्ता में आयोजित किया गया था।</p>",
+      "option2": "<p> W.C. Bonnerjee was the first President of the INC. / व्योमेश चंद्र बनर्जी INC के पहले अध्यक्ष थे।</p>",
+      "option3": "<p> Lord Curzon was the Viceroy during the formation of INC. / INC के गठन के दौरान लॉर्ड कर्जन वायसराय थे।</p>",
+      "option4": "<p> Kadambini Ganguly was the first woman President of INC. / कादंबिनी गांगुली INC की पहली महिला अध्यक्ष थीं।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The first session was held in Bombay (1885) under W.C. Bonnerjee. Lord Dufferin was the Viceroy at that time.<br/> पहला अधिवेशन बंबई (1885) में व्योमेश चंद्र बनर्जी की अध्यक्षता में हुआ था। उस समय लॉर्ड डफरिन वायसराय थे।</p>"
+    },
+    {
+      "sr_no": 3,
+      "question": "<p> <b>Consider the following statements regarding the Partition of Bengal (1905): <br/> </b>बंगाल के विभाजन <b>(1905) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) It was officially implemented on October 16, 1905. / </b>इसे आधिकारिक तौर पर <b>16 </b>अक्टूबर<b>, 1905 </b>को लागू किया गया था। <b><br/> (b) The official reason given by the British was administrative convenience. / </b>अंग्रेजों द्वारा दिया गया आधिकारिक कारण प्रशासनिक सुविधा थी। <b><br/> (c) Rabindranath Tagore suggested celebrating the day of partition as 'Raksha Bandhan Day'. / </b>रवींद्रनाथ टैगोर ने विभाजन के दिन को <b>'</b>रक्षा बंधन दिवस<b>' </b>के रूप में मनाने का सुझाव दिया।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. The partition was a move to curb nationalism, though administrative ease was the stated reason.<br/> सभी कथन सही हैं। राष्ट्रवाद को अंकुश लगाने के लिए विभाजन किया गया था, हालांकि प्रशासनिक सुगमता को इसका कारण बताया गया था।</p>"
+    },
+    {
+      "sr_no": 4,
+      "question": "<p> <b>In which year did Mahatma Gandhi return to India from South Africa? <br/> </b>महात्मा गांधी दक्षिण अफ्रीका से भारत किस वर्ष लौटे थे<b>?</b></p>",
+      "option1": "<p> 1914</p>",
+      "option2": "<p> 1915</p>",
+      "option3": "<p> 1916</p>",
+      "option4": "<p> 1917</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Gandhi returned to India on January 9, 1915, which is now celebrated as Pravasi Bharatiya Divas.<br/> गांधीजी 9 जनवरी, 1915 को भारत लौटे, जिसे अब प्रवासी भारतीय दिवस के रूप में मनाया जाता है।</p>"
+    },
+    {
+      "sr_no": 5,
+      "question": "<p> <b>Consider the following statements regarding the Simon Commission: <br/> </b>साइमन कमीशन के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) It was appointed in 1927 to review the working of the Government of India Act 1919. / </b>इसे <b>1919 </b>के भारत सरकार अधिनियम के कामकाज की समीक्षा के लिए <b>1927 </b>में नियुक्त किया गया था। <b><br/> (b) All its members were British, with no Indian representation. / </b>इसके सभी सदस्य ब्रिटिश थे<b>, </b>इसमें कोई भारतीय प्रतिनिधित्व नहीं था। <b><br/> (c) The Congress supported the commission but the Muslim League boycotted it. / </b>कांग्रेस ने आयोग का समर्थन किया लेकिन मुस्लिम लीग ने इसका बहिष्कार किया।<b><br/> Which of the above statements is/are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a and c / a और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Both the Congress and the major faction of the Muslim League boycotted the Simon Commission because it lacked Indian members.<br/> कांग्रेस और मुस्लिम लीग के प्रमुख गुट दोनों ने साइमन कमीशन का बहिष्कार किया क्योंकि इसमें भारतीय सदस्यों की कमी थी।</p>"
+    },
+    {
+      "sr_no": 6,
+      "question": "<p> <b>Which movement was launched after the failure of the Simon Commission and the rejection of the Nehru Report? <br/> </b>साइमन कमीशन की विफलता और नेहरू रिपोर्ट की अस्वीकृति के बाद कौन सा आंदोलन शुरू किया गया था<b>?</b></p>",
+      "option1": "<p> Non-Cooperation Movement / असहयोग आंदोलन</p>",
+      "option2": "<p> Khilafat Movement / खिलाफत आंदोलन</p>",
+      "option3": "<p> Civil Disobedience Movement / सविनय अवज्ञा आंदोलन</p>",
+      "option4": "<p> Quit India Movement / भारत छोड़ो आंदोलन</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The failure of the British to grant 'Dominion Status' led to the declaration of Purna Swaraj and the launch of the Civil Disobedience Movement in 1930.<br/> ब्रिटिश सरकार द्वारा 'डोमीनियन स्टेटस' न दिए जाने के कारण पूर्ण स्वराज की घोषणा हुई और 1930 में सविनय अवज्ञा आंदोलन शुरू हुआ।</p>"
+    },
+    {
+      "sr_no": 7,
+      "question": "<p> <b>Consider the following matches of the 1857 Revolt leaders and their regions: <br/> 1857 </b>के विद्रोह के नेताओं और उनके क्षेत्रों के निम्नलिखित मिलानों पर विचार करें<b>: <br/> (a) Begum Hazrat Mahal : Lucknow / </b>बेगम हजरत महल <b>: </b>लखनऊ <b><br/> (b) Khan Bahadur : Bareilly / </b>खान बहादुर <b>: </b>बरेली <b><br/> (c) Kunwar Singh : Bihar / </b>कुंवर सिंह <b>: </b>बिहार<b><br/> Which of the pairs given above are correctly matched? <br/> </b>ऊपर दिए गए युग्मों में से कौन<b>-</b>से सही सुमेलित हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All matches are correct. Begum Hazrat Mahal led in Lucknow, Khan Bahadur in Bareilly, and Kunwar Singh in Jagdispur (Bihar).<br/> सभी मिलान सही हैं। बेगम हजरत महल ने लखनऊ में, खान बहादुर ने बरेली में और कुंवर सिंह ने जगदीशपुर (बिहार) में नेतृत्व किया।</p>"
+    },
+    {
+      "sr_no": 8,
+      "question": "<p> <b>The 'Safety Valve' theory is associated with the foundation of which organization? <br/> '</b>सेफ्टी वॉल्व<b>' </b>सिद्धांत किस संगठन की स्थापना से जुड़ा है<b>?</b></p>",
+      "option1": "<p> Ghadar Party / गदर पार्टी</p>",
+      "option2": "<p> Indian National Congress / भारतीय राष्ट्रीय कांग्रेस</p>",
+      "option3": "<p> Muslim League / मुस्लिम लीग</p>",
+      "option4": "<p> Home Rule League / होम रूल लीग</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Lala Lajpat Rai and other extremist leaders used this theory to suggest INC was created by the British to provide a safe outlet for Indian discontent.<br/> लाला लाजपत राय और अन्य चरमपंथी नेताओं ने इस सिद्धांत का उपयोग यह सुझाव देने के लिए किया कि INC का गठन अंग्रेजों द्वारा भारतीय असंतोष के लिए एक सुरक्षित मार्ग प्रदान करने के लिए किया गया था।</p>"
+    },
+    {
+      "sr_no": 9,
+      "question": "<p> <b>Consider the following statements regarding the Dandi March: <br/> </b>दांडी मार्च के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) It began from Sabarmati Ashram on March 12, 1930. / </b>यह <b>12 </b>मार्च<b>, 1930 </b>को साबरमती आश्रम से शुरू हुआ था। <b><br/> (b) It covered a distance of approximately 240 miles. / </b>इसने लगभग <b>240 </b>मील की दूरी तय की। <b><br/> (c) Gandhi broke the salt law at Dandi on April 6, 1930. / </b>गांधीजी ने <b>6 </b>अप्रैल<b>, 1930 </b>को दांडी में नमक कानून तोड़ा।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and c / a और c</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are factual. The Dandi March marked the beginning of the Civil Disobedience Movement.<br/> सभी कथन तथ्यात्मक हैं। दांडी मार्च ने सविनय अवज्ञा आंदोलन की शुरुआत को चिह्नित किया।</p>"
+    },
+    {
+      "sr_no": 10,
+      "question": "<p> <b>Who was the first Muslim President of the Indian National Congress? <br/> </b>भारतीय राष्ट्रीय कांग्रेस के पहले मुस्लिम अध्यक्ष कौन थे<b>?</b></p>",
+      "option1": "<p> Abul Kalam Azad / अबुल कलाम आज़ाद</p>",
+      "option2": "<p> Badruddin Tyabji / बदरुद्दीन तैयबजी</p>",
+      "option3": "<p> Mohammad Ali Jinnah / मोहम्मद अली जिन्ना</p>",
+      "option4": "<p> Sir Syed Ahmad Khan / सर सैयद अहमद खान</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Badruddin Tyabji presided over the third session of INC in Madras (1887).<br/> बदरुद्दीन तैयबजी ने मद्रास (1887) में INC के तीसरे अधिवेशन की अध्यक्षता की थी।</p>"
+    },
+    {
+      "sr_no": 11,
+      "question": "<p> <b>Consider the following statements regarding the Gandhi-Irwin Pact (1931): <br/> </b>गांधी<b>-</b>इरविन समझौते <b>(1931) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) The Congress agreed to join the Second Round Table Conference. / </b>कांग्रेस दूसरे गोलमेज सम्मेलन में शामिल होने के लिए सहमत हुई। <b><br/> (b) The British agreed to release all political prisoners immediately. / </b>अंग्रेज सभी राजनीतिक कैदियों को तुरंत रिहा करने पर सहमत हुए। <b><br/> (c) The Government allowed the manufacture of salt for personal consumption in coastal villages. / </b>सरकार ने तटीय गांवों में व्यक्तिगत उपभोग के लिए नमक बनाने की अनुमति दी।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> a and c only / केवल a और c</p>",
+      "option3": "<p> b and c only / केवल b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Statement (b) is tricky: the British agreed to release only those prisoners who were NOT charged with violence. Prisoners like Bhagat Singh were not released.<br/> कथन (b) थोड़ा पेचीदा है: अंग्रेज केवल उन कैदियों को रिहा करने पर सहमत हुए जिन पर हिंसा का आरोप नहीं था। भगत सिंह जैसे कैदियों को रिहा नहीं किया गया।</p>"
+    },
+    {
+      "sr_no": 12,
+      "question": "<p> <b>What was the 'immediate cause' for the Revolt of 1857? <br/> 1857 </b>के विद्रोह का <b>'</b>तत्कालिक कारण<b>' </b>क्या था<b>?</b></p>",
+      "option1": "<p> The Doctrine of Lapse / व्यपगत का सिद्धांत</p>",
+      "option2": "<p> Heavy taxation on peasants / किसानों पर भारी कर</p>",
+      "option3": "<p> Introduction of Greased Cartridges / चर्बी वाले कारतूसों की शुरुआत</p>",
+      "option4": "<p> Activities of Christian Missionaries / ईसाई मिशनरियों की गतिविधियाँ</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The rumor that Enfield rifle cartridges were greased with cow and pig fat offended both Hindu and Muslim sepoys.<br/> यह अफवाह कि एनफील्ड राइफल के कारतूसों में गाय और सूअर की चर्बी लगी थी, ने हिंदू और मुस्लिम दोनों सिपाहियों को नाराज कर दिया।</p>"
+    },
+    {
+      "sr_no": 13,
+      "question": "<p> <b>Consider the following statements about the Swadeshi Movement: <br/> </b>स्वदेशी आंदोलन के बारे में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) It was a direct consequence of the Partition of Bengal. / </b>यह बंगाल के विभाजन का प्रत्यक्ष परिणाम था। <b><br/> (b) Boycott of foreign goods was a major part of this movement. / </b>विदेशी वस्तुओं का बहिष्कार इस आंदोलन का एक प्रमुख हिस्सा था। <b><br/> (c) It remained strictly limited to the province of Bengal. / </b>यह सख्ती से बंगाल प्रांत तक ही सीमित रहा।<b><br/> Which of the above statements is/are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The movement spread beyond Bengal to other parts of India, led by leaders like Tilak, Lala Lajpat Rai, and Ajit Singh.<br/> तिलक, लाला लाजपत राय और अजीत सिंह जैसे नेताओं के नेतृत्व में यह आंदोलन बंगाल से बाहर भारत के अन्य हिस्सों में भी फैला।</p>"
+    },
+    {
+      "sr_no": 14,
+      "question": "<p> <b>In which INC session was the resolution for 'Purna Swaraj' (Complete Independence) passed? <br/> </b>किस <b>INC </b>अधिवेशन में <b>'</b>पूर्ण स्वराज<b>' (</b>पूर्ण स्वतंत्रता<b>) </b>का प्रस्ताव पारित किया गया था<b>?</b></p>",
+      "option1": "<p> Calcutta Session 1928 / कलकत्ता अधिवेशन 1928</p>",
+      "option2": "<p> Lahore Session 1929 / लाहौर अधिवेशन 1929</p>",
+      "option3": "<p> Karachi Session 1931 / कराची अधिवेशन 1931</p>",
+      "option4": "<p> Lucknow Session 1936 / लखनऊ अधिवेशन 1936</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Under the presidency of Jawaharlal Nehru, the Lahore session (1929) declared Purna Swaraj as the goal.<br/> जवाहरलाल नेहरू की अध्यक्षता में, लाहौर अधिवेशन (1929) ने पूर्ण स्वराज को लक्ष्य घोषित किया।</p>"
+    },
+    {
+      "sr_no": 15,
+      "question": "<p> <b>Consider the following statements regarding the Simon Commission protest: <br/> </b>साइमन कमीशन के विरोध के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) Lala Lajpat Rai died due to injuries sustained during a lathi charge in Lahore. / </b>लाहौर में लाठीचार्ज के दौरान लगी चोटों के कारण लाला लाजपत राय की मृत्यु हो गई। <b><br/> (b) The slogan 'Simon Go Back' was coined by Yusuf Meherally. / '</b>साइमन गो बैक<b>' </b>का नारा यूसुफ मेहरली ने दिया था। <b><br/> (c) The commission visited India only once in 1938. / </b>आयोग ने <b>1938 </b>में केवल एक बार भारत का दौरा किया।<b><br/> Which of the above statements is/are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Statement (c) is incorrect because the commission visited India in 1928.<br/> कथन (c) गलत है क्योंकि आयोग ने 1928 में भारत का दौरा किया था।</p>"
+    },
+    {
+      "sr_no": 16,
+      "question": "<p> <b>Consider the following statements regarding the 1857 Revolt at Delhi:<br/> </b>दिल्ली में <b>1857 </b>के विद्रोह के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) Bahadur Shah Zafar was proclaimed as the Emperor of India. / </b>बहादुर शाह जफर को भारत का सम्राट घोषित किया गया था। <b><br/> (b) The real command of the army was in the hands of General Bakht Khan. / </b>सेना की वास्तविक कमान जनरल बख्त खान के हाथों में थी। <b><br/> (c) The revolt in Delhi was suppressed by John Nicholson. / </b>दिल्ली में विद्रोह को जॉन निकोलसन ने दबाया था।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. Bahadur Shah was the symbolic head, while Bakht Khan was the actual leader. Nicholson was the officer who recaptured Delhi.<br/> सभी कथन सही हैं। बहादुर शाह प्रतीकात्मक प्रमुख थे, जबकि बख्त खान वास्तविक नेता थे। निकोलसन वह अधिकारी था जिसने दिल्ली पर पुनः अधिकार किया था।</p>"
+    },
+    {
+      "sr_no": 17,
+      "question": "<p> <b>Arrange the following events in chronological order: <br/> </b>निम्नलिखित घटनाओं को कालानुक्रमिक क्रम में व्यवस्थित करें<b>: <br/> (a) Surat Split / </b>सूरत विभाजन <b><br/> (b) Partition of Bengal / </b>बंगाल का विभाजन <b><br/> (c) Formation of Muslim League / </b>मुस्लिम लीग का गठन <b><br/> (d) Foundation of INC / INC </b>की स्थापना<b><br/> Choose the correct code: / </b>सही कूट चुनें<b>:</b></p>",
+      "option1": "<p> d - b - c - a</p>",
+      "option2": "<p> d - c - b - a</p>",
+      "option3": "<p> b - d - c - a</p>",
+      "option4": "<p> d - b - a - c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> INC Foundation (1885), Partition of Bengal (1905), Muslim League Formation (1906), Surat Split (1907).<br/> INC की स्थापना (1885), बंगाल का विभाजन (1905), मुस्लिम लीग का गठन (1906), सूरत विभाजन (1907)।</p>"
+    },
+    {
+      "sr_no": 18,
+      "question": "<p> <b>Consider the following statements about the Civil Disobedience Movement (CDM): <br/> </b>सविनय अवज्ञा आंदोलन <b>(CDM) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) The movement saw massive participation of women. / </b>आंदोलन में महिलाओं की बड़े पैमाने पर भागीदारी देखी गई। <b><br/> (b) In the North-West Frontier Province, the movement was led by Khan Abdul Ghaffar Khan. / </b>उत्तर<b>-</b>पश्चिम सीमा प्रांत में<b>, </b>आंदोलन का नेतृत्व खान अब्दुल गफ्फार खान ने किया था। <b><br/> (c) The movement was officially suspended after the Gandhi-Irwin Pact. / </b>गांधी<b>-</b>इरविन समझौते के बाद आंदोलन को आधिकारिक तौर पर स्थगित कर दिया गया था।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> a, b and c / a, b और c</p>",
+      "option4": "<p> b and c only / केवल b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. Ghaffar Khan's group, the 'Red Shirts', played a vital role in the NWFP.<br/> सभी कथन सही हैं। खान अब्दुल गफ्फार खान के समूह 'लाल कुर्ती' ने NWFP में महत्वपूर्ण भूमिका निभाई थी।</p>"
+    },
+    {
+      "sr_no": 19,
+      "question": "<p> <b>Which of the following British officers was NOT associated with the suppression of the 1857 Revolt? <br/> </b>निम्नलिखित में से कौन सा ब्रिटिश अधिकारी <b>1857 </b>के विद्रोह के दमन से नहीं जुड़ा था<b>?</b></p>",
+      "option1": "<p> Sir Colin Campbell / सर कॉलिन कैंपबेल</p>",
+      "option2": "<p> Henry Havelock / हेनरी हैवलॉक</p>",
+      "option3": "<p> Lord Cornwallis / लॉर्ड कॉर्नवालिस</p>",
+      "option4": "<p> Sir Hugh Rose / सर ह्यू रोज़</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Lord Cornwallis was associated with the Permanent Settlement (1793) and the Third Anglo-Mysore War, much before 1857.<br/> लॉर्ड कॉर्नवालिस 1857 से बहुत पहले स्थायी बंदोबस्त (1793) और तीसरे आंग्ल-मैसूर युद्ध से जुड़े थे।</p>"
+    },
+    {
+      "sr_no": 20,
+      "question": "<p> <b>Consider the following statements regarding the Moderates of the INC: <br/> INC </b>के नरमपंथियों <b>(Moderates) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) They believed in the policy of 'Prayers, Petitions, and Protests'. / </b>वे <b>'</b>प्रार्थना<b>, </b>याचिका और विरोध<b>' </b>की नीति में विश्वास करते थे। <b><br/> (b) They wanted to overthrow the British rule completely by 1890. / </b>वे <b>1890 </b>तक ब्रिटिश शासन को पूरी तरह से उखाड़ फेंकना चाहते थे। <b><br/> (c) Dadabhai Naoroji and Pherozeshah Mehta were prominent moderate leaders. / </b>दादाभाई नौरोजी और फिरोजशाह मेहता प्रमुख नरमपंथी नेता थे।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and c / a और c</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a only / केवल a</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Moderates did not want to overthrow British rule immediately; they sought constitutional reforms and more Indian representation.<br/> नरमपंथी ब्रिटिश शासन को तुरंत उखाड़ फेंकना नहीं चाहते थे; वे संवैधानिक सुधार और अधिक भारतीय प्रतिनिधित्व चाहते थे।</p>"
+    },
+    {
+      "sr_no": 21,
+      "question": "<p> <b>Match List-I (Congress Session) with List-II (President): <br/> </b>सूची<b>-I (</b>कांग्रेस अधिवेशन<b>) </b>को सूची<b>-II (</b>अध्यक्ष<b>) </b>के साथ सुमेलित करें<b>:<br/> | List-I (Session) | List-II (President) | <br/> | :--- | :--- | <br/> | (A) 1924 Belgaum / </b>बेलगाम <b>| (i) Sarojini Naidu | <br/> | (B) 1925 Kanpur / </b>कानपुर <b>| (ii) Mahatma Gandhi | <br/> | (C) 1917 Calcutta / </b>कलकत्ता <b>| (iii) Annie Besant | <br/> | (D) 1938 Haripura / </b>हरिपुरा <b>| (iv) S.C. Bose |<br/> Choose the correct option: / </b>सही विकल्प चुनें<b>:</b></p>",
+      "option1": "<p> A-ii, B-i, C-iii, D-iv</p>",
+      "option2": "<p> A-ii, B-iii, C-i, D-iv</p>",
+      "option3": "<p> A-i, B-ii, C-iii, D-iv</p>",
+      "option4": "<p> A-iv, B-i, C-iii, D-ii</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Belgaum (1924) was the only session presided over by Gandhi. Sarojini Naidu was the first Indian woman president (1925).<br/> बेलगाम (1924) एकमात्र अधिवेशन था जिसकी अध्यक्षता गांधीजी ने की थी। सरोजिनी नायडू पहली भारतीय महिला अध्यक्ष (1925) थीं।</p>"
+    },
+    {
+      "sr_no": 22,
+      "question": "<p> <b>Consider the following statements regarding the Champaran Satyagraha (1917): <br/> </b>चंपारण सत्याग्रह <b>(1917) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) It was Gandhi's first Satyagraha in India. / </b>यह भारत में गांधीजी का पहला सत्याग्रह था। <b><br/> (b) It was against the 'Tinkathia' system imposed by indigo planters. / </b>यह नील बागान मालिकों द्वारा थोपी गई <b>'</b>तिनकठिया<b>' </b>प्रणाली के खिलाफ था। <b><br/> (c) Raj Kumar Shukla had invited Gandhi to Champaran. / </b>राज कुमार शुक्ल ने गांधीजी को चंपारण आमंत्रित किया था। <b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. The Tinkathia system required farmers to grow indigo on 3/20th of their land.<br/> सभी कथन सही हैं। तिनकठिया प्रणाली के तहत किसानों को अपनी 3/20 भूमि पर नील की खेती करनी पड़ती थी।</p>"
+    },
+    {
+      "sr_no": 23,
+      "question": "<p> <b>The 'Delhi Proposals' of 1927 were related to which of the following? <br/> 1927 </b>के <b>'</b>दिल्ली प्रस्ताव<b>' </b>निम्नलिखित में से किससे संबंधित थे<b>?</b></p>",
+      "option1": "<p> Demands of the Congress for Purna Swaraj / पूर्ण स्वराज के लिए कांग्रेस की मांगें</p>",
+      "option2": "<p> Muslim League's demands for joint electorates with reservations / आरक्षण के साथ संयुक्त निर्वाचक मंडल के लिए मुस्लिम लीग की मांगें</p>",
+      "option3": "<p> British plan to divide Punjab / पंजाब को विभाजित करने की ब्रिटिश योजना</p>",
+      "option4": "<p> Gandhi's 11-point demand to Lord Irwin / लॉर्ड इरविन को गांधीजी की 11-सूत्रीय मांग</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> In 1927, Muslim leaders met at Delhi and agreed to give up separate electorates if certain demands (like 1/3 representation in Central Legislature) were met.<br/> 1927 में, मुस्लिम नेता दिल्ली में मिले और यदि कुछ मांगें (जैसे केंद्रीय विधानमंडल में 1/3 प्रतिनिधित्व) मान ली जातीं, तो वे अलग निर्वाचक मंडल छोड़ने पर सहमत हुए।</p>"
+    },
+    {
+      "sr_no": 24,
+      "question": "<p> <b>Consider the following statements about the Kheda Satyagraha (1918): <br/> </b>खेड़ा सत्याग्रह <b>(1918) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) The peasants demanded remission of taxes due to crop failure. / </b>किसानों ने फसल खराब होने के कारण करों में छूट की मांग की। <b><br/> (b) Sardar Vallabhbhai Patel played a key role in this movement. / </b>इस आंदोलन में सरदार वल्लभभाई पटेल ने प्रमुख भूमिका निभाई थी। <b><br/> (c) It was Gandhi's first Hunger Strike in India. / </b>यह भारत में गांधीजी की पहली भूख हड़ताल थी।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a only / केवल a</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Gandhi's first hunger strike was during the Ahmedabad Mill Strike (1918), not Kheda.<br/> गांधीजी की पहली भूख हड़ताल अहमदाबाद मिल हड़ताल (1918) के दौरान हुई थी, खेड़ा में नहीं।</p>"
+    },
+    {
+      "sr_no": 25,
+      "question": "<p> <b>Which movement is also known as the 'August Kranti'? <br/> </b>किस आंदोलन को <b>'</b>अगस्त क्रांति<b>' </b>के नाम से भी जाना जाता है<b>?</b></p>",
+      "option1": "<p> Non-Cooperation Movement / असहयोग आंदोलन</p>",
+      "option2": "<p> Civil Disobedience Movement / सविनय अवज्ञा आंदोलन</p>",
+      "option3": "<p> Quit India Movement / भारत छोड़ो आंदोलन</p>",
+      "option4": "<p> Swadeshi Movement / स्वदेशी आंदोलन</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Quit India Movement, launched on August 8, 1942, is popularly known as August Kranti.<br/> 8 अगस्त, 1942 को शुरू हुए भारत छोड़ो आंदोलन को लोकप्रिय रूप से अगस्त क्रांति के नाम से जाना जाता है।</p>"
+    },
+    {
+      "sr_no": 26,
+      "question": "<p> <b>Consider the following statements regarding the Nehru Report (1928): <br/> </b>नेहरू रिपोर्ट <b>(1928) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) It was drafted by Jawaharlal Nehru. / </b>इसे जवाहरलाल नेहरू ने तैयार किया था। <b><br/> (b) It demanded 'Dominion Status' for India. / </b>इसने भारत के लिए <b>'</b>डोमीनियन स्टेटस<b>' </b>की मांग की थी। <b><br/> (c) It rejected the idea of separate electorates. / </b>इसने पृथक निर्वाचक मंडल के विचार को खारिज कर दिया था।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> b only / केवल b</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Nehru Report was drafted by Motilal Nehru, not Jawaharlal Nehru.<br/> नेहरू रिपोर्ट मोतीलाल नेहरू द्वारा तैयार की गई थी, जवाहरलाल नेहरू द्वारा नहीं।</p>"
+    },
+    {
+      "sr_no": 27,
+      "question": "<p> <b>Who was the Viceroy of India when the Civil Disobedience Movement was started? <br/> </b>सविनय अवज्ञा आंदोलन शुरू होने के समय भारत का वायसराय कौन था<b>?</b></p>",
+      "option1": "<p> Lord Reading / लॉर्ड रीडिंग</p>",
+      "option2": "<p> Lord Irwin / लॉर्ड इरविन</p>",
+      "option3": "<p> Lord Willingdon / लॉर्ड विलिंगडन</p>",
+      "option4": "<p> Lord Linlithgow / लॉर्ड लिनलिथगो</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Lord Irwin was the Viceroy during the Dandi March and the start of the CDM.<br/> दांडी मार्च और CDM की शुरुआत के दौरान लॉर्ड इरविन वायसराय थे।</p>"
+    },
+    {
+      "sr_no": 28,
+      "question": "<p> <b>Consider the following statements about the Swaraj Party: <br/> </b>स्वराज पार्टी के बारे में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) It was formed in 1923 by C.R. Das and Motilal Nehru. / </b>इसका गठन <b>1923 </b>में सी<b>.</b>आर<b>. </b>दास और मोतीलाल नेहरू ने किया था। <b><br/> (b) They wanted to boycott the legislative councils. / </b>वे विधान परिषदों का बहिष्कार करना चाहते थे। <b><br/> (c) Vithalbhai Patel was elected as the Speaker of the Central Legislative Assembly in 1925. / </b>विट्ठलभाई पटेल <b>1925 </b>में केंद्रीय विधान सभा के अध्यक्ष चुने गए थे।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Swarajists wanted to \"enter the councils\" to wreck them from within, not boycott them.<br/> स्वराजवादी परिषदों का बहिष्कार नहीं करना चाहते थे, बल्कि उनके भीतर प्रवेश करके उन्हें नष्ट करना चाहते थे।</p>"
+    },
+    {
+      "sr_no": 29,
+      "question": "<p> <b>Which of the following journals/newspapers was NOT started by Mahatma Gandhi? <br/> </b>निम्नलिखित में से कौन सी पत्रिका<b>/</b>समाचार पत्र महात्मा गांधी द्वारा शुरू नहीं किया गया था<b>?</b></p>",
+      "option1": "<p> Indian Opinion / इंडियन ओपिनियन</p>",
+      "option2": "<p> Young India / यंग इंडिया</p>",
+      "option3": "<p> Harijan / हरिजन</p>",
+      "option4": "<p> New India / न्यू इंडिया</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> 'New India' and 'Commonweal' were started by Annie Besant.<br/> 'न्यू इंडिया' और 'कॉमनवील' की शुरुआत एनी बेसेंट ने की थी।</p>"
+    },
+    {
+      "sr_no": 30,
+      "question": "<p> <b>Consider the following statements regarding the 1857 Revolt in Central India: <br/> </b>मध्य भारत में <b>1857 </b>के विद्रोह के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) Rani Laxmibai captured Gwalior with the help of Tatya Tope. / </b>रानी लक्ष्मीबाई ने तात्या टोपे की मदद से ग्वालियर पर कब्जा किया था। <b><br/> (b) Sir Hugh Rose described Rani Laxmibai as \"the best and bravest military leader of the rebels\". / </b>सर ह्यू रोज़ ने रानी लक्ष्मीबाई को <b>\"</b>विद्रोहियों की सबसे अच्छी और बहादुर सैन्य नेता<b>\" </b>बताया था।<b><br/> Which of the above statements is/are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> b only / केवल b</p>",
+      "option3": "<p> Both a and b / a और b दोनों</p>",
+      "option4": "<p> Neither a nor b / न तो a और न ही b</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Both statements are correct. Rani Laxmibai died fighting at Gwalior on June 18, 1858.<br/> दोनों कथन सही हैं। रानी लक्ष्मीबाई 18 जून, 1858 को ग्वालियर में लड़ते हुए शहीद हुई थीं।</p>"
+    },
+    {
+      "sr_no": 31,
+      "question": "<p> <b>Consider the following statements regarding the 'Lothian Committee': <br/> '</b>लोथियन समिति<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) It was related to the expansion of the communal electorate in India. / </b>यह भारत में सांप्रदायिक निर्वाचन मंडल के विस्तार से संबंधित थी। <b><br/> (b) It was formed in the aftermath of the Second Round Table Conference. / </b>इसका गठन दूसरे गोलमेज सम्मेलन के बाद किया गया था।<b><br/> Which of the above statements is/are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> b only / केवल b</p>",
+      "option3": "<p> Both a and b / a और b दोनों</p>",
+      "option4": "<p> Neither a nor b / न तो a और न ही b</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Lothian Committee (Franchise Committee) provided the basis for the Communal Award by recommending the extension of separate electorates.<br/> लोथियन समिति (मताधिकार समिति) ने पृथक निर्वाचक मंडल के विस्तार की सिफारिश करके सांप्रदायिक अधिनिर्णय (Communal Award) का आधार तैयार किया था।</p>"
+    },
+    {
+      "sr_no": 32,
+      "question": "<p> <b>During the 1857 Revolt, which among the following was the main reason for the 'failure' of the revolt? <br/> 1857 </b>के विद्रोह के दौरान<b>, </b>निम्नलिखित में से विद्रोह की <b>'</b>विफलता<b>' </b>का मुख्य कारण क्या था<b>?</b></p>",
+      "option1": "<p> Lack of a unified ideology and political perspective. / एकीकृत विचारधारा और राजनीतिक दृष्टिकोण की कमी।</p>",
+      "option2": "<p> The British had superior naval power. / अंग्रेजों के पास श्रेष्ठ नौसैनिक शक्ति थी।</p>",
+      "option3": "<p> Participation of the entire Indian population. / पूरी भारतीय जनसंख्या की भागीदारी।</p>",
+      "option4": "<p> Support of all Indian princely states to the rebels. / विद्रोहियों को सभी भारतीय रियासतों का समर्थन।</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The rebels had no forward-looking program or a coherent strategy to replace the British system.<br/> विद्रोहियों के पास ब्रिटिश व्यवस्था को बदलने के लिए कोई भविष्योन्मुखी कार्यक्रम या सुसंगत रणनीति नहीं थी।</p>"
+    },
+    {
+      "sr_no": 33,
+      "question": "<p> <b>Consider the following statements regarding the 'Surat Split' (1907): <br/> '</b>सूरत विभाजन<b>' (1907) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) Rash Behari Ghosh presided over the Surat session. / </b>रास बिहारी घोष ने सूरत अधिवेशन की अध्यक्षता की थी। <b><br/> (b) The main reason for the split was the conflict between moderates and extremists over methods of struggle. / </b>विभाजन का मुख्य कारण संघर्ष के तरीकों को लेकर उदारवादियों और उग्रवादियों के बीच उत्पन्न हुआ मतभेद था। <b><br/> (c) Extremists wanted Lala Lajpat Rai or Tilak to be the President. / </b>चरमपंथी चाहते थे कि लाला लाजपत राय या तिलक अध्यक्ष बनें।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. The conflict over the presidency and the scope of the Swadeshi movement led to the split.<br/> सभी कथन सही हैं। अध्यक्षता को लेकर संघर्ष और स्वदेशी आंदोलन के दायरे ने विभाजन को जन्म दिया।</p>"
+    },
+    {
+      "sr_no": 34,
+      "question": "<p> <b>Who among the following was the first British President of the Indian National Congress? <br/> </b>भारतीय राष्ट्रीय कांग्रेस के पहले ब्रिटिश अध्यक्ष निम्नलिखित में से कौन थे<b>?</b></p>",
+      "option1": "<p> A.O. Hume / ए.ओ. ह्यूम</p>",
+      "option2": "<p> George Yule / जॉर्ज यूल</p>",
+      "option3": "<p> William Wedderburn / विलियम वेडरबर्न</p>",
+      "option4": "<p> Alfred Webb / अल्फ्रेड वेब</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> George Yule presided over the Allahabad session of INC in 1888.<br/> जॉर्ज यूल ने 1888 में INC के इलाहाबाद अधिवेशन की अध्यक्षता की थी।</p>"
+    },
+    {
+      "sr_no": 35,
+      "question": "<p> <b>Consider the following statements regarding the Ahmedabad Mill Strike (1918): <br/> </b>अहमदाबाद मिल हड़ताल <b>(1918) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) The dispute was over the discontinuation of the 'Plague Bonus'. / </b>विवाद <b>'</b>प्लेग बोनस<b>' </b>की समाप्ति को लेकर था। <b><br/> (b) Anusuya Sarabhai supported the mill owners against Gandhi. / </b>अनुसूया साराभाई ने गांधीजी के खिलाफ मिल मालिकों का समर्थन किया। <b><br/> (c) Workers demanded a 35% increase in wages. / </b>श्रमिकों ने वेतन में <b>35% </b>वृद्धि की मांग की।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and c / a और c</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a only / केवल a</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Anusuya Sarabhai actually supported Gandhi and the workers during the strike.<br/> अनुसूया साराभाई ने वास्तव में हड़ताल के दौरान गांधीजी और श्रमिकों का समर्थन किया था।</p>"
+    },
+    {
+      "sr_no": 36,
+      "question": "<p> <b>Which of the following events occurred first? <br/> </b>निम्नलिखित में से कौन सी घटना सबसे पहले हुई<b>?</b></p>",
+      "option1": "<p> Chittagong Armoury Raid / चटगांव शस्त्रागार छापा</p>",
+      "option2": "<p> Execution of Bhagat Singh / भगत सिंह को फांसी</p>",
+      "option3": "<p> Appointment of Simon Commission / साइमन कमीशन की नियुक्ति</p>",
+      "option4": "<p> First Round Table Conference / प्रथम गोलमेज सम्मेलन</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Simon Commission appointed (Nov 1927), Chittagong Raid (1930), 1st RTC (1930), Bhagat Singh execution (1931).<br/> साइमन कमीशन की नियुक्ति (नवंबर 1927), चटगांव छापा (1930), प्रथम RTC (1930), भगत सिंह को फांसी (1931)।</p>"
+    },
+    {
+      "sr_no": 37,
+      "question": "<p> <b>Consider the following statements about the 'Red Shirts' (Khudai Khidmatgars): <br/> '</b>लाल कुर्ती<b>' (</b>खुदाई खिदमतगार<b>) </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) They were a non-violent group active in the North-West Frontier Province. / </b>वे उत्तर<b>-</b>पश्चिम सीमा प्रांत में सक्रिय एक अहिंसक समूह थे। <b><br/> (b) They were led by Khan Abdul Ghaffar Khan, also known as 'Frontier Gandhi'. / </b>उनका नेतृत्व खान अब्दुल गफ्फार खान ने किया था<b>, </b>जिन्हें <b>'</b>सीमांत गांधी<b>' </b>भी कहा जाता है। <b><br/> (c) They participated enthusiastically in the Civil Disobedience Movement. / </b>उन्होंने सविनय अवज्ञा आंदोलन में उत्साहपूर्वक भाग लिया। <b><br/> Which of the above statements are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. They played a massive role in mobilizing the Pathans during the CDM.<br/> सभी कथन सही हैं। उन्होंने CDM के दौरान पठानों को संगठित करने में बड़ी भूमिका निभाई थी।</p>"
+    },
+    {
+      "sr_no": 38,
+      "question": "<p> <b>Who was the leader of the 1857 Revolt in Faizabad? <br/> </b>फैजाबाद में <b>1857 </b>के विद्रोह के नेता कौन थे<b>?</b></p>",
+      "option1": "<p> Maulvi Ahmadullah Shah / मौलवी अहमदुल्ला शाह</p>",
+      "option2": "<p> Liyaqat Ali / लियाकत अली</p>",
+      "option3": "<p> Azimullah Khan / अजीमुल्ला खान</p>",
+      "option4": "<p> Birjis Qadr / बिरजिस कद्र</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Maulvi Ahmadullah Shah fought a stiff battle against the British in Faizabad.<br/> मौलवी अहमदुल्ला शाह ने फैजाबाद में अंग्रेजों के खिलाफ कड़ा संघर्ष किया था।</p>"
+    },
+    {
+      "sr_no": 39,
+      "question": "<p> <b>Consider the following statements regarding the Rowlatt Act (1919): <br/> </b>रौलट एक्ट <b>(1919) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) It allowed detention of political prisoners without trial for two years. / </b>इसने राजनीतिक कैदियों को बिना किसी मुकदमे के दो साल तक हिरासत में रखने की अनुमति दी। <b><br/> (b) Gandhi organized a 'Satyagraha Sabha' to protest against this act. / </b>गांधीजी ने इस अधिनियम के विरोध में <b>'</b>सत्याग्रह सभा<b>' </b>का आयोजन किया। <b><br/> (c) It was officially called the Anarchical and Revolutionary Crimes Act. / </b>इसे आधिकारिक तौर पर <b>'</b>अनार्किकल एंड रिवोल्यूशनरी क्राइम्स एक्ट<b>' </b>कहा जाता था।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. The act led to widespread protests, culminating in the Jallianwala Bagh massacre.<br/> सभी कथन सही हैं। इस अधिनियम के कारण व्यापक विरोध हुआ, जिसका समापन जलियांवाला बाग हत्याकांड में हुआ।</p>"
+    },
+    {
+      "sr_no": 40,
+      "question": "<p> <b>The 'Deepavali Declaration' of 1929 was made by which Viceroy? <br/> 1929 </b>की <b>'</b>दीपावली घोषणा<b>' </b>किस वायसराय द्वारा की गई थी<b>?</b></p>",
+      "option1": "<p> Lord Reading / लॉर्ड रीडिंग</p>",
+      "option2": "<p> Lord Irwin / लॉर्ड इरविन</p>",
+      "option3": "<p> Lord Linlithgow / लॉर्ड लिनलिथगो</p>",
+      "option4": "<p> Lord Wavell / लॉर्ड वेवेल</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Lord Irwin declared in 1929 that the natural goal of India's constitutional progress was 'Dominion Status'.<br/> लॉर्ड इरविन ने 1929 में घोषणा की कि भारत की संवैधानिक प्रगति का स्वाभाविक लक्ष्य 'डोमीनियन स्टेटस' है।</p>"
+    },
+    {
+      "sr_no": 41,
+      "question": "<p> <b>Consider the following statements regarding the 1858 Act (Queen's Proclamation): <br/> 1858 </b>के अधिनियम <b>(</b>रानी की उद्घोषणा<b>) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) It ended the rule of the East India Company. / </b>इसने ईस्ट इंडिया कंपनी के शासन को समाप्त कर दिया। <b><br/> (b) The office of Secretary of State for India was created. / </b>भारत के लिए राज्य सचिव <b>(</b>सेक्रेटरी ऑफ स्टेट<b>) </b>का पद बनाया गया। <b><br/> (c) The Governor-General was given the title of Viceroy. / </b>गवर्नर<b>-</b>जनरल को वायसराय की उपाधि दी गई।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Act for the Better Government of India transferred power from the Company to the British Crown.<br/> भारत सरकार के बेहतर अधिनियम ने कंपनी से ब्रिटिश क्राउन को सत्ता हस्तांतरित कर दी।</p>"
+    },
+    {
+      "sr_no": 42,
+      "question": "<p> <b>Which Congress President said, \"I am a socialist and a republican\"? <br/> </b>किस कांग्रेस अध्यक्ष ने कहा था<b>, \"</b>मैं एक समाजवादी और गणतंत्रवादी हूँ<b>\"?</b></p>",
+      "option1": "<p> Subhas Chandra Bose / सुभाष चंद्र बोस</p>",
+      "option2": "<p> Jawaharlal Nehru / जवाहरलाल नेहरू</p>",
+      "option3": "<p> M.N. Roy / एम.एन. रॉय</p>",
+      "option4": "<p> Jayaprakash Narayan / जयप्रकाश नारायण</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Jawaharlal Nehru made this statement in his presidential address at the Lucknow Session in 1936.<br/> जवाहरलाल नेहरू ने 1936 में लखनऊ अधिवेशन में अपने अध्यक्षीय भाषण में यह बयान दिया था।</p>"
+    },
+    {
+      "sr_no": 43,
+      "question": "<p> <b>Consider the following statements about the 'Cunningham Circular': <br/> '</b>कनिंघम सर्कुलर<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) It was issued in Assam during the Civil Disobedience Movement. / </b>यह सविनय अवज्ञा आंदोलन के दौरान असम में जारी किया गया था। <b><br/> (b) It forbade students from participating in political activities. / </b>इसने छात्रों को राजनीतिक गतिविधियों में भाग लेने से मना किया था।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> b only / केवल b</p>",
+      "option3": "<p> Both a and b / a और b दोनों</p>",
+      "option4": "<p> Neither a nor b / न तो a और न ही b</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Students in Assam launched a powerful agitation against this circular, which restricted their freedom to join the movement.<br/> असम में छात्रों ने इस सर्कुलर के खिलाफ एक शक्तिशाली आंदोलन शुरू किया, जिसने आंदोलन में शामिल होने की उनकी स्वतंत्रता को प्रतिबंधित कर दिया था।</p>"
+    },
+    {
+      "sr_no": 44,
+      "question": "<p> <b>Who was the President of the Indian National Congress during the 1905 Partition of Bengal? <br/> 1905 </b>के बंगाल विभाजन के दौरान भारतीय राष्ट्रीय कांग्रेस के अध्यक्ष कौन थे<b>?</b></p>",
+      "option1": "<p> Gopal Krishna Gokhale / गोपाल कृष्ण गोखले</p>",
+      "option2": "<p> Dadabhai Naoroji / दादाभाई नौरोजी</p>",
+      "option3": "<p> Pherozeshah Mehta / फिरोजशाह मेहता</p>",
+      "option4": "<p> Dinshaw Wacha / दिनशा वाचा</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> G.K. Gokhale presided over the Banaras session of INC in 1905.<br/> जी.के. गोखले ने 1905 में INC के बनारस अधिवेशन की अध्यक्षता की थी।</p>"
+    },
+    {
+      "sr_no": 45,
+      "question": "<p> <b>Consider the following pairs: <br/> </b>निम्नलिखित युग्मों पर विचार करें<b>: <br/> (a) Khan Abdul Ghaffar Khan : Peshawar / </b>खान अब्दुल गफ्फार खान <b>: </b>पेशावर <b><br/> (b) C. Rajagopalachari : Vedaranyam / </b>सी<b>. </b>राजगोपालाचारी <b>: </b>वेदारण्यम <b><br/> (c) Sarojini Naidu : Dharsana / </b>सरोजिनी नायडू <b>: </b>धरसाना<b><br/> Which of the pairs given above are correctly matched? <br/> </b>ऊपर दिए गए युग्मों में से कौन<b>-</b>से सही सुमेलित हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All are correct leaders of Salt Satyagraha in their respective regions. C. Rajagopalachari led the march from Trichinopoly to Vedaranyam.<br/> सभी अपने-अपने क्षेत्रों में नमक सत्याग्रह के सही नेता हैं। सी. राजगोपालाचारी ने त्रिचिनोपोली से वेदारण्यम तक मार्च का नेतृत्व किया।</p>"
+    },
+    {
+      "sr_no": 46,
+      "question": "<p> <b>Consider the following statements about the 'Simon Commission': <br/> '</b>साइमन कमीशन<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) The commission was sent to India two years before the scheduled time. / </b>आयोग को निर्धारित समय से दो साल पहले भारत भेजा गया था। <b><br/> (b) Clement Attlee, the future Prime Minister of Britain, was one of its members. / </b>ब्रिटेन के भावी प्रधानमंत्री क्लेमेंट एटली इसके सदस्यों में से एक थे। <b><br/> (c) The commission's report suggested the abolition of Dyarchy in provinces. / </b>आयोग की रिपोर्ट में प्रांतों में द्वैध शासन को समाप्त करने का सुझाव दिया गया था।<b><br/> Which of the above statements are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. The commission was appointed in 1927 (instead of 1929) and recommended replacing Dyarchy with provincial autonomy.<br/> सभी कथन सही हैं। आयोग की नियुक्ति 1927 में (1929 के बजाय) की गई थी और इसने द्वैध शासन को प्रांतीय स्वायत्तता से बदलने की सिफारिश की थी।</p>"
+    },
+    {
+      "sr_no": 47,
+      "question": "<p> <b>Match the following centers of the 1857 revolt with the British officers who suppressed them: <br/> 1857 </b>के विद्रोह के निम्नलिखित केंद्रों को उन ब्रिटिश अधिकारियों के साथ सुमेलित करें जिन्होंने उन्हें दबाया था<b>: <br/> | List-I (Center) | List-II (British Officer) | <br/> | :--- | :--- | <br/> | (A) Jhansi / </b>झांसी <b>| (i) Colin Campbell | <br/> | (B) Kanpur / </b>कानपुर <b>| (ii) Hugh Rose | <br/> | (C) Delhi / </b>दिल्ली <b>| (iii) William Taylor | <br/> | (D) Arrah (Bihar) / </b>आरा <b>| (iv) John Nicholson |<br/> Choose the correct code: / </b>सही कूट चुनें<b>:</b></p>",
+      "option1": "<p> A-ii, B-i, C-iv, D-iii</p>",
+      "option2": "<p> A-ii, B-iv, C-i, D-iii</p>",
+      "option3": "<p> A-i, B-ii, C-iv, D-iii</p>",
+      "option4": "<p> A-iv, B-i, C-ii, D-iii</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Hugh Rose suppressed Jhansi, Colin Campbell recaptured Kanpur/Lucknow, Nicholson was in Delhi, and William Taylor suppressed the revolt in Bihar.<br/> ह्यू रोज़ ने झांसी का दमन किया, कॉलिन कैंपबेल ने कानपुर/लखनऊ पर कब्जा किया, निकोलसन दिल्ली में था, और विलियम टेलर ने बिहार में विद्रोह को दबाया।</p>"
+    },
+    {
+      "sr_no": 48,
+      "question": "<p> <b>Consider the following statements regarding the 'Purna Swaraj' resolution (1929): <br/> '</b>पूर्ण स्वराज<b>' </b>प्रस्ताव <b>(1929) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) It was passed on the banks of the river Ravi. / </b>यह रावी नदी के तट पर पारित किया गया था। <b><br/> (b) January 26, 1930, was fixed as the first Independence Day. / 26 </b>जनवरी<b>, 1930 </b>को प्रथम स्वतंत्रता दिवस के रूप में निश्चित किया गया था। <b><br/> (c) The resolution also decided to boycott the First Round Table Conference. / </b>प्रस्ताव में प्रथम गोलमेज सम्मेलन का बहिष्कार करने का भी निर्णय लिया गया।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. The Congress session in Lahore set the stage for the Civil Disobedience Movement.<br/> सभी कथन सही हैं। लाहौर में कांग्रेस अधिवेशन ने सविनय अवज्ञा आंदोलन का मार्ग प्रशस्त किया।</p>"
+    },
+    {
+      "sr_no": 49,
+      "question": "<p> <b>Who among the following called the Revolt of 1857 as the \"First War of Indian Independence\"? <br/> </b>निम्नलिखित में से किसने <b>1857 </b>के विद्रोह को <b>\"</b>भारतीय स्वतंत्रता का प्रथम युद्ध<b>\" </b>कहा था<b>?</b></p>",
+      "option1": "<p> V.D. Savarkar / वी.डी. सावरकर</p>",
+      "option2": "<p> S.N. Sen / एस.एन. सेन</p>",
+      "option3": "<p> R.C. Majumdar / आर.सी. मजूमदार</p>",
+      "option4": "<p> Benjamin Disraeli / बेंजामिन डिसरायली</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> V.D. Savarkar popularized this term in his book published in 1909.<br/> वी.डी. सावरकर ने 1909 में प्रकाशित अपनी पुस्तक में इस शब्द को लोकप्रिय बनाया था।</p>"
+    },
+    {
+      "sr_no": 50,
+      "question": "<p> <b>Consider the following statements regarding the 'Two-Nation Theory' and Muslim League: <br/> '</b>द्वि<b>-</b>राष्ट्र सिद्धांत<b>' </b>और मुस्लिम लीग के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) The idea of a separate homeland for Muslims was first proposed by Mohammad Iqbal. / </b>मुसलमानों के लिए एक अलग मातृभूमि का विचार सबसे पहले मोहम्मद इकबाल ने प्रस्तावित किया था। <b><br/> (b) The term 'Pakistan' was coined by Choudhry Rahmat Ali. / '</b>पाकिस्तान<b>' </b>शब्द चौधरी रहमत अली ने गढ़ा था। <b><br/> (c) The Lahore Resolution (1940) formally demanded a separate state. / </b>लाहौर प्रस्ताव <b>(1940) </b>में औपचारिक रूप से एक अलग राज्य की मांग की गई थी।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Iqbal spoke of a North-West Muslim state in 1930; Rahmat Ali coined the name in 1933; and Jinnah led the 1940 resolution.<br/> इकबाल ने 1930 में उत्तर-पश्चिम मुस्लिम राज्य की बात की थी; रहमत अली ने 1933 में यह नाम गढ़ा; और जिन्ना ने 1940 के प्रस्ताव का नेतृत्व किया।</p>"
+    },
+    {
+      "sr_no": 51,
+      "question": "<p> <b>Which of the following was the reason for the withdrawal of the Non-Cooperation Movement in 1922? <br/> 1922 </b>में असहयोग आंदोलन को वापस लेने का कारण निम्नलिखित में से क्या था<b>?</b></p>",
+      "option1": "<p> Chauri Chaura incident / चौरी-चौरा की घटना</p>",
+      "option2": "<p> Jallianwala Bagh massacre / जलियांवाला बाग हत्याकांड</p>",
+      "option3": "<p> Arrest of Mahatma Gandhi / महात्मा गांधी की गिरफ्तारी</p>",
+      "option4": "<p> Signing of Gandhi-Irwin Pact / गांधी-इरविन समझौते पर हस्ताक्षर</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Violent clash in Chauri Chaura (UP) led Gandhi to call off the movement as it was turning violent.<br/> चौरी-चौरा (यूपी) में हिंसक झड़प के कारण गांधीजी ने आंदोलन को वापस ले लिया क्योंकि यह हिंसक हो रहा था।</p>"
+    },
+    {
+      "sr_no": 52,
+      "question": "<p> <b>Consider the following statements regarding the 'Surat Split' and its consequences: <br/> '</b>सूरत विभाजन<b>' </b>और उसके परिणामों के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) The British followed the policy of \"Divide and Rule\" by favoring the Moderates. / </b>अंग्रेजों ने नरमपंथियों का पक्ष लेकर <b>\"</b>फूट डालो और राज करो<b>\" </b>की नीति अपनाई। <b><br/> (b) Following the split, Tilak was sent to Mandalay jail for 6 years. / </b>विभाजन के बाद तिलक को <b>6 </b>साल के लिए मांडले जेल भेज दिया गया था। <b><br/> (c) The INC became weak and ineffective for almost a decade after the split. / </b>विभाजन के बाद लगभग एक दशक तक <b>INC </b>कमजोर और अप्रभावी हो गई थी।<b><br/> Which of the above statements is/are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b / a और b</p>",
+      "option2": "<p> b and c / b और c</p>",
+      "option3": "<p> a and c / a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The split severely weakened the national movement until the Lucknow Pact of 1916.<br/> 1916 के लखनऊ समझौते तक इस विभाजन ने राष्ट्रीय आंदोलन को गंभीर रूप से कमजोर कर दिया था।</p>"
+    },
+    {
+      "sr_no": 53,
+      "question": "<p> <b>Who was known as the \"Ambassador of Hindu-Muslim Unity\" in the early phase of his career? <br/> </b>अपने करियर के शुरुआती चरण में किसे <b>\"</b>हिंदू<b>-</b>मुस्लिम एकता का राजदूत<b>\" </b>कहा जाता था<b>?</b></p>",
+      "option1": "<p> Mohammad Ali Jinnah / मोहम्मद अली जिन्ना</p>",
+      "option2": "<p> Shaukat Ali / शौकत अली</p>",
+      "option3": "<p> Sir Syed Ahmad Khan / सर सैयद अहमद खान</p>",
+      "option4": "<p> Maulana Abul Kalam Azad / मौलाना अबुल कलाम आज़ाद</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Sarojini Naidu gave this title to Jinnah due to his efforts during the Lucknow Pact. सरोजिनी नायडू ने लखनऊ समझौते के दौरान जिन्ना के प्रयासों के कारण उन्हें यह उपाधि दी थी।</p>"
+    },
+    {
+      "sr_no": 54,
+      "question": "<p> <b>Consider the following statements regarding the 'Salt Satyagraha': <br/> '</b>नमक सत्याग्रह<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) Salt was chosen because it was a product used by every Indian, regardless of caste or religion. / </b>नमक इसलिए चुना गया क्योंकि यह एक ऐसा उत्पाद था जिसका उपयोग हर भारतीय करता था<b>, </b>चाहे वह किसी भी जाति या धर्म का हो। <b><br/> (b) The British had a monopoly on the production and sale of salt. / </b>नमक के उत्पादन और बिक्री पर अंग्रेजों का एकाधिकार था। <b><br/> (c) The tax on salt accounted for more than 50% of British India's revenue. / </b>नमक पर लगने वाला कर ब्रिटिश भारत के राजस्व का <b>50% </b>से अधिक था।<b><br/> Which of the above statements is/are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Statement (c) is incorrect. While salt tax was burdensome for the poor, it was not 50% of the total revenue (it was approx. 8-10%).<br/> कथन (c) गलत है। हालांकि नमक कर गरीबों के लिए बोझिल था, लेकिन यह कुल राजस्व का 50% नहीं था (यह लगभग 8-10% था)।</p>"
+    },
+    {
+      "sr_no": 55,
+      "question": "<p> <b>Arrange the following Satyagrahas of Gandhi in chronological order: <br/> </b>गांधीजी के निम्नलिखित सत्याग्रहों को कालानुक्रमिक क्रम में व्यवस्थित करें<b>: <br/> (a) Kheda Satyagraha / </b>खेड़ा सत्याग्रह <b><br/> (b) Champaran Satyagraha / </b>चंपारण सत्याग्रह <b><br/> (c) Ahmedabad Mill Strike / </b>अहमदाबाद मिल हड़ताल<b><br/> Choose the correct code: / </b>सही कूट चुनें<b>:</b></p>",
+      "option1": "<p> b - c - a</p>",
+      "option2": "<p> b - a - c</p>",
+      "option3": "<p> a - b - c</p>",
+      "option4": "<p> c - b - a</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Champaran (1917), Ahmedabad (March 1918), Kheda (June 1918).<br/> चंपारण (1917), अहमदाबाद (मार्च 1918), खेड़ा (जून 1918)।</p>"
+    },
+    {
+      "sr_no": 56,
+      "question": "<p> <b>Consider the following statements about the '1857 Revolt' in Awadh: <br/> </b>अवध में <b>'1857 </b>के विद्रोह<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) Awadh was annexed by the British in 1856 on grounds of misgovernance. / 1856 </b>में कुशासन के आधार पर अंग्रेजों ने अवध पर अधिकार कर लिया था। <b><br/> (b) Large numbers of sepoys in the Bengal Army were recruited from Awadh. / </b>बंगाल सेना में बड़ी संख्या में सिपाही अवध से भर्ती किए गए थे। <b><br/> (c) The Taluqdars of Awadh supported the British during the revolt. / </b>अवध के ताल्लुकदारों ने विद्रोह के दौरान अंग्रेजों का समर्थन किया।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Taluqdars were dispossessed of their lands after the annexation and thus mostly supported the rebels, not the British.<br/> विलेय के बाद ताल्लुकदारों को उनकी भूमि से बेदखल कर दिया गया था, इसलिए उन्होंने ज्यादातर विद्रोहियों का समर्थन किया, अंग्रेजों का नहीं।</p>"
+    },
+    {
+      "sr_no": 57,
+      "question": "<p> <b>The 'Karachi Session' of 1931 is famous for which of the following? <br/> 1931 </b>का <b>'</b>कराची अधिवेशन<b>' </b>निम्नलिखित में से किसके लिए प्रसिद्ध है<b>?</b></p>",
+      "option1": "<p> Adoption of resolution on Fundamental Rights. / मौलिक अधिकारों पर प्रस्ताव को अपनाना।</p>",
+      "option2": "<p> Resolution on National Economic Program. / राष्ट्रीय आर्थिक कार्यक्रम पर प्रस्ताव।</p>",
+      "option3": "<p> Endorsement of the Gandhi-Irwin Pact. / गांधी-इरविन समझौते का समर्थन।</p>",
+      "option4": "<p> All of the above. / उपरोक्त सभी।</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Presided over by Vallabhbhai Patel, this session defined what 'Swaraj' would mean for the masses.<br/> वल्लभभाई पटेल की अध्यक्षता में, इस अधिवेशन ने परिभाषित किया कि जनता के लिए 'स्वराज' का क्या अर्थ होगा।</p>"
+    },
+    {
+      "sr_no": 58,
+      "question": "<p> <b>Consider the following statements about 'Annie Besant': <br/> '</b>एनी बेसेंट<b>' </b>के बारे में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) She was the first woman President of the INC. / </b>वह <b>INC </b>की पहली महिला अध्यक्ष थीं। <b><br/> (b) She founded the Home Rule League in 1916. / </b>उन्होंने <b>1916 </b>में होम रूल लीग की स्थापना की। <b><br/> (c) She was the founder of the Theosophical Society. / </b>वह थियोसोफिकल सोसाइटी की संस्थापक थीं।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> She was the first woman President (1917). The Theosophical Society was founded by Blavatsky and Olcott; Besant joined it later and became its president.<br/> वह पहली महिला अध्यक्ष (1917) थीं। थियोसोफिकल सोसाइटी की स्थापना ब्लावत्स्की और ऑलकोट ने की थी; बेसेंट बाद में इसमें शामिल हुईं और इसकी अध्यक्ष बनीं।</p>"
+    },
+    {
+      "sr_no": 59,
+      "question": "<p> <b>The 'Vande Mataram' slogan became popular during which movement? <br/> '</b>वंदे मातरम<b>' </b>का नारा किस आंदोलन के दौरान लोकप्रिय हुआ<b>?</b></p>",
+      "option1": "<p> Revolt of 1857 / 1857 का विद्रोह</p>",
+      "option2": "<p> Swadeshi Movement / स्वदेशी आंदोलन</p>",
+      "option3": "<p> Non-Cooperation Movement / असहयोग आंदोलन</p>",
+      "option4": "<p> Quit India Movement / भारत छोड़ो आंदोलन</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> It became the anthem of the anti-partition agitation (Swadeshi Movement) in 1905.<br/> यह 1905 में विभाजन विरोधी आंदोलन (स्वदेशी आंदोलन) का गान बन गया।</p>"
+    },
+    {
+      "sr_no": 60,
+      "question": "<p> <b>Consider the following statements regarding the 'Round Table Conferences': <br/> '</b>गोलमेज सम्मेलनों<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) Dr. B.R. Ambedkar attended all three conferences. / </b>डॉ<b>. </b>बी<b>.</b>आर<b>. </b>अंबेडकर ने तीनों सम्मेलनों में भाग लिया। <b><br/> (b) The Congress attended only the second conference. / </b>कांग्रेस ने केवल दूसरे सम्मेलन में भाग लिया। <b><br/> (c) The conferences were held in London. / </b>सम्मेलन लंदन में आयोजित किए गए थे।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All statements are correct. Gandhi represented Congress in the 2nd RTC after the Gandhi-Irwin Pact.<br/> सभी कथन सही हैं। गांधी-इरविन समझौते के बाद गांधीजी ने दूसरे RTC में कांग्रेस का प्रतिनिधित्व किया।</p>"
+    },
+    {
+      "sr_no": 61,
+      "question": "<p> <b>Consider the following statements regarding the 'Peshawar Incident' (1930): <br/> '</b>पेशावर कांड<b>' (1930) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) The soldiers of the Garhwal Rifles refused to fire on the unarmed crowd. / </b>गढ़वाल राइफल्स के सैनिकों ने निहत्थी भीड़ पर गोली चलाने से इनकार कर दिया था। <b><br/> (b) Chandra Singh Garhwali was the leader of these soldiers. / </b>इन सैनिकों के नेता चंद्र सिंह गढ़वाली थे। <b><br/> (c) This incident occurred during the Non-Cooperation Movement. / </b>यह घटना असहयोग आंदोलन के दौरान हुई थी।<b><br/> Which of the above statements is/are correct? / </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a only / केवल a</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> This incident occurred during the Civil Disobedience Movement (CDM) in April 1930, not during the Non-Cooperation Movement.<br/> यह घटना अप्रैल 1930 में सविनय अवज्ञा आंदोलन (CDM) के दौरान हुई थी, असहयोग आंदोलन के दौरान नहीं।</p>"
+    },
+    {
+      "sr_no": 62,
+      "question": "<p> <b>Who was the President of the Indian National Congress at the time of India's independence? <br/> </b>भारत की स्वतंत्रता के समय भारतीय राष्ट्रीय कांग्रेस के अध्यक्ष कौन थे<b>?</b></p>",
+      "option1": "<p> Jawaharlal Nehru / जवाहरलाल नेहरू</p>",
+      "option2": "<p> J.B. Kripalani / जे.बी. कृपलानी</p>",
+      "option3": "<p> Maulana Abul Kalam Azad / मौलाना अबुल कलाम आज़ाद</p>",
+      "option4": "<p> Sardar Patel / सरदार पटेल</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> J.B. Kripalani was the President during the transition of power in 1947.<br/> जे.बी. कृपलानी 1947 में सत्ता हस्तांतरण के दौरान अध्यक्ष थे।</p>"
+    },
+    {
+      "sr_no": 63,
+      "question": "<p> <b>Consider the following statements regarding the 'Swaraj Party': <br/> '</b>स्वराज पार्टी<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) They were known as 'Pro-changers' within the Congress. / </b>उन्हें कांग्रेस के भीतर <b>'</b>परिवर्तनवादी<b>' (Pro-changers) </b>के रूप में जाना जाता था। <b><br/> (b) They were against entering the legislative councils. / </b>वे विधान परिषदों में प्रवेश करने के खिलाफ थे। <b><br/> (c) The party merged back with Congress for the 1930 elections. / 1930 </b>के चुनावों के लिए पार्टी का वापस कांग्रेस में विलय हो गया।<b><br/> Which of the above statements is/are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a and c / a और c</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Swarajists were 'Pro-changers' who wanted to enter councils to disrupt British administration. They boycotted the 1930 elections as part of the CDM.<br/> स्वराजवादी 'परिवर्तनवादी' थे जो ब्रिटिश प्रशासन को बाधित करने के लिए परिषदों में प्रवेश करना चाहते थे। उन्होंने CDM के हिस्से के रूप में 1930 के चुनावों का बहिष्कार किया था।</p>"
+    },
+    {
+      "sr_no": 64,
+      "question": "<p> <b>Match the following Books/Journals with their Authors: <br/> </b>निम्नलिखित पुस्तकों<b>/</b>पत्रिकाओं को उनके लेखकों के साथ सुमेलित करें<b>:<br/> | List-I (Book/Journal) | List-II (Author) | <br/> | :--- | :--- | <br/> | (A) The Indian War of Independence / </b>द इंडियन वॉर ऑफ इंडिपेंडेंस <b>| (i) Mahatma Gandhi | <br/> | (B) Hind Swaraj / </b>हिंद स्वराज <b>| (ii) V.D. Savarkar | <br/> | (C) Why I am an Atheist / </b>मैं नास्तिक क्यों हूँ <b>| (iii) Maulana Azad | <br/> | (D) India Wins Freedom / </b>इंडिया विन्स फ्रीडम <b>| (iv) Bhagat Singh |<br/> Choose the correct code: / </b>सही कूट चुनें<b>:</b></p>",
+      "option1": "<p> A-ii, B-i, C-iv, D-iii</p>",
+      "option2": "<p> A-ii, B-iv, C-i, D-iii</p>",
+      "option3": "<p> A-i, B-ii, C-iv, D-iii</p>",
+      "option4": "<p> A-iv, B-i, C-ii, D-iii</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> All matches represent iconic literary works of the Indian freedom struggle.<br/> सभी मिलान भारतीय स्वतंत्रता संग्राम की प्रतिष्ठित साहित्यिक कृतियों का प्रतिनिधित्व करते हैं।</p>"
+    },
+    {
+      "sr_no": 65,
+      "question": "<p> <b>Consider the following statements regarding the 'Communal Award' (1932): <br/> '</b>सांप्रदायिक अधिनिर्णय<b>' (1932) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) It was announced by the British PM Ramsay MacDonald. / </b>इसकी घोषणा ब्रिटिश प्रधानमंत्री रैमसे मैकडोनाल्ड ने की थी। <b><br/> (b) It extended separate electorates to the 'Depressed Classes'. / </b>इसने <b>'</b>दलित वर्गों<b>' </b>के लिए अलग निर्वाचक मंडल का विस्तार किया। <b><br/> (c) Gandhi supported the award in the Second Round Table Conference. / </b>गांधीजी ने दूसरे गोलमेज सम्मेलन में इस अधिनिर्णय का समर्थन किया था।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a and c / a और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Gandhi strongly opposed the Communal Award as he believed it would divide the Hindu society. He went on a fast unto death in Yerwada Jail.<br/> गांधीजी ने सांप्रदायिक अधिनिर्णय का कड़ा विरोध किया क्योंकि उनका मानना था कि यह हिंदू समाज को विभाजित कर देगा। वे यरवदा जेल में आमरण अनशन पर बैठ गए थे।</p>"
+    },
+    {
+      "sr_no": 66,
+      "question": "<p> <b>The 1857 Revolt did not spread to which of the following regions? <br/> 1857 </b>का विद्रोह निम्नलिखित में से किस क्षेत्र में नहीं फैला था<b>?</b></p>",
+      "option1": "<p> Punjab / पंजाब</p>",
+      "option2": "<p> South India / दक्षिण भारत</p>",
+      "option3": "<p> Rajasthan / राजस्थान</p>",
+      "option4": "<p> Central India / मध्य भारत</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> While there were isolated incidents, South India remained largely unaffected by the 1857 revolt.<br/> यद्यपि कुछ छिटपुट घटनाएं हुई थीं, लेकिन दक्षिण भारत 1857 के विद्रोह से काफी हद तक अप्रभावित रहा।</p>"
+    },
+    {
+      "sr_no": 67,
+      "question": "<p> <b>Consider the following statements regarding the 'Lucknow Pact' (1916): <br/> '</b>लखनऊ समझौते<b>' (1916) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) It brought together the Moderates and Extremists. / </b>इसने नरमपंथियों और चरमपंथियों को एक साथ लाया। <b><br/> (b) It was a joint agreement between the INC and the Muslim League. / </b>यह <b>INC </b>और मुस्लिम लीग के बीच एक संयुक्त समझौता था। <b><br/> (c) The Congress accepted the demand for separate electorates for Muslims. / </b>कांग्रेस ने मुसलमानों के लिए अलग निर्वाचक मंडल की मांग स्वीकार कर ली।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Lucknow Pact was a milestone in unity but is also criticized for accepting the communal principle of separate electorates.<br/> लखनऊ समझौता एकता में एक मील का पत्थर था लेकिन अलग निर्वाचक मंडल के सांप्रदायिक सिद्धांत को स्वीकार करने के लिए इसकी आलोचना भी की जाती है।</p>"
+    },
+    {
+      "sr_no": 68,
+      "question": "<p> <b>Who was the leader of the 'Akaal Movement' associated with the Simon Commission protest? <br/> </b>साइमन कमीशन के विरोध से जुड़े <b>'</b>अकाल आंदोलन<b>' </b>के नेता कौन थे<b>?</b></p>",
+      "option1": "<p> Master Tara Singh / मास्टर तारा सिंह</p>",
+      "option2": "<p> Baba Gurdit Singh / बाबा गुरदित सिंह</p>",
+      "option3": "<p> Kartar Singh Sarabha / करतार सिंह सराभा</p>",
+      "option4": "<p> Bhagat Singh / भगत सिंह</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Master Tara Singh was a prominent leader in Punjab who mobilized the Sikh community against the Simon Commission.<br/> मास्टर तारा सिंह पंजाब के एक प्रमुख नेता थे जिन्होंने साइमन कमीशन के खिलाफ सिख समुदाय को लामबंद किया था।</p>"
+    },
+    {
+      "sr_no": 69,
+      "question": "<p> <b>Consider the following statements about the 'Partition of Bengal' annulment: <br/> '</b>बंगाल विभाजन<b>' </b>के निरस्तीकरण के बारे में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) The partition was annulled in 1911 by Lord Hardinge. / </b>लॉर्ड हार्डिंग द्वारा <b>1911 </b>में विभाजन को रद्द कर दिया गया था। <b><br/> (b) The capital of India was shifted from Calcutta to Delhi in the same year. / </b>इसी वर्ष भारत की राजधानी कलकत्ता से दिल्ली स्थानांतरित की गई थी। <b><br/> (c) Bihar and Orissa were separated from Bengal in 1911. / 1911 </b>में बिहार और उड़ीसा को बंगाल से अलग कर दिया गया था।<b><br/> Which of the above statements are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The annulment was announced during the Delhi Durbar of King George V.<br/> विभाजन को रद्द करने की घोषणा किंग जॉर्ज पंचम के दिल्ली दरबार के दौरान की गई थी।</p>"
+    },
+    {
+      "sr_no": 70,
+      "question": "<p> <b>In the context of the 1857 Revolt, what did the term 'Zafarnama' refer to? <br/> 1857 </b>के विद्रोह के संदर्भ में<b>, '</b>जफरनामा<b>' </b>शब्द का तात्पर्य क्या था<b>?</b></p>",
+      "option1": "<p> The military manual of the rebels. / विद्रोहियों का सैन्य मैनुअल।</p>",
+      "option2": "<p> The proclamation issued by Bahadur Shah Zafar. / बहादुर शाह जफर द्वारा जारी उद्घोषणा।</p>",
+      "option3": "<p> The diary of a British officer. / एक ब्रिटिश अधिकारी की डायरी।</p>",
+      "option4": "<p> A collection of poems by Ghalib. / गालिब की कविताओं का संग्रह।</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Proclamations or 'Zafarnamas' were issued to appeal to all sections of society to unite against the British.<br/> समाज के सभी वर्गों से अंग्रेजों के खिलाफ एकजुट होने की अपील करने के लिए उद्घोषणाएं या 'जफरनामा' जारी किए गए थे।</p>"
+    },
+    {
+      "sr_no": 71,
+      "question": "<p> <b>Consider the following statements regarding the 'Poona Pact' (1932): <br/> '</b>पूना समझौते<b>' (1932) </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) It was signed between Mahatma Gandhi and B.R. Ambedkar. / </b>इस पर महात्मा गांधी और बी<b>.</b>आर<b>. </b>अंबेडकर के बीच हस्ताक्षर किए गए थे। <b><br/> (b) It abandoned the idea of separate electorates for the depressed classes. / </b>इसने दलित वर्गों के लिए अलग निर्वाचक मंडल के विचार को त्याग दिया। <b><br/> (c) The number of reserved seats for depressed classes was decreased. / </b>दलित वर्गों के लिए आरक्षित सीटों की संख्या कम कर दी गई थी।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> a and b / a और b</p>",
+      "option3": "<p> b and c / b और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "2",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Statement (c) is incorrect. The number of reserved seats in provincial legislatures was increased from 71 to 147.<br/> कथन (c) गलत है। प्रांतीय विधानसभाओं में आरक्षित सीटों की संख्या 71 से बढ़ाकर 147 कर दी गई थी।</p>"
+    },
+    {
+      "sr_no": 72,
+      "question": "<p> <b>Which of the following movements started with the 'Dandi March'? <br/> </b>निम्नलिखित में से कौन सा आंदोलन <b>'</b>दांडी मार्च<b>' </b>के साथ शुरू हुआ था<b>?</b></p>",
+      "option1": "<p> Home Rule Movement / होम रूल आंदोलन</p>",
+      "option2": "<p> Non-Cooperation Movement / असहयोग आंदोलन</p>",
+      "option3": "<p> Civil Disobedience Movement / सविनय अवज्ञा आंदोलन</p>",
+      "option4": "<p> Quit India Movement / भारत छोड़ो आंदोलन</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The violation of salt law at Dandi on April 6, 1930, marked the beginning of the CDM.<br/> 6 अप्रैल, 1930 को दांडी में नमक कानून के उल्लंघन ने CDM की शुरुआत को चिह्नित किया।</p>"
+    },
+    {
+      "sr_no": 73,
+      "question": "<p> <b>Consider the following statements regarding the '1857 Revolt' and the role of the Press: <br/> '1857 </b>के विद्रोह<b>' </b>और प्रेस की भूमिका के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) The 'Gagging Act' of 1857 was passed to restrict the freedom of the press. / </b>प्रेस की स्वतंत्रता को प्रतिबंधित करने के लिए <b>1857 </b>का <b>'</b>गैगिंग एक्ट<b>' </b>पारित किया गया था। <b><br/> (b) Lord Canning was the Viceroy who introduced this act. / </b>लॉर्ड कैनिंग वह वायसराय थे जिन्होंने इस अधिनियम को पेश किया था।<b><br/> Which of the above statements is/are correct? <br/> </b>उपरोक्त में से कौन<b>-</b>सा<b>/</b>से कथन सही है<b>/</b>हैं<b>?</b></p>",
+      "option1": "<p> a only / केवल a</p>",
+      "option2": "<p> b only / केवल b</p>",
+      "option3": "<p> Both a and b / a और b दोनों</p>",
+      "option4": "<p> Neither a nor b / न तो a और न ही b</p>",
+      "answer": "3",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The Licensing Act of 1857 (Gagging Act) required a license for operating any press, aimed at stopping the spread of rebel ideas.<br/> 1857 के लाइसेंसिंग एक्ट (गैगिंग एक्ट) के तहत किसी भी प्रेस को चलाने के लिए लाइसेंस की आवश्यकता होती थी, जिसका उद्देश्य विद्रोही विचारों के प्रसार को रोकना था।</p>"
+    },
+    {
+      "sr_no": 74,
+      "question": "<p> <b>Who presided over the 1906 Calcutta session where 'Swaraj' was first mentioned as a goal? <br/> 1906 </b>के कलकत्ता अधिवेशन की अध्यक्षता किसने की थी जहाँ पहली बार <b>'</b>स्वराज<b>' </b>का उल्लेख एक लक्ष्य के रूप में किया गया था<b>?</b></p>",
+      "option1": "<p> Dadabhai Naoroji / दादाभाई नौरोजी</p>",
+      "option2": "<p> Bal Gangadhar Tilak / बाल गंगाधर तिलक</p>",
+      "option3": "<p> G.K. Gokhale / जी.के. गोखले</p>",
+      "option4": "<p> Bipin Chandra Pal / बिपिन चंद्र पाल</p>",
+      "answer": "1",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> Dadabhai Naoroji mentioned 'Swaraj' as the ultimate goal of the Congress to prevent a split between Moderates and Extremists.<br/> नरमपंथियों और चरमपंथियों के बीच विभाजन को रोकने के लिए दादाभाई नौरोजी ने 'स्वराज' को कांग्रेस के अंतिम लक्ष्य के रूप में उल्लेख किया था।</p>"
+    },
+    {
+      "sr_no": 75,
+      "question": "<p> <b>Consider the following statements regarding the 'Simon Commission Report': <br/> '</b>साइमन कमीशन रिपोर्ट<b>' </b>के संबंध में निम्नलिखित कथनों पर विचार करें<b>: <br/> (a) It recommended the continuation of communal electorates. / </b>इसने सांप्रदायिक निर्वाचन मंडल को जारी रखने की सिफारिश की। <b><br/> (b) It recommended the establishment of a federation of British India and Princely States. / </b>इसने ब्रिटिश भारत और रियासतों के एक संघ <b>(Federation) </b>की स्थापना की सिफारिश की। <b><br/> (c) It rejected the idea of Universal Adult Franchise. / </b>इसने सार्वभौमिक वयस्क मताधिकार के विचार को खारिज कर दिया।<b><br/> Which of the above statements are correct?<br/> </b>उपरोक्त में से कौन<b>-</b>से कथन सही हैं<b>?</b></p>",
+      "option1": "<p> a and b only / केवल a और b</p>",
+      "option2": "<p> b and c only / केवल b और c</p>",
+      "option3": "<p> a and c only / केवल a और c</p>",
+      "option4": "<p> a, b and c / a, b और c</p>",
+      "answer": "4",
+      "negative_marking": "0.25",
+      "positive_marking": "1.00",
+      "solution": "<p> The report was published in 1930 and formed the basis for the Government of India Act 1935.<br/> रिपोर्ट 1930 में प्रकाशित हुई थी और इसने भारत सरकार अधिनियम 1935 का आधार बनाया था।</p>"
+    }
+  ]
+};
+
+// Extract questions and time from new structure
+const questions = quizData.questions;
+const totalTimeMinutes = quizData.time_minutes;
+
+let currentQuestion = 0;
+let answers = {};
+let bookmarks = new Set();
+let timerSeconds = totalTimeMinutes * 60;
+let timerInterval = null;
+let isPaletteOpen = false;
+
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https'));
+}
+
+function createOptionContent(optionText) {
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'option-content';
+    
+    if (isImageURL(optionText)) {
+        const img = document.createElement('img');
+        img.src = optionText;
+        img.className = 'option-image';
+        img.alt = 'Option image';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+            const errorText = document.createTextNode('Image failed to load');
+            contentDiv.appendChild(errorText);
+        };
+        contentDiv.appendChild(img);
+    } else {
+        contentDiv.innerHTML = optionText;  // FIXED: Use innerHTML
+    }
+    
+    return contentDiv;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initQuiz();
+  initEventListeners();
+  loadFromLocalStorage();
+  startTimer();
+  createPalette();
+  preventDoubleTapZoom();
+});
+
+function preventDoubleTapZoom() {
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('quizTheme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon();
+}
+
+function updateThemeIcon() {
+  const theme = document.documentElement.getAttribute('data-theme');
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('quizTheme', newTheme);
+  updateThemeIcon();
+}
+
+function initQuiz() {
+  loadQuestion(currentQuestion);
+  updateMarkingInfo();
+}
+
+function initEventListeners() {
+  const themeBtn = document.getElementById('themeToggle');
+  const fullscreenBtn = document.getElementById('fullscreenBtn');
+  
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+    themeBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleTheme();
+    });
+  }
+  
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
+  }
+  
+  addButtonListener('prevBtn', prevQuestion);
+  addButtonListener('nextBtn', nextQuestion);
+  addButtonListener('clearBtn', clearAnswer);
+  addButtonListener('submitBtn', confirmSubmit);
+  addButtonListener('bookmarkBtn', toggleBookmark);
+  
+  addButtonListener('paletteFab', togglePalette);
+  addButtonListener('paletteClose', closePalette);
+  
+  const overlay = document.getElementById('paletteOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', closePalette);
+    overlay.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      closePalette();
+    });
+  }
+  
+  const searchInput = document.getElementById('paletteSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', handleSearch);
+    searchInput.addEventListener('change', jumpToQuestion);
+  }
+  
+  document.addEventListener('keydown', handleKeyPress);
+  
+  setInterval(saveToLocalStorage, 5000);
+  
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      updatePalette();
+    }
+  });
+}
+
+function addButtonListener(id, handler) {
+  const btn = document.getElementById(id);
+  if (btn) {
+    btn.addEventListener('click', handler);
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      handler();
+    });
+  }
+}
+
+function jumpToQuestion(e) {
+  const questionNum = parseInt(e.target.value);
+  if (questionNum >= 1 && questionNum <= questions.length) {
+    goToQuestion(questionNum - 1);
+    closePalette();
+    e.target.value = '';
+  }
+}
+
+function togglePalette() {
+  isPaletteOpen = !isPaletteOpen;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (isPaletteOpen) {
+    palette.classList.add('active');
+    overlay.classList.add('active');
+    fab.classList.add('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+    document.body.classList.add('palette-open');
+  } else {
+    closePalette();
+  }
+}
+
+function closePalette() {
+  isPaletteOpen = false;
+  const palette = document.getElementById('questionPalette');
+  const overlay = document.getElementById('paletteOverlay');
+  const fab = document.getElementById('paletteFab');
+  
+  if (palette) palette.classList.remove('active');
+  if (overlay) overlay.classList.remove('active');
+  if (fab) {
+    fab.classList.remove('active');
+    fab.innerHTML = `📋 <span class="badge" id="answeredBadge">${Object.keys(answers).length}</span>`;
+  }
+  document.body.classList.remove('palette-open');
+}
+
+function handleSearch(e) {
+  const searchTerm = e.target.value.toLowerCase();
+  if (!searchTerm) {
+    document.querySelectorAll('.palette-btn').forEach(btn => {
+      btn.style.display = '';
+    });
+    return;
+  }
+  
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    const questionNum = (index + 1).toString();
+    if (questionNum.includes(searchTerm)) {
+      btn.style.display = '';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+}
+
+function handleKeyPress(e) {
+  if (document.getElementById('resultSection').classList.contains('hidden')) {
+    if (e.key === 'Escape') {
+      if (isPaletteOpen) {
+        closePalette();
+      }
+    } else if (!isPaletteOpen && e.target.tagName !== 'INPUT') {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevQuestion();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        nextQuestion();
+      } else if (e.key === 'b' || e.key === 'B') {
+        e.preventDefault();
+        toggleBookmark();
+      } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        clearAnswer();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePalette();
+      } else if (e.key >= '1' && e.key <= '4') {
+        e.preventDefault();
+        selectOption(parseInt(e.key));
+      }
+    }
+  }
+}
+
+function selectOption(optionNum) {
+  const q = questions[currentQuestion];
+  const radio = document.querySelector(`input[name="q${q.sr_no}"][value="${optionNum}"]`);
+  if (radio) {
+    radio.checked = true;
+    const label = radio.closest('.option-label');
+    if (label) {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    }
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Fullscreen error:', err);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  } catch (err) {
+    console.log('Fullscreen not supported');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimer();
+    
+    // Auto-submit when time runs out
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      alert('Time is up! Submitting quiz automatically.');
+      submitQuiz();
+      return;
+    }
+    
+    if (timerSeconds <= 120) {
+      const timer = document.getElementById('timer');
+      if (timer) timer.classList.add('warning');
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timerSeconds / 60);
+  const seconds = timerSeconds % 60;
+  const timer = document.getElementById('timer');
+  if (timer) {
+    timer.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+}
+
+function createPalette() {
+  const grid = document.getElementById('paletteGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = '';
+  questions.forEach((q, index) => {
+    const btn = document.createElement('button');
+    btn.textContent = index + 1;
+    btn.className = 'palette-btn';
+    btn.setAttribute('aria-label', `Go to question ${index + 1}`);
+    btn.setAttribute('type', 'button');
+    
+    btn.addEventListener('click', () => {
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      goToQuestion(index);
+      closePalette();
+    });
+    
+    grid.appendChild(btn);
+  });
+  updatePalette();
+}
+
+function updatePalette() {
+  const buttons = document.querySelectorAll('.palette-btn');
+  buttons.forEach((btn, index) => {
+    btn.className = 'palette-btn';
+    if (index === currentQuestion) btn.classList.add('current');
+    if (answers[questions[index].sr_no]) btn.classList.add('answered');
+    if (bookmarks.has(questions[index].sr_no)) btn.classList.add('bookmarked');
+  });
+  
+  updatePaletteStats();
+}
+
+function updatePaletteStats() {
+  const answered = Object.keys(answers).length;
+  const unanswered = questions.length - answered;
+  const bookmarkedCount = bookmarks.size;
+  
+  const answeredEl = document.getElementById('paletteAnswered');
+  const unansweredEl = document.getElementById('paletteUnanswered');
+  const bookmarkedEl = document.getElementById('paletteBookmarked');
+  
+  if (answeredEl) answeredEl.textContent = answered;
+  if (unansweredEl) unansweredEl.textContent = unanswered;
+  if (bookmarkedEl) bookmarkedEl.textContent = bookmarkedCount;
+  
+  const badge = document.querySelector('.palette-fab .badge');
+  if (badge) badge.textContent = answered;
+}
+
+function goToQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  saveAnswer();
+  currentQuestion = index;
+  loadQuestion(currentQuestion);
+  
+  const questionSection = document.getElementById('questionSection');
+  if (questionSection) {
+    setTimeout(() => {
+      questionSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function loadQuestion(index) {
+  const q = questions[index];
+  
+  const questionNumber = document.getElementById('questionNumber');
+  const questionText = document.getElementById('questionText');
+  
+  if (questionNumber) {
+    questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  }
+  
+  if (questionText) {
+    questionText.innerHTML = '';
+    const questionContent = createOptionContent(q.question);
+    questionText.appendChild(questionContent);
+  }
+  
+  const container = document.getElementById('optionsContainer');
+  if (!container) return;
+  
+  container.innerHTML = '';
+  
+  for (let i = 1; i <= 4; i++) {
+    const label = document.createElement('label');
+    label.className = 'option-label';
+    if (answers[q.sr_no] == i) label.classList.add('selected');
+    
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = `q${q.sr_no}`;
+    radio.value = i;
+    radio.checked = answers[q.sr_no] == i;
+    
+    const changeHandler = () => {
+      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      saveAnswer();
+    };
+    
+    radio.addEventListener('change', changeHandler);
+    label.addEventListener('click', (e) => {
+      if (e.target !== radio) {
+        radio.checked = true;
+        changeHandler();
+      }
+    });
+    
+    label.appendChild(radio);
+    
+    const optionContent = createOptionContent(q[`option${i}`]);
+    label.appendChild(optionContent);
+    
+    container.appendChild(label);
+  }
+  
+  const bookmarkBtn = document.getElementById('bookmarkBtn');
+  if (bookmarkBtn) {
+    if (bookmarks.has(q.sr_no)) {
+      bookmarkBtn.classList.add('active');
+    } else {
+      bookmarkBtn.classList.remove('active');
+    }
+  }
+  
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  
+  if (prevBtn) prevBtn.disabled = index === 0;
+  
+  if (index === questions.length - 1) {
+    if (nextBtn) nextBtn.classList.add('hidden');
+    if (submitBtn) submitBtn.classList.remove('hidden');
+  } else {
+    if (nextBtn) nextBtn.classList.remove('hidden');
+    if (submitBtn) submitBtn.classList.add('hidden');
+  }
+  
+  updateProgress();
+  updatePalette();
+}
+
+function updateMarkingInfo() {
+  const q = questions[0];
+  const markingInfo = document.getElementById('markingInfo');
+  if (markingInfo) {
+    markingInfo.textContent = `Marking: +${q.positive_marking}, -${q.negative_marking}`;
+  }
+}
+
+function updateProgress() {
+  const attempted = Object.keys(answers).length;
+  const currentProgress = ((currentQuestion + 1) / questions.length) * 100;
+  
+  const progressBar = document.getElementById('progressBar');
+  const progressText = document.getElementById('progressText');
+  const attemptedText = document.getElementById('attemptedText');
+  
+  if (progressBar) progressBar.style.width = `${currentProgress}%`;
+  if (progressText) progressText.textContent = `${currentQuestion + 1}/${questions.length}`;
+  if (attemptedText) attemptedText.textContent = attempted;
+}
+
+function saveAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  
+  if (selected) {
+    answers[q.sr_no] = selected.value;
+  }
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function clearAnswer() {
+  const q = questions[currentQuestion];
+  delete answers[q.sr_no];
+  
+  const selected = document.querySelector(`input[name="q${q.sr_no}"]:checked`);
+  if (selected) selected.checked = false;
+  
+  document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+  
+  updateProgress();
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function toggleBookmark() {
+  const q = questions[currentQuestion];
+  const btn = document.getElementById('bookmarkBtn');
+  
+  if (bookmarks.has(q.sr_no)) {
+    bookmarks.delete(q.sr_no);
+    if (btn) btn.classList.remove('active');
+  } else {
+    bookmarks.add(q.sr_no);
+    if (btn) btn.classList.add('active');
+  }
+  
+  updatePalette();
+  saveToLocalStorage();
+}
+
+function nextQuestion() {
+  saveAnswer();
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  saveAnswer();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function confirmSubmit() {
+  const unattempted = questions.length - Object.keys(answers).length;
+  let message = 'Are you sure you want to submit the quiz?';
+  
+  if (unattempted > 0) {
+    message = `You have ${unattempted} unanswered questions. ${message}`;
+  }
+  
+  if (confirm(message)) {
+    submitQuiz();
+  }
+}
+
+function submitQuiz() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  saveAnswer();
+  closePalette();
+  
+  let correct = 0, wrong = 0, unattempted = 0, score = 0;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    const posMark = parseFloat(q.positive_marking) || 0;
+    const negMark = parseFloat(q.negative_marking) || 0;
+    
+    if (!userAns) {
+      unattempted++;
+    } else if (userAns == q.answer) {
+      correct++;
+      score += posMark;
+    } else {
+      wrong++;
+      score -= negMark;
+    }
+  });
+  
+  displayResults(correct, wrong, unattempted, score);
+  
+  const fab = document.getElementById('paletteFab');
+  const nav = document.getElementById('navigation');
+  if (fab) fab.style.display = 'none';
+  if (nav) nav.style.display = 'none';
+  
+  document.body.style.paddingBottom = '20px';
+  
+  clearLocalStorage();
+}
+
+function displayResults(correct, wrong, unattempted, score) {
+  const totalQuestions = questions.length;
+  const percentage = ((correct / totalQuestions) * 100).toFixed(1);
+  const timerEl = document.getElementById('timer');
+  const timeText = timerEl ? timerEl.textContent : '00:00';
+  const timeTaken = (totalTimeMinutes * 60) - timerSeconds;
+  const minutesTaken = Math.floor(timeTaken / 60);
+  const secondsTaken = timeTaken % 60;
+  const timeTakenText = `${minutesTaken}m ${secondsTaken}s`;
+  
+  let html = `
+    <div class="score-card">
+      <h2>${score}/${totalQuestions}</h2>
+      <p>Your Score: ${percentage}%</p>
+      <p>Time Taken: ${timeTakenText}</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <h3>${correct}</h3>
+        <p>Correct</p>
+      </div>
+      <div class="stat-card wrong">
+        <h3>${wrong}</h3>
+        <p>Wrong</p>
+      </div>
+      <div class="stat-card unattempted">
+        <h3>${unattempted}</h3>
+        <p>Unattempted</p>
+      </div>
+      <div class="stat-card">
+        <h3>${totalQuestions}</h3>
+        <p>Total</p>
+      </div>
+    </div>
+  `;
+  
+  questions.forEach(q => {
+    const userAns = answers[q.sr_no];
+    let questionDisplay = '';
+    if (isImageURL(q.question)) {
+      questionDisplay = `<img src="${q.question}" class="question-image" alt="Question ${q.sr_no}">`;
+    } else {
+      questionDisplay = q.question;
+    }
+    html += `<div class="question-review">
+      <h4>Q${q.sr_no}: ${questionDisplay}</h4>`;
+    
+    for (let i = 1; i <= 4; i++) {
+      const isCorrect = i.toString() === q.answer;
+      const isUserAnswer = userAns == i.toString();
+      
+      let className = 'review-option';
+      if (isCorrect) className += ' correct';
+      if (isUserAnswer && !isCorrect) className += ' wrong';
+      if (isUserAnswer) className += ' user-selected';
+      
+      const optionValue = q[`option${i}`];
+      
+      if (isImageURL(optionValue)) {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''} 
+          <img src="${optionValue}" class="option-image" alt="Option ${i}">
+        </div>`;
+      } else {
+        html += `<div class="${className}">
+          ${isCorrect ? '✓ ' : ''}${isUserAnswer ? '➤ ' : ''}${optionValue}
+        </div>`;
+      }
+    }
+    
+    if (q.solution && q.solution.trim() !== '') {
+      let solutionDisplay = '';
+      if (isImageURL(q.solution)) {
+        solutionDisplay = `<img src="${q.solution}" class="solution-image" alt="Solution" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">`;
+      } else {
+        solutionDisplay = q.solution;
+      }
+      
+      html += `<div class="solution-section" style="margin-top: 15px; padding: 15px; background: #f0f8ff; border-left: 4px solid #007bff; border-radius: 8px;">
+        <strong style="color: #007bff;">💡 Solution:</strong>
+        <div style="margin-top: 8px; color: #333;">${solutionDisplay}</div>
+      </div>`;
+    }
+    
+    html += `</div>`;
+  });
+  
+  html += `
+    <div class="action-buttons">
+      <button class="action-btn restart" onclick="restartQuiz()">Restart Quiz</button>
+      <button class="action-btn download" onclick="downloadResults()">Download Results</button>
+      <button class="action-btn print" onclick="window.print()">Print Results</button>
+    </div>
+  `;
+  
+  const resultSection = document.getElementById('resultSection');
+  const questionSection = document.getElementById('questionSection');
+  const progressSection = document.querySelector('.progress-section');
+  
+  if (resultSection) {
+    resultSection.innerHTML = html;
+    resultSection.classList.remove('hidden');
+  }
+  if (questionSection) questionSection.classList.add('hidden');
+  if (progressSection) progressSection.classList.add('hidden');
+  
+  const quizContainer = document.getElementById('quizContainer');
+  if (quizContainer) {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }
+}
+function isImageURL(str) {
+  return str && (str.startsWith('http') || str.startsWith('https')) &&
+    (str.match(/\.(jpeg|jpg|gif|png|svg|webp)$/i));
+}
+function restartQuiz() {
+  if (confirm('Are you sure you want to restart? All progress will be lost.')) {
+    currentQuestion = 0;
+    answers = {};
+    bookmarks.clear();
+    timerSeconds = totalTimeMinutes * 60;
+    
+    const resultSection = document.getElementById('resultSection');
+    const questionSection = document.getElementById('questionSection');
+    const progressSection = document.querySelector('.progress-section');
+    const fab = document.getElementById('paletteFab');
+    const nav = document.getElementById('navigation');
+    
+    if (resultSection) {
+      resultSection.classList.add('hidden');
+      resultSection.innerHTML = '';
+    }
+    if (questionSection) questionSection.classList.remove('hidden');
+    if (progressSection) progressSection.classList.remove('hidden');
+    if (fab) fab.style.display = 'flex';
+    if (nav) nav.style.display = 'grid';
+    
+    document.body.style.paddingBottom = 'var(--nav-height)';
+    
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+    updateTimer();
+    startTimer();
+    
+    loadQuestion(currentQuestion);
+    createPalette();
+  }
+}
+
+function downloadResults() {
+  const resultSection = document.getElementById('resultSection');
+  if (!resultSection) return;
+  
+  const resultHTML = resultSection.innerHTML;
+  const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HISTORY TEST - 5</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; max-width: 900px; margin: 0 auto; }
+    .score-card { background: linear-gradient(135deg, #007bff, #28a745); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+    .score-card h2 { font-size: 48px; margin-bottom: 10px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: white; padding: 20px; border-radius: 10px; text-align: center; border: 2px solid #ddd; }
+    .stat-card h3 { font-size: 32px; margin-bottom: 8px; }
+    .stat-card.correct h3 { color: #28a745; }
+    .stat-card.wrong h3 { color: #dc3545; }
+    .stat-card.unattempted h3 { color: #6c757d; }
+    .question-review { background: white; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+    .question-review h4 { margin-bottom: 15px; font-size: 16px; line-height: 1.6; }
+    .review-option { padding: 10px 15px; margin: 8px 0; border-radius: 8px; border: 2px solid #ddd; display: flex; align-items: center; gap: 10px; }
+    .option-image { max-width: 150px; max-height: 100px; border-radius: 8px; }
+    .review-option.correct { background: #d4edda; border-color: #28a745; color: #155724; }
+    .review-option.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+    .review-option.user-selected { border-width: 3px; font-weight: bold; }
+    @media print { body { background: white; } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">MOTION 3.0 - Quiz Results</h1>
+  <p style="text-align: center; color: #666; margin-bottom: 30px;">Generated on: ${new Date().toLocaleString()}</p>
+  ${resultHTML.replace(/<div class="action-buttons">[\s\S]*?<\/div>/, '')}
+</body>
+</html>
+  `;
+  
+  try {
+    const blob = new Blob([fullHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Quiz_Results_${new Date().getTime()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    alert('Download failed. Please try using the Print option instead.');
+    console.error('Download error:', err);
+  }
+}
+
+function saveToLocalStorage() {
+  try {
+    const state = {
+      currentQuestion,
+      answers,
+      bookmarks: Array.from(bookmarks),
+      timerSeconds,
+      timestamp: Date.now()
+    };
+    localStorage.setItem('quizState', JSON.stringify(state));
+  } catch (err) {
+    console.error('Save error:', err);
+  }
+}
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem('quizState');
+    if (saved) {
+      const state = JSON.parse(saved);
+      if (Date.now() - state.timestamp < 24 * 60 * 60 * 1000) {
+        if (confirm('Resume previous quiz session?')) {
+          currentQuestion = state.currentQuestion || 0;
+          answers = state.answers || {};
+          bookmarks = new Set(state.bookmarks || []);
+          timerSeconds = state.timerSeconds || (totalTimeMinutes * 60); // MODIFIED
+          updateTimer();
+          loadQuestion(currentQuestion);
+        }
+      } else {
+        clearLocalStorage();
+      }
+    }
+  } catch (err) {
+    console.error('Load error:', err);
+    clearLocalStorage();
+  }
+}
+
+function clearLocalStorage() {
+  try {
+    localStorage.removeItem('quizState');
+  } catch (err) {
+    console.error('Clear storage error:', err);
+  }
+}
+
+window.addEventListener('beforeunload', (e) => {
+  const resultSection = document.getElementById('resultSection');
+  if (resultSection && !resultSection.classList.contains('hidden')) {
+    return;
+  }
+  e.preventDefault();
+  e.returnValue = '';
+});
+
+window.addEventListener('unload', () => {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+});
+</script>
+</body>
+</html>
