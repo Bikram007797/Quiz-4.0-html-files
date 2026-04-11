@@ -14,7 +14,6 @@
             --warning: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
             --danger: linear-gradient(135deg, #ff6a88 0%, #ff99ac 100%);
             --info: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            
             --bg-primary: #fff;
             --bg-secondary: #f8f9fe;
             --bg-tertiary: #eef2ff;
@@ -25,7 +24,6 @@
             --coin-color: #ffd700;
             --xp-color: #4ecdc4;
             --fantasy-gold: #d4af37;
-            
             --shadow: 0 4px 15px rgba(102, 126, 234, 0.15);
             --shadow-lg: 0 10px 40px rgba(102, 126, 234, 0.2);
             --shadow-colored: 0 8px 25px rgba(102, 126, 234, 0.3);
@@ -75,7 +73,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
+            background-image:
                 radial-gradient(circle at 20% 80%, rgba(121, 87, 213, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
             z-index: -1;
@@ -83,19 +81,10 @@
         }
 
         /* ---------- Custom Scrollbar ---------- */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-secondary);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 6px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-solid);
-        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 6px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-solid); }
 
         /* ---------- Container ---------- */
         .container {
@@ -104,13 +93,13 @@
             padding: 8px;
         }
 
-        /* ---------- Animated Header ---------- */
+        /* ---------- Header ---------- */
         .header {
             background: var(--primary);
-            padding: 12px;
-            border-radius: 16px;
+            padding: 15px 20px;
+            border-radius: 18px;
             box-shadow: var(--shadow-colored);
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             position: relative;
             overflow: hidden;
             animation: slideDown 0.5s ease;
@@ -147,13 +136,13 @@
         }
 
         .header h1 {
-            font-size: 18px;
+            font-size: 22px;
             color: #fff;
             font-weight: 800;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .header h1 .emoji {
@@ -165,20 +154,20 @@
             50% { transform: translateY(-5px); }
         }
 
-       .developer-badge {
-    background: rgba(255,255,255,0.2);
-    padding: 4px 12px 4px 10px; /* More padding on left for icon */
-    border-radius: 15px;
-    font-size: 12px;
-    color: #fff;
-    font-weight: 600;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.3);
-    margin-top: 6px;
-    display: inline-flex; /* Changed to flex */
-    align-items: center; /* Vertically center */
-    gap: 6px; /* Space between icon and text */
-}
+        .developer-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px 4px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            color: #fff;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            margin-top: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
 
         .header-controls {
             display: flex;
@@ -191,32 +180,31 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
-            flex-wrap: wrap;
             gap: 8px;
         }
 
         .stats-container {
             display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            flex: 1;
+            gap: 8px;
+            flex-wrap: nowrap;
+            flex: 0 0 auto;
         }
 
         .stat-display {
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 8px 12px;
-            border-radius: 20px;
+            padding: 6px 10px;
+            border-radius: 16px;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
             background: rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             border: 2px solid;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            flex: 1;
-            min-width: 120px;
+            min-width: 100px;
+            white-space: nowrap;
         }
 
         .stat-display:hover {
@@ -290,16 +278,18 @@
             background: linear-gradient(135deg, var(--primary-solid), #5f43b2);
             border: 2px solid var(--fantasy-gold);
             color: white;
-            padding: 8px 14px;
+            padding: 6px 12px;
             border-radius: 40px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
             white-space: nowrap;
+            min-width: 110px;
+            justify-content: center;
         }
 
         .profile-btn:hover {
@@ -436,7 +426,7 @@
             color: #FFD700;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: rgba(0.3, 0.3, 0.3, 0.3);
+            background: rgba(30, 30, 30, 0.3); /* FIX: was rgba(0.3,0.3,0.3,0.3) - invalid */
             width: 36px;
             height: 36px;
             border-radius: 50%;
@@ -460,9 +450,8 @@
             color: #FFD700;
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
             background: linear-gradient(transparent, rgba(0, 0, 0, 0.2));
-             font-weight: 700;
-    font-family: 'Cinzel', 'Georgia', serif; /* Fantasy font */
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            font-weight: 700;
+            font-family: 'Cinzel', 'Georgia', serif;
         }
 
         .sidebar-content {
@@ -486,14 +475,8 @@
         }
 
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         .sidebar.open li {
@@ -540,44 +523,43 @@
             border-color: rgba(40, 167, 69, 0.3);
         }
 
-       .quiz-link {
-    color: #00F2FE;
-    text-decoration: none;
-    font-size: 16px;
-    cursor: pointer;
-    word-break: break-word;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-weight: 700;
-    font-family: 'Segoe UI', 'SF Pro Display', -apple-system, sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
+        .quiz-link {
+            color: #00F2FE;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            word-break: break-word;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-family: 'Segoe UI', 'SF Pro Display', -apple-system, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
+        .quiz-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--primary-solid), #9b5de5);
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 14px;
+            border: none;
+            flex-shrink: 0;
+            color: white;
+            box-shadow: 0 3px 8px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
 
-
-       .quiz-number {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 28px;
-    height: 28px;
-    background: linear-gradient(135deg, var(--primary-solid), #9b5de5);
-    border-radius: 8px; /* Square with rounded corners */
-    font-weight: 900;
-    font-size: 14px;
-    border: none;
-    flex-shrink: 0;
-    color: white;
-    box-shadow: 0 3px 8px rgba(102, 126, 234, 0.4);
-    transition: all 0.3s ease;
-}
-.quiz-link-container:hover .quiz-number {
-    transform: scale(1.1) rotate(5deg);
-    background: linear-gradient(135deg, #9b5de5, var(--primary-solid));
-}
+        .quiz-link-container:hover .quiz-number {
+            transform: scale(1.1) rotate(5deg);
+            background: linear-gradient(135deg, #9b5de5, var(--primary-solid));
+        }
 
         /* ---------- Verify Button ---------- */
         .verify-btn {
@@ -725,134 +707,103 @@
             50% { transform: scale(1.05); }
         }
 
+        /* ---------- Quizo Icon ---------- */
+        .quizo-icon {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #FF6B9D 0%, #FF8E53 100%);
+            border-radius: 50%;
+            margin-right: 8px;
+            box-shadow: 0 4px 10px rgba(255, 107, 157, 0.3);
+            overflow: hidden;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(5deg); }
+        }
+
+        .quizo-icon::before {
+            content: 'Q';
+            font-size: 18px;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+        }
+
+        .quizo-icon::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 70%, rgba(255, 215, 0, 0.2) 0%, transparent 50%);
+            animation: iconGlow 4s linear infinite;
+        }
+
+        @keyframes iconGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .quizo-icon .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: sparklePulse 2s infinite;
+            box-shadow: 0 0 8px white;
+        }
+
+        .quizo-icon .sparkle:nth-child(1) { top: 5px; right: 5px; animation-delay: 0s; }
+        .quizo-icon .sparkle:nth-child(2) { bottom: 5px; left: 5px; animation-delay: 0.5s; }
+        .quizo-icon .sparkle:nth-child(3) { top: 50%; left: 5px; animation-delay: 1s; }
+        .quizo-icon .sparkle:nth-child(4) { top: 50%; right: 5px; animation-delay: 1.5s; }
+
+        @keyframes sparklePulse {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
         /* ---------- Responsive ---------- */
-       @media (max-width: 480px) {
-    .stats-bar {
-        flex-direction: row; /* Keep row layout on mobile */
-        flex-wrap: wrap;
-    }
-    .stats-container {
-        width: auto; /* Auto width on mobile */
-        flex: 0 0 auto;
-    }
-    
-    .stat-display {
-        min-width: 90px; /* Smaller on mobile */
-        padding: 5px 8px;
-        font-size: 12px;
-    }
-    
-    .profile-btn {
-        min-width: 100px; /* Smaller on mobile */
-        padding: 5px 10px;
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 360px) {
-    .stats-bar {
-        gap: 6px;
-    }
-    
-    .stat-display {
-        min-width: 85px;
-        font-size: 11px;
-    }
-    
-    .profile-btn {
-        min-width: 95px;
-        font-size: 11px;
-    }
-}
-
-            .header {
-    background: var(--primary);
-    padding: 15px 20px; /* Increased padding for wider look */
-    border-radius: 18px; /* Slightly larger radius */
-    box-shadow: var(--shadow-colored);
-    margin-bottom: 15px; /* Slightly more spacing */
-    position: relative;
-    overflow: hidden;
-    animation: slideDown 0.5s ease;
-}
-
-           .header h1 {
-    font-size: 22px; /* Increased from 18px */
-    color: #fff;
-    font-weight: 800;
-    text-shadow: 2px 2px 6px rgba(0,0,0,0.3); /* Enhanced shadow */
-    display: flex;
-    align-items: center;
-    gap: 8px; /* Slightly more gap */
-}
-           .stats-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    gap: 8px;
-}
-
-.stats-container {
-    display: flex;
-    gap: 8px; /* Reduced gap */
-    flex-wrap: nowrap; /* Keep on one line */
-    flex: 0 0 auto; /* Don't grow, don't shrink */
-}
-
-.stat-display {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 10px; /* Reduced padding */
-    border-radius: 16px; /* Slightly smaller radius */
-    font-weight: bold;
-    font-size: 13px; /* Slightly smaller font */
-    background: rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    border: 2px solid;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    min-width: 100px; /* Reduced from 120px */
-    white-space: nowrap; /* Prevent text wrapping */
-}
-
-.profile-btn {
-    background: linear-gradient(135deg, var(--primary-solid), #5f43b2);
-    border: 2px solid var(--fantasy-gold);
-    color: white;
-    padding: 6px 12px; /* Reduced padding */
-    border-radius: 40px;
-    cursor: pointer;
-    font-size: 13px; /* Slightly smaller */
-    display: flex;
-    align-items: center;
-    gap: 6px; /* Reduced gap */
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    white-space: nowrap;
-    min-width: 110px; /* Set minimum width */
-    justify-content: center;
-}
-
+        @media (max-width: 480px) {
+            .stats-bar {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .stats-container {
+                width: auto;
+                flex: 0 0 auto;
+            }
+            .stat-display {
+                min-width: 90px;
+                padding: 5px 8px;
+                font-size: 12px;
+            }
+            .profile-btn {
+                min-width: 100px;
+                padding: 5px 10px;
+                font-size: 12px;
+            }
             .grid-container {
                 grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
                 gap: 8px;
             }
-
             .box {
                 padding: 8px;
                 border-radius: 12px;
             }
-
-            .box-header {
-                font-size: 12px;
-            }
-
-            .box-icon {
-                font-size: 2em;
-            }
-
+            .box-header { font-size: 12px; }
+            .box-icon { font-size: 2em; }
             .box-progress {
                 bottom: 8px;
                 left: 8px;
@@ -862,181 +813,48 @@
         }
 
         @media (max-width: 360px) {
-            .grid-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .box-header {
-                font-size: 11px;
-            }
-            
-            .box-icon {
-                font-size: 1.8em;
-            }
+            .stats-bar { gap: 6px; }
+            .stat-display { min-width: 85px; font-size: 11px; }
+            .profile-btn { min-width: 95px; font-size: 11px; }
+            .grid-container { grid-template-columns: repeat(2, 1fr); }
+            .box-header { font-size: 11px; }
+            .box-icon { font-size: 1.8em; }
         }
 
         /* Fix for iOS Safari */
         @supports (-webkit-touch-callout: none) {
-            body {
-                min-height: -webkit-fill-available;
-            }
-            
-            .sidebar {
-                height: -webkit-fill-available;
-            }
+            body { min-height: -webkit-fill-available; }
+            .sidebar { height: -webkit-fill-available; }
         }
 
         /* Touch device optimizations */
         @media (hover: none) and (pointer: coarse) {
-            .box:hover, .box.active {
-                transform: scale(0.98);
-            }
-            
-            .verify-btn:hover {
-                transform: none;
-            }
-            
-            .btn:active::before {
-                width: 150px;
-                height: 150px;
-            }
+            .box:hover, .box.active { transform: scale(0.98); }
+            .verify-btn:hover { transform: none; }
+            .btn:active::before { width: 150px; height: 150px; }
         }
-        /* ---------- Quizo Icon ---------- */
-.quizo-icon {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-     background: linear-gradient(135deg, #FF6B9D 0%, #FF8E53 100%);
-    border-radius: 50%;
-    margin-right: 8px;
-    box-shadow: 0 4px 10px rgba(255, 107, 157, 0.3);
-    overflow: hidden;
-    animation: iconFloat 3s ease-in-out infinite;
-}
-
-@keyframes iconFloat {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-5px) rotate(5deg); }
-}
-
-.quizo-icon::before {
-    content: 'Q';
-    font-size: 18px;
-    font-weight: 900;
-    color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    z-index: 2;
-}
-
-.quizo-icon::after {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 70% 70%, rgba(255, 215, 0, 0.2) 0%, transparent 50%);
-    animation: iconGlow 4s linear infinite;
-}
-
-@keyframes iconGlow {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.quizo-icon .sparkle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: white;
-    border-radius: 50%;
-    animation: sparklePulse 2s infinite;
-    box-shadow: 0 0 8px white;
-}
-
-.quizo-icon .sparkle:nth-child(1) {
-    top: 5px;
-    right: 5px;
-    animation-delay: 0s;
-}
-
-.quizo-icon .sparkle:nth-child(2) {
-    bottom: 5px;
-    left: 5px;
-    animation-delay: 0.5s;
-}
-
-.quizo-icon .sparkle:nth-child(3) {
-    top: 50%;
-    left: 5px;
-    animation-delay: 1s;
-}
-
-.quizo-icon .sparkle:nth-child(4) {
-    top: 50%;
-    right: 5px;
-    animation-delay: 1.5s;
-}
-
-@keyframes sparklePulse {
-    0%, 100% { opacity: 0.3; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1.2); }
-}
-
-/* Enhanced header with icon */
-.header h1 {
-    font-size: 22px;
-    color: #fff;
-    font-weight: 800;
-    text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-/* Developer badge with icon */
-.developer-badge {
-    background: rgba(255,255,255,0.2);
-    padding: 4px 12px 4px 10px;
-    border-radius: 15px;
-    font-size: 12px;
-    color: #fff;
-    font-weight: 600;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.3);
-    margin-top: 6px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
     </style>
 </head>
 <body data-theme="dark">
     <div class="container">
-       <!-- Header -->
-<div class="header">
-    <div class="header-content">
-        <div>
-            <h1>
-                <div class="quizo-icon" id="quizoIcon">
-                    <!-- Sparkles will be generated by JavaScript -->
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div>
+                    <h1>
+                        <div class="quizo-icon" id="quizoIcon">
+                            <!-- Sparkles generated by JS -->
+                        </div>
+                        Quizo
+                    </h1>
+                    <div class="developer-badge">By Bikr@m</div>
                 </div>
-                Quizo
-            </h1>
-            <div class="developer-badge">
-                 By Bikr@m
+                <div class="header-controls">
+                    <button class="theme-toggle btn" id="themeToggle" title="Toggle theme">☀️</button>
+                    <button class="fullscreen-btn btn" id="fullscreenBtn" title="Fullscreen">⛶</button>
+                </div>
             </div>
         </div>
-        <div class="header-controls">
-            <button class="theme-toggle btn" id="themeToggle" title="Toggle theme">☀️</button>
-            <button class="fullscreen-btn btn" id="fullscreenBtn" title="Fullscreen">⛶</button>
-        </div>
-    </div>
-</div>
 
         <!-- Stats Bar -->
         <div class="stats-bar">
@@ -1057,9 +875,7 @@
         </div>
 
         <!-- Subject Boxes -->
-        <div class="grid-container" id="subjectsGrid">
-            <!-- Boxes will be generated here -->
-        </div>
+        <div class="grid-container" id="subjectsGrid"></div>
 
         <!-- Weekly Quiz Card -->
         <div class="card">
@@ -1067,9 +883,7 @@
                 <h2 class="card-title">🔥 Weekly Quiz Challenge</h2>
                 <span class="weekly-badge">NEW</span>
             </div>
-            <div class="grid-container" id="weeklyGrid">
-                <!-- Weekly quiz boxes will be generated here -->
-            </div>
+            <div class="grid-container" id="weeklyGrid"></div>
         </div>
     </div>
 
@@ -1078,9 +892,7 @@
         <button class="close-btn" onclick="closeSidebars()">×</button>
         <div class="sidebar-header" id="quiz-sidebar-header"></div>
         <div class="sidebar-content">
-            <ul id="quiz-sidebar-links">
-                <!-- Quiz links will be generated here -->
-            </ul>
+            <ul id="quiz-sidebar-links"></ul>
         </div>
     </div>
 
@@ -1089,9 +901,7 @@
         <button class="close-btn" onclick="closeSidebars()">×</button>
         <div class="sidebar-header" id="weekly-sidebar-header"></div>
         <div class="sidebar-content">
-            <ul id="weekly-sidebar-links">
-                <!-- Weekly quiz links will be generated here -->
-            </ul>
+            <ul id="weekly-sidebar-links"></ul>
         </div>
     </div>
 
@@ -1105,16 +915,12 @@
             <p>Total XP Gained: <strong id="stats-total-xp">0</strong></p>
             <p>Quizzes Completed: <strong id="stats-completed-quizzes">0</strong></p>
             <p>Active Quest: <strong id="stats-active-category">None</strong></p>
-            
             <h3>Quest Progression</h3>
             <p>Total Subjects: <strong>11</strong></p>
             <p>Total Quizzes: <strong id="stats-total-quizzes">0</strong></p>
             <p>Overall Progress: <strong id="stats-overall-progress">0%</strong></p>
-            
             <h3>Achievements</h3>
-            <div id="achievements-container">
-                <!-- Achievements will be added here -->
-            </div>
+            <div id="achievements-container"></div>
         </div>
     </div>
 
@@ -1138,38 +944,39 @@
         let currentActiveCategory = null;
         let totalQuizzes = 0;
 
+        // FIX: All Geography URLs encoded with %20 for spaces
         const subjects = [
             {
                 id: 'geography',
                 title: 'Geography',
                 emoji: '🌍',
                 chapters: [
-                    { no: 1, title: 'SOLAR SYSTEM', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 1 - SOLAR SYSTEM.html' },
-                    { no: 2, title: 'LATITUDE AND LONGITUDE', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 2 - LATITUDE AND LONGITUDE.html' },
-                    { no: 3, title: "EARTH'S INTERIOR AND PLATE TECHTONICS", url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 3 - EARTH\'S INTERIOR AND PLATE TECHTONICS.html' },
-                    { no: 4, title: 'OCEAN AND CONTINENTS', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 4 - OCEAN AND CONTINENTS.html' },
-                    { no: 5, title: 'ROCKS AND VOLCANO', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 5 - ROCKS AND VOLCANO.html' },
-                    { no: 6, title: 'GEOMORPHIC PROCESSES', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 6 - GEOMORPHIC PROCESSES.html' },
-                    { no: 7, title: 'LANDFORMS', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 7 - LANDFORMS.html' },
-                    { no: 8, title: 'ATMOSPHERE', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 8 - ATMOSPHERE.html' },
-                    { no: 9, title: 'CONDENSATION AND PRECIPITATION', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 9 - CONDENSATION AND PRECIPITATION.html' },
-                    { no: 10, title: 'WIND', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 10 - WIND.html' },
-                    { no: 11, title: 'CYCLONE AND OCEAN CURRENTS', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 11 - CYCLONE AND OCEAN CURRENTS.html' },
-                    { no: 12, title: "INDIA AND IT'S LOCATION", url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 12 - INDIA AND IT\'S LOCATION.html' },
-                    { no: 13, title: 'HIMALAYAS', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 13 - HIMALAYAS.html' },
-                    { no: 14, title: 'PENINSULAR PLATEAU', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 14 - PENINSULAR PLATEAU.html' },
-                    { no: 15, title: 'PLAINS AND ISLANDS', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 15 - PLAINS AND ISLANDS.html' },
-                    { no: 16, title: 'HIMALAYAN RIVER SYSTEM', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 16 - HIMALAYAN RIVER SYSTEM.html' },
-                    { no: 17, title: 'PENINSULAR RIVERS', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 17 - PENINSULAR RIVERS.html' },
-                    { no: 18, title: 'DAMS LAKES AND WATERFALLS', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 18 - DAMS LAKES AND WATERFALLS.html' },
-                    { no: 19, title: 'MONSOON', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 19 - MONSOON.html' },
-                    { no: 20, title: 'FORESTS AND GRASSLANDS', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 20 - FORESTS AND GRASSLANDS.html' },
-                    { no: 21, title: 'SOIL', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 21 - SOIL.html' },
-                    { no: 22, title: 'AGRICULTURE', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 22 - AGRICULTURE.html' },
-                    { no: 23, title: 'MINERALS', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 23 - MINERALS.html' },
-                    { no: 24, title: 'TRANSPORT', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 24 - TRANSPORT.html' },
-                    { no: 25, title: 'WORLD MAP', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 25 - WORLD MAP.html' },
-                    { no: 26, title: 'HUMAN GEOGRAPHY', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo Html/Chapter 26 - HUMAN GEOGRAPHY.html' }
+                    { no: 1,  title: 'SOLAR SYSTEM',                    url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%201%20-%20SOLAR%20SYSTEM.html' },
+                    { no: 2,  title: 'LATITUDE AND LONGITUDE',           url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%202%20-%20LATITUDE%20AND%20LONGITUDE.html' },
+                    { no: 3,  title: "EARTH'S INTERIOR AND PLATE TECHTONICS", url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%203%20-%20EARTH%27S%20INTERIOR%20AND%20PLATE%20TECHTONICS.html' },
+                    { no: 4,  title: 'OCEAN AND CONTINENTS',             url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%204%20-%20OCEAN%20AND%20CONTINENTS.html' },
+                    { no: 5,  title: 'ROCKS AND VOLCANO',                url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%205%20-%20ROCKS%20AND%20VOLCANO.html' },
+                    { no: 6,  title: 'GEOMORPHIC PROCESSES',             url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%206%20-%20GEOMORPHIC%20PROCESSES.html' },
+                    { no: 7,  title: 'LANDFORMS',                        url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%207%20-%20LANDFORMS.html' },
+                    { no: 8,  title: 'ATMOSPHERE',                       url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%208%20-%20ATMOSPHERE.html' },
+                    { no: 9,  title: 'CONDENSATION AND PRECIPITATION',   url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%209%20-%20CONDENSATION%20AND%20PRECIPITATION.html' },
+                    { no: 10, title: 'WIND',                             url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%2010%20-%20WIND.html' },
+                    { no: 11, title: 'CYCLONE AND OCEAN CURRENTS',       url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%2011%20-%20CYCLONE%20AND%20OCEAN%20CURRENTS.html' },
+                    { no: 12, title: "INDIA AND IT'S LOCATION",          url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%2012%20-%20INDIA%20AND%20IT%27S%20LOCATION.html' },
+                    { no: 13, title: 'HIMALAYAS',                        url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%2013%20-%20HIMALAYAS.html' },
+                    { no: 14, title: 'PENINSULAR PLATEAU',               url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%2014%20-%20PENINSULAR%20PLATEAU.html' },
+                    { no: 15, title: 'PLAINS AND ISLANDS',               url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%2015%20-%20PLAINS%20AND%20ISLANDS.html' },
+                    { no: 16, title: 'HIMALAYAN RIVER SYSTEM',           url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%2016%20-%20HIMALAYAN%20RIVER%20SYSTEM.html' },
+                    { no: 17, title: 'PENINSULAR RIVERS',                url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%2017%20-%20PENINSULAR%20RIVERS.html' },
+                    { no: 18, title: 'DAMS LAKES AND WATERFALLS',        url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%2018%20-%20DAMS%20LAKES%20AND%20WATERFALLS.html' },
+                    { no: 19, title: 'MONSOON',                          url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%2019%20-%20MONSOON.html' },
+                    { no: 20, title: 'FORESTS AND GRASSLANDS',           url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%2020%20-%20FORESTS%20AND%20GRASSLANDS.html' },
+                    { no: 21, title: 'SOIL',                             url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%2021%20-%20SOIL.html' },
+                    { no: 22, title: 'AGRICULTURE',                      url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%2022%20-%20AGRICULTURE.html' },
+                    { no: 23, title: 'MINERALS',                         url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%2023%20-%20MINERALS.html' },
+                    { no: 24, title: 'TRANSPORT',                        url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%2024%20-%20TRANSPORT.html' },
+                    { no: 25, title: 'WORLD MAP',                        url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%2025%20-%20WORLD%20MAP.html' },
+                    { no: 26, title: 'HUMAN GEOGRAPHY',                  url: 'https://bikram007797.github.io/Quiz-4.0-html-files/geo%20Html/Chapter%2026%20-%20HUMAN%20GEOGRAPHY.html' }
                 ]
             },
             {
@@ -1177,133 +984,130 @@
                 title: 'Polity',
                 emoji: '⚖️',
                 chapters: [
-                    { no: 1, title: 'MAKING OF CONSTITUTION', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 1- MAKING_OF_CONSTITUTION.html' },
-                    { no: 2, title: 'SALIENT FEATURES OF THE CONSTITUTION', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 2- SALIENT_FEATURES_OF_CONSTITUTION.html' },
-                    { no: 3, title: 'PREAMBLE', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 3- PREAMBLE.html' },
-                    { no: 4, title: 'PART 1 AND 2 OF THE CONSTITUTION', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 4- PART_1_AND_2_OF_CONSTITUTION.html' },
-                    { no: 5, title: 'FUNDAMENTAL RIGHTS', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 5- FUNDAMENTAL_RIGHTS.html' },
-                    { no: 6, title: 'DPSP & FUNDAMENTAL DUTIES', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 6- DPSP_AND_FUNDAMENTAL_DUTIES.html' },
-                    { no: 7, title: 'PRESIDENT AND VICE PRESIDENT', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 7- PRESIDENT_AND_VICE_PRESIDENT.html' },
-                    { no: 8, title: 'PM & CoM', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 8- PM_CoM.html' },
-                    { no: 9, title: 'PARLIAMENT 1', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 9- PARLIAMENT_PART_1.html' },
-                    { no: 10, title: 'PARLIAMENT 2', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity Html/Chapter 10- PARLIAMENT_PART_2.html' },
-                    { no:11,title:'STATE LEGISLATURE', url:'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%2011-%20STATE%20LEGISLATURE.html'},
-                    { no:12,title:'COURTS', url:'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%2012-%20COURTS.html'},
-                    { no:13,title:'LOCAL BODIES', url:'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%2013%20-%20LOCAL%20BODIES.html'},
-                    { no:14,title:'CONSTITUTIONAL & NON-CONSTITUTIONAL BODIES', url:'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%2014%20-%20CONSTITUTIONAL_AND_NON_CONSTITUTIONAL_BODIES.html'},
-                    { no:15,title:'EMERGENCY AMENDMENTS & INTER-STATE RELATIONS', url:'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%2015%20-EMERGENCY_AMENDMENTS_INTER_STATE_RELATIONS.html'}
+                    { no: 1,  title: 'MAKING OF CONSTITUTION',                         url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%201-%20MAKING_OF_CONSTITUTION.html' },
+                    { no: 2,  title: 'SALIENT FEATURES OF THE CONSTITUTION',           url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%202-%20SALIENT_FEATURES_OF_CONSTITUTION.html' },
+                    { no: 3,  title: 'PREAMBLE',                                       url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%203-%20PREAMBLE.html' },
+                    { no: 4,  title: 'PART 1 AND 2 OF THE CONSTITUTION',               url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%204-%20PART_1_AND_2_OF_CONSTITUTION.html' },
+                    { no: 5,  title: 'FUNDAMENTAL RIGHTS',                             url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%205-%20FUNDAMENTAL_RIGHTS.html' },
+                    { no: 6,  title: 'DPSP & FUNDAMENTAL DUTIES',                      url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%206-%20DPSP_AND_FUNDAMENTAL_DUTIES.html' },
+                    { no: 7,  title: 'PRESIDENT AND VICE PRESIDENT',                   url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%207-%20PRESIDENT_AND_VICE_PRESIDENT.html' },
+                    { no: 8,  title: 'PM & CoM',                                       url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%208-%20PM_CoM.html' },
+                    { no: 9,  title: 'PARLIAMENT 1',                                   url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%209-%20PARLIAMENT_PART_1.html' },
+                    { no: 10, title: 'PARLIAMENT 2',                                   url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%2010-%20PARLIAMENT_PART_2.html' },
+                    { no: 11, title: 'STATE LEGISLATURE',                              url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%2011-%20STATE%20LEGISLATURE.html' },
+                    { no: 12, title: 'COURTS',                                         url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%2012-%20COURTS.html' },
+                    { no: 13, title: 'LOCAL BODIES',                                   url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%2013%20-%20LOCAL%20BODIES.html' },
+                    { no: 14, title: 'CONSTITUTIONAL & NON-CONSTITUTIONAL BODIES',     url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%2014%20-%20CONSTITUTIONAL_AND_NON_CONSTITUTIONAL_BODIES.html' },
+                    { no: 15, title: 'EMERGENCY AMENDMENTS & INTER-STATE RELATIONS',   url: 'https://bikram007797.github.io/Quiz-4.0-html-files/polity%20Html/Chapter%2015%20-EMERGENCY_AMENDMENTS_INTER_STATE_RELATIONS.html' }
                 ]
             },
-            { id: 'ancient', 
-             title: 'Ancient History', 
-             emoji: '🏛️', 
-             chapters: [
-        { no: 1, title: 'STONE AGE', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An. HIs HTML/Chapter 01 - STONE AGE.html' },
-        { no: 2, title: 'INDUS VALLEY CIVILIZATION', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An. HIs HTML/Chapter 02 - Indus Valley Civilization.html' },
-        { no: 3, title: 'VEDIC AGE', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An. HIs HTML/Chapter 03 - Vedic Age.html' },
-        { no: 4, title: 'JAINISM & BUDDHISM', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An. HIs HTML/Chapter 04 - Jainism & Buddhism.html' },
-        { no: 5, title: 'MAHAJANPADAS', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An. HIs HTML/Chapter 05 - Mahajanpadas.html' },
-        { no: 6, title: 'MAURYA DYNASTY', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An. HIs HTML/Chapter 06 - Maurya Dynasty.html' },
-        { no: 7, title: 'POST-MAURYA DYNASTIES', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An. HIs HTML/Chapter 07 - Post-Maurya Dynasties.html' },
-        { no: 8, title: 'SANGAM AGE', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An. HIs HTML/Chapter 08 - Sangam Age.html' },
-        { no: 9, title: 'GUPTA DYNASTY', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An. HIs HTML/Chapter 09 - Gupta Empire.html' },
-        { no: 10, title: 'POST-GUPTA DYNASTIES', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An. HIs HTML/Chapter 10 - Post-Gupta Empire.html' },
-        { no: 11, title: 'CHOLAS AND TRIPARTITE STRUGGLE', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An. HIs HTML/Chapter 11 - CHOLAS AND TRIPARTITE STRUGGLE.html' }
-            ]
-                 
-        },
-        
-        
-        { id: 'medieval', 
-         title: 'Medieval History', 
-         emoji: '🏰', 
-         chapters: [
-        { no: 1, title: 'INVASION OF ISLAM', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Med.His HTML/Chapter 01 - INVASION OF ISLAM.html' },
-        { no: 2, title: 'DELHI SULTANATE PART 1', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Med.His HTML/Chapter 02 - DELHI SULTANATE PART 1.html' },
-        { no: 3, title: 'DELHI SULTANATE PART 2', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Med.His HTML/Chapter 03 - DELHI SULTANATE PART 2.html' },
-        { no: 4, title: 'VIJAYANAGAR EMPIRE', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Med.His HTML/Chapter 04 - VIJAYANAGAR EMPIRE.html' },
-        { no: 5, title: 'MUGHAL EMPIRE PART - 1', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Med.His HTML/Chapter 05 - MUGHAL EMPIRE PART - 1.html' },
-        { no: 6, title: 'MUGHAL EMPIRE PART - 2', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Med.His HTML/Chapter 06 - MUGHAL EMPIRE PART - 2.html' },
-        { no: 7, title: 'AURANGZEB AND LATER MUGHALS', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Med.His HTML/Chapter 07 - AURANGZEB AND LATER MUGHALS.html' },
-        { no: 8, title: 'MARATHAS', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Med.His HTML/Chapter 08 - MARATHAS.html' },
-        { no: 9, title: 'BHAKTI SUFI MOVEMENT', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Med.His HTML/Chapter 09 - BHAKTI SUFI MOVEMENT.html' }
-         ] 
-        },
-            { id: 'modern', 
-             title: 'Modern History', 
-             emoji: '🗽', 
-             chapters: [
-                     { no: 1, title: 'ADVENT OF EUROPEANS', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Mod.His HTML/Chapter 01 - ADVENT OF EUROPEANS.html' },
-                     { no: 2, title: 'SOCIO RELIGIOUS REFORM MOVEMENT', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Mod.His HTML/Chapter 02 - SOCIO RELIGIOUS REFORM MOVEMENT.html' },
-                     { no: 3, title: 'REOVLT OF 1857', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Mod.His HTML/Chapter 03 - REOVLT OF 1857.html' },
-                     { no: 4, title: 'INDIAN NATIONAL CONGRESS', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Mod.His HTML/Chapter 04 - INDIAN NATIONAL CONGRESS.html' },
-                     { no: 5, title: 'PARTITION OF BENGAL', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Mod.His HTML/Chapter 05 - PARTITION OF BENGAL.html' },
-                    { no: 6, title: 'GANDHIAN ERA', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Mod.His HTML/Chapter 06 - GANDHIAN ERA.html' },
-                    { no: 7, title: 'CMD & SIMON COMMISSION', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Mod.His HTML/Chapter 07 - CMD & SIMON COMMISSION.html' },
-                    { no: 8, title: 'CIVIL DISOBEDIENCE MOVEMENT', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Mod.His HTML/Chapter 08 - CIVIL DISOBEDIENCE MOVEMENT.html' },
-                    { no: 9, title: 'QUIT INDIA MOVEMENT', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Mod.His HTML/Chapter 09 - QUIT INDIA MOVEMENT.html' }
-             ] 
+            {
+                id: 'ancient',
+                title: 'Ancient History',
+                emoji: '🏛️',
+                chapters: [
+                    { no: 1,  title: 'STONE AGE',                          url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An.%20HIs%20HTML/Chapter%2001%20-%20STONE%20AGE.html' },
+                    { no: 2,  title: 'INDUS VALLEY CIVILIZATION',          url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An.%20HIs%20HTML/Chapter%2002%20-%20Indus%20Valley%20Civilization.html' },
+                    { no: 3,  title: 'VEDIC AGE',                          url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An.%20HIs%20HTML/Chapter%2003%20-%20Vedic%20Age.html' },
+                    { no: 4,  title: 'JAINISM & BUDDHISM',                 url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An.%20HIs%20HTML/Chapter%2004%20-%20Jainism%20%26%20Buddhism.html' },
+                    { no: 5,  title: 'MAHAJANPADAS',                       url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An.%20HIs%20HTML/Chapter%2005%20-%20Mahajanpadas.html' },
+                    { no: 6,  title: 'MAURYA DYNASTY',                     url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An.%20HIs%20HTML/Chapter%2006%20-%20Maurya%20Dynasty.html' },
+                    { no: 7,  title: 'POST-MAURYA DYNASTIES',              url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An.%20HIs%20HTML/Chapter%2007%20-%20Post-Maurya%20Dynasties.html' },
+                    { no: 8,  title: 'SANGAM AGE',                         url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An.%20HIs%20HTML/Chapter%2008%20-%20Sangam%20Age.html' },
+                    { no: 9,  title: 'GUPTA DYNASTY',                      url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An.%20HIs%20HTML/Chapter%2009%20-%20Gupta%20Empire.html' },
+                    { no: 10, title: 'POST-GUPTA DYNASTIES',               url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An.%20HIs%20HTML/Chapter%2010%20-%20Post-Gupta%20Empire.html' },
+                    { no: 11, title: 'CHOLAS AND TRIPARTITE STRUGGLE',     url: 'https://bikram007797.github.io/Quiz-4.0-html-files/An.%20HIs%20HTML/Chapter%2011%20-%20CHOLAS%20AND%20TRIPARTITE%20STRUGGLE.html' }
+                ]
             },
-            
-            { id: 'economics', 
-             title: 'Economics', 
-             emoji: '💰', 
-        chapters: [
-{ no: 1, title: 'Basics of Economy', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco. HTML/Chapter 01- Basics of Economy.html' },
-{ no: 2, title: 'Microeconomics', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco. HTML/Chapter 02- Microeconomics' },
-{ no: 3, title: 'Inflation And Unemployment', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco. HTML/Chapter 03- INFLATION AND UNEMPLOYMENT' },
-{ no: 4, title: 'National Income', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco. HTML/Chapter 04- NATIONAL INCOME' },
-{ no: 5, title: 'Budget And Taxation', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco. HTML/Chapter 05- BUDGET AND TAXATION' },
-{ no: 6, title: 'Monetary Policy', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco. HTML/Chapter 06- MONETARY POLICY ' },
-{ no: 7, title: 'Banking System (Part - 1)', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco. HTML/Chapter 07- BANKING SYSTEM (PART - 1)' },
-{ no: 8, title: 'Banking System (Part - 2)', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco. HTML/Chapter 08- BANKING SYSTEM (PART - 2)' },
-{ no: 9, title: 'Balance Of Payment', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco. HTML/Chapter 09- BALANCE OF PAYMENT' },
-{ no: 10, title: 'Poverty', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco. HTML/Chapter 10- POVERTY' },
-{ no: 11, title: 'Five Year Plans', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco. HTML/Chapter 11- FIVE YEAR PLANS' }
-
-        ]
-        },
-            { id: 'biology', 
-             title: 'Biology', 
-        emoji: '🧬', 
-        chapters: [
-        { no: 1, title: 'CELL', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio. HTML/Chapter 01 - CELL.html' },
- { no: 2, title: 'PLANT TISSUE', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio. HTML/Chapter 02 - PLANT TISSUE.html' },
- { no: 3, title: 'ANIMAL TISSUE', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio. HTML/Chapter 03 - ANIMAL TISSUE.html' },
- { no: 4, title: 'PLANT KINGDOM ', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio. HTML/Chapter 04 - PLANT KINGDOM.html' },
- { no: 5, title: 'ANIMAL KINGDOM', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio. HTML/Chapter 05 - ANIMAL KINGDOM.html' },
- { no: 6, title: 'NERVOUS SYSTEM', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio. HTML/Chapter 06 - NERVOUS SYSTEM.html' },
- { no: 7, title: 'HORMONES PLANT MOVEMENTS', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio. HTML/Chapter 07 - HORMONES PLANT MOVEMENTS.html' },
- { no: 8, title: 'REPRODUCTION', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio. HTML/Chapter 08 - REPRODUCTION.html' },
- { no: 9, title: 'DIGESTIVE AND RESPIRATORY SYSTEM', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio. HTML/Chapter 09 - DIGESTIVE AND RESPIRATORY SYSTEM.html' },
- { no: 10, title: 'CIRCULATORY EXCRETORY SYSTEM', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio. HTML/Chapter 10 - CIRCULATORY EXCRETORY SYSTEM.html' },
- { no: 11, title: 'DISEASES', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio. HTML/Chapter 11 - DISEASES.html' },
- { no: 12, title: 'NUTRITION ', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio. HTML/Chapter 12 - NUTRITION.html' },
- { no: 13, title: 'GENETICS AND SKELETAL SYSTEM', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio. HTML/Chapter 13 - GENETICS AND SKELETAL SYSTEM.html' }
-        ] 
+            {
+                id: 'medieval',
+                title: 'Medieval History',
+                emoji: '🏰',
+                chapters: [
+                    { no: 1, title: 'INVASION OF ISLAM',              url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Med.His%20HTML/Chapter%2001%20-%20INVASION%20OF%20ISLAM.html' },
+                    { no: 2, title: 'DELHI SULTANATE PART 1',         url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Med.His%20HTML/Chapter%2002%20-%20DELHI%20SULTANATE%20PART%201.html' },
+                    { no: 3, title: 'DELHI SULTANATE PART 2',         url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Med.His%20HTML/Chapter%2003%20-%20DELHI%20SULTANATE%20PART%202.html' },
+                    { no: 4, title: 'VIJAYANAGAR EMPIRE',             url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Med.His%20HTML/Chapter%2004%20-%20VIJAYANAGAR%20EMPIRE.html' },
+                    { no: 5, title: 'MUGHAL EMPIRE PART - 1',         url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Med.His%20HTML/Chapter%2005%20-%20MUGHAL%20EMPIRE%20PART%20-%201.html' },
+                    { no: 6, title: 'MUGHAL EMPIRE PART - 2',         url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Med.His%20HTML/Chapter%2006%20-%20MUGHAL%20EMPIRE%20PART%20-%202.html' },
+                    { no: 7, title: 'AURANGZEB AND LATER MUGHALS',    url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Med.His%20HTML/Chapter%2007%20-%20AURANGZEB%20AND%20LATER%20MUGHALS.html' },
+                    { no: 8, title: 'MARATHAS',                       url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Med.His%20HTML/Chapter%2008%20-%20MARATHAS.html' },
+                    { no: 9, title: 'BHAKTI SUFI MOVEMENT',           url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Med.His%20HTML/Chapter%2009%20-%20BHAKTI%20SUFI%20MOVEMENT.html' }
+                ]
             },
-
-            
-            { id: 'chemistry', 
-             title: 'Chemistry', 
-             emoji: '⚗️', 
-             chapters: [
-                { no: 1, title: 'Matter', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Chem. HTML/Chapter - 01 MATTER.html' },
-{ no: 2, title: 'Is Matter Pure?', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Chem. HTML/Chapter - 02 IS MATTER PURE.html' },
- { no: 3, title: 'Atom and Its Structure', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Chem. HTML/Chapter - 03 ATOM_AND_IT'S STRUCTURE.html' },
- { no: 4, title: 'Priodic Table', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Chem. HTML/Chapter - 04 PERIODIC TABLE.html' },
- { no: 5, title: 'Chemical Reaction', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Chem. HTML/Chapter - 05 CHEMICAL_REACTIONS.html' },
- { no: 6, title: 'Metals and Non-Metals', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Chem. HTML/Chapter - 06 METALS_AND_NON_METALS.html' },
- { no: 7, title: 'Acid, Base and Salt', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Chem. HTML/Chapter - 07 ACID_BASE_AND_SALT.html' },
- { no: 8, title: 'Carbon and Its Compounds 1', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Chem. HTML/Chapter - 08 A_CARBON_AND_IT'S_COMPOUNDS_PART_1.html' },
- { no: 9, title: 'Carbon and Its Compounds 2', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Chem. HTML/Chapter - 08 B_CARBON_AND_IT'S_COMPOUNDS_PART_2.html' }
-
-        ]  
+            {
+                id: 'modern',
+                title: 'Modern History',
+                emoji: '🗽',
+                chapters: [
+                    { no: 1, title: 'ADVENT OF EUROPEANS',              url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Mod.His%20HTML/Chapter%2001%20-%20ADVENT%20OF%20EUROPEANS.html' },
+                    { no: 2, title: 'SOCIO RELIGIOUS REFORM MOVEMENT',  url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Mod.His%20HTML/Chapter%2002%20-%20SOCIO%20RELIGIOUS%20REFORM%20MOVEMENT.html' },
+                    { no: 3, title: 'REVOLT OF 1857',                   url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Mod.His%20HTML/Chapter%2003%20-%20REOVLT%20OF%201857.html' },
+                    { no: 4, title: 'INDIAN NATIONAL CONGRESS',         url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Mod.His%20HTML/Chapter%2004%20-%20INDIAN%20NATIONAL%20CONGRESS.html' },
+                    { no: 5, title: 'PARTITION OF BENGAL',              url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Mod.His%20HTML/Chapter%2005%20-%20PARTITION%20OF%20BENGAL.html' },
+                    { no: 6, title: 'GANDHIAN ERA',                     url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Mod.His%20HTML/Chapter%2006%20-%20GANDHIAN%20ERA.html' },
+                    { no: 7, title: 'CMD & SIMON COMMISSION',           url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Mod.His%20HTML/Chapter%2007%20-%20CMD%20%26%20SIMON%20COMMISSION.html' },
+                    { no: 8, title: 'CIVIL DISOBEDIENCE MOVEMENT',      url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Mod.His%20HTML/Chapter%2008%20-%20CIVIL%20DISOBEDIENCE%20MOVEMENT.html' },
+                    { no: 9, title: 'QUIT INDIA MOVEMENT',              url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Mod.His%20HTML/Chapter%2009%20-%20QUIT%20INDIA%20MOVEMENT.html' }
+                ]
             },
-            
-            { id: 'physics', title: 'Physics', emoji: '⚛️', chapters: [{ no: 1, title: 'Coming Soon', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html' }] },
+            {
+                id: 'economics',
+                title: 'Economics',
+                emoji: '💰',
+                chapters: [
+                    { no: 1,  title: 'Basics of Economy',            url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco.%20HTML/Chapter%2001-%20Basics%20of%20Economy.html' },
+                    { no: 2,  title: 'Microeconomics',               url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco.%20HTML/Chapter%2002-%20Microeconomics' },
+                    { no: 3,  title: 'Inflation And Unemployment',   url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco.%20HTML/Chapter%2003-%20INFLATION%20AND%20UNEMPLOYMENT' },
+                    { no: 4,  title: 'National Income',              url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco.%20HTML/Chapter%2004-%20NATIONAL%20INCOME' },
+                    { no: 5,  title: 'Budget And Taxation',          url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco.%20HTML/Chapter%2005-%20BUDGET%20AND%20TAXATION' },
+                    { no: 6,  title: 'Monetary Policy',              url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco.%20HTML/Chapter%2006-%20MONETARY%20POLICY' },
+                    { no: 7,  title: 'Banking System (Part - 1)',    url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco.%20HTML/Chapter%2007-%20BANKING%20SYSTEM%20(PART%20-%201)' },
+                    { no: 8,  title: 'Banking System (Part - 2)',    url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco.%20HTML/Chapter%2008-%20BANKING%20SYSTEM%20(PART%20-%202)' },
+                    { no: 9,  title: 'Balance Of Payment',           url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco.%20HTML/Chapter%2009-%20BALANCE%20OF%20PAYMENT' },
+                    { no: 10, title: 'Poverty',                      url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco.%20HTML/Chapter%2010-%20POVERTY' },
+                    { no: 11, title: 'Five Year Plans',              url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Eco.%20HTML/Chapter%2011-%20FIVE%20YEAR%20PLANS' }
+                ]
+            },
+            {
+                id: 'biology',
+                title: 'Biology',
+                emoji: '🧬',
+                chapters: [
+                    { no: 1,  title: 'CELL',                                  url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio.%20HTML/Chapter%2001%20-%20CELL.html' },
+                    { no: 2,  title: 'PLANT TISSUE',                          url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio.%20HTML/Chapter%2002%20-%20PLANT%20TISSUE.html' },
+                    { no: 3,  title: 'ANIMAL TISSUE',                         url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio.%20HTML/Chapter%2003%20-%20ANIMAL%20TISSUE.html' },
+                    { no: 4,  title: 'PLANT KINGDOM',                         url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio.%20HTML/Chapter%2004%20-%20PLANT%20KINGDOM.html' },
+                    { no: 5,  title: 'ANIMAL KINGDOM',                        url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio.%20HTML/Chapter%2005%20-%20ANIMAL%20KINGDOM.html' },
+                    { no: 6,  title: 'NERVOUS SYSTEM',                        url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio.%20HTML/Chapter%2006%20-%20NERVOUS%20SYSTEM.html' },
+                    { no: 7,  title: 'HORMONES PLANT MOVEMENTS',              url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio.%20HTML/Chapter%2007%20-%20HORMONES%20PLANT%20MOVEMENTS.html' },
+                    { no: 8,  title: 'REPRODUCTION',                          url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio.%20HTML/Chapter%2008%20-%20REPRODUCTION.html' },
+                    { no: 9,  title: 'DIGESTIVE AND RESPIRATORY SYSTEM',      url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio.%20HTML/Chapter%2009%20-%20DIGESTIVE%20AND%20RESPIRATORY%20SYSTEM.html' },
+                    { no: 10, title: 'CIRCULATORY EXCRETORY SYSTEM',          url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio.%20HTML/Chapter%2010%20-%20CIRCULATORY%20EXCRETORY%20SYSTEM.html' },
+                    { no: 11, title: 'DISEASES',                              url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio.%20HTML/Chapter%2011%20-%20DISEASES.html' },
+                    { no: 12, title: 'NUTRITION',                             url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio.%20HTML/Chapter%2012%20-%20NUTRITION.html' },
+                    { no: 13, title: 'GENETICS AND SKELETAL SYSTEM',          url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Bio.%20HTML/Chapter%2013%20-%20GENETICS%20AND%20SKELETAL%20SYSTEM.html' }
+                ]
+            },
+            {
+                id: 'chemistry',
+                title: 'Chemistry',
+                emoji: '⚗️',
+                chapters: [
+                    { no: 1, title: 'Matter',                         url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Chem.%20HTML/Chapter%20-%2001%20MATTER.html' },
+                    { no: 2, title: 'Is Matter Pure?',                url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Chem.%20HTML/Chapter%20-%2002%20IS%20MATTER%20PURE.html' },
+                    { no: 3, title: 'Atom and Its Structure',         url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Chem.%20HTML/Chapter%20-%2003%20ATOM_AND_IT%27S%20STRUCTURE.html' },
+                    { no: 4, title: 'Periodic Table',                 url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Chem.%20HTML/Chapter%20-%2004%20PERIODIC%20TABLE.html' },
+                    { no: 5, title: 'Chemical Reaction',              url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Chem.%20HTML/Chapter%20-%2005%20CHEMICAL_REACTIONS.html' },
+                    { no: 6, title: 'Metals and Non-Metals',          url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Chem.%20HTML/Chapter%20-%2006%20METALS_AND_NON_METALS.html' },
+                    { no: 7, title: 'Acid, Base and Salt',            url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Chem.%20HTML/Chapter%20-%2007%20ACID_BASE_AND_SALT.html' },
+                    { no: 8, title: 'Carbon and Its Compounds 1',     url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Chem.%20HTML/Chapter%20-%2008%20A_CARBON_AND_IT%27S_COMPOUNDS_PART_1.html' },
+                    { no: 9, title: 'Carbon and Its Compounds 2',     url: 'https://bikram007797.github.io/Quiz-4.0-html-files/Chem.%20HTML/Chapter%20-%2008%20B_CARBON_AND_IT%27S_COMPOUNDS_PART_2.html' }
+                ]
+            },
+            { id: 'physics',     title: 'Physics',     emoji: '⚛️', chapters: [{ no: 1, title: 'Coming Soon', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html' }] },
             { id: 'environment', title: 'Environment', emoji: '🌱', chapters: [{ no: 1, title: 'Coming Soon', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html' }] },
-            { id: 'gk', title: 'Static GK', emoji: '📖', chapters: [{ no: 1, title: 'Coming Soon', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html' }] }
+            { id: 'gk',          title: 'Static GK',   emoji: '📖', chapters: [{ no: 1, title: 'Coming Soon', url: 'https://bikram007797.github.io/Quiz-4.0-html-files/others/comingSoon.html' }] }
         ];
 
         const weeklyQuizzes = [
@@ -1334,24 +1138,16 @@
         ];
 
         // Calculate total quizzes
-        subjects.forEach(subject => {
-            totalQuizzes += subject.chapters.length;
-        });
-        weeklyQuizzes.forEach(quiz => {
-            totalQuizzes += quiz.tests.length;
-        });
+        subjects.forEach(subject => { totalQuizzes += subject.chapters.length; });
+        weeklyQuizzes.forEach(quiz => { totalQuizzes += quiz.tests.length; });
 
         // ---------- Generate Subject Boxes ----------
         function generateSubjectBoxes() {
             const grid = document.getElementById('subjectsGrid');
             grid.innerHTML = '';
-
-            subjects.forEach((subject, index) => {
-                const completedCount = subject.chapters.filter(ch => 
-                    completedStatus[`${subject.id}-ch-${ch.no}`]
-                ).length;
+            subjects.forEach((subject) => {
+                const completedCount = subject.chapters.filter(ch => completedStatus[`${subject.id}-ch-${ch.no}`]).length;
                 const progressPercent = (completedCount / subject.chapters.length) * 100;
-
                 const box = document.createElement('div');
                 box.className = 'box-wrapper';
                 box.innerHTML = `
@@ -1363,7 +1159,6 @@
                         </div>
                     </div>
                 `;
-
                 box.querySelector('.box').addEventListener('click', () => openQuizSidebar(subject.id));
                 grid.appendChild(box);
             });
@@ -1373,13 +1168,9 @@
         function generateWeeklyBoxes() {
             const grid = document.getElementById('weeklyGrid');
             grid.innerHTML = '';
-
             weeklyQuizzes.forEach(quiz => {
-                const completedCount = quiz.tests.filter(test => 
-                    completedStatus[test.id]
-                ).length;
+                const completedCount = quiz.tests.filter(test => completedStatus[test.id]).length;
                 const progressPercent = (completedCount / quiz.tests.length) * 100;
-
                 const box = document.createElement('div');
                 box.className = 'box-wrapper';
                 box.innerHTML = `
@@ -1391,7 +1182,6 @@
                         </div>
                     </div>
                 `;
-
                 box.querySelector('.box').addEventListener('click', () => openWeeklySidebar(quiz.id));
                 grid.appendChild(box);
             });
@@ -1401,19 +1191,14 @@
         function openQuizSidebar(subjectId) {
             const subject = subjects.find(s => s.id === subjectId);
             if (!subject) return;
-
             closeSidebars();
-
             const sidebar = document.getElementById('quiz-sidebar');
             document.getElementById('quiz-sidebar-header').innerHTML = `${subject.emoji} ${subject.title}`;
-            
             const linksList = document.getElementById('quiz-sidebar-links');
             linksList.innerHTML = '';
-
             subject.chapters.forEach((chapter, index) => {
                 const quizId = `${subject.id}-ch-${chapter.no}`;
                 const isCompleted = completedStatus[quizId] || false;
-
                 const li = document.createElement('li');
                 li.style.setProperty('--i', index);
                 li.innerHTML = `
@@ -1433,12 +1218,9 @@
                 `;
                 linksList.appendChild(li);
             });
-
             sidebar.classList.add('open');
             currentActiveCategory = subject.title;
             document.getElementById('stats-active-category').textContent = subject.title;
-
-            // Mark box as active
             document.querySelectorAll('.box').forEach(box => box.classList.remove('active'));
             document.querySelector(`[data-subject-id="${subjectId}"]`).classList.add('active');
         }
@@ -1447,18 +1229,13 @@
         function openWeeklySidebar(weeklyId) {
             const quiz = weeklyQuizzes.find(q => q.id === weeklyId);
             if (!quiz) return;
-
             closeSidebars();
-
             const sidebar = document.getElementById('weekly-sidebar');
             document.getElementById('weekly-sidebar-header').innerHTML = `${quiz.emoji} Weekly ${quiz.title}`;
-            
             const linksList = document.getElementById('weekly-sidebar-links');
             linksList.innerHTML = '';
-
             quiz.tests.forEach((test, index) => {
                 const isCompleted = completedStatus[test.id] || false;
-
                 const li = document.createElement('li');
                 li.style.setProperty('--i', index);
                 li.innerHTML = `
@@ -1478,12 +1255,9 @@
                 `;
                 linksList.appendChild(li);
             });
-
             sidebar.classList.add('open');
             currentActiveCategory = `Weekly ${quiz.title}`;
             document.getElementById('stats-active-category').textContent = `Weekly ${quiz.title}`;
-
-            // Mark box as active
             document.querySelectorAll('.box').forEach(box => box.classList.remove('active'));
             document.querySelector(`[data-weekly-id="${weeklyId}"]`).classList.add('active');
         }
@@ -1491,43 +1265,32 @@
         // ---------- Toggle Quiz Completion ----------
         function toggleQuizCompletion(quizId, buttonElement) {
             const isCurrentlyCompleted = completedStatus[quizId] || false;
-
             if (isCurrentlyCompleted) {
-                if (!confirm("Mark this quiz as incomplete? This will remove the coins and XP.")) {
-                    return;
-                }
+                if (!confirm("Mark this quiz as incomplete? This will remove the coins and XP.")) return;
             }
-
             const container = buttonElement.closest('.quiz-link-container');
             const statusElement = container.querySelector('.quiz-status');
-
             if (!isCurrentlyCompleted) {
-                // Mark as completed
                 completedStatus[quizId] = true;
                 coinBalance += COIN_REWARD;
                 xpBalance += XP_REWARD;
                 completedQuizzes += 1;
-
                 buttonElement.innerHTML = '<span>✓</span><span>Completed</span>';
                 container.classList.add('completed');
                 statusElement.textContent = `+${COIN_REWARD} Coins • +${XP_REWARD} XP`;
                 statusElement.className = 'quiz-status status-completed';
-
                 buttonElement.style.animation = 'pulse 0.5s ease';
                 setTimeout(() => buttonElement.style.animation = '', 500);
             } else {
-                // Mark as incomplete
                 delete completedStatus[quizId];
                 coinBalance = Math.max(0, coinBalance - COIN_REWARD);
                 xpBalance = Math.max(0, xpBalance - XP_REWARD);
                 completedQuizzes = Math.max(0, completedQuizzes - 1);
-
                 buttonElement.innerHTML = '<span>○</span><span>Mark Complete</span>';
                 container.classList.remove('completed');
                 statusElement.textContent = 'Pending';
                 statusElement.className = 'quiz-status status-pending';
             }
-
             updateAllDisplays();
             checkAchievements();
             saveProgress();
@@ -1541,34 +1304,25 @@
             document.getElementById('stats-total-xp').textContent = xpBalance;
             document.getElementById('stats-completed-quizzes').textContent = completedQuizzes;
             document.getElementById('stats-total-quizzes').textContent = totalQuizzes;
-
-            const overallProgress = Math.round((completedQuizzes / totalQuizzes) * 100);
+            const overallProgress = totalQuizzes > 0 ? Math.round((completedQuizzes / totalQuizzes) * 100) : 0;
             document.getElementById('stats-overall-progress').textContent = `${overallProgress}%`;
-
             updateProgressBars();
         }
 
         // ---------- Update Progress Bars ----------
         function updateProgressBars() {
             subjects.forEach(subject => {
-                const completedCount = subject.chapters.filter(ch => 
-                    completedStatus[`${subject.id}-ch-${ch.no}`]
-                ).length;
+                const completedCount = subject.chapters.filter(ch => completedStatus[`${subject.id}-ch-${ch.no}`]).length;
                 const progressPercent = (completedCount / subject.chapters.length) * 100;
-                
                 const box = document.querySelector(`[data-subject-id="${subject.id}"]`);
                 if (box) {
                     const fill = box.querySelector('.box-progress-fill');
                     if (fill) fill.style.width = `${progressPercent}%`;
                 }
             });
-
             weeklyQuizzes.forEach(quiz => {
-                const completedCount = quiz.tests.filter(test => 
-                    completedStatus[test.id]
-                ).length;
+                const completedCount = quiz.tests.filter(test => completedStatus[test.id]).length;
                 const progressPercent = (completedCount / quiz.tests.length) * 100;
-                
                 const box = document.querySelector(`[data-weekly-id="${quiz.id}"]`);
                 if (box) {
                     const fill = box.querySelector('.box-progress-fill');
@@ -1582,36 +1336,27 @@
             const container = document.getElementById('achievements-container');
             let achievementsHTML = '';
             let newAchievement = null;
-
             const achievements = [
-                { id: 'first', threshold: 1, title: 'New Adventurer', desc: 'Completed first quiz' },
-                { id: 'beginner', threshold: 5, title: 'Quest Beginner', desc: 'Completed 5 quizzes' },
-                { id: 'intermediate', threshold: 10, title: 'Rising Star', desc: 'Completed 10 quizzes' },
-                { id: 'advanced', threshold: 25, title: 'Quiz Master', desc: 'Completed 25 quizzes' },
-                { id: 'expert', threshold: 50, title: 'Master Collector', desc: 'Completed 50 quizzes' },
-                { id: 'wealthy', threshold: 100, title: 'Wealthy Adventurer', desc: 'Earned 100 coins', checkCoins: true },
-                { id: 'rich', threshold: 500, title: 'Fortune Seeker', desc: 'Earned 500 coins', checkCoins: true }
+                { id: 'first',       threshold: 1,   title: 'New Adventurer',    desc: 'Completed first quiz' },
+                { id: 'beginner',    threshold: 5,   title: 'Quest Beginner',    desc: 'Completed 5 quizzes' },
+                { id: 'intermediate',threshold: 10,  title: 'Rising Star',       desc: 'Completed 10 quizzes' },
+                { id: 'advanced',    threshold: 25,  title: 'Quiz Master',       desc: 'Completed 25 quizzes' },
+                { id: 'expert',      threshold: 50,  title: 'Master Collector',  desc: 'Completed 50 quizzes' },
+                { id: 'wealthy',     threshold: 100, title: 'Wealthy Adventurer',desc: 'Earned 100 coins', checkCoins: true },
+                { id: 'rich',        threshold: 500, title: 'Fortune Seeker',    desc: 'Earned 500 coins', checkCoins: true }
             ];
-
             achievements.forEach(achievement => {
                 const value = achievement.checkCoins ? coinBalance : completedQuizzes;
                 if (value >= achievement.threshold) {
                     achievementsHTML += `<span class="achievement-badge">${achievement.title}</span>`;
-                    
-                    // Check if this is a new achievement
                     if (!localStorage.getItem(`achievement-${achievement.id}`) && value === achievement.threshold) {
                         newAchievement = achievement;
                         localStorage.setItem(`achievement-${achievement.id}`, 'true');
                     }
                 }
             });
-
             container.innerHTML = achievementsHTML || '<p style="color: #cbd5e0;">No achievements yet. Start completing quizzes!</p>';
-
-            // Show popup for new achievement
-            if (newAchievement) {
-                showAchievement(newAchievement.title, newAchievement.desc);
-            }
+            if (newAchievement) showAchievement(newAchievement.title, newAchievement.desc);
         }
 
         // ---------- Show Achievement Popup ----------
@@ -1619,11 +1364,8 @@
             const popup = document.getElementById('achievement-popup');
             document.getElementById('achievement-title').textContent = title;
             document.getElementById('achievement-desc').textContent = description;
-            
             popup.classList.add('show');
-            setTimeout(() => {
-                popup.classList.remove('show');
-            }, 3000);
+            setTimeout(() => popup.classList.remove('show'), 3000);
         }
 
         // ---------- Toggle Profile Sidebar ----------
@@ -1646,12 +1388,7 @@
 
         // ---------- Save Progress ----------
         function saveProgress() {
-            const progress = {
-                coinBalance,
-                xpBalance,
-                completedQuizzes,
-                completedStatus
-            };
+            const progress = { coinBalance, xpBalance, completedQuizzes, completedStatus };
             localStorage.setItem('quizMasterProgress', JSON.stringify(progress));
         }
 
@@ -1671,7 +1408,7 @@
             }
         }
 
-        // ---------- Theme Toggle ----------
+        // ---------- Theme ----------
         function initTheme() {
             const saved = localStorage.getItem('quizTheme') || 'dark';
             document.body.setAttribute('data-theme', saved);
@@ -1691,24 +1428,67 @@
             document.body.setAttribute('data-theme', next);
             localStorage.setItem('quizTheme', next);
             updateThemeButton();
-            
-            // Add animation feedback
             const button = document.getElementById('themeToggle');
             button.style.transform = 'scale(1.2)';
-            setTimeout(() => {
-                button.style.transform = '';
-            }, 300);
+            setTimeout(() => { button.style.transform = ''; }, 300);
         }
 
-        // ---------- Fullscreen Toggle ----------
+        // ---------- Fullscreen ----------
         function toggleFullscreen() {
             if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen?.().catch(err => {
-                    console.log(`Error: ${err.message}`);
-                });
+                document.documentElement.requestFullscreen?.().catch(err => console.log(`Error: ${err.message}`));
             } else {
                 document.exitFullscreen?.();
             }
+        }
+
+        // ---------- Quizo Icon Sparkles ----------
+        function generateQuizoIcon() {
+            const icon = document.getElementById('quizoIcon');
+            if (!icon) return;
+            for (let i = 0; i < 4; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.animationDelay = `${i * 0.5}s`;
+                icon.appendChild(sparkle);
+            }
+            icon.addEventListener('click', function () {
+                this.style.animation = 'none';
+                this.style.transform = 'scale(1.3)';
+                this.style.background = 'linear-gradient(135deg, #FF8E53 0%, #FF6B9D 100%)';
+                createBurstEffect(icon);
+                setTimeout(() => {
+                    this.style.animation = 'iconFloat 3s ease-in-out infinite';
+                    this.style.transform = '';
+                    this.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                }, 800);
+            });
+        }
+
+        // ---------- Burst Effect ----------
+        function createBurstEffect(element) {
+            const rect = element.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            for (let i = 0; i < 8; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `position:fixed;width:4px;height:4px;background:${getRandomColor()};border-radius:50%;left:${centerX}px;top:${centerY}px;pointer-events:none;z-index:1000;`;
+                document.body.appendChild(particle);
+                const angle = (i / 8) * Math.PI * 2;
+                const distance = 30;
+                const targetX = Math.cos(angle) * distance;
+                const targetY = Math.sin(angle) * distance;
+                particle.animate([
+                    { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                    { transform: `translate(${targetX}px, ${targetY}px) scale(0)`, opacity: 0 }
+                ], { duration: 600, easing: 'ease-out' });
+                setTimeout(() => particle.remove(), 600);
+            }
+        }
+
+        function getRandomColor() {
+            const colors = ['#667eea','#764ba2','#f093fb','#f5576c','#4facfe','#00f2fe','#fa709a','#fee140','#ffd700','#4ecdc4','#d4af37','#a8edea'];
+            return colors[Math.floor(Math.random() * colors.length)];
         }
 
         // ---------- Initialize ----------
@@ -1719,12 +1499,11 @@
             generateWeeklyBoxes();
             updateAllDisplays();
             checkAchievements();
-             generateQuizoIcon();
+            generateQuizoIcon();
 
             document.getElementById('themeToggle').addEventListener('click', toggleTheme);
             document.getElementById('fullscreenBtn').addEventListener('click', toggleFullscreen);
 
-            // Close sidebar on outside click
             document.addEventListener('click', (e) => {
                 const sidebars = ['quiz-sidebar', 'weekly-sidebar', 'profile-sidebar'];
                 const isClickInsideSidebar = sidebars.some(id => {
@@ -1734,95 +1513,15 @@
                 const isClickOnBox = e.target.closest('.box');
                 const isClickOnProfile = e.target.closest('.profile-btn');
                 const isClickOnCloseBtn = e.target.closest('.close-btn');
-
                 if (!isClickInsideSidebar && !isClickOnBox && !isClickOnProfile && !isClickOnCloseBtn) {
                     closeSidebars();
                 }
             });
 
-            // ESC key to close
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeSidebars();
-                }
+                if (e.key === 'Escape') closeSidebars();
             });
         });
-        // ---------- Generate Quizo Icon Sparkles ----------
-function generateQuizoIcon() {
-    const icon = document.getElementById('quizoIcon');
-    if (!icon) return;
-    
-    // Add sparkles
-    for (let i = 0; i < 4; i++) {
-        const sparkle = document.createElement('div');
-        sparkle.className = 'sparkle';
-        sparkle.style.animationDelay = `${i * 0.5}s`;
-        icon.appendChild(sparkle);
-    }
-    
-    // Interactive effect on click
-    icon.addEventListener('click', function() {
-        this.style.animation = 'none';
-        this.style.transform = 'scale(1.3)';
-       this.style.background = 'linear-gradient(135deg, #FF8E53 0%, #FF6B9D 100%)';
-        
-        // Create burst effect
-        createBurstEffect(icon);
-        
-        setTimeout(() => {
-            this.style.animation = 'iconFloat 3s ease-in-out infinite';
-            this.style.transform = '';
-            this.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-        }, 800);
-    });
-}
-
-// ---------- Create Burst Effect ----------
-function createBurstEffect(element) {
-    const rect = element.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    
-    for (let i = 0; i < 8; i++) {
-        const particle = document.createElement('div');
-        particle.style.position = 'fixed';
-        particle.style.width = '4px';
-        particle.style.height = '4px';
-        particle.style.background = getRandomColor();
-        particle.style.borderRadius = '50%';
-        particle.style.left = `${centerX}px`;
-        particle.style.top = `${centerY}px`;
-        particle.style.pointerEvents = 'none';
-        particle.style.zIndex = '1000';
-        document.body.appendChild(particle);
-        
-        // Animate particle
-        const angle = (i / 8) * Math.PI * 2;
-        const distance = 30;
-        const targetX = Math.cos(angle) * distance;
-        const targetY = Math.sin(angle) * distance;
-        
-        particle.animate([
-            { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-            { transform: `translate(${targetX}px, ${targetY}px) scale(0)`, opacity: 0 }
-        ], {
-            duration: 600,
-            easing: 'ease-out'
-        });
-        
-        setTimeout(() => particle.remove(), 600);
-    }
-}
-
-// ---------- Random Color Generator ----------
-function getRandomColor() {
-    const colors = [
-        '#667eea', '#764ba2', '#f093fb', '#f5576c', 
-        '#4facfe', '#00f2fe', '#fa709a', '#fee140',
-        '#ffd700', '#4ecdc4', '#d4af37', '#a8edea'
-    ];
-    return colors[Math.floor(Math.random() * colors.length)];
-}
     </script>
 </body>
 </html>
